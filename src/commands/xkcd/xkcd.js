@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const database = require("./../../utils/database");
 const Utils = require("./../../utils/utils");
-
 const axios = require("axios").default;
 
 module.exports = {
