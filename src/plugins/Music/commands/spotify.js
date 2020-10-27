@@ -17,7 +17,6 @@ module.exports = {
      */
     run: async (client, message, args) => {
         const playlist_url = args[0]
-
         if (args.length != 1 || !playlist_url) {
             return message.channel.send(
                 Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}spotify <link da playlist>** para tocar alguma playlist! 🤗`, client.user.username, client.user.avatarURL())
@@ -28,8 +27,6 @@ module.exports = {
                 Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
             );
         }
-
-
         var spotify_playlist;
         try {
             spotify_playlist = await Music.getSpotifyPlaylist(playlist_url, 50)
@@ -37,7 +34,6 @@ module.exports = {
             console.log(">", error)
             return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
         }
-
         var player = client.players.get(message.guild.id)
         if (!player) {
             player = await new MusicPlayer(message.guild.id, client, message)
@@ -51,7 +47,6 @@ module.exports = {
             return message.channel.send(Utils.createSimpleEmbed("✅ Sua música foi adicionada à playlist", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
         }
     },
-
     get command() {
         return {
             name: 'spotify',

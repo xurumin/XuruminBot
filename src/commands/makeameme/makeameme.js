@@ -66,13 +66,12 @@ module.exports = {
 	 */
 	run: async (client, message, args) => {
 		if (message.mentions.users.size > 0) {
-
-			message.channel.send(await makecatimage(message.mentions.users.entries().next().value[1].avatarURL({
+			return message.channel.send(await makecatimage(message.mentions.users.entries().next().value[1].avatarURL({
 				format: "png"
 			})))
 
 		} else {
-			message.channel.send(await makecatimage(message.author.avatarURL({
+			return message.channel.send(await makecatimage(message.author.avatarURL({
 				format: "png"
 			})))
 		}

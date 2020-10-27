@@ -13,25 +13,17 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-        random_meme.getRandomMeme()
-        .then(data=>{
-            const meme_embed = new Discord.MessageEmbed()
-			.setTitle('Hm, que tal um meme?')
-			.setDescription(data.text)
-            .setColor('#8146DC')
-            .setImage(data.url)
-			.setFooter(
-				`${(data.source).toLocaleUpperCase()} - ${data.author.screen_name}`,
-				'https://i.imgur.com/PAYbEgv.png'
-            )
-            .setTimestamp();
-            
-            return message.channel.send(meme_embed);
-        })
-        .catch(error=>{
-            console.log(error)
-            return message.channel.send("Alguma coisa deu errado...");
-		})
+		var meme = await random_meme.getRandomMeme()
+		const meme_embed = new Discord.MessageEmbed()
+		.setTitle('Hm, que tal um meme?')
+		.setDescription(meme.text)
+		.setColor('#8146DC')
+		.setImage(meme.url)
+		.setFooter(
+			`${(meme.source).toLocaleUpperCase()} - ${meme.author.screen_name}`,
+			'https://i.imgur.com/PAYbEgv.png'
+		);
+		return message.channel.send(meme_embed);
 		
 	},
 

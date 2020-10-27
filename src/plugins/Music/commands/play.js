@@ -17,7 +17,6 @@ module.exports = {
      */
     run: async (client, message, args) => {
         const video_url = args[0]
-
         if (args.length != 1 || !video_url) {
             return message.channel.send(
                 Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, client.user.username, client.user.avatarURL())
@@ -34,8 +33,6 @@ module.exports = {
             console.log(">", error)
             return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
         }
-
-
         var player = client.players.get(message.guild.id)
         if (!player) {
             player = await new MusicPlayer(message.guild.id, client, message)
@@ -48,14 +45,10 @@ module.exports = {
             player.appendPlaylist([video_info])
             return message.channel.send(Utils.createSimpleEmbed("✅ Sua música foi adicionada à playlist", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
         }
-
     },
-
     get command() {
         return {
-            name: 'play',
-            description: 'Toca um link do youtube',
-            usage: 'play <link do youtube>'
+            name: 'play'
         }
     },
 };

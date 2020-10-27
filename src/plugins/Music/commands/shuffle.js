@@ -16,16 +16,11 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args) => {
-
-        
-
         if (!message.member.voice.channel) {
             return message.channel.send(
                 Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
             );
         }
-
-
         var player = client.players.get(message.guild.id)
         if (!player) {
             player = await new MusicPlayer(message.guild.id, client, message)
@@ -45,14 +40,11 @@ module.exports = {
             player.shufflePlaylist()
             return message.channel.send(Utils.createSimpleEmbed("✅ Playlist randomizada!", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
         }
-
     },
 
     get command() {
         return {
-            name: 'shuffle',
-            description: 'Randomiza a playlist',
-            usage: 'shuffle'
+            name: 'shuffle'
         }
     },
 };

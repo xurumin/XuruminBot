@@ -16,22 +16,17 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		var image = await axios.get(`https://unsplash.com/napi/search/photos?query=cat&xp=&per_page=1&page=${Utils.random(0,100)}`)
 		return message.channel.send(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
-			.setTitle("Vai um gatin? 😻")
+			.setTitle("Juan")
 			.setAuthor(client.user.username)
-			.setImage(image.data["results"][0]["urls"]["small"])
-			.setFooter(`Photo by ${image.data["results"][0]["user"]["name"]} on Unsplash`)
+			.setImage("https://i.imgur.com/kWFFM2w.png")
 		)
 	},
 	get command() {
 		return {
-			name: 'cat',
-			description: '',
-			usage: 'cat',
-			aliases: ["gato"]
+			name: 'juan'
 		};
 	},
 };

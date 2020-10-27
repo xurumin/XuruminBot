@@ -15,7 +15,6 @@ module.exports = {
 	run: async (client, message, args) => {
 		//database.createDatabase()
 		const time = 60 * 1000
-
 		database.removeServer(message.guild.id)
 		return message.channel.send("Canal removido!");
 	},

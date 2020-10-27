@@ -16,23 +16,16 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		axios
-		.get(`https://xkcd.com/${Utils.random(0,2100)}/info.0.json`)
-		.then((res) => {
-			return message.channel.send(
-				new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle(res.data.safe_title)
-				.setDescription(res.data.alt)
-				.setAuthor(client.user.username)
-				.setImage(res.data.img)
-				.setFooter(`Photo by XKCD on https://xkcd.com`)
-			)
-		})
-		.catch((err) => {
-			console.log(err)
-			return message.channel.send(Utils.getErrorMessage());
-		})
+		var meme = await axios.get(`https://xkcd.com/${Utils.random(0,2100)}/info.0.json`)
+		return message.channel.send(
+			new Discord.MessageEmbed()
+			.setColor('#9d65c9')
+			.setTitle(meme.data.safe_title)
+			.setDescription(meme.data.alt)
+			.setAuthor(client.user.username)
+			.setImage(meme.data.img)
+			.setFooter(`Photo by XKCD on https://xkcd.com`)
+		)
 	},
 
 	get command() {

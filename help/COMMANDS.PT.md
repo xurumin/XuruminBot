@@ -23,6 +23,9 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |cat| Receba a imagem de um gatinho fofinho :3 | gato |
 |fish| Que tal um peixin? | peixe |
 |xkcd| Receba um meme do XKCD ||
+|pedro| pedro ||
+|juan| juan ||
+|ratinho| Receba um vídeo do ratinho ||
 
 ## Gerais
 | Comando | Descrição  | Aliases |

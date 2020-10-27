@@ -24,7 +24,6 @@ module.exports = {
 			.addField("Github do Xurumin", "http://bit.ly/xurumingithub")
 			.addField("Site do Xurumin", "http://bit.ly/xurumin")
 			.setAuthor(client.user.username)
-			.setImage(res.data["results"][0]["urls"]["small"])
 		)
 		
 	},
