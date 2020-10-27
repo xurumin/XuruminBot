@@ -1,0 +1,72 @@
+{
+    "philosophers": [
+        {
+            "name": "Friedrich Nietzsche",
+            "pic": "/files/philosophers/Nietzsche.jpg"
+        },
+        {
+            "name": "Jean-Jacques Rousseau",
+            "pic": "/files/philosophers/russeau.jpg"
+        },
+        {
+            "name": "Nicolau Maquiavel",
+            "pic": "https://i.imgur.com/K6btt1S.jpg"
+        },
+        {
+            "name": "Sócrates",
+            "pic": "https://i.imgur.com/iGfs2nl.jpg"
+        },
+        {
+            "name": "Sócrates",
+            "pic": "https://i.imgur.com/ooG0EaH.jpg"
+        },
+        {
+            "name": "Pitágoras de Samos",
+            "pic": "/files/philosophers/pitagoras.jpg"
+        },
+        {
+            "name": "Aristóteles",
+            "pic": "https://i.imgur.com/x110yzK.jpg"
+        },
+        {
+            "name": "Platão",
+            "pic": "/files/philosophers/platao.jpg"
+        },
+        {
+            "name": "Leandro Karnal",
+            "pic": "https://i.imgur.com/6iPJ1ws.png"
+        },
+        {
+            "name": "Nelson Mandela",
+            "pic": "https://i.imgur.com/osFudTY.png"
+        },
+        {
+            "name": "Adam Smith",
+            "pic": "https://i.imgur.com/6RdGuJx.png"
+        },
+        {
+            "name": "Alan Turing",
+            "pic": "https://i.imgur.com/QsP3PPn.png"
+        },
+        {
+            "name": "Ayn Rand",
+            "pic": "https://i.imgur.com/GFvS2Le.png"
+        },
+        {
+            "name": "Carl Sagan",
+            "pic": "https://i.imgur.com/c8PARRK.png"
+        },
+        {
+            "name": "Albert Einstein",
+            "pic": "https://i.imgur.com/x78umXV.png"
+        },
+        {
+            "name": "Clarice Lispector",
+            "pic": "https://i.imgur.com/1bnKGHg.png"
+        },
+        {
+            "name": "Euclides",
+            "pic": "https://i.imgur.com/HYvHTks.png"
+        }
+    ]
+}
