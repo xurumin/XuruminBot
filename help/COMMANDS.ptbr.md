@@ -26,6 +26,12 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |pedro| pedro ||
 |juan| juan ||
 |ratinho| Receba um vídeo do ratinho ||
+|rapaz| Receba um RÁPÁAAAZ do Xaropinho ||
+|gatinhodamamae @usuario| Mostre para todo mundo quem é o gatinho da mamae ||
+|fusca| Receba a imagem de um fusca | beetle |
+|monarktweet| O que o Monark tweetou dessa vez? | monarktw, mktwt, monarktwt |
+|indoatras| Vá atrás desse tal por que ele fez aquilo | indoatrasdessetalde, indoatrasdesse, iadtd |
+|manualdomundo| Você viu esse vídeo do Manuel do mundo? | mdm |
 
 ## Gerais
 | Comando | Descrição  | Aliases |

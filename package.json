@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./src/bot.js",
     "dev": "nodemon ./src/bot.js",
+    "shard": "nodemon ./src/shard.js",
     "pm2": "pm2 start ./src/bot.js --watch --name=app & pm2 monit app"
   },
   "author": "jonatas araujo <jonatasaraujofx@gmail.com>",

@@ -8,14 +8,10 @@ const {
 	loadImage
 } = require('canvas')
 
-
-
 function makecatimage(profile_pic) {
 	return new Promise(async (resolve, reject) => {
 		const canvas = createCanvas(300, 300)
 		const ctx = canvas.getContext('2d')
-
-
 		const image = await loadImage(profile_pic)
 
 		ctx.fillStyle = 'orange';
@@ -80,9 +76,7 @@ module.exports = {
 
 	get command() {
 		return {
-			name: 'makeameme',
-			description: 'Irá retornar um meme!',
-			usage: 'makeameme',
+			name: 'gatinhodamamae'
 		};
 	},
 };

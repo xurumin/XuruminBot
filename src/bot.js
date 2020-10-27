@@ -103,22 +103,23 @@ const init = async () => {
 	setInterval(()=>{
 		Music.authorizeSpotify()
 	}, 2500 * 1000 )
-	
-
 	/** 
-	 * 
+	 * Login to Discord
 	 */
-
-
+	// client.login(process.env.DISCORD_API)
+	// .then(() => {
+	// 	console.log("im on babe")
+	// 	/**
+	// 	 * RUNNER - PLS ADD TO ANOTHER FILE
+	// 	 */
+	// 	// const runner_meme = require("./runner/runner_meme")
+	// 	// runner_meme.init(client)
+	// 	// runner_meme.run()
+	// })
 	client.login(process.env.DISCORD_API)
-		.then(() => {
-			console.log("im on babe")
-			/**
-			 * RUNNER - PLS ADD TO ANOTHER FILE
-			 */
-			const runner_meme = require("./runner/runner_meme")
-			runner_meme.init(client)
-			runner_meme.run()
-		})
+	client.on("ready", () => {
+		process.env.SHARD_ID = client.shard.ids[0]
+		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
+	});
 }
 init();

@@ -2,6 +2,7 @@ const {
 	createCanvas,
 	loadImage
 } = require('canvas')
+const fs = require("fs-extra")
 const Discord = require('discord.js');
 
 function wrapText (context, text, x, y, lineHeight, maxWidth) {
@@ -17,7 +18,6 @@ function wrapText (context, text, x, y, lineHeight, maxWidth) {
         test = words[i];
         metrics = context.measureText(test);
         while (metrics.width > maxWidth) {
-            // Determine how much of the word will fit
             test = test.substring(0, test.length - 1);
             metrics = context.measureText(test);
         }
@@ -43,30 +43,21 @@ function wrapText (context, text, x, y, lineHeight, maxWidth) {
     context.fillText(line, x, y);
 }
 
-module.exports = function process(philosopher_name, philosopher_pic, text) {
+module.exports = function process(text, img_code=3) {
     return new Promise(async (resolve, reject) => {
-        const canvas = createCanvas(600, 315)
+        const canvas = createCanvas(500, 380)
         const ctx = canvas.getContext('2d')
+        let pedro = fs.readdirSync(__dirname+"/files")
+		pedro = pedro[Math.floor(Math.random() * pedro.length)]
 
-        let philosopher_image;
-        if(philosopher_pic.startsWith("http")){
-            philosopher_image = await loadImage(philosopher_pic)
-        }else{
-            philosopher_image = await loadImage(__dirname + philosopher_pic)
-        }
+        ctx.drawImage(await loadImage(__dirname + `/files/${pedro}`), 0, 0, 500,380);
 
-        ctx.drawImage(await loadImage(__dirname + "/files/base.png"), 0, 0, 600,315);
-        ctx.drawImage(philosopher_image, 0, 0, 242,315);
-        
-
+        ctx.font = "500 13px Arial";
+        ctx.textAlign = "left";
         ctx.fillStyle = "white";
-        ctx.font = "18px Arial";
-        wrapText(ctx, text, 260,60, 25, 330)
         
-        ctx.font = "22px Times New Roman";
-        ctx.fillStyle = "gray";
-        ctx.fillText(philosopher_name, 260, 290)
-
+        ctx.fillText(text, 8,302)
+        
         resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
     })
 

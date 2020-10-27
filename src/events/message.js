@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const utils = require('../utils/utils');
-const Log = require('./../utils/Log');
+const MessageLog = require('./../utils/MessageLog');
 require('dotenv/config');
 
 const talkedRecently = new Set();
@@ -38,13 +38,11 @@ module.exports = {
 			talkedRecently.add(message.author.id);
 			setTimeout(() => {
 				talkedRecently.delete(message.author.id);
-			}, 5000); 
+			}, process.env.MESSAGE_COOLDOWN); 
 			const args = message.content
 			.slice(process.env.COMMAND_PREFIX.length)
 			.trim()
 			.split(/ +/g);
-			
-			
 
 			const command = args.shift().toLowerCase();
 			try {
@@ -52,12 +50,13 @@ module.exports = {
 				const aliase = client.aliases.get(command);
 				if (cmd){
 					const response = await cmd.run(client, message, args);
-					return Log.log(message, response); // ADD MESSAGE TO LOG
+					return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
 				}else if (aliase){
 					const response =  await client.commands.get(aliase).run(client, message, args);
-					return Log.log(message, response); // ADD MESSAGE TO LOG
+					return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
 				}
 			} catch (error) {
+				if(message.channel.typing) message.channel.stopTyping();
 				console.log(error)
 				return utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
 

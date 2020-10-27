@@ -10,6 +10,7 @@ const Utils = require("./../../../utils/utils")
 require('dotenv/config');
 
 const SpotifyWebApi = require('spotify-web-api-node');
+const { resolve } = require('path');
 let spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_SECRET
@@ -59,6 +60,33 @@ module.exports = {
                 reject( err )
             })
 
+        })
+    },
+    getYoutubePlaylistByUrl(url, limit) {
+        return new Promise(async (resolve, reject)=>{
+            var playlist_id = urlQ.parse(url, true).query.list
+            if (!playlist_id) {
+                reject("invalid youtube playlist url")
+            }
+            ytpl(playlist_id, {
+                limit: limit
+            }).then(res => {
+               var playlist = res["items"]
+                .map((element)=>{
+                    if (element["title"] && element["url"] && element["author"]) {
+                        return {
+                            name: element["title"],
+                            url: element["url"],
+                            author: element["author"]["name"],
+                            duration: element["duration"]
+                        }
+                    }
+                })
+                resolve(playlist)
+            })
+            .catch(err => {
+                reject(err)
+            })
         })
     },
 
