@@ -56,7 +56,8 @@ module.exports = {
         return {
             name: 'spotify',
             description: 'Toca uma playlist do Spotify',
-            usage: 'spotify <link da playlist>'
+            usage: 'spotify <link da playlist>',
+            aliases: ["spt"]
         }
     },
 };

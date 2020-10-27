@@ -16,26 +16,22 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		axios
-		.get(`https://unsplash.com/napi/search/photos?query=cat&xp=&per_page=1&page=${Utils.random(0,100)}`)
-		.then((res) => {
-			return message.channel.send(
-				new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle("Vai um gatin? 😻")
-				.setAuthor(client.user.username)
-				.setImage(res.data["results"][0]["urls"]["small"])
-				.setFooter(`Photo by ${res.data["results"][0]["user"]["name"]} on Unsplash`)
-			)
-		})
+		return message.channel.send(
+			new Discord.MessageEmbed()
+			.setColor('#9d65c9')
+			.setTitle("Precisa de ajuda? 🤓")
+			.addField("Lista de comandos", "http://bit.ly/xurumincomandos")
+			.addField("Github do Xurumin", "http://bit.ly/xurumingithub")
+			.addField("Site do Xurumin", "http://bit.ly/xurumin")
+			.setAuthor(client.user.username)
+			.setImage(res.data["results"][0]["urls"]["small"])
+		)
+		
 	},
 
 	get command() {
 		return {
-			name: 'cat',
-			description: '',
-			usage: 'cat',
-			aliases: ["gato"]
+			name: 'help'
 		};
 	},
 };

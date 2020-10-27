@@ -17,25 +17,27 @@ module.exports = {
 	 */
 	run: async (client, message, args) => {
 		axios
-		.get(`https://unsplash.com/napi/search/photos?query=cat&xp=&per_page=1&page=${Utils.random(0,100)}`)
+		.get(`https://xkcd.com/${Utils.random(0,2100)}/info.0.json`)
 		.then((res) => {
 			return message.channel.send(
 				new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("Vai um gatin? 😻")
+				.setTitle(res.data.safe_title)
+				.setDescription(res.data.alt)
 				.setAuthor(client.user.username)
-				.setImage(res.data["results"][0]["urls"]["small"])
-				.setFooter(`Photo by ${res.data["results"][0]["user"]["name"]} on Unsplash`)
+				.setImage(res.data.img)
+				.setFooter(`Photo by XKCD on https://xkcd.com`)
 			)
+		})
+		.catch((err) => {
+			console.log(err)
+			return message.channel.send(Utils.getErrorMessage());
 		})
 	},
 
 	get command() {
 		return {
-			name: 'cat',
-			description: '',
-			usage: 'cat',
-			aliases: ["gato"]
+			name: 'xkcd'
 		};
 	},
 };

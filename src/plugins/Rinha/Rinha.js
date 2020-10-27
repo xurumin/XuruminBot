@@ -8,13 +8,8 @@ module.exports = {
     },
 
 	get commands() {
-		return [
-			require("./commands/aceitarrinha"),
-            require("./commands/rinha"),
-			require("./commands/boprarinha"),
-			require("./commands/galosts"),
-			require("./commands/galocreate"),
-			
-        ];
+		return {
+			path: "commands"
+		}
 	},
 };

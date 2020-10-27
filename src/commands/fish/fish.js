@@ -36,9 +36,10 @@ module.exports = {
 
 	get command() {
 		return {
-			name: 'peixe',
+			name: 'fish',
 			description: '',
-			usage: 'peixe',
+			usage: 'fish',
+			aliases: ["peixe"]
 		};
 	},
 };

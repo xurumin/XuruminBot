@@ -2,21 +2,20 @@
 const cache = require('memory-cache');
 require('dotenv/config');
 const fs = require('fs-extra');
-//const Enmap = require('enmap');
 
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
 
-//client.commands = new Enmap();
 client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
 client.playlist = new Discord.Collection();
 client.players = new Discord.Collection();
 const init = async () => {
 
 	/** 
-	 * READING COMMANDS
+	 * IMPORTING COMMANDS
 	 */
 
 	const cmdFiles = await fs.readdir('src/commands/')
@@ -28,10 +27,15 @@ const init = async () => {
 
 	cmdFiles.forEach(async (cmdFolder) => {
 		try {
-			const props = require(`./commands/${cmdFolder}/${cmdFolder}.js`);
+			const command = require(`./commands/${cmdFolder}/${cmdFolder}.js`);
 
-			client.commands.set(props.command.name, props);
-			console.log(`	> Command ${props.command.name} loaded.`)
+			client.commands.set(command.command.name, command);
+			if(command.command.aliases && command.command.aliases != []){
+				command.command.aliases.forEach(aliase => {
+					client.aliases.set(aliase, command.command.name);
+				});
+			}
+			console.log(`	> Command ${command.command.name} loaded.`)
 		} catch (error) {
 			console.log(`[#ERROR] Could not load command ${cmdFolder}:`);
 			console.error(error)
@@ -39,7 +43,7 @@ const init = async () => {
 	})
 
 	/** 
-	 * READING EVENTS
+	 * IMPORTING EVENTS
 	 */
 	const evntFiles = await fs.readdir('src/events/')
 
@@ -62,7 +66,7 @@ const init = async () => {
 	})
 
 	/** 
-	 * READING PLUGINS
+	 * IMPORTING PLUGINS
 	 */
 	const controllersFiles = await fs.readdir('src/plugins/')
 
@@ -73,11 +77,18 @@ const init = async () => {
 
 	controllersFiles.forEach(async (controllerName) => {
 		try {
-			const props = require(`./plugins/${controllerName}/${controllerName}.js`);
+			const main = require(`./plugins/${controllerName}/${controllerName}.js`);
 			console.log(`[plugin-loader] loading ${controllerName} commands...`)
-			props.commands.forEach(element => {
-				client.commands.set(element.command.name, element);
-				console.log(`	> Command ${element.command.name} loaded.`)
+			const commandList = await fs.readdir(`${__dirname}/plugins/${controllerName}/${main.commands.path}/`)
+			commandList.forEach(element => {
+				const command = require(`${__dirname}/plugins/${controllerName}/${main.commands.path}/${element}`);
+				client.commands.set(command.command.name, command);
+				if(command.command.aliases && command.command.aliases != []){
+					command.command.aliases.forEach(aliase => {
+						client.aliases.set(aliase, command.command.name);
+					});
+				}
+				console.log(`	> Command ${command.command.name} loaded.`)
 			});
 			console.log(`[plugin-loader] ${controllerName} loaded.`)
 
@@ -111,10 +122,3 @@ const init = async () => {
 		})
 }
 init();
-
-
-
-
-client.on('message', async (msg) => {
-
-})

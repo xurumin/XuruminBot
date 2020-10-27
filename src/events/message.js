@@ -42,14 +42,18 @@ module.exports = {
 				.trim()
 				.split(/ +/g);
 			const command = args.shift().toLowerCase();
-
-			const cmd = client.commands.get(command);
-			if (!cmd) return;
-			await cmd.run(client, message, args);
 			try {
-				//await cmd.run(client, message, args);
+				const cmd = client.commands.get(command);
+				const aliase = client.aliases.get(command);
+				if (cmd){
+					return await cmd.run(client, message, args);
+				}else if (aliase){
+					return await client.commands.get(aliase).run(client, message, args);
+				}
 			} catch (error) {
-				//message.channel.send("Alguma coisa deu errado... 😔")
+				console.log(error)
+				return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
+
 			}
 			
 		}

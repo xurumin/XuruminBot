@@ -10,14 +10,8 @@ module.exports = {
     },
 
 	get commands() {
-		return [
-			require("./commands/play"),
-			require("./commands/queue"),
-			require("./commands/skip"),
-			require("./commands/spotify"),
-			require("./commands/shuffle"),
-			require("./commands/leave")
-		]
-		
+		return {
+			path: "commands"
+		}
 	},
 };
