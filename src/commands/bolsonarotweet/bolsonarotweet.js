@@ -40,8 +40,8 @@ module.exports = {
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("O que o Monark tweetou?")
-				.setAuthor("Monark")
+				.setTitle("O que o presidente tweetou?")
+				.setAuthor("Bolaro")
 				.setDescription(`Mensagem de: ${message.author.username}\n\n*Esta imagem não é verdadeira.*`)
 				.attachFiles(image)
 				.setImage("attachment://image.png")
@@ -57,11 +57,10 @@ module.exports = {
 
 	get command() {
 		return {
-			name: 'monarktweet',
+			name: 'bolsonarotweet',
 			aliases: [
-				"monarktw",
-				"monarktwt",
-				"mktwt"
+				"bolsonarotwt",
+				"bolsotwt"
 			]
 		};
 	},

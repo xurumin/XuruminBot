@@ -19,7 +19,7 @@ module.exports = {
 	 */
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
-			let text = args.join(" ").slice(0,218)
+			let text = args.join(" ").slice(0,220)
 			text = text.replace(/\n/gi, ' ')
 			if(args.length <= 0 ){
 				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
@@ -27,22 +27,23 @@ module.exports = {
 	
 			if(text == ""){
 				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}monarktweet <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}monarktweet** que eu pego a ultima mensagem mandada! 🤗`, client.user.username, client.user.avatarURL())
+					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}filosofo <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}filosofo** que eu pego a ultima mensagem mandada! 🤗`, client.user.username, client.user.avatarURL())
 				);
 			}
 	
 			message.channel.startTyping()
-			var img_code = 3;
-			if(text.length <= 74) img_code=1;
-			if(text.length > 74 && text.length <= 151) img_code=2;
+
+
 	
-			ImageProcessor(text, img_code)
+			ImageProcessor(message.author.username, message.author.avatarURL({
+				format: "png"
+			}), text)
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("O que o Monark tweetou?")
-				.setAuthor("Monark")
-				.setDescription(`Mensagem de: ${message.author.username}\n\n*Esta imagem não é verdadeira.*`)
+				.setTitle("O que o filósofo disse?")
+				.setAuthor(message.author.username)
+				.setDescription(`Mensagem de: ${message.author.username}`)
 				.attachFiles(image)
 				.setImage("attachment://image.png")
 				message.channel.stopTyping()
@@ -51,17 +52,16 @@ module.exports = {
 			.catch((err)=>{
 				message.channel.stopTyping()
 				reject(err)
+				//return message.channel.send(Utils.getErrorMessage())
 			})
 		})
 	},
 
 	get command() {
 		return {
-			name: 'monarktweet',
+			name: 'eufilosofo',
 			aliases: [
-				"monarktw",
-				"monarktwt",
-				"mktwt"
+				"eufilo"
 			]
 		};
 	},
