@@ -103,20 +103,6 @@ const init = async () => {
 	setInterval(()=>{
 		Music.authorizeSpotify()
 	}, 2500 * 1000 )
-	/** 
-	 * Login to Discord
-	 */
-	// client.login(process.env.DISCORD_API)
-	// .then(() => {
-	// 	console.log("im on babe")
-	// 	/**
-	// 	 * RUNNER - PLS ADD TO ANOTHER FILE
-	// 	 */
-	// 	// const runner_meme = require("./runner/runner_meme")
-	// 	// runner_meme.init(client)
-	// 	// runner_meme.run()
-	// })
-	
 
 	client.login(process.env.DISCORD_API)
 	client.on("ready", () => {
