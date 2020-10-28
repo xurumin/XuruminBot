@@ -20,9 +20,9 @@ module.exports = {
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
 			.setTitle("Precisa de ajuda? 🤓")
-			.addField("Lista de comandos", "http://bit.ly/xurumincomandos")
-			.addField("Github do Xurumin", "http://bit.ly/xurumingithub")
-			.addField("Site do Xurumin", "http://bit.ly/xurumin")
+			.addField("Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md")
+			.addField("Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/")
+			.addField("Site do Xurumin", "https://xurumin.github.io/")
 			.setAuthor(client.user.username)
 		)
 		
