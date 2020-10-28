@@ -106,6 +106,9 @@ const init = async () => {
 
 	client.login(process.env.DISCORD_API)
 	client.on("ready", () => {
+		client.user.setActivity({
+			name: `Precisa de ajuda? ${process.env.COMMAND_PREFIX}help`
+		})
 		process.env.SHARD_ID = client.shard.ids[0]
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 	});
