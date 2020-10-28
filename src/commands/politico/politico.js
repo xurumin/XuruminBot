@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const database = require("./../../utils/database")
-const Utils = require("./../../utils/Utils")
+const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
 const {

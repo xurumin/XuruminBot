@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor")
+const ImageProcessor = require("./imageProcessor")
 
 
 
