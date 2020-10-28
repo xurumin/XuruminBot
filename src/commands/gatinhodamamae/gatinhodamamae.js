@@ -31,7 +31,7 @@ function makecatimage(profile_pic) {
 
 
 		ctx.fillStyle = '#F5DD47';
-		ctx.font = 'bold 25px Arial'
+		ctx.font = 'bold 23px Arial'
 
 		ctx.shadowColor = "black";
 		ctx.shadowBlur = 4;

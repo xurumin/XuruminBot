@@ -59,7 +59,7 @@ module.exports = function process(text, whathedodoes) {
         ctx.fillRect(0,370,400, 80)
 
         ctx.fillStyle = "white";
-        ctx.font = "36px Arial";
+        ctx.font = "32px Arial";
         ctx.textAlign = "center"
         ctx.fillText("indo atrás desse tal de", 200, 40)
 
