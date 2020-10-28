@@ -4,7 +4,7 @@ const {
     registerFont
 } = require('canvas')
 
-registerFont("/Arial.ttf", {family: "arialfont"})
+registerFont(__dirname+"/Arial.ttf", {family: "arialfont"})
 const fs = require("fs-extra")
 const Discord = require('discord.js');
 
