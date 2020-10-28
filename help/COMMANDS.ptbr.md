@@ -25,9 +25,9 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |eufilosofo ou eufilosofo \<texto a ser dito>| Seja um filósofo e diga sua sabedoria por aí | eufilo |
 |politico ou politico @usuario| Mostre a todo servidor sua campanha política ||
 |gatinhodamamae @usuario| Mostre para todo mundo quem é o gatinho da mamae ||
-|monarktweet| O que o Monark tweetou dessa vez? | monarktw, mktwt, monarktwt |
-|felipenetotweet| VO que o Felipe Neto tweetou dessa vez? | felipeneto, felipinho, felipenetotwt, felipetwt |
-|bolsonarotweet| VO que o Bolsonaro tweetou dessa vez? | bolsonarotwt, bolsotwt |
+|monarktweet| Viu o Monark tweetou dessa vez? | monarktw, mktwt, monarktwt |
+|felipenetotweet| Viu que o Felipe Neto tweetou dessa vez? | felipeneto, felipinho, felipenetotwt, felipetwt |
+|bolsonarotweet| Viu que o Bolsonaro tweetou dessa vez? | bolsonarotwt, bolsotwt |
 |indoatras| Vá atrás desse tal por que ele fez aquilo | indoatrasdessetalde, indoatrasdesse, iadtd |
 |manualdomundo| Você viu esse vídeo do Manual do mundo? | mdm |
 |marcarbriga| Chame aquele besta pra uma briga justa ||
