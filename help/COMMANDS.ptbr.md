@@ -41,6 +41,7 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |manualdomundo| Você viu esse vídeo do Manual do mundo? | mdm |
 |marcarbriga| Chame aquele besta pra uma briga justa ||
 |marcarbeijo| Porque não chamar teu crush pra beijar? Não custa nada. né... ||
+|crush @usuario| Mostro pro seu crush que você ama ele(a) ||
 
 ## Gerais
 | Comando | Descrição  | Aliases |

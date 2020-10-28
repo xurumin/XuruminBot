@@ -50,7 +50,7 @@ module.exports = {
 			})
 			.catch((err)=>{
 				message.channel.stopTyping()
-				reject(err)
+				return reject(err)
 			})
 		})
 	},
