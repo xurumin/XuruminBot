@@ -12,7 +12,7 @@ var whathedoeslist = [
 	"que vive matando ela no among",
 	"que vive robando os itens dela no minecraft",
 	"que vive fazendo ela chorar",
-	"que vive chatendo ela",
+	"que vive chateando ela",
 	"que vive tirando a bateria do iphone dela",
 	"que vive ligando pra ela",
 	"que vive indo matar o rato na casa dela",

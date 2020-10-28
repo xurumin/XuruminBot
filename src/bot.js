@@ -116,6 +116,8 @@ const init = async () => {
 	// 	// runner_meme.init(client)
 	// 	// runner_meme.run()
 	// })
+	
+
 	client.login(process.env.DISCORD_API)
 	client.on("ready", () => {
 		process.env.SHARD_ID = client.shard.ids[0]

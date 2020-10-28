@@ -30,8 +30,7 @@ module.exports = {
     get command() {
         return {
             name: 'skip',
-            description: '',
-            usage: ''
+            aliases: ["skp"]
         }
     },
 };

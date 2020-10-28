@@ -4,6 +4,8 @@ const ytsr = require('ytsr');
 const ytpl = require('ytpl');
 const ytdl = require("ytdl-core")
 
+const solenolyrics = require("solenolyrics")
+
 const temoytsearch = require('./../utils/YoutubeSearchTemp');
 
 const Utils = require("./../../../utils/utils")
@@ -15,7 +17,6 @@ let spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_SECRET
 });
-
 
 module.exports = {
     
@@ -141,6 +142,23 @@ module.exports = {
             } catch (error) {
                 reject(error)
             }
+        })
+    },
+    getLyricByMusicName(music_name){
+        return new Promise(async (resolve, reject)=>{
+            let search_term = String(music_name)
+            .toLocaleLowerCase()
+            .replace(/[\W_]+/g," ")
+            .replace(/video/g, "")
+            .replace(/official/g, "")
+            let lyric = await solenolyrics.requestLyricsFor(search_term)
+            if(!lyric){
+                reject("music not found")
+            }
+            if(lyric.length > 3000){
+                reject("music not found")
+            }
+            resolve(lyric)
         })
     }
 }

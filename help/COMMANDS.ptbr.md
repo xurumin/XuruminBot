@@ -2,6 +2,8 @@
 
 Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesite em chamar!
 
+> **Atencão:** Por padrão, o prefixo dos comandos é **>**
+
 ## Musica
 | Comando | Descrição  | Aliases |
 |--|--|--|
@@ -10,10 +12,11 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |youtube \<link para a playlist> | Toca a playlist do Youtube| yt |
 |pause| Da uma parada no que estiver tocando | |
 |resume| Volta a tocar o que tinha sido parado | |
-|skip| Música chata tocando? Pule ela! | |
+|skip| Música chata tocando? Pule ela! | skp |
 |leave| Cansou de música? Tudo bem! Eu volto depois :) | |
 |shuffle| Mude a ordem da playlist | |
 |queue| Veja sua lista de músicas | |
+|lyrics| Veja a letra da música que está tocando e cante junto | letras |
 
 ## Memes
 | Comando | Descrição  | Aliases |
