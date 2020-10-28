@@ -153,12 +153,12 @@ module.exports = {
             .replace(/official/g, "")
             let lyric = await solenolyrics.requestLyricsFor(search_term)
             if(!lyric){
-                reject("music not found")
+                return reject("music not found")
             }
             if(lyric.length > 3000){
-                reject("music not found")
+                return reject("music not found")
             }
-            resolve(lyric)
+            return resolve(lyric)
         })
     }
 }
