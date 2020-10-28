@@ -1,6 +1,5 @@
 var Twitter = require('twitter');
 var utils = require("./../../utils/utils")
-
  
 var client = new Twitter({
   consumer_key: process.env.CONSUMER_KEY,
@@ -61,19 +60,16 @@ function getTwitterRandomMeme(){
     })
 }
 
-
-function getRandomMeme(){
-    return new Promise(async (resolve, reject)=>{
-        try {
-            var meme = await getTwitterRandomMeme()
-            resolve(meme)
-        } catch (error) {
-            reject(error)
-        }
-        
-    })
-}
-
 module.exports = {
-    getRandomMeme: getRandomMeme
+    getRandomMeme: ()=>{
+        return new Promise(async (resolve, reject)=>{
+            try {
+                var meme = await getTwitterRandomMeme()
+                resolve(meme)
+            } catch (error) {
+                reject(error)
+            }
+            
+        })
+    }
 }

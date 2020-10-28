@@ -60,7 +60,7 @@ module.exports = {
 			} catch (error) {
 				if(message.channel.typing) message.channel.stopTyping();
 				console.log("[MESSAGE_EVENT]",error)
-				return utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
+				return message.channel.send(utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
 
 			}
 			

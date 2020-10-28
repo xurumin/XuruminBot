@@ -1,6 +1,6 @@
 const {
 	createCanvas,
-	loadImage
+    loadImage
 } = require('canvas')
 const Discord = require('discord.js');
 

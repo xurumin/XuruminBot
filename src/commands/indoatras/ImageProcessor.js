@@ -1,6 +1,6 @@
 const {
 	createCanvas,
-	loadImage
+    loadImage
 } = require('canvas')
 const fs = require("fs-extra")
 const Discord = require('discord.js');
