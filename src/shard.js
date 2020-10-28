@@ -7,4 +7,4 @@ const shard = new ShardingManager('./src/bot.js', {
 });
 console.log(`RUNING ${process.env.SHARDS} SHARDS`)
 shard.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
-shard.spawn(process.env.SHARDS);
+shard.spawn(Number(process.env.SHARDS));
