@@ -17,7 +17,7 @@ module.exports = {
 		if (message.content == `<@!${client.user.id}>`) {
 			const embed = new Discord.MessageEmbed()
 			.setTitle(`Oi! Meu nome é ${client.user.username}! 😁`)
-			.setDescription(`Para me usar, basta utilizar o prefixo **${process.env.COMMAND_PREFIX}** + o comando que você quiser! 🤓\nExperimenta usar **>meme** 🤠`)
+			.setDescription(`Para me usar, basta utilizar o prefixo **${process.env.COMMAND_PREFIX}** + o comando que você quiser! 🤓\nExperimenta usar **${process.env.COMMAND_PREFIX}meme** 🤠`)
 			.addField('Prefixo', process.env.COMMAND_PREFIX)
 			.addField('Ajuda?', `${process.env.COMMAND_PREFIX}help`)
 			.addField("Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md")
