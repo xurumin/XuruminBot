@@ -12,7 +12,7 @@ module.exports = {
 	 */
 	run: async (client, message) => {
 		/**
-		 * Se a mensagem do bot for o @ do bot
+		 * Se o usuário marcar o bot
 		 */
 		if (message.content == `<@!${client.user.id}>`) {
 			const embed = new Discord.MessageEmbed()
@@ -41,6 +41,7 @@ module.exports = {
 			setTimeout(() => {
 				talkedRecently.delete(message.author.id);
 			}, process.env.MESSAGE_COOLDOWN); 
+
 			const args = message.content
 			.slice(process.env.COMMAND_PREFIX.length)
 			.trim()
@@ -61,7 +62,6 @@ module.exports = {
 				if(message.channel.typing) message.channel.stopTyping();
 				console.log("[MESSAGE_EVENT]",error)
 				return message.channel.send(utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
-
 			}
 			
 		}
