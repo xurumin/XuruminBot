@@ -33,7 +33,7 @@ module.exports = {
 			if (talkedRecently.has(message.author.id)){
 				const embed = new Discord.MessageEmbed()
 					.setTitle('Calma lá, amigo! 🖐')
-					.setDescription(`Você precisa esperar **5 segundos** antes de mandar outra mensagem! 🤠`)
+					.setDescription(`Você precisa esperar **${process.env.MESSAGE_COOLDOWN/1000} segundos** antes de mandar outra mensagem! 🤠`)
 					.setColor('#8146DC')
 				return message.channel.send(embed);
 			}
