@@ -47,9 +47,11 @@ module.exports = {
 			.trim()
 			.split(/ +/g);
 
+			console.log("nm")
 			const command = args.shift().toLowerCase();
 			try {
 				const cmd = client.commands.get(command);
+				console.log(cmd.validate(client, message))
 				const aliase = client.aliases.get(command);
 				if (cmd){
 					const response = await cmd.run(client, message, args);
@@ -63,6 +65,18 @@ module.exports = {
 				console.log("[MESSAGE_EVENT]",error)
 				return message.channel.send(utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
 			}
+
+			return message.channel.send(
+				new Discord.MessageEmbed()
+				.setColor('#9d65c9')
+				.setTitle("Não achei esse comando 😞")
+				.setTitle("Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗")
+				.addField("Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md")
+				.addField("Site do Xurumin", "https://xurumin.github.io/")
+				.addField("Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/")
+				.setAuthor(client.user.username)
+			)
+
 			
 		}
 	},

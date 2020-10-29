@@ -15,8 +15,9 @@ module.exports = function process(userimagelink, message) {
     return new Promise(async (resolve, reject) => {
 
         let encoder = new GIFEncoder(500, 500);
+
         encoder.setQuality(100)
-        encoder.setDelay(80)
+        encoder.setDelay(150)
         encoder.start()
         const canvas = createCanvas(500, 500)
         const ctx = canvas.getContext('2d')

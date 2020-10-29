@@ -5,9 +5,7 @@ const fs = require("fs")
 
 module.exports = {
 	validate(client, message) {
-		if (!message.member.hasPermission('MANAGE_GUILD')) {
-			throw new Error('no_permission');
-		}
+		return true;
 	},
 	/**
 	 * @param  {Discord.Client} client

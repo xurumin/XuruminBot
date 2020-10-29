@@ -5,10 +5,12 @@ const Utils = require("./../../utils/utils");
 const axios = require("axios").default;
 
 module.exports = {
+	/**
+	 * @param  {Discord.Client} client
+	 * @param  {Discord.Message} message
+	 */
 	validate(client, message) {
-		if (!message.member.hasPermission('MANAGE_GUILD')) {
-			throw new Error('no_permission');
-		}
+		return true;
 	},
 	/**
 	 * @param  {Discord.Client} client

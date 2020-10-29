@@ -6,9 +6,7 @@ const axios = require("axios").default;
 
 module.exports = {
 	validate(client, message) {
-		if (!message.member.hasPermission('MANAGE_GUILD')) {
-			throw new Error('no_permission');
-		}
+		return true;
 	},
 	/**
 	 * @param  {Discord.Client} client
@@ -21,8 +19,8 @@ module.exports = {
 			.setColor('#9d65c9')
 			.setTitle("Precisa de ajuda? 🤓")
 			.addField("Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md")
-			.addField("Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/")
 			.addField("Site do Xurumin", "https://xurumin.github.io/")
+			.addField("Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/")
 			.setAuthor(client.user.username)
 		)
 		
