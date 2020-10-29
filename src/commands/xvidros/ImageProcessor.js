@@ -45,48 +45,49 @@ function wrapText (context, text, x, y, lineHeight, maxWidth) {
 }
 
 function generatePhrase(username){
-    //text lenght: 8 1chars
+    //text lenght: 81 chars
     const sent_1 = [
         "jovem",
         username,
         "estranho",
         "milf",
         "coroa",
-        "jogador de fogarel gratuito",
+        "jogador de fogaréu gratuito",
         "kpoper",
         "velho de 69 anos",
         "pedro",
         "professor de educação fisica",
         "cantor de sertenejo",
         "estudante",
-        "medico kkkk",
+        "medico",
         "doido da esquina",
-        "nicolau do dominó",
-        "cleiton barbeiro",
-        "fã do felipe neto"
+        "fã do felipe neto",
+        "streamer",
+        "streamer de lol",
+        "youtuber",
+        "youtuber de minecraft"
     ]
     const sent_2 = [
-        "estava parado",
-        "ficou louco",
+        "estava jogando lol",
+        "sentou na vassoura",
         "estava ouvindo sertanejo",
-        "estava lambendo a escada",
+        "estava lambendo um cachorro",
         "estava travando zap da moça",
+        "estava travando zap",
         "tomou a azulzinha",
         "tomou 37 azulzinhas",
         "fumou umas",
         "tomou umas",
-        "estava assistindo o felipe neto",
-        "tava na ead"
+        "estava assistindo o felipe neto"
     ]
     const sent_3 = [
-        "quando chegou Toinhão",
         "quando chegou o corno",
-        "quando caiu da escada",
         "quando quebrou a cara",
         "quando foi preso",
+        "quando morreu de overdose",
         "e morreu de amor",
         "e enfartou",
-        "e enfartou no hotel",
+        "e enfartou no motel",
         "e morreu",
         "e pediu o estorno da dama",
         "enquanto a mulher tava em casa",
@@ -96,7 +97,7 @@ function generatePhrase(username){
         "enquanto o corno militava no twitter",
         "enquanto o corno assistia viniccius 13",
         "enquanto curtia a dedada",
-        "enquanto curtia a o chifre",
+        "enquanto curtia o chifre",
         "enquanto curtia a p*taria",
         
     ]

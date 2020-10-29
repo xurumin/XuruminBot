@@ -34,7 +34,9 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |marcarbeijo| Porque não chamar teu crush pra beijar? Não custa nada. né... ||
 |crush @usuario| Mostre pro seu crush que você ama ele(a) ||
 |carteirinha| Mostra para todos que você tem uma carteirinha |carteira|
+|xvidros| Qual será o vídeo do Xvidros dessa vez? |xvd, xv|
 |xkcd| Receba um meme do XKCD ||
+|catbobbing| O gif do gatinho mexendo a cabeça |gatodancando, gatinhodancando, gatobalancando, catbobbinghead|
 |cat| Receba a imagem de um gatinho fofinho :3 | gato |
 |fish| Que tal um peixin? | peixe |
 |fusca| Receba a imagem de um fusca | beetle |
