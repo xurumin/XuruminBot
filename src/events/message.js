@@ -47,11 +47,9 @@ module.exports = {
 			.trim()
 			.split(/ +/g);
 
-			console.log("nm")
 			const command = args.shift().toLowerCase();
 			try {
 				const cmd = client.commands.get(command);
-				console.log(cmd.validate(client, message))
 				const aliase = client.aliases.get(command);
 				if (cmd){
 					const response = await cmd.run(client, message, args);
@@ -70,7 +68,7 @@ module.exports = {
 				new Discord.MessageEmbed()
 				.setColor('#9d65c9')
 				.setTitle("Não achei esse comando 😞")
-				.setTitle("Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗")
+				.setDescription("Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗")
 				.addField("Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md")
 				.addField("Site do Xurumin", "https://xurumin.github.io/")
 				.addField("Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/")
