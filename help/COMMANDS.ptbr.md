@@ -36,6 +36,7 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |carteirinha| Mostra para todos que você tem uma carteirinha |carteira|
 |xvidros| Qual será o vídeo do Xvidros dessa vez? |xvd, xv|
 |espelhoespelhomeu| Veja o que o espelho tem a dizer sobre você |espelho, espelhomeu|
+|soolhe|  ||
 |xkcd| Receba um meme do XKCD ||
 |catbobbing| O gif do gatinho mexendo a cabeça |gatodancando, gatinhodancando, gatobalancando, catbobbinghead|
 |cat| Receba a imagem de um gatinho fofinho :3 | gato |
