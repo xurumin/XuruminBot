@@ -29,7 +29,10 @@ module.exports = {
         try {
             youtube_playlist = await Music.getYoutubePlaylistByUrl(playlist_url, 50)
         } catch (error) {
-            console.log(error)
+            console.log({
+                type: "Erro ao carregar a playlist",
+                info: error
+            })
             return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
         }
         var player = client.players.get(message.guild.id)

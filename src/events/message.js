@@ -38,7 +38,7 @@ module.exports = {
 					.setColor('#8146DC')
 				return message.channel.send(embed);
 			}
-
+			
 			if(!config.specialusers.includes(message.author.id)) talkedRecently.add(message.author.id);
 
 			setTimeout(() => {
@@ -54,6 +54,7 @@ module.exports = {
 			try {
 				const cmd = client.commands.get(command);
 				const aliase = client.aliases.get(command);
+				if( (cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send("Este comando está temporariamente bloqueado.")
 				if (cmd){
 					const response = await cmd.run(client, message, args);
 					return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
