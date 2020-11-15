@@ -86,8 +86,8 @@ class MusicPlayer {
         })
         this.connection.on("error", (err) => {
             console.log(err)
-            //this.deletePlayer();
-            //this.deletePlaylist();
+            this.deletePlayer();
+            this.deletePlaylist();
             return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
         })
 
@@ -105,11 +105,20 @@ class MusicPlayer {
                 music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
             }
 
-            const stream = ytdl(music_url, {
-                filter: 'audioonly'
-            });
-            this.dispatcher = this.connection.play(stream)
-            this.onEventDispatcher()
+            try {
+                const stream = ytdl(music_url, {
+                    filter: 'audioonly',
+                    quality: 'lowestaudio'
+                });
+                this.dispatcher = await this.connection.play(stream)
+                this.onEventDispatcher()
+            } catch (error) {
+                console.log({
+                    type: "Erro ao tocar a música",
+                    info: error
+                })
+            }
+            
         });
         this.connection.on('shuffle', async () => {
             this.shufflePlaylist()
@@ -126,21 +135,14 @@ class MusicPlayer {
                 current_playlist.splice(0, 1)
                 this.setPlaylist(current_playlist)
                 this.connection.emit("play")
-
-                // const stream = ytdl(this.getPlaylist()[0]["url"], {
-                //     filter: 'audioonly'
-                // });
-                // this.dispatcher = this.connection.play(stream)
             }
 
         });
         this.connection.on('pause', () => {
             if (this.dispatcher) dispatcher.pause();
-            //return this.message.channel.send(Utils.createSimpleEmbed("Estátua! Música pausada! 😊"));
         });
         this.connection.on('resume', () => {
             if (this.dispatcher) this.dispatcher.resume();
-            //return this.message.channel.send(Utils.createSimpleEmbed("Ufa! Voltei! 😊"));
         });
 
     }
@@ -148,24 +150,28 @@ class MusicPlayer {
         this.dispatcher.on('finish', (msg) => {
             if (this.dispatcher) this.dispatcher.destroy()
             var playlist = this.getPlaylist()
-            if (!playlist) {
-                //return this.message.channel.send(Utils.createSimpleEmbed("Sem playlist tocando no momento 😔"));
-            }
             if (this.connection.channel.members.size <= 1) {
                 this.connection.disconnect()
                 this.deletePlayer();
                 this.deletePlaylist();
+                return;
             }
             if (playlist.length <= 1) {
                 this.connection.disconnect()
                 this.deletePlayer();
                 this.deletePlaylist();
+                return;
             } else {
                 var x = playlist
                 x.splice(0, 1)
                 this.setPlaylist(x)
                 this.play()
+                return;
             }
+        });
+        this.dispatcher.on('error', (err) => {
+            return this.connection.emit("skip")
+            console.log("MusicPlayer", err)
         });
     }
 

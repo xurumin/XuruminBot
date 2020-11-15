@@ -72,6 +72,7 @@ module.exports = {
             ytpl(playlist_id, {
                 limit: limit
             }).then(res => {
+                console.log(res["items"])
                var playlist = res["items"]
                 .map((element)=>{
                     if (element["title"] && element["url"] && element["author"]) {
@@ -86,6 +87,7 @@ module.exports = {
                 resolve(playlist)
             })
             .catch(err => {
+                console.log(err)
                 reject(err)
             })
         })

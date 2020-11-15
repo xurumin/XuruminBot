@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const utils = require('../utils/utils');
 const MessageLog = require('./../utils/MessageLog');
+const config = require("./../config")
 require('dotenv/config');
 
 const talkedRecently = new Set();
@@ -37,7 +38,9 @@ module.exports = {
 					.setColor('#8146DC')
 				return message.channel.send(embed);
 			}
-			talkedRecently.add(message.author.id);
+			
+			if(!config.specialusers.includes(message.author.id)) talkedRecently.add(message.author.id);
+
 			setTimeout(() => {
 				talkedRecently.delete(message.author.id);
 			}, process.env.MESSAGE_COOLDOWN); 
@@ -51,6 +54,7 @@ module.exports = {
 			try {
 				const cmd = client.commands.get(command);
 				const aliase = client.aliases.get(command);
+				if( (cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send("Este comando está temporariamente bloqueado.")
 				if (cmd){
 					const response = await cmd.run(client, message, args);
 					return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
@@ -74,7 +78,6 @@ module.exports = {
 				console.log("[MESSAGE_EVENT]",error)
 				return message.channel.send(utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
 			}
-			
 		}
 	},
 
