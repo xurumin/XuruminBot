@@ -18,6 +18,11 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 |queue| Veja sua lista de músicas | |
 |lyrics| Veja a letra da música que está tocando e cante junto | letras |
 
+## Podcast
+| Comando | Descrição  | Aliases |
+|--|--|--|
+|podcast \<nome do podcast>| Procura e toca um podcast | pdc |
+
 ## Memes
 | Comando | Descrição  | Aliases |
 |--|--|--|
