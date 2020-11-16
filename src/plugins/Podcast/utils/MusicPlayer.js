@@ -54,9 +54,6 @@ class MusicPlayer {
     play() {
         return this.connection.emit("play")
     }
-    playMp3() {
-        return this.connection.emit("playMp3")
-    }
     skip() {
         return this.connection.emit("skip")
     }
@@ -72,32 +69,12 @@ class MusicPlayer {
         this.deletePlaylist();
     }
 
-    aliveConCooldown(){
-        var intv = setInterval(() => {
-            if(!this.connection){
-                return clearInterval(intv);
-            }
-            if(this.connection.channel.members.size <= 1){
-                this.connection.disconnect()
-                this.deletePlayer();
-                this.deletePlaylist();
-                return clearInterval(intv);
-            }
-        }, 10000); 
-    }
-
 
     async __connectVoice() {
         return new Promise(async (resolve, reject) => {
-            try {
-                this.connection = await this.message.member.voice.channel.join();
-                this.onEventConnections()
-                resolve()
-            } catch (error) {
-                this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
-                reject(error)
-            }
-            
+            this.connection = await this.message.member.voice.channel.join();
+            this.onEventConnections()
+            resolve()
         })
     }
 
@@ -118,8 +95,7 @@ class MusicPlayer {
         this.connection.on('play', async () => {
             if (this.dispatcher) this.dispatcher.destroy();
             var current_playlist = this.getPlaylist()
-            if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
-
+            if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, client.user.username, client.user.avatarURL()));
 
             let music_url;
             
@@ -135,32 +111,6 @@ class MusicPlayer {
                     quality: 'lowestaudio'
                 });
                 this.dispatcher = await this.connection.play(stream)
-                this.aliveConCooldown()
-                this.onEventDispatcher()
-            } catch (error) {
-                console.log({
-                    type: "Erro ao tocar a música",
-                    info: error
-                })
-            }
-            
-        });
-        this.connection.on('playMp3', async () => {
-            if (this.dispatcher) this.dispatcher.destroy();
-            var current_playlist = this.getPlaylist()
-            if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
-
-            let music_url;
-            
-            if(current_playlist[0]["url"]){
-                music_url = current_playlist[0]["url"]
-            }else{
-                music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
-            }
-
-            try {
-                this.dispatcher = await this.connection.play(music_url)
-                this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
                 console.log({
@@ -220,7 +170,6 @@ class MusicPlayer {
             }
         });
         this.dispatcher.on('error', (err) => {
-            //console.log("dasdasd")
             return this.connection.emit("skip")
             console.log("MusicPlayer", err)
         });
