@@ -10,7 +10,7 @@ function segParaHora(time){
 	minutes = minutes < 10 ? '0' + minutes : minutes;      
 	seconds = seconds < 10 ? '0' + seconds : seconds;
 	
-	return `${hours} horas, ${minutes} minutos e ${Math.round(seconds)} segundos`
+	return `${hours} hora(s), ${minutes} minuto(s) e ${Math.round(seconds)} segundo(s)`
   }
 	  
 
