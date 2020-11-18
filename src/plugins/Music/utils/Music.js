@@ -50,6 +50,7 @@ module.exports = {
                     Utils
                     .shuffle(data["body"]["tracks"]["items"])
                     .slice(0, limit).map(element => {
+                        if(!element["track"]) return;
                         return {
                             name: element["track"]["name"],
                             author: element["track"]["album"]["artists"][0]["name"],
@@ -92,19 +93,6 @@ module.exports = {
             })
         })
     },
-
-    // getVideoLinkBySearch(name) {
-    //     return new Promise((resolve, reject)=>{
-    //         ytsr(name, {
-    //             limit: 1
-    //         }).then(data => {
-    //             console.log(data)
-    //             resolve(data["items"][0]["link"])
-    //         }).catch(err => {
-    //             reject(err)
-    //         });
-    //     })
-    // },
     getVideoLinkBySearch(name) {
         return new Promise((resolve, reject)=>{
             temoytsearch(name)
