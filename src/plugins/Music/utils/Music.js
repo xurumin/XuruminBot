@@ -46,17 +46,17 @@ module.exports = {
 
             spotifyApi.getPlaylist(playlist_id)
             .then((data) => {
-                var music_list = []
-                Utils
-                .shuffle(data["body"]["tracks"]["items"])
-                .slice(0, limit).forEach(element => {
-                    music_list.push({
-                        name: element["track"]["name"],
-                        author: element["track"]["album"]["artists"][0]["name"],
-                        duration: Utils.toHHMMSS(element["track"]["duration_ms"] / (1000))
+                resolve(
+                    Utils
+                    .shuffle(data["body"]["tracks"]["items"])
+                    .slice(0, limit).map(element => {
+                        return {
+                            name: element["track"]["name"],
+                            author: element["track"]["album"]["artists"][0]["name"],
+                            duration: Utils.toHHMMSS(element["track"]["duration_ms"] / (1000))
+                        }
                     })
-                })
-                resolve( music_list )
+                    )
             }).catch(function (err) {
                 reject( err )
             })
