@@ -46,31 +46,29 @@ function sendWebhook(info) {
             value: String(info.request.message.date)
         },
         {
-            name: "Responser Name / Id",
+            name: "Responder Name / Id",
             value: `${info.response.author.username} / ${info.response.author.id}`
         },
         {
-            name: "Responser Content",
+            name: "Responder Content",
             value: info.response.message.content
         },
         {
-            name: "Responser Datetime",
+            name: "Responder Datetime",
             value: String(info.response.message.date)
         }
     ]
-    console.log(items)
+    var text = "**New command!**\n"+items.map((elm)=>{
+        return `**${elm.name}**: \` ${elm.value} \``
+    }).join("\n")
+    
     //"description": `Guild Name: ${info.guild.name}\nGuild Id: ${info.guild.id}\nChannel Name: ${info.guild.channel.name}`,
     var options = {
         "headers": {
             "Content-Type": "application/json",
         },
         "payload": JSON.stringify({
-            "content": "‌",
-            "embeds": [{
-                "title": "New command!",
-                "color": 33023,
-                "fields": items
-            }]
+            "content": text
         })
     };
 
