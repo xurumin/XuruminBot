@@ -57,3 +57,4 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 | Comando | Descrição  | Aliases |
 |--|--|--|
 |ping| Verifique o ping do bot | |
+|uptime| Mostra a quanto tempo o bot está online | |

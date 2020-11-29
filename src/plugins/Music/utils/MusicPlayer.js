@@ -18,6 +18,7 @@ class MusicPlayer {
         this.guild_id = guild_id;
         this.client = client;
         this.message = message;
+        this.isPlaying = false;
         this.dispatcher;
     }
     getPlaylist() {
@@ -67,6 +68,7 @@ class MusicPlayer {
         return this.connection.emit("resume")
     }
     leave() {
+        this.isPlaying = false;
         this.connection.disconnect()
         this.deletePlayer();
         this.deletePlaylist();
@@ -105,17 +107,18 @@ class MusicPlayer {
         this.connection.on("disconnect", () => {
             this.deletePlayer();
             this.deletePlaylist();
-            return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            if (this.isPlaying == true) this.isPlaying = false; return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
         })
         this.connection.on("error", (err) => {
             console.log(err)
             this.deletePlayer();
             this.deletePlaylist();
-            return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            if (this.isPlaying == true) this.isPlaying = false; return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
         })
 
 
         this.connection.on('play', async () => {
+            this.isPlaying == true
             if (this.dispatcher) this.dispatcher.destroy();
             var current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));

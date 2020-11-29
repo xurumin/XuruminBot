@@ -1,57 +1,53 @@
-const querystring = require('querystring');
-const fetch = require('node-fetch');
+/* eslint-disable no-prototype-builtins */
+const axios = require('axios').default;
+const scrapper = async params => {
+  const results = [];
+  let data;
 
-
-
-function extractWindowYtInitialData(html) {
-  const json = /window\["ytInitialData"\] = (.*);/gm.exec(html);
-  return json ? json[1] : null;
-}
-
-function extractYtInitialData(html) {
-  const json = /var ytInitialData = (.*);/gm.exec(html);
-  return json ? json[1] : null;
-}
-
-function extractSearchResults(result) {
-  let json = null;
-  if (result.includes('window["ytInitialData"]')) json = extractWindowYtInitialData(result);
-  else if (result.includes('var ytInitialData =')) json = extractYtInitialData(result);
-  else return [];
-
-  if (!json) return [];
-
-  const obj = JSON.parse(json);
-
-  // eslint-disable-next-line max-len
-  const videoInfo = obj.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0]
-    .itemSectionRenderer.contents;
-  const ytVideos = videoInfo
-    .filter((x) => x.videoRenderer)
-    .map(({ videoRenderer }) => ({
-      id: videoRenderer.videoId,
-      title: videoRenderer.title.runs[0].text,
-      author: videoRenderer.ownerText.runs[0].text,
-      authorId: videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId,
-    }));
-
-  return ytVideos;
-}
-
-module.exports = async function search(query) {
-  const res = await fetch(
-    `https://www.youtube.com/results?${querystring.stringify({ search_query: query })}`,
-    {
-      headers: {
-        'user-agent': ' Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
-        accept: 'text/html',
-        'accept-encoding': 'gzip',
-        'accept-language': 'en-US',
-      },
+  const html = (await axios
+  .get("https://www.youtube.com/results",{
+    headers: {
+      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"
     },
-  );
+    params: {
+      q: params, page: 1
+    }
+  })).data
 
-  const text = await res.text();
-
-  return extractSearchResults(text);
-}
+  const parser = data => {
+    return {
+      id: data.videoId,
+      thumbnail:
+        data.thumbnail.thumbnails[data.thumbnail.thumbnails.length - 1].url,
+      title: data.title.runs[0].text,
+      duration: data.lengthText ? data.lengthText.simpleText : 'LIVE',
+      url: `https://youtube.com${data.navigationEndpoint.commandMetadata.webCommandMetadata.url}`,
+    };
+  };
+  try {
+    data = JSON.parse(
+      html
+        .substring(
+          html.indexOf('window["ytInitialData"] = '),
+          html.indexOf('window["ytInitialPlayerResponse"]')
+        )
+        .replace('window["ytInitialData"] = ', '')
+        .replace(';', '')
+    );
+  } catch (e) {
+    data = JSON.parse(
+      html
+        .split('ytInitialData = ')[1]
+        .split('</script>')[0]
+        .replace('// scraper_data_end', '')
+        .replace(';', '')
+    );
+  }
+  data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents
+    .filter(x => x.hasOwnProperty('itemSectionRenderer'))
+    .map(x => x.itemSectionRenderer.contents)[0]
+    .filter(x => x.hasOwnProperty('videoRenderer'))
+    .forEach(x => results.push(parser(x.videoRenderer)));
+  return results;
+};
+module.exports = scrapper;

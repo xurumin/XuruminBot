@@ -46,17 +46,18 @@ module.exports = {
 
             spotifyApi.getPlaylist(playlist_id)
             .then((data) => {
-                var music_list = []
-                Utils
-                .shuffle(data["body"]["tracks"]["items"])
-                .slice(0, limit).forEach(element => {
-                    music_list.push({
-                        name: element["track"]["name"],
-                        author: element["track"]["album"]["artists"][0]["name"],
-                        duration: Utils.toHHMMSS(element["track"]["duration_ms"] / (1000))
+                resolve(
+                    Utils
+                    .shuffle(data["body"]["tracks"]["items"])
+                    .slice(0, limit).map(element => {
+                        if(!element["track"]) return;
+                        return {
+                            name: element["track"]["name"],
+                            author: element["track"]["album"]["artists"][0]["name"],
+                            duration: Utils.toHHMMSS(element["track"]["duration_ms"] / (1000))
+                        }
                     })
-                })
-                resolve( music_list )
+                    )
             }).catch(function (err) {
                 reject( err )
             })
@@ -87,26 +88,21 @@ module.exports = {
                 resolve(playlist)
             })
             .catch(err => {
-                console.log(err)
+                console.log("2131",err)
                 reject(err)
             })
         })
     },
-
-    // getVideoLinkBySearch(name) {
-    //     return new Promise((resolve, reject)=>{
-    //         ytsr(name, {
-    //             limit: 1
-    //         }).then(data => {
-    //             console.log(data)
-    //             resolve(data["items"][0]["link"])
-    //         }).catch(err => {
-    //             reject(err)
-    //         });
-    //     })
-    // },
     getVideoLinkBySearch(name) {
         return new Promise((resolve, reject)=>{
+            // ytsr(name)
+            // .then((data)=>{
+            //     var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
+            //     resolve(url)
+            // })
+            // .catch((err)=>{
+            //     reject(err)
+            // })
             temoytsearch(name)
             .then((data)=>{
                 var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
@@ -133,7 +129,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 var video_dat = await ytdl.getBasicInfo(url)
-                video_dat = video_dat["playerResponse"]["videoDetails"]
+                video_dat = video_dat["videoDetails"]
                 const video_info = {
                     name: video_dat["title"],
                     url: url,
