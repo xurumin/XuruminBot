@@ -107,13 +107,23 @@ class MusicPlayer {
         this.connection.on("disconnect", () => {
             this.deletePlayer();
             this.deletePlaylist();
-            if (this.isPlaying == true) this.isPlaying = false; return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            if (this.isPlaying == true){
+                this.isPlaying = false;
+                return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            }else{
+                return;
+            }
         })
         this.connection.on("error", (err) => {
             console.log(err)
             this.deletePlayer();
             this.deletePlaylist();
-            if (this.isPlaying == true) this.isPlaying = false; return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            if (this.isPlaying == true){
+                this.isPlaying = false;
+                return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            }else{
+                return;
+            }
         })
 
 
