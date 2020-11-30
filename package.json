@@ -27,7 +27,7 @@
     "spotify-web-api-node": "^5.0.0",
     "twitter": "^1.7.1",
     "xml2js": "^0.4.23",
-    "ytdl-core": "^4.1.0",
+    "ytdl-core": "^4.1.1",
     "ytpl": "^1.0.1",
     "ytsr": "^1.0.4"
   }
