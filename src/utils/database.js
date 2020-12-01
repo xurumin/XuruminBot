@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 
 //const db = new Database(__dirname+'/files/guild_info.db', { verbose: console.log });
-const db = new Database(__dirname+'/files/guild_info.db');
+//const db = new Database(__dirname+'/files/guild_info.db');
 module.exports = {
     createDatabase(){
         db.exec("CREATE TABLE IF NOT EXISTS `meme_channel` ( `id` INTEGER PRIMARY KEY, `server_id` TEXT NOT NULL, `channel_id` TEXT NOT NULL, `interval` INTEGER, `initialtime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)")
