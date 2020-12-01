@@ -44,21 +44,21 @@ function sendWebhook(info) {
         {
             name: "Sender Datetime",
             value: String(info.request.message.date)
-        },
-        {
-            name: "Responder Name / Id",
-            value: `${info.response.author.username} / ${info.response.author.id}`
-        },
-        {
-            name: "Responder Content",
-            value: info.response.message.content
-        },
-        {
-            name: "Responder Datetime",
-            value: String(info.response.message.date)
-        }
+        }//,
+        // {
+        //     name: "Responder Name / Id",
+        //     value: `${info.response.author.username} / ${info.response.author.id}`
+        // },
+        // {
+        //     name: "Responder Content",
+        //     value: info.response.message.content
+        // },
+        // {
+        //     name: "Responder Datetime",
+        //     value: String(info.response.message.date)
+        // }
     ]
-    var text = "**New command!**\n"+items.map((elm)=>{
+    var text = `**New command on guild \` ${info.request.guild.name} \`**\n`+items.map((elm)=>{
         return `**${elm.name}**: \` ${elm.value} \``
     }).join("\n")
     
@@ -88,8 +88,8 @@ module.exports = {
             bot: {
                 shard_id: process.env.SHARD_ID
             },
-            request: genLogPattern(request_message),
-            response: genLogPattern(response_message)
+            request: genLogPattern(request_message)
+            //response: genLogPattern(response_message)
         }
         if (WEBHOOK) {
             return await sendWebhook(info)
