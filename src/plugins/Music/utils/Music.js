@@ -95,15 +95,7 @@ module.exports = {
     },
     getVideoLinkBySearch(name) {
         return new Promise((resolve, reject)=>{
-            ytsr(name)
-            .then((data)=>{
-                var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
-                resolve(url)
-            })
-            .catch((err)=>{
-                reject(err)
-            })
-            // temoytsearch(name)
+            // ytsr(name)
             // .then((data)=>{
             //     var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
             //     resolve(url)
@@ -111,6 +103,14 @@ module.exports = {
             // .catch((err)=>{
             //     reject(err)
             // })
+            temoytsearch(name)
+            .then((data)=>{
+                var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
+                resolve(url)
+            })
+            .catch((err)=>{
+                reject(err)
+            })
         })
     },
     
