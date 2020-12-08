@@ -15,6 +15,18 @@ module.exports = {
      */
     run: async (client, message, args) => {
         const video_url = args[0]
+
+        if(video_url.includes("open.spotify.com/playlist/")){
+            return message.channel.send(
+                Utils.createSimpleEmbed("Ops! Comando errado.", `➡️ Use  **${process.env.COMMAND_PREFIX}spotify <link da playlist>** para tocar uma playlist do Spotify! 🤗`, client.user.username, client.user.avatarURL())
+            );
+        }
+        if(video_url.includes("open.spotify.com/track/")){
+            return message.channel.send(
+                Utils.createSimpleEmbed("Ops! Ainda não consigo tocar tracks do Spotify 😞", `➡️ Tenta tocar uma playlist com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** ou tocar um vídeo do Youtube com **${process.env.COMMAND_PREFIX}play <link do youtube>** 🤗`, client.user.username, client.user.avatarURL())
+            );
+        }
+
         if (args.length != 1 || !video_url) {
             return message.channel.send(
                 Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, client.user.username, client.user.avatarURL())
