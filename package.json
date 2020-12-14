@@ -10,7 +10,6 @@
   "author": "jonatas araujo <jonatasaraujofx@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "ini": ">=1.3.6",
     "@discordjs/opus": "^0.3.3",
     "axios": "^0.20.0",
     "better-sqlite3": "^7.1.1",
