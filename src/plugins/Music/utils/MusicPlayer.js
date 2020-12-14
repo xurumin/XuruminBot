@@ -135,14 +135,14 @@ class MusicPlayer {
 
 
             let music_url;
-            
-            if(current_playlist[0]["url"]){
-                music_url = current_playlist[0]["url"]
-            }else{
-                music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
-            }
 
             try {
+                if(current_playlist[0]["url"]){
+                    music_url = current_playlist[0]["url"]
+                }else{
+                    music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
+                }
+
                 const stream = ytdl(music_url, {
                     filter: 'audioonly',
                     quality: 'lowestaudio'
@@ -151,10 +151,7 @@ class MusicPlayer {
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
-                console.log({
-                    type: "Erro ao tocar a música",
-                    info: error
-                })
+                return this.connection.emit("skip")
             }
             
         });
@@ -164,22 +161,19 @@ class MusicPlayer {
             if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
             let music_url;
-            
-            if(current_playlist[0]["url"]){
-                music_url = current_playlist[0]["url"]
-            }else{
-                music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
-            }
 
             try {
+                if(current_playlist[0]["url"]){
+                    music_url = current_playlist[0]["url"]
+                }else{
+                    music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
+                }
+
                 this.dispatcher = await this.connection.play(music_url)
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
-                console.log({
-                    type: "Erro ao tocar a música",
-                    info: error
-                })
+                return this.connection.emit("skip")
             }
             
         });
