@@ -7,7 +7,7 @@ Oi! Está é a lista de comandos do bot Xurumin! Se precisar de ajuda, não hesi
 ## Musica
 | Comando | Descrição  | Aliases |
 |--|--|--|
-|add \<link para o vídeo ou playlist>| Toque playlists do Spotify e do Youtube, links de vídeos etc. | |
+|add \<link para o vídeo ou playlist>| Toque playlists do Spotify e do Youtube, links de vídeos etc | |
 |play \<link para o vídeo>| Toca o link do vídeo | |
 |spotify \<link para a playlist> | Toca a playlist do Spotify | spt |
 |youtube \<link para a playlist> | Toca a playlist do Youtube| yt |
