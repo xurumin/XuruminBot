@@ -158,7 +158,7 @@ module.exports = {
             );
         }
 
-        if (args.length <= 0) {
+        if (args.length <= 0 || !args) {
             return message.channel.send(
                 Utils.createSimpleEmbed("Ops! Você digitou o comendo errado!", `➡️ Tente usar **${process.env.COMMAND_PREFIX}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** 🤗`, client.user.username, client.user.avatarURL())
             );
