@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const utils = require('./../../../utils/utils');
 const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
 const MusicPlayer = require("./../utils/MusicPlayer")
@@ -73,7 +74,7 @@ async function youtubePlaylist(client, message, args) {
         return message.channel.send(Utils.createSimpleEmbed("✅ Suas músicas foram adicionadas à playlist", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
     }
 }
-async function youtubeLink(client, message, args){
+async function youtubeLink(client, message, args) {
     const video_url = args[0]
     try {
         var video_info = await Music.getVideoInfoByUrl(video_url)
@@ -93,6 +94,50 @@ async function youtubeLink(client, message, args){
         player.appendPlaylist([video_info])
         return message.channel.send(Utils.createSimpleEmbed("✅ Sua música foi adicionada à playlist", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
     }
+}
+
+function searchTerm(client, message, args) {
+    let search_term = args.join(" ")
+
+    Music.searchYoutubeVideos(search_term, 5)
+        .then(async (res) => {
+            var searchlist = []
+            var txt = "👨‍💻 Sua pesquisa retornou: \n\n"
+            var searchlist = res.map((element, i) => {
+                var title = element["title"] ? element["title"] : element["title"]
+                var author = element["author"] ? element["author"]["name"] : "null"
+                txt += `➡️${i+1}: **${title}** de **${author}**\n\n`
+                return element
+            })
+            txt += "🔔 Clique no número abaixo para retornar os ultimos epsódios\n\n"
+
+            var msg = await message.channel.send(txt)
+
+            var reactIndex = await Music.getReact(msg)
+
+            const video_info = {
+                name: searchlist[reactIndex]["title"],
+                author: searchlist[reactIndex]["author"],
+                duration: searchlist[reactIndex]["duration"]
+            }
+
+            var player = client.players.get(message.guild.id)
+            if (!player) {
+                player = await new MusicPlayer(message.guild.id, client, message)
+                await player.__connectVoice()
+                client.players.set(message.guild.id, player)
+                player.setPlaylist([video_info])
+                player.play()
+                return message.channel.send(Utils.createSimpleEmbed(`🔊 Tocando ${video_info.name} - ⌛️ ${video_info.duration}`));
+            } else {
+                player.appendPlaylist([video_info])
+                return message.channel.send(Utils.createSimpleEmbed("✅ Sua música foi adicionada à playlist", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
+            }
+
+        })
+        .catch(err => {
+            return err
+        })
 }
 
 module.exports = {
@@ -119,8 +164,8 @@ module.exports = {
         if (userMsg.includes("youtube.com/playlist")) {
             return youtubePlaylist(client, message, args)
         }
-        if (!userMsg.startsWith("https://")) {
-            //TODO: SISTEMA DE PESQUISA
+        if ((!userMsg.startsWith("https://") || !userMsg.startsWith("http://")) && !userMsg.includes(".com")) {
+            return searchTerm(client, message, args)
         }
         if (userMsg.includes("youtube.com/watch")) {
             return youtubeLink(client, message, args)
@@ -134,7 +179,7 @@ module.exports = {
         return message.channel.send(
             Utils.createSimpleEmbed("Ops! Você digitou o comendo errado! (ou eu ainda não implementei o que você busca 😞)", `➡️ Tente usar **${process.env.COMMAND_PREFIX}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** 🤗`, client.user.username, client.user.avatarURL())
         );
-        
+
     },
     get command() {
         return {
