@@ -109,7 +109,7 @@ function searchTerm(client, message, args) {
                 txt += `➡️${i+1}: **${title}** de **${author}**\n\n`
                 return element
             })
-            txt += "🔔 Clique no número abaixo para retornar os ultimos epsódios\n\n"
+            txt += "🔔 Clique no número abaixo para adicionar à playlist\n\n"
 
             var msg = await message.channel.send(txt)
 
