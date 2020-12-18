@@ -190,8 +190,6 @@ module.exports = {
         await message.react("3️⃣")
         await message.react("4️⃣")
         await message.react("5️⃣")
-        await message.react("⏪")
-        await message.react("⏩")
     },
     getReact(message) {
         return new Promise(async (resolve, reject) => {
