@@ -113,6 +113,31 @@ module.exports = {
             })
         })
     },
+    searchYoutubeVideos(term, limit=5) {
+        return new Promise((resolve, reject)=>{
+            // ytsr(term, {
+            //     limit: limit+3
+            // }).then(data => {
+            //     resolve(data["items"].map((element, i, a) => {
+            //         if(element["type"] == "video" && a.length < limit)
+            //             return element
+            //     }))
+            // }).catch(err => {
+            //     reject(err)
+            // });
+            temoytsearch(term, {
+                limit: limit+3
+            }).then(data => {
+                resolve(data.map((element, i, a) => {
+                    if(element["url"]){
+                        return element
+                    }
+                }).slice(0,limit))
+            }).catch(err => {
+                reject(err)
+            });
+        })
+    },
     
     toHHMMSS(secs){
         var sec_num = parseInt(secs, 10)
@@ -157,6 +182,68 @@ module.exports = {
                 return reject("music not found")
             }
             return resolve(lyric)
+        })
+    },
+    async __sendRects(message) {
+        await message.react("1️⃣")
+        await message.react("2️⃣")
+        await message.react("3️⃣")
+        await message.react("4️⃣")
+        await message.react("5️⃣")
+    },
+    getReact(message) {
+        return new Promise(async (resolve, reject) => {
+            this.__sendRects(message)
+            const filter = (reaction, user) => {
+                return !["754756207507669128", "753723888671785042", "757333853529702461"].includes(user.id);
+            };
+            message.awaitReactions(filter, {
+                    max: 1,
+                    time: 100000,
+                    errors: ['time']
+                })
+                .then(collected => {
+                    const reaction = collected.first();
+                    var index = 0
+                    switch (reaction.emoji.name) {
+                        case "1️⃣":
+                            index = 0
+                            break;
+                        case "2️⃣":
+                            index = 1
+                            break;
+                        case "3️⃣":
+                            index = 2
+                            break;
+                        case "4️⃣":
+                            index = 3
+                            break;
+                        case "5️⃣":
+                            index = 4
+                            break;
+                        case "⏪":
+                            index = 5
+                            break;
+                        case "⏩":
+                            index = 6
+                            break;
+                        default:
+                            reject({
+                                status: 3,
+                                data: "usuário não selecionou nenhum dos emojis",
+                                message: message
+                            })
+                            break;
+                    }
+                    resolve(index)
+                })
+                .catch(collected => {
+                    reject({
+                        status: 0,
+                        data: collected
+                    })
+                });
+
         })
     }
 }
