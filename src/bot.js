@@ -104,6 +104,8 @@ const init = async () => {
 		Music.authorizeSpotify()
 	}, 2500 * 1000 )
 
+	
+
 	client.login(process.env.DISCORD_API)
 	client.on("ready", () => {
 		client.user.setActivity({
