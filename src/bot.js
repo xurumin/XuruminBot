@@ -108,24 +108,28 @@ const init = async () => {
 
 	client.login(process.env.DISCORD_API)
 	client.on("ready", () => {
-		const DBL = require("dblapi.js");
-		const dbl = new DBL(process.env.TOPGG_API, client);
 
-		dbl.on('posted', () => {
-			console.log('Server count posted!');
-		})
-		
-		dbl.on('error', e => {
-		console.log(`Oops! ${e}`);
-		})
+		if(process.env.NODE_ENV == "production"){
+			const DBL = require("dblapi.js");
+			const dbl = new DBL(process.env.TOPGG_API, client);
 
-		function postDBL(){
-			dbl.postStats(client.guilds.size, client.shard.ids[0]);
-		}
-		postDBL()
-		setInterval(async () => {
+			dbl.on('posted', () => {
+				console.log('Server count posted!');
+			})
+			
+			dbl.on('error', e => {
+				console.log(`Oops! ${e}`);
+			})
+
+			function postDBL(){
+				//client.guilds.cache.size
+				dbl.postStats(client.guilds.size, client.shard.ids[0]);
+			}
 			postDBL()
-		}, 1800000);
+			setInterval(async () => {
+				postDBL()
+			}, 1800000);
+		}
 
 		client.user.setActivity({
 			name: `Precisa de ajuda? ${process.env.COMMAND_PREFIX}help`
