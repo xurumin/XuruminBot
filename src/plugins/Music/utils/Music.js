@@ -191,11 +191,11 @@ module.exports = {
         await message.react("4️⃣")
         await message.react("5️⃣")
     },
-    getReact(message) {
+    getReact(message, originalAuthor="") {
         return new Promise(async (resolve, reject) => {
             this.__sendRects(message)
             const filter = (reaction, user) => {
-                return !["754756207507669128", "753723888671785042", "757333853529702461"].includes(user.id);
+                return ( !(message.author==user) && (originalAuthor == user));
             };
             message.awaitReactions(filter, {
                     max: 1,
