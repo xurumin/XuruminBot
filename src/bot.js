@@ -15,6 +15,28 @@ client.players = new Discord.Collection();
 const init = async () => {
 
 	/** 
+	 * IMPORTING LOCALES
+	 */
+
+	const locales = await fs.readdir('src/locales')
+
+	console.log(
+		'[#LOG]',
+		`Loading ${cmdFiles.length} locale(s).`
+	);
+
+	locales.forEach(async (localeName) => {
+		try {
+			const locale = require(`./locales/${localeName}.js`);
+			console.log(locale)
+
+		} catch (error) {
+			console.log(`[#ERROR] Could not load locale ${cmdFolder}:`);
+			console.error(error)
+		}
+	})
+
+	/** 
 	 * IMPORTING COMMANDS
 	 */
 
