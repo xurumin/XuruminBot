@@ -15,17 +15,18 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {Array} args
 	 */
-	run: (client, message, args) => {
+	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 			let text = args.join(" ").slice(0,218)
 			text = text.replace(/\n/gi, ' ')
+
 			if(args.length <= 0 ){
 				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
 			}
 	
 			if(text == ""){
 				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}monarktweet <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}monarktweet** que eu pego a ultima mensagem mandada! 🤗`, client.user.username, client.user.avatarURL())
+					Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, Utils.stringTemplateParser(LOCALE.errors.cmd_format.description, {prefix: process.env.COMMAND_PREFIX}), client.user.username, client.user.avatarURL())
 				);
 			}
 	
@@ -38,9 +39,9 @@ module.exports = {
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("O que o presidente tweetou?")
-				.setAuthor("Bolaro")
-				.setDescription(`Mensagem de: ${message.author.username}\n\n*Esta imagem não é verdadeira.*`)
+				.setTitle(LOCALE.message.title)
+				.setAuthor(LOCALE.message.author)
+				.setDescription(Utils.stringTemplateParser(LOCALE.message.description,{author:message.author.username}))
 				.attachFiles(image)
 				.setImage("attachment://image.png")
 				message.channel.stopTyping()

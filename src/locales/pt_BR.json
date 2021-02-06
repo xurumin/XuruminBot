@@ -1,5 +1,62 @@
 {
-    "errors": {
-        
+    "events": {
+        "message": {
+            "cooldown": {
+                "title": "Calma lá, amigo! 🖐",
+                "description": "Você precisa esperar **{{cooldown}} segundos** antes de mandar outra mensagem! 🤠"
+            },
+            "bot_tagged": {
+                "title": "Oi! Meu nome é {{username}}! 😁`)",
+                "description": "Para me usar, basta utilizar o prefixo **{{prefix}}** + o comando que você quiser! 🤓\nExperimenta usar **{{prefix}}meme** 🤠",
+                "fields": [
+                    ["Prefixo"],
+                    ["Ajuda?"],
+                    ["Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Github do Xurumin"],
+                    ["Site do Xurumin"]
+                ]
+            },
+            "errors": {
+                "blocked_command": "Este comando está temporariamente bloqueado.",
+                "command_not_found": {
+                    "title": "Não achei esse comando 😞",
+                    "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
+                    "fields": [
+                        ["Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Site do Xurumin", "https://xurumin.github.io/"],
+                        ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
+                    ]
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                }
+            }
+        }
+    },
+    "commands": {
+        "help": {
+            "message": {
+                "title": "Precisa de ajuda? 🤓",
+                "fields": [
+                    ["Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Site do Xurumin", "https://xurumin.github.io/"],
+                    ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
+                ]
+            }
+        },
+        "bolsonarotweet": {
+            "message": {
+                "title": "O que o presidente tweetou?",
+                "author": "Bolaro",
+                "description": "Mensagem de: {{author}}\n\n*Esta imagem não é verdadeira.*"
+            },
+            "errors": {
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Use  **{{prefix}}monarktweet <frase que você quiser>** ou somente **{{prefix}}monarktweet** que eu pego a ultima mensagem mandada! 🤗"
+                }
+            }
+        }
     }
 }

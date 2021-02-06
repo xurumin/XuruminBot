@@ -12,6 +12,9 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.playlist = new Discord.Collection();
 client.players = new Discord.Collection();
+
+const LOCALES = new Discord.Collection();
+
 const init = async () => {
 
 	/** 
@@ -22,16 +25,20 @@ const init = async () => {
 
 	console.log(
 		'[#LOG]',
-		`Loading ${cmdFiles.length} locale(s).`
+		`Loading ${locales.length} locale(s).`
 	);
 
-	locales.forEach(async (localeName) => {
+	locales.forEach(async (localeFileName) => {
 		try {
-			const locale = require(`./locales/${localeName}.js`);
-			console.log(locale)
+			const localeName = localeFileName.split(".")[0]
 
+			const localeFile = JSON.parse(fs.readFileSync(__dirname+`/locales/${localeFileName}`).toString());
+
+			LOCALES.set(localeName, localeFile)
+
+			console.log(`	> LOCALE ${localeName} loaded.`)
 		} catch (error) {
-			console.log(`[#ERROR] Could not load locale ${cmdFolder}:`);
+			console.log(`[#ERROR] Could not load locale ${localeFileName}:`);
 			console.error(error)
 		}
 	})
@@ -79,7 +86,7 @@ const init = async () => {
 			const props = require(`./events/${eventName}`);
 			console.log(`[event-loader] ${props.event.eventName} loaded.`)
 
-			client.on(props.event.eventName, (data)=>{props.run(client, data)});
+			client.on(props.event.eventName, (data)=>{props.run(client, data, LOCALES)});
 
 		} catch (error) {
 			console.log(`[#ERROR] Could not load command ${eventName}:`);
