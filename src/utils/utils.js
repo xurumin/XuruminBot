@@ -18,7 +18,7 @@ function stringTemplateParser(expression, valueObj) {
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./../firebase_credential.json");
+var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
