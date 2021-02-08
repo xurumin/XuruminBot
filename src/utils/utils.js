@@ -1,5 +1,6 @@
 "use strict"
 const discord = require("discord.js")
+const crypto = require("crypto")
 
 String.prototype.interpolate = function(params) {
   "use strict"
@@ -81,6 +82,7 @@ module.exports = {
   stringTemplateParser: stringTemplateParser,
   Profile: {
     setProfile: async (client, user_id, bg_url, aboutme, level, points, badges=[])=>{
+      const user_id = crypto.createHash("sha256").update(user_id).digest("hex");
       var usersRef = profilesRef.child("users")
       await usersRef.child(user_id).set({
           aboutme: aboutme,
@@ -97,6 +99,7 @@ module.exports = {
 			// })
     },
     setTag: async (client, user_id, tag, value)=>{
+      const user_id = crypto.createHash("sha256").update(user_id).digest("hex");
       var usersRef = profilesRef.child("users")
       var updateObj = {}
       updateObj[tag] = value
@@ -104,11 +107,13 @@ module.exports = {
       //client.profiles.get(user_id)[tag] = value
     },
     getProfile: async (client, user_id)=>{
+      const user_id = crypto.createHash("sha256").update(user_id).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.get(user_id)).val()[user_id]
       //return client.profiles.get(user_id)
     },
     hasProfile: async (client, user_id)=>{
+      const user_id = crypto.createHash("sha256").update(user_id).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.child(user_id).once("value")).exists()
       //return client.profiles.has(user_id)
