@@ -23,6 +23,9 @@ module.exports = {
 			if(metioned_user.value) user=metioned_user.value[1];
 
 			message.channel.startTyping()
+			setTimeout(() => {
+				message.channel.stopTyping();
+			}, 5000);
 			ImageProcessor(user.avatarURL({format:"png"}), user.username)
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()

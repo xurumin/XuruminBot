@@ -31,15 +31,15 @@ module.exports = {
             );
 		}
 		
-		if(Utils.Profile.hasProfile(client, message.author.id)){
-			Utils.Profile.setTag(client, message.author.id, "bg_url", `${args[0]}/download?force=true&w=640`)
+		if(await Utils.Profile.hasProfile(client, message.author.id)){
+			await Utils.Profile.setTag(client, message.author.id, "bg_url", `${args[0]}/download?force=true&w=640`)
 			return message.channel.send(
                 Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({prefix: process.env.COMMAND_PREFIX}), client.user.username, client.user.avatarURL())
             );
 		}else{
 			var standard_profile = Utils.Profile.getStandardProfile()
-			Utils.Profile.setProfile(client, message.author.id,`${args[0]}/download?force=true&w=640`,standard_profile.aboutme,standard_profile.level, standard_profile.points)
-			
+			await Utils.Profile.setProfile(client, message.author.id,`${args[0]}/download?force=true&w=640`,standard_profile.aboutme,standard_profile.level, standard_profile.points)
+
 			return message.channel.send(
                 Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({prefix: process.env.COMMAND_PREFIX}), client.user.username, client.user.avatarURL())
             );

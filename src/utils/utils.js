@@ -1,3 +1,4 @@
+"use strict"
 const discord = require("discord.js")
 
 String.prototype.interpolate = function(params) {
@@ -14,6 +15,17 @@ function stringTemplateParser(expression, valueObj) {
   });
   return text
 }
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./../firebase_credential.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://kkkklink.firebaseio.com"
+});
+var db = admin.database()
+var profilesRef = db.ref("profiles");
 
 module.exports = {
   shuffle(array) {
@@ -68,29 +80,46 @@ module.exports = {
   },
   stringTemplateParser: stringTemplateParser,
   Profile: {
-    setProfile: (client, user_id, bg_url, aboutme, level, points)=>{
-      client.profiles.set(user_id, {
-        aboutme: aboutme,
-				bg_url: bg_url,
-				level: level,
-				points: points
-			})
+    setProfile: async (client, user_id, bg_url, aboutme, level, points, badges=[])=>{
+      var usersRef = profilesRef.child("users")
+      await usersRef.child(user_id).set({
+          aboutme: aboutme,
+          bg_url: bg_url,
+          level: level,
+          points: points,
+          badges: badges
+      });
+      // client.profiles.set(user_id, {
+      //   aboutme: aboutme,
+			// 	bg_url: bg_url,
+			// 	level: level,
+			// 	points: points
+			// })
     },
-    setTag: (client, user_id, tag, value)=>{
-      client.profiles.get(user_id)[tag] = value
+    setTag: async (client, user_id, tag, value)=>{
+      var usersRef = profilesRef.child("users")
+      var updateObj = {}
+      updateObj[tag] = value
+      await usersRef.child(user_id).update(updateObj)
+      //client.profiles.get(user_id)[tag] = value
     },
-    getProfile: (client, user_id)=>{
-      return client.profiles.get(user_id)
+    getProfile: async (client, user_id)=>{
+      var usersRef = profilesRef.child("users")
+      return (await usersRef.get(user_id)).val()[user_id]
+      //return client.profiles.get(user_id)
     },
-    hasProfile: (client, user_id)=>{
-      return client.profiles.has(user_id)
+    hasProfile: async (client, user_id)=>{
+      var usersRef = profilesRef.child("users")
+      return (await usersRef.child(user_id).once("value")).exists()
+      //return client.profiles.has(user_id)
     },
     getStandardProfile: ()=>{
       return {
         bg_url: "https://i.imgur.com/MbGPZQR.png",
         level: 0,
 				points: 0,
-        aboutme: ""
+        aboutme: "",
+        badges: []
       }
     }
   }

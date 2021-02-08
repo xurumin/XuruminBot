@@ -40,6 +40,10 @@ module.exports = {
 				);
 			}
 			message.channel.startTyping()
+
+			setTimeout(() => {
+				message.channel.stopTyping();
+			}, 5000);
 			
 			ImageProcessor(text, whathedoeslist[Math.floor(Math.random() * whathedoeslist.length)])
 			.then((image)=>{

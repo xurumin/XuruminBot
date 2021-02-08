@@ -19,6 +19,10 @@ module.exports = {
 			if (message.mentions.users.size > 0) {
 				message.channel.startTyping()
 
+				setTimeout(() => {
+					message.channel.stopTyping();
+				}, 5000);
+
 				ImageProcessor(message.mentions.users.entries().next().value[1].avatarURL({
 					format: "png"
 				}))

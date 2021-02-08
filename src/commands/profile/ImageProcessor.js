@@ -66,18 +66,13 @@ function roundedImage(ctx,x,y,width,height,radius){
 
 module.exports = function process(user_img, user, profile, LOCALE) {
     return new Promise(async (resolve, reject) => {
+
         const canvas = createCanvas(736, 455)
         const ctx = canvas.getContext('2d')
 
 
         var badges = []
-
-        badges.push({img: await loadImage("https://i.imgur.com/E1WmZ49.png"), w: 36});
-        badges.push({img: await loadImage("https://i.imgur.com/Waj0d8x.png"), w: 36});
-        
-        
-        
-        
+        if(profile.badges) badges=profile.badges
 
         var bg = await loadImage(profile.bg_url)
         ctx.drawImage(bg, 0, 0, 736,bg.height); //background
@@ -85,7 +80,7 @@ module.exports = function process(user_img, user, profile, LOCALE) {
         ctx.drawImage(await loadImage(__dirname + `/base.png`),0, 0, 736,455); //base
 
         for(var i = 0; i < badges.length; i++){
-            ctx.drawImage(badges[i].img, 226+(i*45), 118, badges[i].w,36);
+            ctx.drawImage(await loadImage(badges[i].img_url), 226+(i*45), 118, badges[i].w,36);
         }
 
         ctx.save();

@@ -31,7 +31,9 @@ module.exports = {
 	
 			message.channel.startTyping()
 
-
+			setTimeout(() => {
+				message.channel.stopTyping();
+			}, 5000);
 	
 			ImageProcessor(message.author.username, message.author.avatarURL({
 				format: "png"

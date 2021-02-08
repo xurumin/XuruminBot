@@ -21,6 +21,7 @@ module.exports = {
 			setTimeout(() => {
 				message.channel.stopTyping();
 			}, 5000);
+
 			let user;
 			if (message.mentions.users.size > 0) {
 				user = message.mentions.users.entries().next().value[1]
@@ -29,21 +30,25 @@ module.exports = {
 			}
 
 			let profile;
-			if(utils.Profile.hasProfile(client, user.id)){
-				if(!utils.Profile.getProfile(client, user.id).aboutme || utils.Profile.getProfile(client, user.id).aboutme == ""){
-					utils.Profile.setTag(client, user.id, "aboutme",LOCALE.stardard.aboutme)
+			if(await utils.Profile.hasProfile(client, user.id)){
+				profile = await utils.Profile.getProfile(client, user.id)
+				if(!(profile.aboutme) || profile.aboutme == ""){
+					profile["aboutme"] = LOCALE.stardard.aboutme
+					await utils.Profile.setTag(client, user.id, "aboutme",LOCALE.stardard.aboutme)
 				}
-				profile = utils.Profile.getProfile(client, user.id)
 			}else{
-				utils.Profile.setProfile(client, user.id, "https://i.imgur.com/MbGPZQR.png",LOCALE.stardard.aboutme, 0, 0)
-				profile = utils.Profile.getProfile(client,user.id)
+				await utils.Profile.setProfile(client, user.id, "https://i.imgur.com/MbGPZQR.png",LOCALE.stardard.aboutme, 0, 0)
+				profile = await utils.Profile.getProfile(client,user.id)
 
 			}
-			
 
-			ImageProcessor(user.avatarURL({
+			var avatar = user.avatarURL({
 				format: "png"
-			}), user,profile, LOCALE.profile)
+			})
+
+			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
+
+			ImageProcessor(avatar, user,profile, LOCALE.profile)
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
