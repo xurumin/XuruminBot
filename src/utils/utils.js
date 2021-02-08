@@ -15,9 +15,6 @@ function stringTemplateParser(expression, valueObj) {
   return text
 }
 
-
-
-
 module.exports = {
   shuffle(array) {
     var currentIndex = array.length,

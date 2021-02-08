@@ -2,3 +2,4 @@ src/utils/files/guild_info.db
 /.env
 node_modules
 src/plugins/Tests
+src/firebase_credential.json
