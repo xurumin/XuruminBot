@@ -5,6 +5,7 @@ const fs = require('fs-extra');
 
 
 const Discord = require('discord.js');
+const utils = require('./utils/utils');
 const client = new Discord.Client();
 
 
@@ -135,6 +136,31 @@ const init = async () => {
 		Music.authorizeSpotify()
 	}, 2500 * 1000 )
 
+	setInterval(async ()=>{
+		console.log(`[LOG] Uploading cached points of ${client.cachedPoints.size} users`)
+		const t1 = (new Date()).getTime()
+		for (const user of client.cachedPoints) {
+			try {
+				var userInfo = {
+					userId:user[0],
+					points: user[1]
+				}
+				if(await utils.Profile.hasProfile(client, userInfo.userId)){
+					var sumOfPoints = (parseFloat((await utils.Profile.getProfile(client, userInfo.userId)).points) + parseFloat(userInfo.points)).toFixed(2)
+					await utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
+				}else{
+					var standard_profile = utils.Profile.getStandardProfile()
+					await utils.Profile.setProfile(client, userInfo.userId,standard_profile.bg_url,standard_profile.aboutme,standard_profile.level, userInfo.points)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		const t2 = (new Date()).getTime()
+		console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
+		client.cachedPoints.clear()
+	}, 5 * 60 * 1000 )
+	// 5MINUTES = 5* 60 * 1000
 	
 
 	client.login(process.env.DISCORD_API)

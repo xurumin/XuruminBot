@@ -4,7 +4,8 @@ const MessageLog = require('./../utils/MessageLog');
 const config = require("./../config")
 require('dotenv/config');
 
-const talkedRecently = new Discord.Collection();;
+const talkedRecently = new Discord.Collection();
+const antiFloodCooldown = new Discord.Collection();
 
 module.exports = {
 	/**
@@ -14,6 +15,21 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, locale_list) => {
+
+
+		if(!antiFloodCooldown.has(message.author.id)){
+			if(client.cachedPoints.has(message.author.id)){
+				var newPoints = (parseFloat(client.cachedPoints.get(message.author.id)) + (1 * process.env.MESSAGE_POINT_X)).toFixed(2)
+				client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + (1 * process.env.MESSAGE_POINT_X))
+			}else{
+				client.cachedPoints.set(message.author.id, 1 * process.env.MESSAGE_POINT_X)
+			}
+			antiFloodCooldown.set(message.author.id);
+			setTimeout(() => {
+				antiFloodCooldown.delete(message.author.id);
+			}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
+		}
+
 		if ( (!message.content.startsWith(process.env.COMMAND_PREFIX)) && !(message.content == `<@!${client.user.id}>`) ) return;
 
 		//get guild language
