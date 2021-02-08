@@ -17,12 +17,12 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {} args
 	 */
-	run: async (client, message, args) => {
+	run: async (client, message, args, LOCALE) => {
 		var image = await axios.get(`https://unsplash.com/napi/search/photos?query=cat&xp=&per_page=1&page=${Utils.random(0,100)}`)
 		return message.channel.send(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
-			.setTitle("Vai um gatin? 😻")
+			.setTitle(LOCALE.message.title)
 			.setAuthor(client.user.username)
 			.setImage(image.data["results"][0]["urls"]["small"])
 			.setFooter(`Photo by ${image.data["results"][0]["user"]["name"]} on Unsplash`)

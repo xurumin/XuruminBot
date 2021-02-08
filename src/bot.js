@@ -12,6 +12,7 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.playlist = new Discord.Collection();
 client.players = new Discord.Collection();
+client.profiles = new Discord.Collection();
 
 const LOCALES = new Discord.Collection();
 

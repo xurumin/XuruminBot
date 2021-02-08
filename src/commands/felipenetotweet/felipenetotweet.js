@@ -15,7 +15,7 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {Array} args
 	 */
-	run: (client, message, args) => {
+	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 			let text = args.join(" ").slice(0,218)
 			text = text.replace(/\n/gi, ' ')
@@ -38,9 +38,11 @@ module.exports = {
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("O que o Felipe Neto tweetou?")
+				.setTitle(LOCALE.message.title)
 				.setAuthor("Felipe Neto")
-				.setDescription(`Mensagem de: ${message.author.username}\n\n*Esta imagem não é verdadeira.*`)
+				.setDescription(LOCALE.message.description.interpolate({
+					author: message.author
+				}))
 				.attachFiles(image)
 				.setImage("attachment://image.png")
 				message.channel.stopTyping()

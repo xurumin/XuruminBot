@@ -15,7 +15,7 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {Array} args
 	 */
-	run: (client, message, args) => {
+	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 			const metioned_user = message.mentions.users.entries().next()
 
@@ -27,9 +27,12 @@ module.exports = {
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("Espelho, espelho meu: existe alguém mais bela do que eu?")
-				.setAuthor("Espelho")
-				.setDescription(`O que será que disse o espelho sobre ${user}?\n\n*Mensagem de: ${message.author}*`)
+				.setTitle(LOCALE.message.title)
+				.setAuthor(LOCALE.message.author)
+				.setDescription(LOCALE.message.description.interpolate({
+					user: user,
+					author: message.author
+				}))
 				.attachFiles(image)
 				.setImage("attachment://image.png")
 				message.channel.stopTyping()

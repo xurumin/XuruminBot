@@ -1,5 +1,23 @@
 const discord = require("discord.js")
 
+String.prototype.interpolate = function(params) {
+  "use strict"
+	return stringTemplateParser(this, params)
+}
+
+
+function stringTemplateParser(expression, valueObj) {
+  const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
+  let text = expression.replace(templateMatcher, (substring, value, index) => {
+    value = valueObj[value];
+    return value;
+  });
+  return text
+}
+
+
+
+
 module.exports = {
   shuffle(array) {
     var currentIndex = array.length,
@@ -51,12 +69,32 @@ module.exports = {
   choice(array){
     return array[Math.floor(Math.random() * array.length)]
   },
-  stringTemplateParser(expression, valueObj) {
-    const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
-    let text = expression.replace(templateMatcher, (substring, value, index) => {
-      value = valueObj[value];
-      return value;
-    });
-    return text
+  stringTemplateParser: stringTemplateParser,
+  Profile: {
+    setProfile: (client, user_id, bg_url, aboutme, level, points)=>{
+      client.profiles.set(user_id, {
+        aboutme: aboutme,
+				bg_url: bg_url,
+				level: level,
+				points: points
+			})
+    },
+    setTag: (client, user_id, tag, value)=>{
+      client.profiles.get(user_id)[tag] = value
+    },
+    getProfile: (client, user_id)=>{
+      return client.profiles.get(user_id)
+    },
+    hasProfile: (client, user_id)=>{
+      return client.profiles.has(user_id)
+    },
+    getStandardProfile: ()=>{
+      return {
+        bg_url: "https://i.imgur.com/MbGPZQR.png",
+        level: 0,
+				points: 0,
+        aboutme: ""
+      }
+    }
   }
 }

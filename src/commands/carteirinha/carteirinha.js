@@ -14,24 +14,13 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {Array} args
 	 */
-	run: (client, message, args) => {
+	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
+	
 			message.channel.startTyping()
 			const member = message.guild.member(message.author);
 			const user_roles = member.roles.cache.sort((a, b) => a.position - b.position || a.id - b.id).map(r=>{ return r.name.replace(/[^a-z0-9 ,.?!]/ig, "")}).reverse().slice(0,3)			
-			const carteirinha_list = [
-				"Troxa",
-				"Besta",
-				"Otario",
-				"Rei Delas",
-				"Minecrafter",
-				"Amigo de Todos",
-				"Corno",
-				"Amante do Gado",
-				"Rei do Gado",
-				"Primo do Toin",
-				"Amigo do Cleiton"
-			]
+			const carteirinha_list = LOCALE.word_list
 			const tag = carteirinha_list[Math.floor(Math.random() * carteirinha_list.length)]
 
 			ImageProcessor(message.author.avatarURL({
@@ -40,9 +29,9 @@ module.exports = {
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle(`Carteirinha de ${tag}`)
+				.setTitle(LOCALE.message.title.interpolate({tag: tag}))
 				.setAuthor(client.user.username)
-				.setDescription(`Parabéns ${message.author}!\nAqui está a prova que você tem a **Carteirinha de ${tag}**!`)
+				.setDescription(LOCALE.message.description.interpolate({author: message.author, tag:tag}))
 				.attachFiles(image)
 				.setImage("attachment://image.png")
 				message.channel.stopTyping()
