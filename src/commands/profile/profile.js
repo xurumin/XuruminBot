@@ -50,7 +50,6 @@ module.exports = {
 			}else{
 				await utils.Profile.setProfile(client, user.id, "https://i.imgur.com/MbGPZQR.png",LOCALE.stardard.aboutme, 0, 0)
 				profile = await utils.Profile.getProfile(client,user.id)
-
 			}
 
 			var avatar = user.avatarURL({
