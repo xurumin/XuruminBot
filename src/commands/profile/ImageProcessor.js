@@ -5,6 +5,7 @@ const {
 } = require('canvas')
 
 
+require('dotenv/config');
 const fs = require("fs-extra")
 const Discord = require('discord.js');
 
