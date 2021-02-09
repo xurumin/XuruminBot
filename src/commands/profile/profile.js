@@ -59,7 +59,8 @@ module.exports = {
 
 			var badgeList = []
 			for(var badgeId in profile.badges.sort()){
-				badgeList.push(allBadges.find(elm=>elm.id==badgeId))
+				var badge = allBadges.find(elm=>elm.id==badgeId)
+				if(badge != null) badgeList.push(badge)
 			}
 			profile.badges = badgeList;
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
