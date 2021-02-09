@@ -6,6 +6,17 @@ const ImageProcessor = require("./ImageProcessor");
 const utils = require('./../../utils/utils');
 
 
+var allBadges = [];
+
+async function getAllBadges(){
+	allBadges = await utils.Profile.getBadges();
+}
+setInterval(async () => {
+	console.log("[LOG] Auto updating badges")
+	await getAllBadges()
+}, 60 * 60 * 1000);
+getAllBadges()
+
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -46,6 +57,11 @@ module.exports = {
 				format: "png"
 			})
 
+			var badgeList = []
+			for(var badgeId in profile.badges.sort()){
+				badgeList.push(allBadges.find(elm=>elm.id==badgeId))
+			}
+			profile.badges = badgeList;
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
 
 			ImageProcessor(avatar, user,profile, LOCALE.profile)

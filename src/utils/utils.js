@@ -126,6 +126,10 @@ module.exports = {
         aboutme: "",
         badges: []
       }
+    },
+    getBadges: async()=>{
+      var badgesRef = profilesRef.child("badges")
+      return (await badgesRef.get()).val()
     }
   }
 }
