@@ -24,7 +24,7 @@ const init = async () => {
 	 * IMPORTING LOCALES
 	 */
 
-	const locales = await fs.readdir('src/locales')
+	var locales = await fs.readdir('src/locales')
 
 	console.log(
 		'[#LOG]',
@@ -45,12 +45,16 @@ const init = async () => {
 			console.error(error)
 		}
 	})
+	locales=[]
 
 	/** 
 	 * IMPORTING COMMANDS
 	 */
 
-	const cmdFiles = await fs.readdir('src/commands/')
+	var cmdFiles = await fs.readdir('src/commands/')
+	if(process.env.ONLY_PLUGINS_MODE=="true"){
+		cmdFiles=[]
+	}
 
 	console.log(
 		'[#LOG]',
@@ -73,11 +77,12 @@ const init = async () => {
 			console.error(error)
 		}
 	})
+	cmdFiles=[]
 
 	/** 
 	 * IMPORTING EVENTS
 	 */
-	const evntFiles = await fs.readdir('src/events/')
+	var evntFiles = await fs.readdir('src/events/')
 
 	console.log(
 		'[#LOG]',
@@ -96,19 +101,21 @@ const init = async () => {
 			console.error(error)
 		}
 	})
+	evntFiles=[]
 
 	/** 
 	 * IMPORTING PLUGINS
 	 */
-	const controllersFiles = await fs.readdir('src/plugins/')
+	var pluginsFiles = await fs.readdir('src/plugins/')
 
 	console.log(
 		'[#LOG]',
-		`Loading ${controllersFiles.length} plugin(s).`
+		`Loading ${pluginsFiles.length} plugin(s).`
 	);
 
-	controllersFiles.forEach(async (controllerName) => {
+	pluginsFiles.forEach(async (controllerName) => {
 		try {
+			console.log(`[plugin-loader] Loading ${controllerName}`)
 			const main = require(`./plugins/${controllerName}/${controllerName}.js`);
 			console.log(`[plugin-loader] loading ${controllerName} commands...`)
 			const commandList = await fs.readdir(`${__dirname}/plugins/${controllerName}/${main.commands.path}/`)
@@ -122,13 +129,12 @@ const init = async () => {
 				}
 				console.log(`	> Command ${command.command.name} loaded.`)
 			});
-			console.log(`[plugin-loader] ${controllerName} loaded.`)
-
 		} catch (error) {
 			console.log(`[#ERROR] Could not load command ${controllerName}:`);
 			console.error(error)
 		}
 	})
+	pluginsFiles=[]
 
 	const Music = require('./plugins/Music/utils/Music');
 	Music.authorizeSpotify()
@@ -159,9 +165,7 @@ const init = async () => {
 		const t2 = (new Date()).getTime()
 		console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
 		client.cachedPoints.clear()
-	}, 5 * 60 * 1000 )
-	// 5MINUTES = 5* 60 * 1000
-	
+	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN )
 
 	client.login(process.env.DISCORD_API)
 	client.on("ready", () => {

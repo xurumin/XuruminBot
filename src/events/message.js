@@ -61,9 +61,6 @@ module.exports = {
 		/**
 		 * If bot was tagged
 		 */
-
-		LOCALE.events.message.bot_tagged.fields[0][0]
-
 		if (message.content == `<@!${client.user.id}>`) {
 			const embed = new Discord.MessageEmbed()
 				.setTitle(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.title, {username: client.user.username}))
@@ -92,7 +89,6 @@ module.exports = {
 		try {
 			const cmd = client.commands.get(command);
 			const aliase = client.aliases.get(command);
-
 			if ((cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send(LOCALE.events.message.errors.blocked_command)
 			if (cmd) {
 				const response = await cmd.run(client, message, args, LOCALE.commands[command]);

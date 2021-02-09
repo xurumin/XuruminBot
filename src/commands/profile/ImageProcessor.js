@@ -117,11 +117,11 @@ module.exports = function processS(user_img, user, profile, LOCALE) {
         ctx.fillStyle = "#EAD552";
         ctx.fillText(`Level ${profile.level}`, 608, 70)
 
-        //points
+        //money
         ctx.font = "20px Montserrat-Bold";
         ctx.textAlign = "left";
         ctx.fillStyle = "#EAD552";
-        ctx.fillText(`${parseFloat(profile.points * process.env.MESSAGE_POINT_X).toFixed(0)} XP`, 608, 110)
+        ctx.fillText(`$${parseFloat(profile.money).toFixed(2)}`, 608, 110)
         
         //Text about me
         ctx.font = "18px Montserrat-Regular";

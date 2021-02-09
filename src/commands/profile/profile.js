@@ -64,6 +64,7 @@ module.exports = {
 			}
 			profile.badges = badgeList;
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
+			if(!profile.money) profile.money=0
 
 			profile.level = utils.XP2LV(profile.points)
 

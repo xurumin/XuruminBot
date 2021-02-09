@@ -207,6 +207,31 @@
                 "title": "Sua informação foi definida 🤗!",
                 "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
             }
+        },
+        "pay":{
+            "message":{
+                "title": ":white_check_mark: Transação concluída 🤗!",
+                "description": "Foi enviada uma mensagem privada com os detalhes :)"
+            },
+            "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
+            "errors":{
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa definir um **beneficiário** e um **valor** a ser pago\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                },
+                "user_not_found": {
+                    "title": "❌ Usuário não encontrado:",
+                    "description": "O beneficiário que você marcou **não é valido**.\nVerifique se você o marcou corretamente\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                },
+                "user_do_not_have_funds": {
+                    "title": "❌ Você não possui dinheiro suficiente",
+                    "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+                },
+                "invalid_value": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa informar um valor **válido** e **maior que 0 (zero)**\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                }
+            }
         }
     }
 }
