@@ -120,7 +120,7 @@ module.exports = function process(user_img, user, profile, LOCALE) {
         ctx.font = "20px Montserrat-Bold";
         ctx.textAlign = "left";
         ctx.fillStyle = "#EAD552";
-        ctx.fillText(`${parseFloat(profile.points).toFixed(0)} XP`, 608, 110)
+        ctx.fillText(`${parseFloat(profile.points * process.env.MESSAGE_POINT_X).toFixed(0)} XP`, 608, 110)
         
         //Text about me
         ctx.font = "18px Montserrat-Regular";

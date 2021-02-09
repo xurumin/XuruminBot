@@ -65,6 +65,8 @@ module.exports = {
 			profile.badges = badgeList;
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
 
+			profile.level = utils.XP2LV(profile.points)
+
 			ImageProcessor(avatar, user,profile, LOCALE.profile)
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()

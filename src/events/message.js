@@ -19,10 +19,9 @@ module.exports = {
 
 		if(!antiFloodCooldown.has(message.author.id)){
 			if(client.cachedPoints.has(message.author.id)){
-				var newPoints = (parseFloat(client.cachedPoints.get(message.author.id)) + (1 * process.env.MESSAGE_POINT_X)).toFixed(2)
-				client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + (1 * process.env.MESSAGE_POINT_X))
+				client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
 			}else{
-				client.cachedPoints.set(message.author.id, 1 * process.env.MESSAGE_POINT_X)
+				client.cachedPoints.set(message.author.id,1)
 			}
 			antiFloodCooldown.set(message.author.id);
 			setTimeout(() => {

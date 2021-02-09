@@ -80,6 +80,11 @@ module.exports = {
     return array[Math.floor(Math.random() * array.length)]
   },
   stringTemplateParser: stringTemplateParser,
+  XP2LV(xp){
+    //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
+    var lv = ((10**((Math.log10(xp) - 2)/1.5))+1)
+    return parseInt(lv.toFixed(0))
+  },
   Profile: {
     setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges=[])=>{
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
