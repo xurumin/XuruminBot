@@ -89,7 +89,8 @@ module.exports = {
           bg_url: bg_url,
           level: level,
           points: points,
-          badges: badges
+          badges: badges,
+          userId: user_id_raw
       });
       // client.profiles.set(user_id, {
       //   aboutme: aboutme,
