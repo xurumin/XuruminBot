@@ -58,6 +58,7 @@ module.exports = {
 			})
 
 			var badgeList = []
+			if(!profile.badges) profile.badges = []
 			for(var badgeId in profile.badges.sort()){
 				var badge = allBadges.find(elm=>elm.id==badgeId)
 				if(badge != null) badgeList.push(badge)
