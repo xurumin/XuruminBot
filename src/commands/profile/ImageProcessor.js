@@ -5,7 +5,7 @@ const {
 } = require('canvas')
 
 
-require('dotenv/config');
+
 const fs = require("fs-extra")
 const Discord = require('discord.js');
 
@@ -65,7 +65,7 @@ function roundedImage(ctx,x,y,width,height,radius){
   }
 
 
-module.exports = function process(user_img, user, profile, LOCALE) {
+module.exports = function processS(user_img, user, profile, LOCALE) {
     return new Promise(async (resolve, reject) => {
 
         const canvas = createCanvas(736, 455)
@@ -116,7 +116,7 @@ module.exports = function process(user_img, user, profile, LOCALE) {
         ctx.textAlign = "left";
         ctx.fillStyle = "#EAD552";
         ctx.fillText(`Level ${profile.level}`, 608, 70)
-        
+
         //points
         ctx.font = "20px Montserrat-Bold";
         ctx.textAlign = "left";
