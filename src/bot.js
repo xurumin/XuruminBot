@@ -159,7 +159,7 @@ const init = async () => {
 		const t2 = (new Date()).getTime()
 		console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
 		client.cachedPoints.clear()
-	}, 5 * 60 * 1000 )
+	}, 10 * 60 * 1000 )
 	// 5MINUTES = 5* 60 * 1000
 	
 
