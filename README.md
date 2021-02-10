@@ -2,7 +2,7 @@
 A brazilian discord bot that plays music and podcasts. Btw, it has memes! To friends, Xurumin.
 
 ### Command list:
- - [PTBR](/help/COMMANDS.ptbr.md)
+ - [PTBR](https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md)
 
 ## ⚠️ Warning
 This is a *test* bot. So, what does that mean? That probably it must have errors. I'm working on it just for study and testing. So, yes, maybe one day it will be useful. Or maybe not.
