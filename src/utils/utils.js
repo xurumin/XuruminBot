@@ -1,4 +1,32 @@
+"use strict"
 const discord = require("discord.js")
+const crypto = require("crypto")
+
+String.prototype.interpolate = function(params) {
+  "use strict"
+	return stringTemplateParser(this, params)
+}
+
+
+function stringTemplateParser(expression, valueObj) {
+  const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
+  let text = expression.replace(templateMatcher, (substring, value, index) => {
+    value = valueObj[value];
+    return value;
+  });
+  return text
+}
+
+var admin = require("firebase-admin");
+
+var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://kkkklink.firebaseio.com"
+});
+var db = admin.database()
+var profilesRef = db.ref("profiles");
 
 module.exports = {
   shuffle(array) {
@@ -50,5 +78,64 @@ module.exports = {
   },
   choice(array){
     return array[Math.floor(Math.random() * array.length)]
+  },
+  stringTemplateParser: stringTemplateParser,
+  XP2LV(xp){
+    //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
+    var lv = ((10**((Math.log10(xp) - 2)/1.5))+1)
+    return parseInt(lv.toFixed(0))
+  },
+  Profile: {
+    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges=[])=>{
+      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      var usersRef = profilesRef.child("users")
+      await usersRef.child(user_id).set({
+          aboutme: aboutme,
+          bg_url: bg_url,
+          level: level,
+          points: points,
+          badges: badges,
+          userId: user_id_raw
+      });
+      // client.profiles.set(user_id, {
+      //   aboutme: aboutme,
+			// 	bg_url: bg_url,
+			// 	level: level,
+			// 	points: points
+			// })
+    },
+    setTag: async (client, user_id_raw, tag, value)=>{
+      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      var usersRef = profilesRef.child("users")
+      var updateObj = {}
+      updateObj[tag] = value
+      await usersRef.child(user_id).update(updateObj)
+      //client.profiles.get(user_id)[tag] = value
+    },
+    getProfile: async (client, user_id_raw)=>{
+      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      var usersRef = profilesRef.child("users")
+      return (await usersRef.get(user_id)).val()[user_id]
+      //return client.profiles.get(user_id)
+    },
+    hasProfile: async (client, user_id_raw)=>{
+      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      var usersRef = profilesRef.child("users")
+      return (await usersRef.child(user_id).once("value")).exists()
+      //return client.profiles.has(user_id)
+    },
+    getStandardProfile: ()=>{
+      return {
+        bg_url: "https://i.imgur.com/MbGPZQR.png",
+        level: 0,
+				points: 0,
+        aboutme: "",
+        badges: []
+      }
+    },
+    getBadges: async()=>{
+      var badgesRef = profilesRef.child("badges")
+      return (await badgesRef.get()).val()
+    }
   }
 }

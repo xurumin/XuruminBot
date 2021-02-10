@@ -13,14 +13,15 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {} args
 	 */
-	run: async (client, message, args) => {
+	run: async (client, message, args, LOCALE) => {
+
 		return message.channel.send(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
-			.setTitle("Precisa de ajuda? 🤓")
-			.addField("Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md")
-			.addField("Site do Xurumin", "https://xurumin.github.io/")
-			.addField("Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/")
+			.setTitle(LOCALE.message.title)
+			.addField(LOCALE.message.fields[0][0],LOCALE.message.fields[0][1])
+			.addField(LOCALE.message.fields[1][0],LOCALE.message.fields[1][1])
+			.addField(LOCALE.message.fields[2][0],LOCALE.message.fields[2][1])
 			.setAuthor(client.user.username)
 		)
 		

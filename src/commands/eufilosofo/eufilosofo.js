@@ -15,7 +15,7 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {Array} args
 	 */
-	run: (client, message, args) => {
+	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 			let text = args.join(" ").slice(0,220)
 			text = text.replace(/\n/gi, ' ')
@@ -31,7 +31,9 @@ module.exports = {
 	
 			message.channel.startTyping()
 
-
+			setTimeout(() => {
+				message.channel.stopTyping();
+			}, 5000);
 	
 			ImageProcessor(message.author.username, message.author.avatarURL({
 				format: "png"
@@ -39,9 +41,11 @@ module.exports = {
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
-				.setTitle("O que o filósofo disse?")
+				.setTitle(LOCALE.message.title)
 				.setAuthor(message.author.username)
-				.setDescription(`Mensagem de: ${message.author.username}`)
+				.setDescription(LOCALE.message.description.interpolate({
+					author: message.author.username
+				}))
 				.attachFiles(image)
 				.setImage("attachment://image.png")
 				message.channel.stopTyping()

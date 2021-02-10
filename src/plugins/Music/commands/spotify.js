@@ -25,12 +25,19 @@ module.exports = {
                 Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
             );
         }
+        console.log(playlist_url.includes("playlist"))
+        if (!playlist_url.includes("playlist")) {
+            return message.channel.send(
+                Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Este comando somente adiciona **playlists do Spotify**.\nUse o **${process.env.COMMAND_PREFIX}help** se precisar de ajuda 😉`, client.user.username, client.user.avatarURL())
+            );
+        }
         var spotify_playlist;
         try {
             spotify_playlist = await Music.getSpotifyPlaylist(playlist_url, 50)
         } catch (error) {
             console.log(">", error)
-            return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
+            return message.channel.send(utils.createSimpleEmbed("❌ Erro ao executar comando:", `Este comando está *TEMPORARIAMENTE* indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
+
         }
         var player = client.players.get(message.guild.id)
         if (!player) {

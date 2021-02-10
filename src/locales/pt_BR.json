@@ -1,0 +1,285 @@
+{
+    "events": {
+        "message": {
+            "cooldown": {
+                "title": "Calma lá, amigo! 🖐",
+                "description": "Você precisa esperar **{{cooldown}} segundos** antes de mandar outra mensagem! 🤠"
+            },
+            "bot_tagged": {
+                "title": "Oi! Meu nome é {{username}}! 😁`)",
+                "description": "Para me usar, basta utilizar o prefixo **{{prefix}}** + o comando que você quiser! 🤓\nExperimenta usar **{{prefix}}meme** 🤠",
+                "fields": [
+                    ["Prefixo"],
+                    ["Ajuda?"],
+                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Github do Xurumin"],
+                    ["Site do Xurumin"]
+                ]
+            },
+            "errors": {
+                "blocked_command": "Este comando está temporariamente bloqueado.",
+                "command_not_found": {
+                    "title": "Não achei esse comando 😞",
+                    "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
+                    "fields": [
+                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Site do Xurumin", "https://xurumin.github.io/"],
+                        ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
+                    ]
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                }
+            }
+        }
+    },
+    "commands": {
+        "help": {
+            "message": {
+                "title": "Precisa de ajuda? 🤓",
+                "fields": [
+                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Site do Xurumin", "https://xurumin.github.io/"],
+                    ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
+                ]
+            }
+        },
+        "bolsonarotweet": {
+            "message": {
+                "title": "O que o presidente tweetou?",
+                "author": "Bolaro",
+                "description": "Mensagem de: {{author}}\n\n*Esta imagem não é verdadeira.*"
+            },
+            "errors": {
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Use  **{{prefix}}monarktweet <frase que você quiser>** ou somente **{{prefix}}monarktweet** que eu pego a ultima mensagem mandada! 🤗"
+                }
+            }
+        },
+        "carteirinha":{
+            "message": {
+                "title": "Carteirinha de {{tag}}",
+                "description": "Parabéns {{author}}!\nAqui está a prova que você tem a **Carteirinha de {{tag}}**!"
+            },
+            "word_list":[
+                "Troxa",
+				"Besta",
+				"Otario",
+				"Rei Delas",
+				"Minecrafter",
+				"Amigo de Todos",
+				"Corno",
+				"Amante do Gado",
+				"Rei do Gado",
+				"Primo do Toin",
+				"Amigo do Cleiton"
+            ]
+        },
+        "cat":{
+            "message": {
+                "title": "Vai um gatin? 😻"
+            }
+        },
+        "catbobbing":{
+            "message": {
+                "title": "Gatinho"
+            }
+        },
+        "crush": {
+            "errors": {
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Use **{{prefix}}crush @usuario** para mostrar a todos quem é o seu crush! 🤗 🤗"
+                },
+                "auto_crush": {
+                    "title": "❌ Pera lá né amigo",
+                    "description": "Você não pode ter um crush em você mesmo... 😑\n Ou será que pode? 🤔"
+                },
+                "tag_bot": {
+                    "title": "😬 Opa, então né...",
+                    "description": "Agradeço e tals mas tô passando"
+                }
+            },
+            "word_lists": [
+                [
+                    "sem fazer nada",
+                    "jogando um mine",
+                    "comendo uma feijoada",
+                    "colocando o gado pro curral",
+                    "vendo a live do Xandão",
+                    "olhando sua foto pela 20ª hoje"
+                ],
+                [
+                    "eu te acho muito legal",
+                    "eu te acho lindo(a) pra xuxu",
+                    "eu queria jogar minecraft com você",
+                    "eu queria te beijar :3",
+                    "eu salvei teu contato como amorzin :3" 
+                ],
+                [
+                    "eu mataria um smurf por você",
+                    "na verdade é mesmo",
+                    "eu pularia na lava com minha picareta de diamante por você",
+                    "eu to caidinho por você",
+                    "eu to caidinho pelo seu pai",
+                    "eu lavaria meu pé por você",
+                    "eu só queria minha sandália do Relambado Marquins que eu deixei na sua casa"
+                ],
+                [
+                    "deu ver teu pai",
+                    "da gente tomar um açai",
+                    "da gente jogar um minecraft",
+                    "da gente se casar e ir morar na Irlanda e ficar ouvindo Billie Eilish e comendo pastel até a gente morrer velhinhos e juntinhos **EU TE AMO SE NÃO PERCEBEU AINDA**",
+                    "da gente namorar",
+                    "da gente casar",
+                    "da gente se chamar de prezinhos(as)"
+                ]
+            ],
+            "message": {
+                "title": "😘 Oie...",
+                "description": "Oi, {{metioned_user}}. Né? 😊 Então... tava aqui {{sent_1}} e pensei em falar que {{sent_2}}.\nSei que parece estranho 🥺, mas {{sent_3}}.\nIae, alguma chance {{sent_4}}? 😚🥰",
+                "footer": "Mensagem de {{author}}"
+            }
+        },
+        "espelhoespelhomeu":{
+            "message":{
+                "title": "Espelho, espelho meu: existe alguém mais bela do que eu?",
+                "description": "O que será que disse o espelho sobre {{user}}?\n\n*Mensagem de: {{author}}*",
+                "author": "Espelho"
+            }
+        },
+        "eufilosofo":{
+            "message":{
+                "title": "O que o filósofo disse?",
+                "description": "Mensagem de: {{author}}",
+                "author": "Espelho"
+            }
+        },
+        "felipenetotweet":{
+            "message":{
+                "title": "O que o Felipe Neto tweetou?",
+                "description": "Mensagem de: {{author}}\n\n*Esta imagem não é verdadeira.*`"
+            }
+        },
+        "filosofo":{
+            "message":{
+                "title": "O que o filósofo disse?",
+                "description": "Mensagem de: {{author}}\n\n*Esta imagem não é verdadeira.*`"
+            }
+        },
+        "profile":{
+            "message":{
+                "title": "Profile de {{author}}"
+            },
+            "stardard": {
+                "aboutme": "Sou legal! Eu juro :3"
+            },
+            "profile":{
+                "aboutme": "Sobre mim"
+            }
+        },
+        "setbackground":{
+            "errors":{
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do UNSPLASH.COM\n👉 Tente **{{prefix}}setbg https://unsplash.com/photos/EgmEuwjGXCk**"
+                },
+                "invalid_url": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do UNSPLASH.COM\n👉 Tente **{{prefix}}setbg https://unsplash.com/photos/EgmEuwjGXCk**"
+                }
+            },
+            "message":{
+                "title": "Seu background foi definido 🤗!",
+                "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
+            }
+        },
+        "setaboutme":{
+            "errors":{
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa colocar algo sobre você \n👉 Tente **{{prefix}}aboutme Sou muito fofo**"
+                }
+            },
+            "message":{
+                "title": "Sua informação foi definida 🤗!",
+                "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
+            }
+        },
+        "pay":{
+            "message":{
+                "title": ":white_check_mark: Transação concluída 🤗!",
+                "description": "Foi enviada uma mensagem privada com os detalhes :)"
+            },
+            "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
+            "errors":{
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa definir um **beneficiário** e um **valor** a ser pago\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                },
+                "user_not_found": {
+                    "title": "❌ Usuário não encontrado:",
+                    "description": "O beneficiário que você marcou **não é valido**.\nVerifique se você o marcou corretamente\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                },
+                "user_do_not_have_funds": {
+                    "title": "❌ Você não possui dinheiro suficiente",
+                    "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+                },
+                "invalid_value": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa informar um valor **válido** e **maior que 0 (zero)**\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                }
+            }
+        },
+        "sexyanime":{
+            "message":{
+                "title": ":flushed: Eita!",
+                "description": "~~Obra de arte~~ Mensagem de: {{author}}"
+            },
+            "errors":{
+                "nsfw_channel":{
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                },
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "testedepaternidade":{
+            "messages":{
+                "loading":{
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos cientistas estão verificando os dados..."
+                },
+                "loaded":{
+                    "title": ":face_with_monocle: O resultado chegou!",
+                    "description": "{{tagged_user}} **{{result}}** o pai de {{tagged_user_2}}! :eyes:"
+                }
+            },
+            "results": [
+                "é",
+                "não é",
+                "pode ser",
+                "parece que não é"
+            ],
+            "errors":{
+                "auto_check":{
+                    "title": "❌ Pera lá né amigo",
+                    "description": "Você não pode ser seu próprio pai...😑\n Ou será que pode? 🤔"
+                },
+                "user_not_tagged":{
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa marcar ~~seu pai~~ algum usuário :eyes:"
+                },
+                "tag_bot":{
+                    "title": "😡 Sai pra lá, irmão",
+                    "description": "Sou pai de ninguém não tá louco 😑"
+                }
+            }
+        }
+    }
+}

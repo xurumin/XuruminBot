@@ -30,6 +30,10 @@ module.exports = {
 			}
 	
 			message.channel.startTyping()
+
+			setTimeout(() => {
+				message.channel.stopTyping();
+			}, 5000);
 	
 			var filosofo_info = JSON.parse(fs.readFileSync(__dirname+"/philosophers_list.json"))["philosophers"]
 			filosofo_info = filosofo_info[Math.floor(Math.random() * filosofo_info.length)]

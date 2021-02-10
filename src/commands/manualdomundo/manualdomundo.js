@@ -30,6 +30,11 @@ module.exports = {
 			}
 	
 			message.channel.startTyping()
+
+			setTimeout(() => {
+				message.channel.stopTyping();
+			}, 5000);
+			
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;
 			if(text.length > 74 && text.length <= 151) img_code=2;

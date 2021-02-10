@@ -13,11 +13,11 @@ module.exports = {
 	 * @param  {Discord.Message} message
 	 * @param  {} args
 	 */
-	run: async (client, message, args) => {
+	run: async (client, message, args, LOCALE) => {
 		return message.channel.send(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
-			.setTitle("Gatinho")
+			.setTitle(LOCALE.message.title)
 			.setDescription("🎶🎶 🥳🥳🥳")
 			.setAuthor(client.user.username)
 			.setImage("https://i.imgur.com/OmiPKRQ.gif")

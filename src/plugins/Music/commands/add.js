@@ -113,7 +113,7 @@ function searchTerm(client, message, args) {
 
             var msg = await message.channel.send(txt)
 
-            var reactIndex = await Music.getReact(msg)
+            var reactIndex = await Music.getReact(msg, message.author)
 
             const video_info = {
                 name: searchlist[reactIndex]["title"],
