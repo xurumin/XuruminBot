@@ -11,7 +11,7 @@
                 "fields": [
                     ["Prefixo"],
                     ["Ajuda?"],
-                    ["Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
                     ["Github do Xurumin"],
                     ["Site do Xurumin"]
                 ]
@@ -22,7 +22,7 @@
                     "title": "Não achei esse comando 😞",
                     "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
                     "fields": [
-                        ["Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
                         ["Site do Xurumin", "https://xurumin.github.io/"],
                         ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                     ]
@@ -39,7 +39,7 @@
             "message": {
                 "title": "Precisa de ajuda? 🤓",
                 "fields": [
-                    ["Lista de comandos", "https://github.com/jnaraujo/xurumin_discord_bot/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
                     ["Site do Xurumin", "https://xurumin.github.io/"],
                     ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                 ]
