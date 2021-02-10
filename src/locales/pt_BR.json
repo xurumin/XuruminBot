@@ -232,6 +232,54 @@
                     "description": "Você precisa informar um valor **válido** e **maior que 0 (zero)**\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
                 }
             }
+        },
+        "sexyanime":{
+            "message":{
+                "title": ":flushed: Eita!",
+                "description": "~~Obra de arte~~ Mensagem de: {{author}}"
+            },
+            "errors":{
+                "nsfw_channel":{
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                },
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "testedepaternidade":{
+            "messages":{
+                "loading":{
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos cientistas estão verificando os dados..."
+                },
+                "loaded":{
+                    "title": ":face_with_monocle: O resultado chegou!",
+                    "description": "{{tagged_user}} **{{result}}** o pai de {{tagged_user_2}}! :eyes:"
+                }
+            },
+            "results": [
+                "é",
+                "não é",
+                "pode ser",
+                "parece que não é"
+            ],
+            "errors":{
+                "auto_check":{
+                    "title": "❌ Pera lá né amigo",
+                    "description": "Você não pode ser seu próprio pai...😑\n Ou será que pode? 🤔"
+                },
+                "user_not_tagged":{
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa marcar ~~seu pai~~ algum usuário :eyes:"
+                },
+                "tag_bot":{
+                    "title": "😡 Sai pra lá, irmão",
+                    "description": "Sou pai de ninguém não tá louco 😑"
+                }
+            }
         }
     }
 }

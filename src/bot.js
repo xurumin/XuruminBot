@@ -20,6 +20,8 @@ const LOCALES = new Discord.Collection();
 
 const init = async () => {
 
+	if(process.env.ONLY_PLUGINS_MODE=="true") console.log("[LOG] ONLY PLUGINS MODE ON")
+
 	/** 
 	 * IMPORTING LOCALES
 	 */
