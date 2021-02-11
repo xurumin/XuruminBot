@@ -296,6 +296,12 @@
                     "description": "Usuário informado não tem foto de perfil :("
                 }
             }
+        },
+        "piadas":{
+            "message":{
+                "title": "Piadocas do dia :zany_face:",
+                "description": "**P:** {{question}}\n**R:** {{answer}}"
+            }
         }
     }
 }
