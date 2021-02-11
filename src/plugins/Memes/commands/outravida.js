@@ -39,9 +39,9 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise((resolve, reject) => {
 
-            const tagged_user = message.mentions.users.entries().next().value
+            const tagged_user = message.mentions.users.entries().next()
             var user = message.author
-            if (tagged_user) user = tagged_user[1]
+            if (tagged_user.value) user = tagged_user.value[1];
 
             var user_pic = user.avatarURL({
                 format: "png",
@@ -69,7 +69,7 @@ module.exports = {
                         title: LOCALE.message.title,
                         description: LOCALE.message.description.interpolate({
                             author: message.author,
-                            user: tagged_user? tagged_user.username : message.author
+                            user: user
                         })
                     }
                     const embed = new Discord.MessageEmbed()
