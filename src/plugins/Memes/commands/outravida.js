@@ -69,7 +69,7 @@ module.exports = {
                         title: LOCALE.message.title,
                         description: LOCALE.message.description.interpolate({
                             author: message.author,
-                            user: message.author
+                            user: tagged_user? tagged_user : message.author
                         })
                     }
                     const embed = new Discord.MessageEmbed()
