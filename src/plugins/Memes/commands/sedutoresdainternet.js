@@ -13,14 +13,14 @@ const ImageList = require("./../files/outravida/image_list.json")
 
 require('dotenv/config');
 
-function ImageGenerator(user_pic, file) {
+function ImageGenerator(user_pic) {
     return new Promise(async (resolve, reject) => {
 
-        const canvas = createCanvas(file.size[0],file.size[1])
+        const canvas = createCanvas(500,500)
         const ctx = canvas.getContext('2d')
 
-        ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/outravida/images/${file.filename}`)), 0, 0, file.size[0],file.size[1]);
-        ctx.drawImage(await loadImage(user_pic), file.info[0],file.info[1],file.info[2],file.info[3],);
+        ctx.drawImage(await loadImage(user_pic), 0,0,500,500);
+        ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/sedutoresdainternet_base.png`)), 0, 0, 500,500);
 
         resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))    
     })
@@ -68,8 +68,7 @@ module.exports = {
                     var msg = {
                         title: LOCALE.message.title,
                         description: LOCALE.message.description.interpolate({
-                            author: message.author,
-                            user: user
+                            author: message.author
                         })
                     }
                     const embed = new Discord.MessageEmbed()
@@ -90,7 +89,10 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'outravida'
+            name: 'sedutoresdainternet',
+            aliase: [
+                "cuidadosedutores"
+            ]
         }
     },
 };

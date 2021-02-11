@@ -15,7 +15,7 @@ module.exports = function process(user_img) {
         ctx.drawImage(await loadImage(__dirname + `/funcionariodomes1.png`), 0, 0,293,400);
         
         
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

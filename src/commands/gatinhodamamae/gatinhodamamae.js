@@ -43,7 +43,7 @@ function makecatimage(profile_pic) {
 
 		ctx.fillText(text, (canvas.width / 2) - (mensureText.width / 2), 280)
 
-		resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+		resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
 	})
 
 }

@@ -93,14 +93,30 @@ module.exports = {
 			if (cmd) {
 				//Register +1 cmd to log
 				client.commandsSent++;
-		
+				
+				const t1 = (new Date()).getTime()
+
 				const response = await cmd.run(client, message, args, LOCALE.commands[command]);
+
+				if(process.env.NODE_ENV=="development"){
+					const t2 = (new Date()).getTime()
+					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
+				}
+
 				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
 			} else if (aliase) {
 				//Register +1 cmd to log
 				client.commandsSent++;
 
+				const t1 = (new Date()).getTime()
+
 				const response = await client.commands.get(aliase).run(client, message, args, LOCALE.commands[aliase]);
+
+				if(process.env.NODE_ENV=="development"){
+					const t2 = (new Date()).getTime()
+					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
+				}
+
 				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
 			} else {
 				return message.channel.send(

@@ -129,7 +129,7 @@ module.exports = function processS(user_img, user, profile, LOCALE) {
         ctx.fillStyle = "black";
         wrapText(ctx, profile.aboutme, 35,311,27,650)
         
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

@@ -5,7 +5,8 @@ const {
     loadImage
 } = require('canvas')
 const Discord = require('discord.js');
-const path = require("path")
+const path = require("path");
+const { stringify } = require('querystring');
 const utils = require('./../../../utils/utils');
 const Utils = require("./../../../utils/utils")
 
@@ -13,16 +14,23 @@ const ImageList = require("./../files/outravida/image_list.json")
 
 require('dotenv/config');
 
-function ImageGenerator(user_pic, file) {
+function ImageGenerator(user_pic) {
     return new Promise(async (resolve, reject) => {
-
-        const canvas = createCanvas(file.size[0],file.size[1])
+        const canvas = createCanvas(500,500)
         const ctx = canvas.getContext('2d')
 
-        ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/outravida/images/${file.filename}`)), 0, 0, file.size[0],file.size[1]);
-        ctx.drawImage(await loadImage(user_pic), file.info[0],file.info[1],file.info[2],file.info[3],);
+        ctx.drawImage(await loadImage(user_pic), 0,0,500,500);
+        ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/humorkkjkk_base.png`)), 0, 0, 500,500);
 
-        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))    
+        ctx.globalCompositeOperation = "saturation";
+        ctx.fillStyle = "hsl(0,100%,50%)";  // saturation at 100%
+        ctx.fillRect(0,0,500,500);  // apply the comp filter
+        ctx.globalCompositeOperation = "source-over";  // restore default comp
+
+        ctx.fillStyle = "rgba(255, 0, 0,0.1)"
+        ctx.fillRect(0,0,500,500);        
+
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.5 }), 'image.png'))
     })
 
 }
@@ -38,7 +46,6 @@ module.exports = {
      */
     run: async (client, message, args, LOCALE) => {
         return new Promise((resolve, reject) => {
-
             const tagged_user = message.mentions.users.entries().next()
             var user = message.author
             if (tagged_user.value) user = tagged_user.value[1];
@@ -64,12 +71,11 @@ module.exports = {
             }, 5000);
 
             ImageGenerator(user_pic, utils.choice(ImageList))
-                .then((image) => {
+                .then(async (image) => {
                     var msg = {
                         title: LOCALE.message.title,
                         description: LOCALE.message.description.interpolate({
-                            author: message.author,
-                            user: user
+                            author: message.author
                         })
                     }
                     const embed = new Discord.MessageEmbed()
@@ -78,9 +84,9 @@ module.exports = {
                         .setDescription(msg.description)
                         .attachFiles(image)
                         .setImage("attachment://image.png")
-                    message.channel.stopTyping()
-                    return resolve(message.channel.send(embed))
+                    message.channel.stopTyping()    
 
+                    return resolve(await message.channel.send(embed))
                 })
                 .catch((err) => {
                     message.channel.stopTyping()
@@ -90,7 +96,10 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'outravida'
+            name: 'humorkkjkk',
+            aliase: [
+                "humorepiadas"
+            ]
         }
     },
 };

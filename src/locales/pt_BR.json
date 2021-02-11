@@ -297,10 +297,46 @@
                 }
             }
         },
+        "sedutoresdainternet":{
+            "message":{
+                "title": ":police_officer: Cuidado com esses sedutores da internet",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors":{
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "humorkkjkk":{
+            "message":{
+                "title": ":rofl: :rofl: :rofl: Aê, pessoal! Vem vê como esse cara eh engraçadokkkj3k12jkkk",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors":{
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
         "piadas":{
             "message":{
                 "title": "Piadocas do dia :zany_face:",
                 "description": "**P:** {{question}}\n**R:** {{answer}}"
+            }
+        },
+        "catgif":{
+            "messages":{
+                "loading":{
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                },
+                "loaded":{
+                    "title": "Gatinhooo",
+                    "description": "Tuts tuts tuts 🥳🥳🥳"
+                }
             }
         }
     }
