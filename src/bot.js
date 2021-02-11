@@ -14,6 +14,7 @@ client.aliases = new Discord.Collection();
 client.playlist = new Discord.Collection();
 client.players = new Discord.Collection();
 client.profiles = new Discord.Collection();
+client.commandsSent = 0;
 client.cachedPoints = new Discord.Collection();
 
 const LOCALES = new Discord.Collection();
@@ -147,6 +148,12 @@ const init = async () => {
 	setInterval(async ()=>{
 		console.log(`[LOG] Uploading cached points of ${client.cachedPoints.size} users`)
 		const t1 = (new Date()).getTime()
+
+		if(process.env.NODE_ENV=="development"){
+			console.log("[LOG] DEV MOD ON. NO POINTS WERE UPLOADED")
+			client.cachedPoints.clear()
+		}
+
 		for (const user of client.cachedPoints) {
 			try {
 				var userInfo = {
@@ -164,9 +171,14 @@ const init = async () => {
 				console.log(error)
 			}
 		}
+
+		utils.BotDB.setBotInfo(client.commandsSent + parseInt(await utils.BotDB.getSentCmds()))
+
 		const t2 = (new Date()).getTime()
 		console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
+
 		client.cachedPoints.clear()
+		client.commandsSent = 0;
 	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN )
 
 	client.login(process.env.DISCORD_API)

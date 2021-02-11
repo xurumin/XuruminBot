@@ -27,6 +27,7 @@ admin.initializeApp({
 });
 var db = admin.database()
 var profilesRef = db.ref("profiles");
+var botInfoRef = db.ref("bot");
 
 module.exports = {
   shuffle(array) {
@@ -84,6 +85,17 @@ module.exports = {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
     var lv = ((10**((Math.log10(xp) - 2)/1.5))+1)
     return parseInt(lv.toFixed(0))
+  },
+  BotDB:{
+    async setBotInfo(cmdSent){
+      await botInfoRef.set({
+        "commandsSent": cmdSent
+      })
+    },
+    async getSentCmds(){
+      var sentCmds = (await botInfoRef.get("commandsSent")).val().commandsSent
+      return sentCmds? sentCmds : 0
+    }
   },
   Profile: {
     setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges=[])=>{

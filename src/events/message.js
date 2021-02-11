@@ -56,8 +56,12 @@ module.exports = {
 		}
 
 		// Checks if sender is a Special User (who do not have message cooldown)
-		if (!config.specialusers.includes(message.author.id)) talkedRecently.set( message.author.id, (new Date()).getTime());
-
+		if (!config.specialusers.includes(message.author.id)){
+			talkedRecently.set( message.author.id, (new Date()).getTime());
+			setTimeout(() => {
+				talkedRecently.delete(message.author.id);
+			}, process.env.MESSAGE_COOLDOWN);
+		}
 		/**
 		 * If bot was tagged
 		 */
@@ -76,10 +80,6 @@ module.exports = {
 			return message.channel.send(embed);
 		}
 
-		setTimeout(() => {
-			talkedRecently.delete(message.author.id);
-		}, process.env.MESSAGE_COOLDOWN);
-
 		const args = message.content
 			.slice(process.env.COMMAND_PREFIX.length)
 			.trim()
@@ -91,9 +91,15 @@ module.exports = {
 			const aliase = client.aliases.get(command);
 			if ((cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send(LOCALE.events.message.errors.blocked_command)
 			if (cmd) {
+				//Register +1 cmd to log
+				client.commandsSent++;
+		
 				const response = await cmd.run(client, message, args, LOCALE.commands[command]);
 				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
 			} else if (aliase) {
+				//Register +1 cmd to log
+				client.commandsSent++;
+
 				const response = await client.commands.get(aliase).run(client, message, args, LOCALE.commands[aliase]);
 				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
 			} else {
