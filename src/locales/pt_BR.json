@@ -233,22 +233,6 @@
                 }
             }
         },
-        "sexyanime":{
-            "message":{
-                "title": ":flushed: Eita!",
-                "description": "~~Obra de arte~~ Mensagem de: {{author}}"
-            },
-            "errors":{
-                "nsfw_channel":{
-                    "title": "❌ Ops!",
-                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
-                },
-                "user_do_not_have_pic":{
-                    "title": "❌ Ops!",
-                    "description": "Usuário informado não tem foto de perfil :("
-                }
-            }
-        },
         "testedepaternidade":{
             "messages":{
                 "loading":{
@@ -278,6 +262,38 @@
                 "tag_bot":{
                     "title": "😡 Sai pra lá, irmão",
                     "description": "Sou pai de ninguém não tá louco 😑"
+                }
+            }
+        },
+        
+        "NSFW":"PLUGIN",
+        "sexyanime":{
+            "message":{
+                "title": ":flushed: Eita!",
+                "description": "~~Obra de arte~~ Mensagem de: {{author}}"
+            },
+            "errors":{
+                "nsfw_channel":{
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                },
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+
+        "MEMES":"PLUGIN",
+        "outravida":{
+            "message":{
+                "title": "O que você seria em outra universo?",
+                "description": ":disguised_face: Em outra vida, isto é o que {{user}} seria:\n\nMensagem de: {{author}}"
+            },
+            "errors":{
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
                 }
             }
         }
