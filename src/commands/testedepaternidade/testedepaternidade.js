@@ -66,8 +66,8 @@ module.exports = {
 			var loaded_msg = {
 				title: LOCALE.messages["loaded"].title,
 				description: LOCALE.messages["loaded"].description.interpolate({
-					tagged_user: metioned_user_2 ? metioned_user_2 : metioned_user,
-					tagged_user_2: metioned_user_2 ? metioned_user_2 : message.author,
+					tagged_user: metioned_user,
+					tagged_user_2: message.author,
 					result: utils.choice(LOCALE.results)
 				})
 			}

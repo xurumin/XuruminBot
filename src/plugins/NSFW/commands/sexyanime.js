@@ -98,7 +98,10 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'sexyanime'
+            name: 'sexyanime',
+            aliases:[
+                "ecchi"
+            ]
         }
     },
 };
