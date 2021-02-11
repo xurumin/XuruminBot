@@ -4,11 +4,9 @@ const {
     Image
 } = require('canvas')
 const Discord = require('discord.js');
-
 const GIFEncoder = require('gifencoder');
-
 const fs = require('fs');
-
+const path = require("path")
 
 
 module.exports = function process(userimagelink, message) {
@@ -20,9 +18,9 @@ module.exports = function process(userimagelink, message) {
             data.push(chunk)
         })
         .on("end", ()=>{
+            
             return resolve(new Discord.MessageAttachment(Buffer.concat(data), 'image.gif'))
         })
-
         encoder.start();
         encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
         encoder.setDelay(150);  // frame delay in ms
@@ -36,9 +34,9 @@ module.exports = function process(userimagelink, message) {
         const user_img = await loadImage(userimagelink)
 
 
-        for (const img_url of fs.readdirSync(__dirname+"/files/pngs")) {
+        for (const img_url of fs.readdirSync(path.join(__dirname,"..","/files/catgif"))) {
             ctx.drawImage(user_img, 0, 0, 250,250);
-            ctx.drawImage(await loadImage(`${__dirname}/files/pngs/${img_url}`), 0, 80, 175,175);
+            ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/catgif/${img_url}`)), 0, 80, 175,175);
             encoder.addFrame(ctx);
         }
 

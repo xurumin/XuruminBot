@@ -6,9 +6,10 @@ const fs = require("fs")
 
 const ImageGenerator = require("./../ImageGenerators/catgif")
 
+
 var globalCooldown = []
 
-function run(client, message, args,loading_msg, LOCALE) {
+function run_gen(client, message, args,loading_msg, LOCALE) {
 	return new Promise(async(resolve, reject)=>{
 		ImageGenerator(message.author.avatarURL({format: "png", size: 256}), message)
 		.then(async (image)=>{
@@ -19,6 +20,7 @@ function run(client, message, args,loading_msg, LOCALE) {
 			.attachFiles(image)
 			.setImage("attachment://image.gif")
 
+            
 			loading_msg = await loading_msg
 			resolve(await message.channel.send(embed))
 			loading_msg.delete()
@@ -57,7 +59,7 @@ module.exports = {
 
         globalCooldown.push(message.id)
         if (isMe(message.id)) {
-            return run(client, message, args, loading_msg, LOCALE)
+            return run_gen(client, message, args, loading_msg, LOCALE)
         }
 
 
@@ -65,7 +67,7 @@ module.exports = {
         var cd = setInterval(() => {
             if (isMe(message.id)) {
                 clearInterval(cd)
-                return run(client, message, args, loading_msg, LOCALE)
+                return run_gen(client, message, args, loading_msg, LOCALE)
             }
         }, 2000)
     },
