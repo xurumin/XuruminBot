@@ -11,7 +11,26 @@ var globalCooldown = []
 
 function run_gen(client, message, args,loading_msg, LOCALE) {
 	return new Promise(async(resolve, reject)=>{
-		ImageGenerator(message.author.avatarURL({format: "png", size: 256}), message)
+        const tagged_user = message.mentions.users.entries().next()
+        var user = message.author
+        if (tagged_user.value) user = tagged_user.value[1];
+        var user_pic = user.avatarURL({
+            format: "png",
+            size: 256
+        })
+        if (!user_pic) {
+            loading_msg = await loading_msg
+            var msg = {
+                title: LOCALE.errors.user_do_not_have_pic.title,
+                description: LOCALE.errors.user_do_not_have_pic.description
+            }
+            globalCooldown.shift()
+            return resolve(loading_msg.edit(
+                Utils.createSimpleEmbed(msg.title, msg.description)
+            ));
+        }
+
+		ImageGenerator(user_pic, message)
 		.then(async (image)=>{
 			const embed = new Discord.MessageEmbed()
 			.setColor('#9d65c9')

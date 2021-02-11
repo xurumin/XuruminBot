@@ -337,6 +337,12 @@
                     "title": "Gatinhooo",
                     "description": "Tuts tuts tuts 🥳🥳🥳"
                 }
+            },
+            "errors":{
+                "user_do_not_have_pic":{
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
             }
         }
     }
