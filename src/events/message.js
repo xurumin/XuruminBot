@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const utils = require('../utils/utils');
 const MessageLog = require('./../utils/MessageLog');
-const config = require("./../config")
+const config = require("./../config");
+const { toLocaleLowerCase } = require('ffmpeg-static');
 require('dotenv/config');
 
 const talkedRecently = new Discord.Collection();
@@ -15,7 +16,6 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, locale_list) => {
-
 
 		if(!antiFloodCooldown.has(message.author.id)){
 			if(client.cachedPoints.has(message.author.id)){
