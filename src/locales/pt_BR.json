@@ -204,6 +204,10 @@
                 "invalid_url": {
                     "title": "❌ Erro ao digitar comando:",
                     "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do IMGUR.COM\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**"
+                },
+                "max_file_size_exceeded": {
+                    "title": "❌ Imagem muito grande",
+                    "description": "Sua imagem passa dos 200 KB permitidos. Tente uma imagem menor."
                 }
             },
             "message": {
