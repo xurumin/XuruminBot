@@ -199,11 +199,11 @@
             "errors": {
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do UNSPLASH.COM\n👉 Tente **{{prefix}}setbg https://unsplash.com/photos/EgmEuwjGXCk**"
+                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do **IMGUR.COM** e estar em **PNG** ou **JPG**\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**"
                 },
                 "invalid_url": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do UNSPLASH.COM\n👉 Tente **{{prefix}}setbg https://unsplash.com/photos/EgmEuwjGXCk**"
+                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do IMGUR.COM\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**"
                 }
             },
             "message": {
