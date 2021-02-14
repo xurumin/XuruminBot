@@ -27,7 +27,7 @@ module.exports = {
 		try {
 			var bg = await axios.request({method: "head", url: `${args[0]}`})
 			var fileSize = bg.headers["content-length"]
-			if( fileSize > 200 ){
+			if( (fileSize/1024) > 200 ){
 				return message.channel.send(
 					Utils.createSimpleEmbed(LOCALE.errors.max_file_size_exceeded.title, LOCALE.errors.max_file_size_exceeded.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
 				);
