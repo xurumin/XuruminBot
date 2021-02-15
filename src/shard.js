@@ -38,11 +38,27 @@ shard.spawn(Number(process.env.SHARDS))
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`)
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`)
 
-    BotStatusSocket.init(2257, "", user_access)
-    BotStatusSocket.setStatus({
-      guilds: await getServerCount()
+
+
+    require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+      console.log('addr: ' + add);
     })
+
+    setInterval(async () => {
+      BotStatusSocket.setStatus({
+        guilds: await getServerCount(),
+        totalMusicPlayers: await getVoiceConnectionsCount()
+      })
+    }, 1000)
+
+    BotStatusSocket.init(2257, "", user_access)
+    
   });
+
+const getVoiceConnectionsCount = async () => {
+  const req = await shard.fetchClientValues('voice.connections.size');
+  return req.reduce((p, n) => p + n, 0);
+}
 
 const getServerCount = async () => {
   const req = await shard.fetchClientValues('guilds.cache.size');

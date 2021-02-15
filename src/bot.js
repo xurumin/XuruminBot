@@ -182,8 +182,7 @@ const init = async () => {
 	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN )
 
 	client.login(process.env.DISCORD_API)
-
-
+	
 	client.on("ready", () => {
 		client.user.setActivity({
 			name: `Precisa de ajuda? ${process.env.COMMAND_PREFIX}help`
