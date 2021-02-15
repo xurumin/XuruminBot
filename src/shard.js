@@ -38,12 +38,6 @@ shard.spawn(Number(process.env.SHARDS))
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`)
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`)
 
-
-
-    require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-      console.log('addr: ' + add);
-    })
-
     setInterval(async () => {
       BotStatusSocket.setStatus({
         guilds: await getServerCount(),
@@ -51,7 +45,10 @@ shard.spawn(Number(process.env.SHARDS))
       })
     }, 1000)
 
-    BotStatusSocket.init(2257, "", user_access)
+    const PORT = process.env.PORT || 3000;
+    const IP = process.env.PORT || "127.0.0.1";
+
+    BotStatusSocket.init(PORT, IP, user_access)
     
   });
 
