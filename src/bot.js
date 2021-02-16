@@ -5,6 +5,7 @@ const fs = require('fs-extra');
 
 const Discord = require('discord.js');
 const utils = require('./utils/utils');
+const { default: axios } = require('axios');
 
 const client = new Discord.Client();
 
@@ -184,9 +185,14 @@ const init = async () => {
 	client.login(process.env.DISCORD_API)
 	
 	client.on("ready", () => {
-		client.user.setActivity({
-			name: `Precisa de ajuda? ${process.env.COMMAND_PREFIX}help`
-		})
+		setInterval(async ()=>{
+			var activities = ( await axios.get(process.env.GIST_URL)).data.split("\n")
+			var activitie = utils.choice(activities)
+			client.user.setActivity({
+				name: activitie
+			})
+
+		}, 2000)
 		process.env.SHARD_ID = client.shard.ids[0]
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 	});
