@@ -188,7 +188,7 @@ const init = async () => {
 
 	client.login(process.env.DISCORD_API)
 
-	function setActv() {
+	async function setActv() {
 		var activities = (await axios.get(process.env.GIST_URL)).data.split("\n")
 		var activitie = utils.choice(activities)
 		client.user.setActivity({
