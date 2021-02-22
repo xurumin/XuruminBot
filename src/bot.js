@@ -159,23 +159,23 @@ const init = async () => {
 			client.cachedPoints.clear()
 		}
 
-		for (const user of client.cachedPoints) {
-			try {
-				var userInfo = {
-					userId: user[0],
-					points: user[1]
-				}
-				if (await utils.Profile.hasProfile(client, userInfo.userId)) {
-					var sumOfPoints = (parseFloat((await utils.Profile.getProfile(client, userInfo.userId)).points) + parseFloat(userInfo.points)).toFixed(2)
-					await utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
-				} else {
-					var standard_profile = utils.Profile.getStandardProfile()
-					await utils.Profile.setProfile(client, userInfo.userId, standard_profile.bg_url, standard_profile.aboutme, standard_profile.level, userInfo.points)
-				}
-			} catch (error) {
-				console.log(error)
-			}
-		}
+		// for (const user of client.cachedPoints) {
+		// 	try {
+		// 		var userInfo = {
+		// 			userId: user[0],
+		// 			points: user[1]
+		// 		}
+		// 		if (await utils.Profile.hasProfile(client, userInfo.userId)) {
+		// 			var sumOfPoints = (parseFloat((await utils.Profile.getProfile(client, userInfo.userId)).points) + parseFloat(userInfo.points)).toFixed(2)
+		// 			await utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
+		// 		} else {
+		// 			var standard_profile = utils.Profile.getStandardProfile()
+		// 			await utils.Profile.setProfile(client, userInfo.userId, standard_profile.bg_url, standard_profile.aboutme, standard_profile.level, userInfo.points)
+		// 		}
+		// 	} catch (error) {
+		// 		console.log(error)
+		// 	}
+		// }
 
 		utils.BotDB.setBotInfo(client.commandsSent + parseInt(await utils.BotDB.getSentCmds()))
 
@@ -184,7 +184,7 @@ const init = async () => {
 
 		client.cachedPoints.clear()
 		client.commandsSent = 0;
-	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN)
+	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN?process.env.UPLOAD_CACHED_POINTS_COOLDOWN:1000*60*60*24)
 
 	client.login(process.env.DISCORD_API)
 
