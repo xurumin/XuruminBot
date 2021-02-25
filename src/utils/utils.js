@@ -17,17 +17,17 @@ function stringTemplateParser(expression, valueObj) {
   return text
 }
 
-var admin = require("firebase-admin");
+// var admin = require("firebase-admin");
 
-var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
+// var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://kkkklink.firebaseio.com"
-});
-var db = admin.database()
-var profilesRef = db.ref("profiles");
-var botInfoRef = db.ref("bot");
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://kkkklink.firebaseio.com"
+// });
+// var db = admin.database()
+// var profilesRef = db.ref("profiles");
+// var botInfoRef = db.ref("bot");
 
 module.exports = {
   shuffle(array) {
@@ -88,27 +88,30 @@ module.exports = {
   },
   BotDB:{
     async setBotInfo(cmdSent){
-      await botInfoRef.set({
-        "commandsSent": cmdSent
-      })
+      // await botInfoRef.set({
+      //   "commandsSent": cmdSent
+      // })
     },
     async getSentCmds(){
-      var sentCmds = (await botInfoRef.get("commandsSent")).val().commandsSent
-      return sentCmds? sentCmds : 0
+      // var sentCmds = (await botInfoRef.get("commandsSent")).val().commandsSent
+      // return sentCmds? sentCmds : 0
     }
   },
   Profile: {
     setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges=[])=>{
-      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
-      var usersRef = profilesRef.child("users")
-      await usersRef.child(user_id).set({
-          aboutme: aboutme,
-          bg_url: bg_url,
-          level: level,
-          points: points,
-          badges: badges,
-          userId: user_id_raw
-      });
+      // const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      // var usersRef = profilesRef.child("users")
+      // await usersRef.child(user_id).set({
+      //     aboutme: aboutme,
+      //     bg_url: bg_url,
+      //     level: level,
+      //     points: points,
+      //     badges: badges,
+      //     userId: user_id_raw
+      // });
+
+
+
       // client.profiles.set(user_id, {
       //   aboutme: aboutme,
 			// 	bg_url: bg_url,
@@ -117,23 +120,31 @@ module.exports = {
 			// })
     },
     setTag: async (client, user_id_raw, tag, value)=>{
-      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
-      var usersRef = profilesRef.child("users")
-      var updateObj = {}
-      updateObj[tag] = value
-      await usersRef.child(user_id).update(updateObj)
+      // const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      // var usersRef = profilesRef.child("users")
+      // var updateObj = {}
+      // updateObj[tag] = value
+      // await usersRef.child(user_id).update(updateObj)
+
+
+
       //client.profiles.get(user_id)[tag] = value
     },
     getProfile: async (client, user_id_raw)=>{
-      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
-      var usersRef = profilesRef.child("users")
-      return (await usersRef.get(user_id)).val()[user_id]
+      // const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      // var usersRef = profilesRef.child("users")
+      // return (await usersRef.get(user_id)).val()[user_id]
+
+
+
       //return client.profiles.get(user_id)
     },
     hasProfile: async (client, user_id_raw)=>{
-      const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
-      var usersRef = profilesRef.child("users")
-      return (await usersRef.child(user_id).once("value")).exists()
+      // const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
+      // var usersRef = profilesRef.child("users")
+      // return (await usersRef.child(user_id).once("value")).exists()
+
+
       //return client.profiles.has(user_id)
     },
     getStandardProfile: ()=>{
@@ -146,8 +157,8 @@ module.exports = {
       }
     },
     getBadges: async()=>{
-      var badgesRef = profilesRef.child("badges")
-      return (await badgesRef.get()).val()
+      // var badgesRef = profilesRef.child("badges")
+      // return (await badgesRef.get()).val()
     }
   }
 }
