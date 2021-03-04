@@ -74,9 +74,16 @@ module.exports = {
             message.channel.startTyping()
             setTimeout(() => {
                 message.channel.stopTyping();
-            }, 5000);
+            }, 5000);   
 
-            ImageGenerator(user_pic, message.guild.member(user).nickname.slice(0,14))
+            var name = message.guild.member(user).nickname
+            if(!name){
+                name = user.username.slice(0,14)
+            }else{
+                name = name.slice(0,14)
+            }
+
+            ImageGenerator(user_pic, 
                 .then(async (image) => {
                     var msg = {
                         title: LOCALE.message.title,
