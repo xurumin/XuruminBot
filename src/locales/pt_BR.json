@@ -352,6 +352,22 @@
                 }
             }
         },
+        "daqueeutedououtra": {
+            "message": {
+                "title": ":triumph: DÁ QUE EU TE DOU OUTRA",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "need_more_users": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisar marcar pelo menos **2 usuários**."
+                }
+            }
+        },
         "piadas": {
             "message": {
                 "title": "Piadocas do dia :zany_face:",

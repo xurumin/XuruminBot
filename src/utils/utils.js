@@ -32,6 +32,9 @@ var botInfoRef = db.ref("bot");
 var $;
 
 var exp = {
+  angleToRadians(angle){
+    return ( -angle * Math.PI)/180
+  },
   shuffle(array) {
     var currentIndex = array.length,
       temporaryValue, randomIndex;
