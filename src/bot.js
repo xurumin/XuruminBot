@@ -127,8 +127,8 @@ const init = async () => {
 			const main = require(`./plugins/${controllerName}/${controllerName}.js`);
 			console.log(`[plugin-loader] loading ${controllerName} commands...`)
 			const commandList = await fs.readdir(`${__dirname}/plugins/${controllerName}/${main.commands.path}/`)
-			commandList.forEach(element => {
-				const command = require(`${__dirname}/plugins/${controllerName}/${main.commands.path}/${element}`);
+			for(var element of commandList){
+				const command = await require(`${__dirname}/plugins/${controllerName}/${main.commands.path}/${element}`);
 				client.commands.set(command.command.name, command);
 				if (command.command.aliases && command.command.aliases != []) {
 					command.command.aliases.forEach(aliase => {
@@ -136,7 +136,7 @@ const init = async () => {
 					});
 				}
 				console.log(`	> Command ${command.command.name} loaded.`)
-			});
+			}
 		} catch (error) {
 			console.log(`[#ERROR] Could not load command ${controllerName}:`);
 			console.error(error)
@@ -151,14 +151,11 @@ const init = async () => {
 	}, 2500 * 1000)
 
 	setInterval(async () => {
-		console.log(`[LOG] Uploading cached points of ${client.cachedPoints.size} users`)
 		const t1 = (new Date()).getTime()
 
-		if (process.env.NODE_ENV == "development") {
-			console.log("[LOG] DEV MOD ON. NO POINTS WERE UPLOADED")
-			client.cachedPoints.clear()
+		if (process.env.NODE_ENV != "development") {
+			utils.BotDB.setBotInfo(client.commandsSent + parseInt(await utils.BotDB.getSentCmds()))
 		}
-
 		// for (const user of client.cachedPoints) {
 		// 	try {
 		// 		var userInfo = {
@@ -176,9 +173,6 @@ const init = async () => {
 		// 		console.log(error)
 		// 	}
 		// }
-
-		utils.BotDB.setBotInfo(client.commandsSent + parseInt(await utils.BotDB.getSentCmds()))
-
 		const t2 = (new Date()).getTime()
 		console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
 
