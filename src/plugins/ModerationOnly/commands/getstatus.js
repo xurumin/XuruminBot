@@ -9,12 +9,17 @@ require('dotenv/config');
 const getVoiceConnectionsCount = async (client) => {
     const req = await client.shard.fetchClientValues('voice.connections.size');
     return req.reduce((p, n) => p + n, 0);
-  }
+}
   
-  const getServerCount = async (client) => {
+const getServerCount = async (client) => {
     const req = await client.shard.fetchClientValues('guilds.cache.size');
     return req.reduce((p, n) => p + n, 0);
-  }
+}
+
+const getMemberCount = async (client) => {
+    const req = await client.shard.broadcastEval('this.guilds.cache.map((guild) => guild.memberCount)');
+    return req[0].reduce((p, n) => p + n, 0);
+}
 
 const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
 module.exports = {
@@ -34,6 +39,7 @@ module.exports = {
             var txt = "";
             txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
             txt+= `Server count: ${await getServerCount(client)}\n`
+            txt+= `Member count: ${await getMemberCount(client)}\n`
             txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
             txt+= `CPU usage: ${os.loadavg()}`
             return message.channel.send(txt)
