@@ -2,6 +2,7 @@
 const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const config = require("./../../../config");
+const os = require('os');
 require('dotenv/config');
 
 
@@ -33,7 +34,8 @@ module.exports = {
             var txt = "";
             txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
             txt+= `Server count: ${await getServerCount(client)}\n`
-            txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}`
+            txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
+            txt+= `CPU usage: ${os.loadavg()}`
             return message.channel.send(txt)
 
         })
