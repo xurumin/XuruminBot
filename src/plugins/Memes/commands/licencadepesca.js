@@ -67,7 +67,7 @@ module.exports = {
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
                 return resolve(message.channel.send(
-                    Utils.createSimpleEmbed(msg.title, msg.description)
+                    utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
             
