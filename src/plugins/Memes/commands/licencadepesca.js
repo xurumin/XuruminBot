@@ -83,7 +83,7 @@ module.exports = {
                 name = name.slice(0,14)
             }
 
-            ImageGenerator(user_pic, 
+            ImageGenerator(user_pic, name)
                 .then(async (image) => {
                     var msg = {
                         title: LOCALE.message.title,
