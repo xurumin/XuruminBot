@@ -340,6 +340,18 @@
                 }
             }
         },
+        "mucagas": {
+            "message": {
+                "title": ":rofl: :rofl: :rofl: MU QUI NHA? ENTREGADOR?",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
         "piadas": {
             "message": {
                 "title": "Piadocas do dia :zany_face:",
