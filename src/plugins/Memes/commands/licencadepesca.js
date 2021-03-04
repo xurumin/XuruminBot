@@ -2,34 +2,42 @@
 
 const {
     createCanvas,
-    loadImage
+    loadImage,
+    registerFont
 } = require('canvas')
 const Discord = require('discord.js');
 const path = require("path");
-const utils = require('./../../../utils/utils');
-const Utils = require("./../../../utils/utils")
 
-const ImageList = require("./../files/outravida/image_list.json")
+registerFont(path.join(__dirname,"..",`/files/Arial.ttf`), {family: "arialfont"})
+
+const utils = require('./../../../utils/utils');
 
 require('dotenv/config');
 
-function ImageGenerator(user_pic) {
+function ImageGenerator(userpic, username) {
     return new Promise(async (resolve, reject) => {
-        const canvas = createCanvas(500,500)
+        const canvas = createCanvas(716,399)
         const ctx = canvas.getContext('2d')
 
-        ctx.drawImage(await loadImage(user_pic), 0,0,500,500);
-        ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/humorkkjkk_base.png`)), 0, 0, 500,500);
+        var p1 = {"x":222,"y":187,"width":60,"height":60,"angle":15}
+        //var p2 = {"x":262,"y":219,"width":215,"height":215,"angle":10}
 
-        ctx.globalCompositeOperation = "saturation";
-        ctx.fillStyle = "hsl(0,100%,50%)";  // saturation at 100%
-        ctx.fillRect(0,0,500,500);  // apply the comp filter
-        ctx.globalCompositeOperation = "source-over";  // restore default comp
+        ctx.save()
+        ctx.translate(p1.x, p1.y);
+        ctx.rotate( utils.angleToRadians(p1.angle) );
+        ctx.drawImage(await loadImage(userpic),-p1.width / 2, -p1.height / 2,p1.width,p1.height);
+        ctx.restore()
 
-        ctx.fillStyle = "rgba(255, 0, 0,0.1)"
-        ctx.fillRect(0,0,500,500);        
+        ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/licencadepesca/base.png`)), 0, 0, 716,399);
 
-        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.5 }), 'image.png'))
+        ctx.save()
+        ctx.translate(430, 290);
+        ctx.rotate( utils.angleToRadians(8) );
+        ctx.font = "20px arialfont";
+        ctx.fillText(username, 0, 0)
+        ctx.restore()
+
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))
     })
 
 }
@@ -53,7 +61,6 @@ module.exports = {
                 format: "png",
                 size: 256
             })
-
             if (!user_pic) {
                 var msg = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
@@ -63,13 +70,13 @@ module.exports = {
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
-
+            
             message.channel.startTyping()
             setTimeout(() => {
                 message.channel.stopTyping();
             }, 5000);
 
-            ImageGenerator(user_pic, utils.choice(ImageList))
+            ImageGenerator(user_pic, message.guild.member(user).nickname.slice(0,14))
                 .then(async (image) => {
                     var msg = {
                         title: LOCALE.message.title,
@@ -95,9 +102,10 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'humorkkjkk',
+            name: 'licencadepesca',
             aliase: [
-                "humorepiadas"
+                "fishinglicense",
+                "fishinglicensepatrick"
             ]
         }
     },

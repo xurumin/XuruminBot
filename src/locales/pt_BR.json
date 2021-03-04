@@ -352,6 +352,18 @@
                 }
             }
         },
+        "licencadepesca": {
+            "message": {
+                "title": ":fishing_pole_and_fish: :ok_hand: :sunglasses:  Aqui está sua Licença para Pescar",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
         "daqueeutedououtra": {
             "message": {
                 "title": ":triumph: DÁ QUE EU TE DOU OUTRA",
