@@ -94,12 +94,10 @@ module.exports = {
                 userImages.push(user_pic)
             }
             
-
             message.channel.startTyping()
             setTimeout(() => {
                 message.channel.stopTyping();
             }, 5000);
-
 
             ImageGenerator(userImages)
                 .then(async (image) => {
