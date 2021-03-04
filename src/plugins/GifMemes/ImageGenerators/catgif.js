@@ -35,6 +35,7 @@ module.exports = function process(userimagelink, message) {
 
 
         for (const img_url of fs.readdirSync(path.join(__dirname,"..","/files/catgif"))) {
+            ctx.clearRect(0,0,250,250)
             ctx.drawImage(user_img, 0, 0, 250,250);
             ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/catgif/${img_url}`)), 0, 80, 175,175);
             encoder.addFrame(ctx);

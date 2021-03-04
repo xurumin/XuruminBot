@@ -4,7 +4,8 @@ const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const fs = require("fs")
 
-const ImageGenerator = require("./../ImageGenerators/catgif")
+const ImageGenerator = require("./../ImageGenerators/catgif");
+const utils = require('./../../../utils/utils');
 
 
 var globalCooldown = []
@@ -69,6 +70,16 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args, LOCALE) => {
+        const isPremium = await utils.Profile.isPremium(client, message.author.id)
+        if(!isPremium){
+            const notPremiumEmbed = new Discord.MessageEmbed()
+            .setColor('#9d65c9')
+            .setTitle(LOCALE.errors.user_is_not_premium.title)
+            .setDescription(LOCALE.errors.user_is_not_premium.description.interpolate({
+                prefix: process.env.COMMAND_PREFIX
+            }))
+            return message.channel.send(notPremiumEmbed)
+        }
         const embed = new Discord.MessageEmbed()
             .setColor('#9d65c9')
             .setTitle(LOCALE.messages.loading.title)

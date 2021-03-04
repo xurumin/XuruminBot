@@ -17,17 +17,17 @@ module.exports = {
 	 */
 	run: async (client, message, locale_list) => {
 
-		if(!antiFloodCooldown.has(message.author.id)){
-			if(client.cachedPoints.has(message.author.id)){
-				client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
-			}else{
-				client.cachedPoints.set(message.author.id,1)
-			}
-			antiFloodCooldown.set(message.author.id);
-			setTimeout(() => {
-				antiFloodCooldown.delete(message.author.id);
-			}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
-		}
+		// if(!antiFloodCooldown.has(message.author.id)){
+		// 	if(client.cachedPoints.has(message.author.id)){
+		// 		client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
+		// 	}else{
+		// 		client.cachedPoints.set(message.author.id,1)
+		// 	}
+		// 	antiFloodCooldown.set(message.author.id);
+		// 	setTimeout(() => {
+		// 		antiFloodCooldown.delete(message.author.id);
+		// 	}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
+		// }
 
 		if ( (!message.content.startsWith(process.env.COMMAND_PREFIX)) && !(message.content == `<@!${client.user.id}>`) ) return;
 

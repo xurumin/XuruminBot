@@ -361,6 +361,10 @@
                 "user_do_not_have_pic": {
                     "title": "❌ Ops!",
                     "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 }
             }
         }
