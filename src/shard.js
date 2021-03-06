@@ -1,20 +1,17 @@
 //const numCpus = require("os").cpus().length
 require('dotenv/config');
 
+const { default: axios } = require('axios');
 const {
   ShardingManager
 } = require('discord.js');
 const shard = new ShardingManager('./src/bot.js', {
   token: process.env.DISCORD_API
 });
+var DISCORD_BOTS_GG_API = process.env.DISCORD_BOTS_GG_API
 
 const BotStatusSocket = require("./libs/BotStatusSocket")
 
-var user_access = {
-  user: "test1",
-  userAgent: "bot_access_client",
-  token: "bdd23d1555a7c0322637c54f1e60a03b9672459dcc3e8882b0a655607eb256a3fa935511bc67c0ac6cf4446c6f52638a91db72698614a57d844f79353eefae37"
-}
 
 
 shard.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
@@ -24,9 +21,22 @@ shard.spawn(Number(process.env.SHARDS))
       const DBL = require("dblapi.js");
       const dbl = new DBL(process.env.TOPGG_API, shard);
 
+      
+
       async function postDBL() {
         //client.guilds.cache.size
-        dbl.postStats(await getServerCount());
+        try {
+          await axios.post("https://discord.bots.gg/api/v1/bots/753723888671785042/stats",{
+            guildCount: await getServerCount()
+          },{
+            headers:{
+              Authorization: DISCORD_BOTS_GG_API
+            }
+          })
+          dbl.postStats(await getServerCount());
+        } catch (error) {
+          console.log(error);
+        }
       }
       postDBL()
       setInterval(async () => {
@@ -37,18 +47,6 @@ shard.spawn(Number(process.env.SHARDS))
 
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`)
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`)
-
-    setInterval(async () => {
-      BotStatusSocket.setStatus({
-        guilds: await getServerCount(),
-        totalMusicPlayers: await getVoiceConnectionsCount()
-      })
-    }, 1000)
-
-    const PORT = process.env.PORT || 3000;
-    const IP = process.env.PORT || "127.0.0.1";
-
-    BotStatusSocket.init(PORT, IP, user_access)
     
   });
 
