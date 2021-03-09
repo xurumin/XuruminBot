@@ -84,9 +84,10 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'mucagas',
+            name: 'gas',
             aliase: [
-                "smurfdomucaentregador"
+                "smurfdomucaentregador",
+                "mucagas"
             ]
         }
     },
