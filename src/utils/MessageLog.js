@@ -39,11 +39,11 @@ function sendWebhook(info) {
         },
         {
             name: "Command",
-            value: String(info.request.message.date)
+            value: info.command
         },
         {
             name: "Sender Content",
-            value: info.command
+            value: info.request.message.content
         },
         {
             name: "Sender Datetime",
