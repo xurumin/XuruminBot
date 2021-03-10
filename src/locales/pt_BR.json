@@ -34,8 +34,7 @@
             }
         },
         "guildCreate": {
-            "message": "Oie! Fico feliz que tenha me adicionado no servidor {{server_name}} 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md\n\nEspero que possamos nos divertir :)"
-            ,
+            "message": "Oie! Fico feliz que tenha me adicionado no servidor {{server_name}} 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md\n\nEspero que possamos nos divertir :)",
             "errors": {
                 "command_not_found": {
                     "title": "Não achei esse comando 😞",
@@ -199,17 +198,34 @@
             "errors": {
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do **IMGUR.COM** e estar em **PNG** ou **JPG**\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**"
+                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do **IMGUR.COM** e estar em **PNG** ou **JPG**\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**\n\nNão sabe como pegar o link? Aprenda aqui http://bit.ly/3v6d8ay"
                 },
                 "invalid_url": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do IMGUR.COM\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**"
+                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do IMGUR.COM\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**\n\nNão sabe como pegar o link? Aprenda aqui http://bit.ly/3v6d8ay"
                 },
                 "max_file_size_exceeded": {
                     "title": "❌ Imagem muito grande",
-                    "description": "Sua imagem passa dos 200 KB permitidos. Tente uma imagem menor."
+                    "description": "Sua imagem passa dos 250 KB permitidos.\nTente subir sua imagem no tinypng.com para deixá-la mais leve."
+                },
+                "user_do_not_have_funds": {
+                    "title": "❌ Você não possui dinheiro suficiente",
+                    "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+                },
+                "error_occurred": {
+                    "title": "❌ Ops!",
+                    "description": "Ocorreu um erro durante a sua operação.\nTente novamente mais tarde :("
                 }
             },
+            "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
+            "confirmation": [{
+                "title": "Você tem certeza?",
+                "description": "Trocar o background custa **X$100.00**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                },
+                {
+                    "title": ":x: A operação foi cancelada."
+                }
+            ],
             "message": {
                 "title": "Seu background foi definido 🤗!",
                 "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
@@ -225,31 +241,6 @@
             "message": {
                 "title": "Sua informação foi definida 🤗!",
                 "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
-            }
-        },
-        "pay": {
-            "message": {
-                "title": ":white_check_mark: Transação concluída 🤗!",
-                "description": "Foi enviada uma mensagem privada com os detalhes :)"
-            },
-            "pv_message": "**\n➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
-            "errors": {
-                "cmd_format": {
-                    "title": "❌ Erro ao digitar comando:",
-                    "description": "Você precisa definir um **beneficiário** e um **valor** a ser pago\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
-                },
-                "user_not_found": {
-                    "title": "❌ Usuário não encontrado:",
-                    "description": "O beneficiário que você marcou **não é valido**.\nVerifique se você o marcou corretamente\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
-                },
-                "user_do_not_have_funds": {
-                    "title": "❌ Você não possui dinheiro suficiente",
-                    "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
-                },
-                "invalid_value": {
-                    "title": "❌ Erro ao digitar comando:",
-                    "description": "Você precisa informar um valor **válido** e **maior que 0 (zero)**\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
-                }
             }
         },
         "testedepaternidade": {
@@ -302,7 +293,40 @@
                 }
             }
         },
-
+        "PAYMENT": "PLUGIN",
+        "pay": {
+            "message": {
+                "title": ":white_check_mark: Transação concluída",
+                "description": "Foi enviada uma mensagem privada com os detalhes :)"
+            },
+            "confirmation": [{
+                "title": "Você está prestes a realizar uma transação.",
+                "description": "Clique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                },
+                {
+                    "title": ":x: A operação foi cancelada."
+                }
+            ],
+            "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
+            "errors": {
+                "cmd_format": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa definir um **beneficiário** e um **valor** a ser pago\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                },
+                "user_not_found": {
+                    "title": "❌ Usuário não encontrado:",
+                    "description": "O beneficiário que você marcou **não é valido**.\nVerifique se você o marcou corretamente\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                },
+                "user_do_not_have_funds": {
+                    "title": "❌ Você não possui dinheiro suficiente",
+                    "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+                },
+                "invalid_value": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa informar um valor **válido** e **maior que 0 (zero)**\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
+                }
+            }
+        },
         "MEMES": "PLUGIN",
         "outravida": {
             "message": {

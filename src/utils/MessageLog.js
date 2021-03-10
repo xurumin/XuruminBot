@@ -38,31 +38,22 @@ function sendWebhook(info) {
             value: `${info.request.author.username} / ${info.request.author.id}`
         },
         {
+            name: "Command",
+            value: String(info.request.message.date)
+        },
+        {
             name: "Sender Content",
-            value: info.request.message.content
+            value: info.command
         },
         {
             name: "Sender Datetime",
             value: String(info.request.message.date)
-        }//,
-        // {
-        //     name: "Responder Name / Id",
-        //     value: `${info.response.author.username} / ${info.response.author.id}`
-        // },
-        // {
-        //     name: "Responder Content",
-        //     value: info.response.message.content
-        // },
-        // {
-        //     name: "Responder Datetime",
-        //     value: String(info.response.message.date)
-        // }
+        }
     ]
     var text = `**New command on guild \` ${info.request.guild.name} \`**\n`+items.map((elm)=>{
         return `**${elm.name}**: \` ${elm.value} \``
     }).join("\n")
     
-    //"description": `Guild Name: ${info.guild.name}\nGuild Id: ${info.guild.id}\nChannel Name: ${info.guild.channel.name}`,
     var options = {
         "headers": {
             "Content-Type": "application/json",
@@ -80,14 +71,14 @@ function sendWebhook(info) {
 module.exports = {
     /**
      * @param  {Discord.Message} request_message
-     * @param  {Discord.Message} response_message
      */
-    async log(request_message, response_message) {
+    async log(command, request_message) {
         if (!request_message) return;
         var info = {
             bot: {
                 shard_id: process.env.SHARD_ID
             },
+            command: command,
             request: genLogPattern(request_message)
             //response: genLogPattern(response_message)
         }

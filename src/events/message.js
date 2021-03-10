@@ -103,7 +103,7 @@ module.exports = {
 					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
 				}
 
-				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
+				return MessageLog.log(command, message); // ADD MESSAGE TO MessageLog
 			} else if (aliase) {
 				//Register +1 cmd to log
 				client.commandsSent++;
@@ -117,7 +117,7 @@ module.exports = {
 					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
 				}
 
-				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
+				return MessageLog.log(aliase, message); // ADD MESSAGE TO MessageLog
 			} else {
 				return message.channel.send(
 					new Discord.MessageEmbed()

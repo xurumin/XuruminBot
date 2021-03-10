@@ -1,10 +1,11 @@
 "use strict"
-const discord = require("discord.js")
-const crypto = require("crypto")
+const discord = require("discord.js");
+const crypto = require("crypto");
+require('dotenv/config');
 
-String.prototype.interpolate = function(params) {
+String.prototype.interpolate = function (params) {
   "use strict"
-	return stringTemplateParser(this, params)
+  return stringTemplateParser(this, params)
 }
 
 
@@ -32,8 +33,8 @@ var botInfoRef = db.ref("bot");
 var $;
 
 var exp = {
-  angleToRadians(angle){
-    return ( -angle * Math.PI)/180
+  angleToRadians(angle) {
+    return (-angle * Math.PI) / 180
   },
   shuffle(array) {
     var currentIndex = array.length,
@@ -74,7 +75,7 @@ var exp = {
       .filter((v, i) => v !== "00" || i > 0)
       .join(":")
   },
-  getErrorMessage(){
+  getErrorMessage() {
     return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
   },
   random(min, max) {
@@ -82,40 +83,40 @@ var exp = {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
-  choice(array){
+  choice(array) {
     return array[Math.floor(Math.random() * array.length)]
   },
   stringTemplateParser: stringTemplateParser,
-  XP2LV(xp){
+  XP2LV(xp) {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
-    var lv = ((10**((Math.log10(xp) - 2)/1.5))+1)
+    var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
     return parseInt(lv.toFixed(0))
   },
-  BotDB:{
-    async setBotInfo(cmdSent){
+  BotDB: {
+    async setBotInfo(cmdSent) {
       await botInfoRef.set({
         "commandsSent": cmdSent
       })
     },
-    async getSentCmds(){
+    async getSentCmds() {
       var sentCmds = (await botInfoRef.get("commandsSent")).val().commandsSent
-      return sentCmds? sentCmds : 0
+      return sentCmds ? sentCmds : 0
     }
   },
   Profile: {
-    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges=[])=>{
+    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges = []) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       await usersRef.child(user_id).set({
-          aboutme: aboutme,
-          bg_url: bg_url,
-          level: level,
-          points: points,
-          badges: badges,
-          userId: user_id_raw
+        aboutme: aboutme,
+        bg_url: bg_url,
+        level: level,
+        points: points,
+        badges: badges,
+        userId: user_id_raw
       });
     },
-    setTag: async (client, user_id_raw, tag, value)=>{
+    setTag: async (client, user_id_raw, tag, value) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       var updateObj = {}
@@ -124,7 +125,7 @@ var exp = {
 
       //client.profiles.get(user_id)[tag] = value
     },
-    getProfile: async (client, user_id_raw)=>{
+    getProfile: async (client, user_id_raw) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.get(user_id)).val()[user_id]
@@ -133,7 +134,7 @@ var exp = {
 
       //return client.profiles.get(user_id)
     },
-    hasProfile: async (client, user_id_raw)=>{
+    hasProfile: async (client, user_id_raw) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.child(user_id).once("value")).exists()
@@ -141,29 +142,66 @@ var exp = {
 
       //return client.profiles.has(user_id)
     },
-    isPremium: async (client, user_id_raw)=>{
+    isPremium: async (client, user_id_raw) => {
       var profile = await exp.Profile.getProfile(client, user_id_raw)
-      
 
-      if(profile["status"]){
-        return (profile["status"]) == "premium"?true:false;
+
+      if (profile["status"]) {
+        return (profile["status"]) == "premium" ? true : false;
       }
       return false;
 
     },
-    getStandardProfile: ()=>{
+    getStandardProfile: () => {
       return {
         bg_url: "https://i.imgur.com/MbGPZQR.png",
         level: 0,
-				points: 0,
+        points: 0,
         aboutme: "",
         badges: []
       }
     },
-    getBadges: async()=>{
+    getBadges: async () => {
       var badgesRef = profilesRef.child("badges")
       return (await badgesRef.get()).val()
     }
+  },
+  Reactions: {
+    async _sendRectsLight(message) {
+      await message.react("✅")
+      await message.react("❌")
+    },
+    getConfirmation(message) {
+      return new Promise(async (resolve, reject) => {
+        await exp.Reactions._sendRectsLight(message)
+        const filter = (reaction, user) => {
+          return !["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id);
+        };
+        message.awaitReactions(filter, {
+            max: 1,
+            time: 100000,
+            errors: ['time']
+          })
+          .then(collected => {
+            const reaction = collected.first();
+            switch (reaction.emoji.name) {
+              case "✅":
+                resolve(true)
+                break;
+              case "❌":
+                resolve(false)
+                break;
+              default:
+                reject()
+                break;
+            }
+          })
+          .catch(collected => {
+            reject(collected)
+          });
+
+      })
+    },
   }
 }
 module.exports = exp
