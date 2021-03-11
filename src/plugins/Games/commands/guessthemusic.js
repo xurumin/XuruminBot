@@ -117,7 +117,7 @@ module.exports = {
                             LOCALE["messages"]["about_the_game"].description.interpolate({
                                 genre: game_info.genre,
                                 rounds: game_info.rounds,
-                                time: "30s"
+                                time: "60s"
                             })
                         )
                     )
@@ -152,11 +152,10 @@ module.exports = {
                             return WITM.EventEmitter.emit("finish")
                         }
                         if (res.status == 0) {
-                            await message.channel.send(new Discord.MessageEmbed().setTitle(
+                            await message.channel.send(
                                 LOCALE["messages"]["timeout"].interpolate({
                                     music_name: res.music
-                                })
-                            ))
+                                }))
                         }
 
                         //start another round

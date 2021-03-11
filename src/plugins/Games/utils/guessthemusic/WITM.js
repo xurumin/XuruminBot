@@ -31,8 +31,7 @@ class MusicPlayerClass {
     async play(url, time = 10000) {
         try {
             var stream = ytdl(url, {
-                filter: 'audioonly',
-                quality: 'lowestaudio'
+                filter: 'audioonly'
             });
             var dispatcher = await this.connection.play(stream)
             setTimeout(()=>{
@@ -79,7 +78,8 @@ class Game {
                 if(!this.isOpen) return;
                 this.isOpen = false;
                 return this.EventEmitter.emit("round", {
-                    status: 0
+                    status: 0,
+                    music: `${this.random_music.name} - ${this.random_music.author}`
                 })
             }, 60000)
 
