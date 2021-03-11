@@ -431,6 +431,22 @@
                     "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 }
             }
+        },
+        "GAMES": "PLUGIN",
+        "either": {
+            "question": {
+                "title": "Qual você prefere?",
+                "loading": "Carregando nova mensagem em 5 segundos..."
+            },
+            "finished":{
+                "description": "O jogo acabou :(\nSe quiser jogar denovo, utilize novamente o comando :)"
+            },
+            "errors": {
+                "something_went_wrong": {
+                    "title": "❌ Ops!",
+                    "description": "Alguma coisa deu errado.\nTente novamente mais tarde :("
+                }
+            }
         }
     }
 }
