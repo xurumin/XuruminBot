@@ -76,6 +76,13 @@ var exp = {
       .filter((v, i) => v !== "00" || i > 0)
       .join(":")
   },
+  wait(ms) {
+    return new Promise((resolve, reject)=>{
+      setTimeout(()=>{
+        resolve();
+      }, ms)
+    })
+  },
   getErrorMessage() {
     return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
   },

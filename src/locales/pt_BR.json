@@ -452,6 +452,51 @@
                     "description": "Alguma coisa deu errado.\nTente novamente mais tarde :("
                 }
             }
+        },
+        "guessthemusic": {
+            "messages": {
+                "title": "🔊 Qual a música?",
+                "start": {
+                    "description": "❔ **Como funciona?**\nOs usuários participantes devem estar no mesmo chat de áudio do bot.\nUma música aleatória irá tocar.\nCada rodada tem 30 segundos. O usuário que acertar a música primeiro ganha.\nUse x!gtm <nome da música> para tentar acertar.\n\n❗️ **Atenção**\nVocê pode escolher o gênero das músicas e o número de rodadas com x!gtm <genero> <número de rodadas>\nPor padrão, o gênero é aleatório e as partidas duram 10 rounds.\nGêneros disponíveis: `pop, rock, mpb, random`\nDeve ter no mínimo **3 rounds** e no máximo **15 rounds**.\n\nPara sair durante a partida, use `x!gtm -stop`\n\nClique em ✅ para **confirmar** e em ❌ para **cancelar**."
+                },
+                "about_the_game": {
+                    "title": "Informações do jogo",
+                    "description": "Gênero: ``{{genre}}``\nRounds: ``{{rounds}}``\nTempo por round: ``{{time}}``\n"
+                },
+                "refused": {
+                    "title": "O jogo foi cancelado!",
+                    "description": "Vejo você em breve! :)"
+                },
+                "leaving": "Saindo...",
+                "timeout": "Ninguém acertou :(",
+                "playing": "Tocando música [{{index}}]",
+                "accuracy": "{{author}} -> Você está {{accuracy}}% perto da resposta.\nVocê precisa de pelo menos 85% para acertar.",
+                "right_answer": "{{author}} -> Você acertou!\n`{{music_name}}`",
+                "game_over": {
+                    "title": "O jogo acabou!",
+                    "description": "{{author}} ganhou acertando **{{points}} de {{total}}**!\nUhul!"
+                },
+                "try_music": {
+                    "title": "Qual o nome da música?",
+                    "description": "Escreva x!gtm <nome da música> para tentar acertar!"
+                }
+            },
+            "finished":{
+                "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
+            },
+            "errors": {
+                "something_went_wrong": {
+                    "title": "❌ Ops!",
+                    "description": "Alguma coisa deu errado.\nTente novamente mais tarde :("
+                },
+                "user_is_not_on_voice_chat": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um chat de voz para executar o comando."
+                },
+                "already_playing": {
+                    "title": "❌ Ops! Já estão jogando \"GUESS THE MUSIC\" no servidor."
+                }
+            }
         }
     }
 }
