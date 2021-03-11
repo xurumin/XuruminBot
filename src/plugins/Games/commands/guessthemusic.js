@@ -153,7 +153,9 @@ module.exports = {
                         }
                         if (res.status == 0) {
                             await message.channel.send(new Discord.MessageEmbed().setTitle(
-                                LOCALE["messages"]["timeout"]
+                                LOCALE["messages"]["timeout"].interpolate({
+                                    music_name: res.music
+                                })
                             ))
                         }
 

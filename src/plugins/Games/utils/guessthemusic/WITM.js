@@ -75,18 +75,15 @@ class Game {
             this.isOpen = true
             this.random_music = random_music
 
-            //remove pls
-            console.log(this.random_music);
-
             this.gm_tm = setTimeout(()=>{
                 if(!this.isOpen) return;
                 this.isOpen = false;
                 return this.EventEmitter.emit("round", {
                     status: 0
                 })
-            }, 30000)
+            }, 60000)
 
-            MusicPlayer.play(random_music.url, 10000)
+            MusicPlayer.play(random_music.url, 15000)
     
             this.EventEmitter.on("pgra", async (playerId)=>{
                 if(this.isOpen == false){
@@ -107,7 +104,8 @@ class Game {
                 }
                 return this.EventEmitter.emit("round", {
                     status: 1,
-                    playerId: playerId
+                    playerId: playerId,
+                    music: `${this.random_music.name} - ${this.random_music.author}`
                 })
             })
         })
