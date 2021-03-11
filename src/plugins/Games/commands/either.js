@@ -16,6 +16,9 @@ module.exports = {
      */
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
+            var translate = true
+
+            if(args[0] == "false") translate == false;
 
             var isDeleted = false;
 
@@ -28,7 +31,7 @@ module.exports = {
                 title: LOCALE["question"].title,
                 loading: LOCALE["question"].loading
             }
-            var question = await EitherGame.getQuestion(Utils.random(0, 5000), true)
+            var question = await EitherGame.getQuestion(Utils.random(0, 5000), translate)
             var main_embed = new Discord.MessageEmbed()
 
             main_embed.setTitle(msg.title)
@@ -39,7 +42,7 @@ module.exports = {
             message.channel.stopTyping();
 
 
-            EitherGame.Reactions.reactEmbed(main_msg, async (reaction) => {
+            EitherGame.Reactions.reactEmbed(main_msg, message.author.id, async (reaction) => {
                     /** 
                      * 0 = 🟦
                      * 1 = 🟥
@@ -100,7 +103,7 @@ module.exports = {
                         main_msg.edit(new_embed)
 
                     }, 5000)
-                    question = await EitherGame.getQuestion(Utils.random(0, 5000), true)
+                    question = await EitherGame.getQuestion(Utils.random(0, 5000), translate)
                 })
                 .then(async() => {
                     if(isDeleted) return;

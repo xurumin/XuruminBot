@@ -45,14 +45,14 @@ var game = {
             await message.react("🟥")
             await message.react("❌")
         },
-        reactEmbed(message, onReact) {
+        reactEmbed(message, playerId, onReact) {
             return new Promise(async (resolve, reject) => {
                 await game.Reactions._sendRectsLight(message)
                 const filter = (reaction, user) => {
                     if(!message.embeds[0].fields[0] || !message){
                         return resolve()
                     }
-                    if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id)) {
+                    if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != playerId) {
                         return false
                     }
                     switch (reaction.emoji.name) {
