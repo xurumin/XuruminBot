@@ -17,6 +17,8 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
 
+            var isDeleted = false;
+
             message.channel.startTyping()
             setTimeout(() => {
                 message.channel.stopTyping();
@@ -26,7 +28,7 @@ module.exports = {
                 title: LOCALE["question"].title,
                 loading: LOCALE["question"].loading
             }
-            var question = await EitherGame.getQuestion(Utils.random(0, 5000))
+            var question = await EitherGame.getQuestion(Utils.random(0, 5000), true)
             var main_embed = new Discord.MessageEmbed()
 
             main_embed.setTitle(msg.title)
@@ -36,16 +38,24 @@ module.exports = {
             var main_msg = await message.channel.send(main_embed)
             message.channel.stopTyping();
 
+
             EitherGame.Reactions.reactEmbed(main_msg, async (reaction) => {
                     /** 
                      * 0 = 🟦
                      * 1 = 🟥
                      * 2 = ❌
                      */
+                    if(isDeleted) return;
                     if(reaction == 2){
-                        main_embed.fields = []
-                        main_embed.setDescription(LOCALE["finished"].description)
-                        return main_msg.edit(main_embed)
+                        await main_msg.delete()
+                        isDeleted = true
+                        var embed = new Discord.MessageEmbed()
+                        embed.setTitle(msg.title)
+                        embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
+                        embed.setDescription(LOCALE["finished"].description)
+                        message.channel.send(embed)
+                        
+                        return resolve()
                     }
                     var blue_percentage = (question.blue_choice.percentage*100).toFixed(0)
                     var red_percentage = (question.red_choice.percentage * 100).toFixed(0)
@@ -54,7 +64,6 @@ module.exports = {
                     if(blue_percentage == 0 || red_percentage == 0 || !question.blue_choice.percentage){
                         blue_percentage = Utils.random(35,60)
                         red_percentage = 100-blue_percentage
-                        console.log("rd");
                     }
 
                     var blue_question;
@@ -75,33 +84,46 @@ module.exports = {
                     main_embed.fields[1].name = `🟥 ${red_percentage}%`
 
                     main_embed.setFooter(msg.loading)
-                    main_msg.edit(main_embed)
+                    await main_msg.edit(main_embed)
 
                     setTimeout(async ()=>{
+                        if(isDeleted){
+                            return;
+                        }
                         var new_embed = new Discord.MessageEmbed()
 
                         new_embed.setTitle(msg.title)
+                        new_embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
                         new_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
                         new_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
 
                         main_msg.edit(new_embed)
 
                     }, 5000)
-                    question = await EitherGame.getQuestion(Utils.random(0, 5000))
+                    question = await EitherGame.getQuestion(Utils.random(0, 5000), true)
                 })
-                .then(() => {
+                .then(async() => {
+                    if(isDeleted) return;
+                    await main_msg.delete()
+                    isDeleted = true
+
                     var embed = new Discord.MessageEmbed()
                     embed.setTitle(msg.title)
+                    embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
                     embed.setDescription(LOCALE["finished"].description)
-                    main_msg.edit(embed)
+                    message.channel.send(embed)
                     return resolve()
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(async(err) => {
+                    if(isDeleted) return;
+                    await main_msg.delete()
+                    isDeleted = true
+
                     var embed = new Discord.MessageEmbed()
                     embed.setTitle(LOCALE["errors"]["something_went_wrong"].title)
+                    embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
                     embed.setDescription(LOCALE["errors"]["something_went_wrong"].description)
-                    main_msg.edit(embed)
+                    message.channel.send(embed)
                     return reject()
                 })
         })

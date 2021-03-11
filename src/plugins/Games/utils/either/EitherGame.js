@@ -5,11 +5,13 @@ const cheerio = require('cheerio');
 const Utils = require("./../../../../utils/utils")
 
 var game = {
-    getQuestion: async (id) => {
+    getQuestion: async (id, translate=false) => {
         try {
-            var r = (await axios.get(`http://either.io/${id}`)).data
+            var r = (await axios.get(`http://either.io/${id}`, {
+                timeout: 10*1000
+            })).data
         } catch (error) {
-            return game.getQuestion(id)
+            return await game.getQuestion(Utils.random(0,5000), translate)
         }
         
         const c = cheerio.load(r)
@@ -30,6 +32,11 @@ var game = {
         questions.red_choice.percentage = questions.red_choice.total_votes / questions.total_votes
         questions.blue_choice.percentage = questions.blue_choice.total_votes / questions.total_votes
 
+        if(translate){
+            questions.red_choice.question = await Utils.translate("en", "pt", questions.red_choice.question)
+            questions.blue_choice.question = await Utils.translate("en", "pt",questions.blue_choice.question)
+        }
+
         return questions
     },
     Reactions: {
@@ -42,6 +49,9 @@ var game = {
             return new Promise(async (resolve, reject) => {
                 await game.Reactions._sendRectsLight(message)
                 const filter = (reaction, user) => {
+                    if(!message.embeds[0].fields[0] || !message){
+                        return resolve()
+                    }
                     if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id)) {
                         return false
                     }

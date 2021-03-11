@@ -19,6 +19,7 @@ function stringTemplateParser(expression, valueObj) {
 }
 
 var admin = require("firebase-admin");
+const { default: axios } = require("axios");
 
 var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
@@ -91,6 +92,16 @@ var exp = {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
     var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
     return parseInt(lv.toFixed(0))
+  },
+  async translate(from, to, message){
+    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + from + "&tl="
+    + to + "&dt=t&q=" + message + "&ie=UTF-8&oe=UTF-8"
+    try {
+      var translation = (await axios.get(url)).data
+      return translation[0][0][0]
+    } catch (error) {
+      return translation(from, to, message)
+    }
   },
   BotDB: {
     async setBotInfo(cmdSent) {
