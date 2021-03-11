@@ -444,7 +444,7 @@
                 "loading": "Carregando nova mensagem em 5 segundos..."
             },
             "finished":{
-                "description": "O jogo acabou :(\nSe quiser jogar novamente, utilize novamente o comando :)"
+                "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
             },
             "errors": {
                 "something_went_wrong": {
