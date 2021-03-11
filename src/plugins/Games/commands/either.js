@@ -72,7 +72,7 @@ module.exports = {
                     var blue_question;
                     var red_question;
 
-                    if(question.blue_choice.percentage > question.red_choice.percentage){
+                    if(blue_percentage > red_percentage){
                         blue_question = `**${question.blue_choice.question}**`
                         red_question = `${question.red_choice.question}`
                     }else{
