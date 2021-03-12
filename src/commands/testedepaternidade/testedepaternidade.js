@@ -27,8 +27,8 @@ module.exports = {
 			)
 
 		}
-		let metioned_user = message.mentions.users.entries().next().value[1]
-		let metioned_user_2 = message.mentions.users.entries().next().value[2]
+		let metioned_user = message.mentions.users.array()[0]
+		let metioned_user_2 = message.mentions.users.array()[1]
 
 		if(message.author == metioned_user){
 			var msg = {
@@ -62,12 +62,13 @@ module.exports = {
 			.setTitle(loading_msg_locale.title)
 			.setDescription(loading_msg_locale.description)
 		)
+
 		setTimeout(()=>{
 			var loaded_msg = {
 				title: LOCALE.messages["loaded"].title,
 				description: LOCALE.messages["loaded"].description.interpolate({
-					tagged_user: metioned_user_2 ? metioned_user_2 : metioned_user,
-					tagged_user_2: metioned_user_2 ? metioned_user_2 : message.author,
+					tagged_user: metioned_user_2?metioned_user_2:metioned_user,
+					tagged_user_2: metioned_user_2?metioned_user:message.author,
 					result: utils.choice(LOCALE.results)
 				})
 			}
@@ -78,7 +79,7 @@ module.exports = {
 			)
 			.setThumbnail("https://i.imgur.com/8wzMv0f.png")
 			loading_msg.edit(loaded_msg_embed)
-		}, 3000)
+		}, 2000)
 
 	},
 

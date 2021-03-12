@@ -14,7 +14,7 @@ async function getAllBadges(){
 setInterval(async () => {
 	console.log("[LOG] Auto updating badges")
 	await getAllBadges()
-}, 60 * 60 * 1000);
+}, 24 * 60 * 60 * 1000);
 getAllBadges()
 
 module.exports = {

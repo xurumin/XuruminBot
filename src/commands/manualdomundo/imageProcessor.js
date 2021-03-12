@@ -58,7 +58,7 @@ module.exports = function process(text, img_code=3) {
         
         ctx.fillText(text, 8,302)
         
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

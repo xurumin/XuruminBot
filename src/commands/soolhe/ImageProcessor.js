@@ -85,7 +85,7 @@ module.exports = function process(userimageurl, username) {
         ctx.drawImage(await loadImage(__dirname + `/files/base.jpg`), 0, 0, 500, 333);
         ctx.drawImage(await loadImage(userimageurl), 246, 2, 254,279);
         
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

@@ -1,10 +1,11 @@
 "use strict"
-const discord = require("discord.js")
-const crypto = require("crypto")
+const discord = require("discord.js");
+const crypto = require("crypto");
+require('dotenv/config');
 
-String.prototype.interpolate = function(params) {
+String.prototype.interpolate = function (params) {
   "use strict"
-	return stringTemplateParser(this, params)
+  return stringTemplateParser(this, params)
 }
 
 
@@ -18,6 +19,7 @@ function stringTemplateParser(expression, valueObj) {
 }
 
 var admin = require("firebase-admin");
+const { default: axios } = require("axios");
 
 var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
@@ -27,8 +29,14 @@ admin.initializeApp({
 });
 var db = admin.database()
 var profilesRef = db.ref("profiles");
+var botInfoRef = db.ref("bot");
 
-module.exports = {
+var $;
+
+var exp = {
+  angleToRadians(angle) {
+    return (-angle * Math.PI) / 180
+  },
   shuffle(array) {
     var currentIndex = array.length,
       temporaryValue, randomIndex;
@@ -68,7 +76,14 @@ module.exports = {
       .filter((v, i) => v !== "00" || i > 0)
       .join(":")
   },
-  getErrorMessage(){
+  wait(ms) {
+    return new Promise((resolve, reject)=>{
+      setTimeout(()=>{
+        resolve();
+      }, ms)
+    })
+  },
+  getErrorMessage() {
     return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
   },
   random(min, max) {
@@ -76,66 +91,135 @@ module.exports = {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
-  choice(array){
+  choice(array) {
     return array[Math.floor(Math.random() * array.length)]
   },
   stringTemplateParser: stringTemplateParser,
-  XP2LV(xp){
+  XP2LV(xp) {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
-    var lv = ((10**((Math.log10(xp) - 2)/1.5))+1)
+    var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
     return parseInt(lv.toFixed(0))
   },
+  async translate(from, to, message){
+    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + from + "&tl="
+    + to + "&dt=t&q=" + message + "&ie=UTF-8&oe=UTF-8"
+    try {
+      var translation = (await axios.get(url)).data
+      return translation[0][0][0]
+    } catch (error) {
+      return translation(from, to, message)
+    }
+  },
+  BotDB: {
+    async setBotInfo(cmdSent) {
+      await botInfoRef.set({
+        "commandsSent": cmdSent
+      })
+    },
+    async getSentCmds() {
+      var sentCmds = (await botInfoRef.get("commandsSent")).val().commandsSent
+      return sentCmds ? sentCmds : 0
+    }
+  },
   Profile: {
-    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges=[])=>{
+    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges = []) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       await usersRef.child(user_id).set({
-          aboutme: aboutme,
-          bg_url: bg_url,
-          level: level,
-          points: points,
-          badges: badges,
-          userId: user_id_raw
+        aboutme: aboutme,
+        bg_url: bg_url,
+        level: level,
+        points: points,
+        badges: badges,
+        userId: user_id_raw
       });
-      // client.profiles.set(user_id, {
-      //   aboutme: aboutme,
-			// 	bg_url: bg_url,
-			// 	level: level,
-			// 	points: points
-			// })
     },
-    setTag: async (client, user_id_raw, tag, value)=>{
+    setTag: async (client, user_id_raw, tag, value) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       var updateObj = {}
       updateObj[tag] = value
       await usersRef.child(user_id).update(updateObj)
+
       //client.profiles.get(user_id)[tag] = value
     },
-    getProfile: async (client, user_id_raw)=>{
+    getProfile: async (client, user_id_raw) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.get(user_id)).val()[user_id]
+
+
+
       //return client.profiles.get(user_id)
     },
-    hasProfile: async (client, user_id_raw)=>{
+    hasProfile: async (client, user_id_raw) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.child(user_id).once("value")).exists()
+
+
       //return client.profiles.has(user_id)
     },
-    getStandardProfile: ()=>{
+    isPremium: async (client, user_id_raw) => {
+      var profile = await exp.Profile.getProfile(client, user_id_raw)
+
+
+      if (profile["status"]) {
+        return (profile["status"]) == "premium" ? true : false;
+      }
+      return false;
+
+    },
+    getStandardProfile: () => {
       return {
         bg_url: "https://i.imgur.com/MbGPZQR.png",
         level: 0,
-				points: 0,
+        points: 0,
         aboutme: "",
         badges: []
       }
     },
-    getBadges: async()=>{
+    getBadges: async () => {
       var badgesRef = profilesRef.child("badges")
       return (await badgesRef.get()).val()
     }
+  },
+  Reactions: {
+    async _sendRectsLight(message) {
+      await message.react("✅")
+      await message.react("❌")
+    },
+    getConfirmation(message) {
+      return new Promise(async (resolve, reject) => {
+        await exp.Reactions._sendRectsLight(message)
+        const filter = (reaction, user) => {
+          return !["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id);
+        };
+        message.awaitReactions(filter, {
+            max: 1,
+            time: 100000,
+            errors: ['time']
+          })
+          .then(collected => {
+            const reaction = collected.first();
+            switch (reaction.emoji.name) {
+              case "✅":
+                resolve(true)
+                break;
+              case "❌":
+                resolve(false)
+                break;
+              default:
+                reject()
+                break;
+            }
+          })
+          .catch(collected => {
+            reject(collected)
+          });
+
+      })
+    },
   }
 }
+module.exports = exp

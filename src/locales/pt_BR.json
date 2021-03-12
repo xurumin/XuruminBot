@@ -32,6 +32,20 @@
                     "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
                 }
             }
+        },
+        "guildCreate": {
+            "message": "Oie! Fico feliz que tenha me adicionado no servidor {{server_name}} 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md\n\nEspero que possamos nos divertir :)",
+            "errors": {
+                "command_not_found": {
+                    "title": "Não achei esse comando 😞",
+                    "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
+                    "fields": [
+                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Site do Xurumin", "https://xurumin.github.io/"],
+                        ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
+                    ]
+                }
+            }
         }
     },
     "commands": {
@@ -58,31 +72,36 @@
                 }
             }
         },
-        "carteirinha":{
+        "carteirinha": {
             "message": {
                 "title": "Carteirinha de {{tag}}",
                 "description": "Parabéns {{author}}!\nAqui está a prova que você tem a **Carteirinha de {{tag}}**!"
             },
-            "word_list":[
+            "word_list": [
                 "Troxa",
-				"Besta",
-				"Otario",
-				"Rei Delas",
-				"Minecrafter",
-				"Amigo de Todos",
-				"Corno",
-				"Amante do Gado",
-				"Rei do Gado",
-				"Primo do Toin",
-				"Amigo do Cleiton"
+                "Besta",
+                "Otario",
+                "Rei Delas",
+                "Minecrafter",
+                "Amigo de Todos",
+                "Corno",
+                "Amante do Gado",
+                "Rei do Gado",
+                "Primo do Toin",
+                "Amigo do Cleiton"
             ]
         },
-        "cat":{
+        "cat": {
             "message": {
                 "title": "Vai um gatin? 😻"
             }
         },
-        "catbobbing":{
+        "updates": {
+            "message": {
+                "title": "Últimos updates do Xurumin"
+            }
+        },
+        "catbobbing": {
             "message": {
                 "title": "Gatinho"
             }
@@ -116,7 +135,7 @@
                     "eu te acho lindo(a) pra xuxu",
                     "eu queria jogar minecraft com você",
                     "eu queria te beijar :3",
-                    "eu salvei teu contato como amorzin :3" 
+                    "eu salvei teu contato como amorzin :3"
                 ],
                 [
                     "eu mataria um smurf por você",
@@ -143,78 +162,158 @@
                 "footer": "Mensagem de {{author}}"
             }
         },
-        "espelhoespelhomeu":{
-            "message":{
+        "espelhoespelhomeu": {
+            "message": {
                 "title": "Espelho, espelho meu: existe alguém mais bela do que eu?",
                 "description": "O que será que disse o espelho sobre {{user}}?\n\n*Mensagem de: {{author}}*",
                 "author": "Espelho"
             }
         },
-        "eufilosofo":{
-            "message":{
+        "eufilosofo": {
+            "message": {
                 "title": "O que o filósofo disse?",
                 "description": "Mensagem de: {{author}}",
                 "author": "Espelho"
             }
         },
-        "felipenetotweet":{
-            "message":{
+        "felipenetotweet": {
+            "message": {
                 "title": "O que o Felipe Neto tweetou?",
                 "description": "Mensagem de: {{author}}\n\n*Esta imagem não é verdadeira.*`"
             }
         },
-        "filosofo":{
-            "message":{
+        "filosofo": {
+            "message": {
                 "title": "O que o filósofo disse?",
                 "description": "Mensagem de: {{author}}\n\n*Esta imagem não é verdadeira.*`"
             }
         },
-        "profile":{
-            "message":{
+        "profile": {
+            "message": {
                 "title": "Profile de {{author}}"
             },
             "stardard": {
                 "aboutme": "Sou legal! Eu juro :3"
             },
-            "profile":{
+            "profile": {
                 "aboutme": "Sobre mim"
             }
         },
-        "setbackground":{
-            "errors":{
+        "setbackground": {
+            "errors": {
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do UNSPLASH.COM\n👉 Tente **{{prefix}}setbg https://unsplash.com/photos/EgmEuwjGXCk**"
+                    "description": "Você precisa colocar a **URL** da imagem que você quer colocar de background. \n⚠️ **Lembre-se:** Ela precisa ser do **IMGUR.COM** e estar em **PNG** ou **JPG**\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**\n\nNão sabe como pegar o link? Aprenda aqui http://bit.ly/3v6d8ay"
                 },
                 "invalid_url": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do UNSPLASH.COM\n👉 Tente **{{prefix}}setbg https://unsplash.com/photos/EgmEuwjGXCk**"
+                    "description": "Você digitou uma URL inválida. \n⚠️ **Lembre-se:** Ela precisa ser do IMGUR.COM\n👉 Tente **{{prefix}}setbg https://i.imgur.com/MbGPZQR.png**\n\nNão sabe como pegar o link? Aprenda aqui http://bit.ly/3v6d8ay"
+                },
+                "max_file_size_exceeded": {
+                    "title": "❌ Imagem muito grande",
+                    "description": "Sua imagem passa dos 250 KB permitidos.\nTente subir sua imagem no tinypng.com para deixá-la mais leve."
+                },
+                "user_do_not_have_funds": {
+                    "title": "❌ Você não possui dinheiro suficiente",
+                    "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+                },
+                "error_occurred": {
+                    "title": "❌ Ops!",
+                    "description": "Ocorreu um erro durante a sua operação.\nTente novamente mais tarde :("
                 }
             },
-            "message":{
+            "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
+            "confirmation": [{
+                "title": "Você tem certeza?",
+                "description": "Trocar o background custa **X$100.00**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                },
+                {
+                    "title": ":x: A operação foi cancelada."
+                }
+            ],
+            "message": {
                 "title": "Seu background foi definido 🤗!",
                 "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
             }
         },
-        "setaboutme":{
-            "errors":{
+        "setaboutme": {
+            "errors": {
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
                     "description": "Você precisa colocar algo sobre você \n👉 Tente **{{prefix}}aboutme Sou muito fofo**"
                 }
             },
-            "message":{
+            "message": {
                 "title": "Sua informação foi definida 🤗!",
                 "description": "Veja seu novo perfil em **{{prefix}}profile** 😻"
             }
         },
-        "pay":{
-            "message":{
-                "title": ":white_check_mark: Transação concluída 🤗!",
+        "testedepaternidade": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos cientistas estão verificando os dados..."
+                },
+                "loaded": {
+                    "title": ":face_with_monocle: O resultado chegou!",
+                    "description": "{{tagged_user}} **{{result}}** o pai de {{tagged_user_2}}! :eyes:"
+                }
+            },
+            "results": [
+                "é",
+                "não é",
+                "pode ser",
+                "parece que não é"
+            ],
+            "errors": {
+                "auto_check": {
+                    "title": "❌ Pera lá né amigo",
+                    "description": "Você não pode ser seu próprio pai...😑\n Ou será que pode? 🤔"
+                },
+                "user_not_tagged": {
+                    "title": "❌ Erro ao digitar comando:",
+                    "description": "Você precisa marcar ~~seu pai~~ algum usuário :eyes:"
+                },
+                "tag_bot": {
+                    "title": "😡 Sai pra lá, irmão",
+                    "description": "Sou pai de ninguém não tá louco 😑"
+                }
+            }
+        },
+
+        "NSFW": "PLUGIN",
+        "sexyanime": {
+            "message": {
+                "title": ":flushed: Eita!",
+                "description": "~~Obra de arte~~ Mensagem de: {{author}}"
+            },
+            "errors": {
+                "nsfw_channel": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                },
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "PAYMENT": "PLUGIN",
+        "pay": {
+            "message": {
+                "title": ":white_check_mark: Transação concluída",
                 "description": "Foi enviada uma mensagem privada com os detalhes :)"
             },
+            "confirmation": [{
+                "title": "Você está prestes a realizar uma transação.",
+                "description": "Clique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                },
+                {
+                    "title": ":x: A operação foi cancelada."
+                }
+            ],
             "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
-            "errors":{
+            "errors": {
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
                     "description": "Você precisa definir um **beneficiário** e um **valor** a ser pago\n👉 Tente **{{prefix}}pay <@753723888671785042> 100**"
@@ -233,51 +332,169 @@
                 }
             }
         },
-        "sexyanime":{
-            "message":{
-                "title": ":flushed: Eita!",
-                "description": "~~Obra de arte~~ Mensagem de: {{author}}"
+        "MEMES": "PLUGIN",
+        "outravida": {
+            "message": {
+                "title": "O que você seria em outra universo?",
+                "description": ":disguised_face: Em outra vida, isto é o que {{user}} seria:\n\nMensagem de: {{author}}"
             },
-            "errors":{
-                "nsfw_channel":{
-                    "title": "❌ Ops!",
-                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
-                },
-                "user_do_not_have_pic":{
+            "errors": {
+                "user_do_not_have_pic": {
                     "title": "❌ Ops!",
                     "description": "Usuário informado não tem foto de perfil :("
                 }
             }
         },
-        "testedepaternidade":{
-            "messages":{
-                "loading":{
-                    "title": "<a:loading:809177799969079326> Carregando...",
-                    "description": "Nossos gatinhos cientistas estão verificando os dados..."
+        "sedutoresdainternet": {
+            "message": {
+                "title": ":police_officer: Cuidado com esses sedutores da internet",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "humorkkjkk": {
+            "message": {
+                "title": ":rofl: :rofl: :rofl: Aê, pessoal! Vem vê como esse cara eh engraçadokkkj3k12jkkk",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "mucagas": {
+            "message": {
+                "title": ":rofl: :rofl: :rofl: MU QUI NHA? ENTREGADOR?",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "licencadepesca": {
+            "message": {
+                "title": ":fishing_pole_and_fish: :ok_hand: :sunglasses:  Aqui está sua Licença para Pescar",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            }
+        },
+        "daqueeutedououtra": {
+            "message": {
+                "title": ":triumph: DÁ QUE EU TE DOU OUTRA",
+                "description": "Mensagem de: {{author}}"
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
                 },
-                "loaded":{
-                    "title": ":face_with_monocle: O resultado chegou!",
-                    "description": "{{tagged_user}} **{{result}}** o pai de {{tagged_user_2}}! :eyes:"
+                "need_more_users": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisar marcar pelo menos **2 usuários**."
+                }
+            }
+        },
+        "piadas": {
+            "message": {
+                "title": "Piadocas do dia :zany_face:",
+                "description": "**P:** {{question}}\n**R:** {{answer}}"
+            }
+        },
+        "catgif": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                },
+                "loaded": {
+                    "title": "Gatinhooo",
+                    "description": "Tuts tuts tuts 🥳🥳🥳"
                 }
             },
-            "results": [
-                "é",
-                "não é",
-                "pode ser",
-                "parece que não é"
-            ],
-            "errors":{
-                "auto_check":{
-                    "title": "❌ Pera lá né amigo",
-                    "description": "Você não pode ser seu próprio pai...😑\n Ou será que pode? 🤔"
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
                 },
-                "user_not_tagged":{
-                    "title": "❌ Erro ao digitar comando:",
-                    "description": "Você precisa marcar ~~seu pai~~ algum usuário :eyes:"
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                }
+            }
+        },
+        "GAMES": "PLUGIN",
+        "either": {
+            "question": {
+                "title": "Qual você prefere?",
+                "loading": "Carregando nova mensagem em 5 segundos..."
+            },
+            "finished":{
+                "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
+            },
+            "errors": {
+                "something_went_wrong": {
+                    "title": "❌ Ops!",
+                    "description": "Alguma coisa deu errado.\nTente novamente mais tarde :("
+                }
+            }
+        },
+        "guessthemusic": {
+            "messages": {
+                "title": "🔊 Qual a música?",
+                "start": {
+                    "description": "❔ **Como funciona?**\nOs usuários participantes devem estar no mesmo chat de áudio do bot.\nUma música aleatória irá tocar por **15 segundos**.\nCada rodada tem **60 segundos**. O usuário que acertar a música primeiro ganha.\nUse x!gtm <nome da música> para tentar acertar.\n\n❗️ **Atenção**\nVocê pode escolher o gênero das músicas e o número de rodadas com x!gtm <genero> <número de rodadas>\nPor padrão, o gênero é aleatório e as partidas duram 10 rounds.\nGêneros disponíveis: `pop, rock, mpb, random`\nDeve ter no mínimo **3 rounds** e no máximo **15 rounds**.\n\nPara sair durante a partida, use `x!gtm -stop`\n\nClique em ✅ para **confirmar** e em ❌ para **cancelar**."
                 },
-                "tag_bot":{
-                    "title": "😡 Sai pra lá, irmão",
-                    "description": "Sou pai de ninguém não tá louco 😑"
+                "about_the_game": {
+                    "title": "Informações do jogo",
+                    "description": "Gênero: ``{{genre}}``\nRounds: ``{{rounds}}``\nTempo por round: ``{{time}}``\n"
+                },
+                "refused": {
+                    "title": "O jogo foi cancelado!",
+                    "description": "Vejo você em breve! :)"
+                },
+                "leaving": "Saindo...",
+                "timeout": "Ninguém acertou :(\n``{{music_name}}``",
+                "playing": "Tocando música [{{index}}]",
+                "accuracy": "{{author}} -> Você está {{accuracy}}% perto da resposta.\nVocê precisa de pelo menos 85% para acertar.",
+                "right_answer": "{{author}} -> Você acertou!\n`{{music_name}}`",
+                "game_over": {
+                    "title": "O jogo acabou!",
+                    "description": "{{author}} ganhou acertando **{{points}} de {{total}}**!\nUhul!"
+                },
+                "try_music": {
+                    "title": "Qual o nome da música?",
+                    "description": "Escreva x!gtm <nome da música> para tentar acertar!"
+                }
+            },
+            "finished":{
+                "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
+            },
+            "errors": {
+                "something_went_wrong": {
+                    "title": "❌ Ops!",
+                    "description": "Alguma coisa deu errado.\nTente novamente mais tarde :("
+                },
+                "user_is_not_on_voice_chat": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um chat de voz para executar o comando."
+                },
+                "already_playing": {
+                    "title": "❌ Ops! Já estão jogando \"GUESS THE MUSIC\" no servidor."
                 }
             }
         }

@@ -67,7 +67,7 @@ module.exports = function process(philosopher_name, philosopher_pic, text) {
         ctx.fillStyle = "gray";
         ctx.fillText(philosopher_name, 260, 290)
 
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

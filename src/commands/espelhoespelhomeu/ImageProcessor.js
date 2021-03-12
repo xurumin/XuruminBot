@@ -95,7 +95,7 @@ module.exports = function process(userimageurl, username) {
         ctx.font = "20px arialfont";
         wrapText(ctx, text, 0,0, 20 ,270)
         
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

@@ -22,7 +22,7 @@ function ImageGenerator(user_pic, anime) {
         ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/sexyanime/images/${anime.filename}`)), 0, 0, anime.size[0],anime.size[1]);
         ctx.drawImage(await loadImage(user_pic), anime.info[0],anime.info[1],anime.info[2],anime.info[3],);
 
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png')) 
     })
 
 }
@@ -98,7 +98,10 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'sexyanime'
+            name: 'sexyanime',
+            aliases:[
+                "ecchi"
+            ]
         }
     },
 };

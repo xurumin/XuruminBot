@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const utils = require('../utils/utils');
 const MessageLog = require('./../utils/MessageLog');
-const config = require("./../config")
+const config = require("./../config");
+const { toLocaleLowerCase } = require('ffmpeg-static');
 require('dotenv/config');
 
 const talkedRecently = new Discord.Collection();
@@ -16,18 +17,17 @@ module.exports = {
 	 */
 	run: async (client, message, locale_list) => {
 
-
-		if(!antiFloodCooldown.has(message.author.id)){
-			if(client.cachedPoints.has(message.author.id)){
-				client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
-			}else{
-				client.cachedPoints.set(message.author.id,1)
-			}
-			antiFloodCooldown.set(message.author.id);
-			setTimeout(() => {
-				antiFloodCooldown.delete(message.author.id);
-			}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
-		}
+		// if(!antiFloodCooldown.has(message.author.id)){
+		// 	if(client.cachedPoints.has(message.author.id)){
+		// 		client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
+		// 	}else{
+		// 		client.cachedPoints.set(message.author.id,1)
+		// 	}
+		// 	antiFloodCooldown.set(message.author.id);
+		// 	setTimeout(() => {
+		// 		antiFloodCooldown.delete(message.author.id);
+		// 	}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
+		// }
 
 		if ( (!message.content.startsWith(process.env.COMMAND_PREFIX)) && !(message.content == `<@!${client.user.id}>`) ) return;
 
@@ -56,8 +56,12 @@ module.exports = {
 		}
 
 		// Checks if sender is a Special User (who do not have message cooldown)
-		if (!config.specialusers.includes(message.author.id)) talkedRecently.set( message.author.id, (new Date()).getTime());
-
+		if (!config.specialusers.includes(message.author.id)){
+			talkedRecently.set( message.author.id, (new Date()).getTime());
+			setTimeout(() => {
+				talkedRecently.delete(message.author.id);
+			}, process.env.MESSAGE_COOLDOWN);
+		}
 		/**
 		 * If bot was tagged
 		 */
@@ -76,10 +80,6 @@ module.exports = {
 			return message.channel.send(embed);
 		}
 
-		setTimeout(() => {
-			talkedRecently.delete(message.author.id);
-		}, process.env.MESSAGE_COOLDOWN);
-
 		const args = message.content
 			.slice(process.env.COMMAND_PREFIX.length)
 			.trim()
@@ -91,11 +91,33 @@ module.exports = {
 			const aliase = client.aliases.get(command);
 			if ((cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send(LOCALE.events.message.errors.blocked_command)
 			if (cmd) {
+				//Register +1 cmd to log
+				client.commandsSent++;
+				
+				const t1 = (new Date()).getTime()
+
 				const response = await cmd.run(client, message, args, LOCALE.commands[command]);
-				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
+
+				if(process.env.NODE_ENV=="development"){
+					const t2 = (new Date()).getTime()
+					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
+				}
+
+				return MessageLog.log(command, message); // ADD MESSAGE TO MessageLog
 			} else if (aliase) {
+				//Register +1 cmd to log
+				client.commandsSent++;
+
+				const t1 = (new Date()).getTime()
+
 				const response = await client.commands.get(aliase).run(client, message, args, LOCALE.commands[aliase]);
-				return MessageLog.log(message, response); // ADD MESSAGE TO MessageLog
+
+				if(process.env.NODE_ENV=="development"){
+					const t2 = (new Date()).getTime()
+					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
+				}
+
+				return MessageLog.log(aliase, message); // ADD MESSAGE TO MessageLog
 			} else {
 				return message.channel.send(
 					new Discord.MessageEmbed()

@@ -31,7 +31,7 @@ module.exports = function process(user_img, username, roles, cateirinha_tag) {
         ctx.fillText(roles[1], 175, 155)
         ctx.fillText(roles[2], 175, 170)
         
-        resolve(new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'))
+        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))   
     })
 
 }

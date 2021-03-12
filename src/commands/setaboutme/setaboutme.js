@@ -38,7 +38,9 @@ module.exports = {
 			name: 'setaboutme',
 			aliases:[
 				"setabout",
-				"setam"
+				"aboutme",
+				"sobremim",
+				"mudarsobremim"
 			]
 		}
 	},

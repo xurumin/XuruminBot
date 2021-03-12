@@ -21,7 +21,7 @@ async function spotifyPlaylist(client, message, args) {
     }
     var spotify_playlist;
     try {
-        spotify_playlist = await Music.getSpotifyPlaylist(playlist_url, 50)
+        spotify_playlist = await Music.getSpotifyPlaylist(playlist_url, process.env.PLAYLIST_ADD_LIMIT ? process.env.PLAYLIST_ADD_LIMIT : 50)
     } catch (error) {
         console.log(">", error)
         return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL()));
