@@ -107,7 +107,9 @@ var exp = {
       var translation = (await axios.get(url)).data
       return translation[0][0][0]
     } catch (error) {
-      return translation(from, to, message)
+      //console.log(error);
+      return message;
+      return this.translate(from, to, message)
     }
   },
   BotDB: {

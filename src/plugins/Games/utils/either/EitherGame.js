@@ -5,13 +5,13 @@ const cheerio = require('cheerio');
 const Utils = require("./../../../../utils/utils")
 
 var game = {
-    getQuestion: async (id, translate=false) => {
+    getQuestion: async (id, language="pt") => {
         try {
             var r = (await axios.get(`http://either.io/${id}`, {
                 timeout: 10*1000
             })).data
         } catch (error) {
-            return await game.getQuestion(Utils.random(0,5000), translate)
+            return await game.getQuestion(Utils.random(0,5000), language)
         }
         
         const c = cheerio.load(r)
@@ -32,9 +32,9 @@ var game = {
         questions.red_choice.percentage = questions.red_choice.total_votes / questions.total_votes
         questions.blue_choice.percentage = questions.blue_choice.total_votes / questions.total_votes
 
-        if(translate){
-            questions.red_choice.question = await Utils.translate("en", "pt", questions.red_choice.question)
-            questions.blue_choice.question = await Utils.translate("en", "pt",questions.blue_choice.question)
+        if(language != "en"){
+            questions.red_choice.question = await Utils.translate("en", language, questions.red_choice.question)
+            questions.blue_choice.question = await Utils.translate("en", language,questions.blue_choice.question)
         }
 
         return questions
