@@ -11,7 +11,7 @@ async function spotifyPlaylist(client, message, args) {
     const playlist_url = args[0]
     if (args.length != 1 || !playlist_url) {
         return message.channel.send(
-            Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}spotify <link da playlist>** para tocar alguma playlist! 🤗`, client.user.username, client.user.avatarURL())
+            Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}add <link da playlist>** para tocar alguma playlist! 🤗`, client.user.username, client.user.avatarURL())
         );
     }
     if (!message.member.voice.channel) {
@@ -43,7 +43,7 @@ async function youtubePlaylist(client, message, args) {
     const playlist_url = args[0]
     if (args.length != 1 || !playlist_url) {
         return message.channel.send(
-            Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}youtube <link da playlist>** para tocar alguma playlist! 🤗`, client.user.username, client.user.avatarURL())
+            Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}add <link da playlist>** para tocar alguma playlist! 🤗`, client.user.username, client.user.avatarURL())
         );
     }
     if (!message.member.voice.channel) {
@@ -150,7 +150,7 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args) => {
-        const userMsg = args[0]
+        const userMsg = args[0] || ""
         const url_ = url.parse(userMsg).host
 
         if (!message.member.voice.channel) {
@@ -161,7 +161,7 @@ module.exports = {
 
         if (args.length <= 0 || !args) {
             return message.channel.send(
-                Utils.createSimpleEmbed("Ops! Você digitou o comendo errado!", `➡️ Tente usar **${process.env.COMMAND_PREFIX}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** 🤗`, client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed("Ops! Você digitou o comendo errado!", `➡️ Tente usar **${process.env.COMMAND_PREFIX}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **${process.env.COMMAND_PREFIX}add <link da playlist>** 🤗`, client.user.username, client.user.avatarURL())
             );
         }
 
@@ -179,12 +179,12 @@ module.exports = {
         }
         if (userMsg.includes("open.spotify.com/track/")) {
             return message.channel.send(
-                Utils.createSimpleEmbed("Ops! Ainda não consigo tocar tracks do Spotify 😞", `➡️ Tenta tocar uma playlist com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** ou tocar um vídeo do Youtube com **${process.env.COMMAND_PREFIX}add <link do youtube>** 🤗`, client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed("Ops! Ainda não consigo tocar tracks do Spotify 😞", `➡️ Tenta tocar uma playlist com **${process.env.COMMAND_PREFIX}add <link da playlist>** ou tocar um vídeo do Youtube com **${process.env.COMMAND_PREFIX}add <link do youtube>** 🤗`, client.user.username, client.user.avatarURL())
             );
         }
 
         return message.channel.send(
-            Utils.createSimpleEmbed("Ops! Você digitou o comendo errado! (ou eu ainda não implementei o que você busca 😞)", `➡️ Tente usar **${process.env.COMMAND_PREFIX}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** 🤗`, client.user.username, client.user.avatarURL())
+            Utils.createSimpleEmbed("Ops! Você digitou o comendo errado! (ou eu ainda não implementei o que você busca 😞)", `➡️ Tente usar **${process.env.COMMAND_PREFIX}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **${process.env.COMMAND_PREFIX}add <link da playlist>** 🤗`, client.user.username, client.user.avatarURL())
         );
 
     },

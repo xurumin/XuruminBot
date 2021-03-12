@@ -88,6 +88,40 @@ module.exports = {
             }
         })
     },
+    fastPayXurumin(payeeId, value){
+        var mc = this
+        return new Promise(async (resolve, reject)=>{
+            const transaction = {
+                status: "pending",
+                create_time: (new Date()),
+                id: crypto.createHash("sha256").update(crypto.randomBytes(64)).digest("hex"),
+                payeeId: payeeId,
+                payerId: "system",
+                value: Number(parseFloat(value).toFixed(2))
+            }
+            if(isNaN(transaction.value) || transaction.value <= 0){
+                return reject({ 
+                    code: 1,
+                    message: "Invalid value"
+                })
+            }
+            var payeeInfo;
+            try {
+                payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
+            } catch (error) {
+                transaction.status="error"
+                reject(error)
+            }
+            try {
+                await Utils.Profile.setTag({}, transaction.payeeId,"money",parseFloat(payeeInfo.money)+transaction.value)   
+                transaction.status="ok"
+                resolve(transaction)
+            } catch (error) {
+                transaction.status="error"
+                reject(error)
+            }
+        })
+    },
     async userHasFunds(userId, value){
         const userProfile = await Utils.Profile.getProfile({},userId)
         if(userProfile.money && userProfile.money > value){

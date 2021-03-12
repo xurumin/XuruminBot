@@ -497,6 +497,24 @@
                     "title": "❌ Ops! Já estão jogando \"GUESS THE MUSIC\" no servidor."
                 }
             }
+        },
+        "GAMBLING": "PLUGIN",
+        "racing": {
+            "messages": {
+                "title": "🏎 Racing",
+                "start": {
+                    "description": "❔ **Como funciona?**\nO bot irá iniciar uma corrida entre 4 carros.\nO primeiro que chegar na linha ganha. Os jogadores que votaram no carro, terão o premio da mesa divido.\nPara participar, basta usar **{{prefix}}racing bet <cor>**\nAs cores são: `blue, red, black, green`.\n\n⚠️ **Importante**\nPara participar, será cobrado um valor de **X$100.00**.\n\n❗️ **Atenção**\nSomente será distribuído **85%** das apostas (15% fica pra casa)\nEntão, não tente fazer todos seus amigos votarem no mesmo carro só para tentar ganhar mais, viu? \n\nClique em ✅ para **começar**."
+                },
+                "bet_accepted": "{{user}} -> Sua aposta foi registrada!",
+                "bet_not_accepted": "{{user}} -> Sua aposta **não foi** registrada",
+                "game_cancelled": "Jogo cancelado.",
+                "user_do_not_have_funds": "❌ Você não possui dinheiro suficiente\nUse **{{prefix}}profile** para ver seu saldo.",
+                "winners": {
+                    "title": ":moneybag: Ganhadores:",
+                    "description": ":money_with_wings: Prêmio total: **X${{total_prize}}**"
+                },
+                "no_winner": "Ninguém ganhou :("
+            }
         }
     }
 }

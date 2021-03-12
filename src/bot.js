@@ -19,7 +19,6 @@ client.players = new Discord.Collection();
 client.profiles = new Discord.Collection();
 client.commandsSent = 0;
 client.cachedPoints = new Discord.Collection();
-
 client.playingWITM = new Discord.Collection();
 
 const LOCALES = new Discord.Collection();

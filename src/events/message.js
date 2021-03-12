@@ -55,13 +55,6 @@ module.exports = {
 			return message.channel.send(embed);
 		}
 
-		// Checks if sender is a Special User (who do not have message cooldown)
-		if (!config.specialusers.includes(message.author.id)){
-			talkedRecently.set( message.author.id, (new Date()).getTime());
-			setTimeout(() => {
-				talkedRecently.delete(message.author.id);
-			}, process.env.MESSAGE_COOLDOWN);
-		}
 		/**
 		 * If bot was tagged
 		 */
@@ -89,6 +82,15 @@ module.exports = {
 		try {
 			const cmd = client.commands.get(command);
 			const aliase = client.aliases.get(command);
+
+			// Checks if sender is a Special User (who do not have message cooldown)
+			if (!config.specialusers.includes(message.author.id) && !(config.noCooldownCommands.includes(cmd) || config.noCooldownCommands.includes(aliase))){
+				talkedRecently.set( message.author.id, (new Date()).getTime());
+				setTimeout(() => {
+					talkedRecently.delete(message.author.id);
+				}, process.env.MESSAGE_COOLDOWN);
+			}
+
 			if ((cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send(LOCALE.events.message.errors.blocked_command)
 			if (cmd) {
 				//Register +1 cmd to log

@@ -3,5 +3,8 @@ module.exports = {
         "253990931441778688"
     ],
     "blockedcommands": [
+    ],
+    "noCooldownCommands":[
+        "guessthemusic"
     ]
 }
