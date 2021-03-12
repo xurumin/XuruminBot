@@ -4,7 +4,7 @@ const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
 const MusicPlayer = require("./../utils/MusicPlayer")
 require('dotenv/config');
-
+var url = require('url');
 
 
 async function spotifyPlaylist(client, message, args) {
@@ -151,6 +151,7 @@ module.exports = {
      */
     run: async (client, message, args) => {
         const userMsg = args[0]
+        const url_ = url.parse(userMsg).host
 
         if (!message.member.voice.channel) {
             return message.channel.send(
@@ -164,21 +165,21 @@ module.exports = {
             );
         }
 
-        if (userMsg.includes("open.spotify.com/playlist/")) {
+        if (userMsg.includes("open.spotify.com/playlist/") && url_.includes("open.spotify.com")) {
             return spotifyPlaylist(client, message, args)
         }
-        if (userMsg.includes("youtube.com/playlist")) {
+        if (userMsg.includes("youtube.com/playlist") && url_.includes("youtube.com")) {
             return youtubePlaylist(client, message, args)
         }
         if ((!userMsg.startsWith("https://") || !userMsg.startsWith("http://")) && !userMsg.includes(".com")) {
             return searchTerm(client, message, args)
         }
-        if (userMsg.includes("youtube.com/watch")) {
+        if (userMsg.includes("youtube.com/watch") && url_.includes("youtube.com")) {
             return youtubeLink(client, message, args)
         }
         if (userMsg.includes("open.spotify.com/track/")) {
             return message.channel.send(
-                Utils.createSimpleEmbed("Ops! Ainda não consigo tocar tracks do Spotify 😞", `➡️ Tenta tocar uma playlist com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** ou tocar um vídeo do Youtube com **${process.env.COMMAND_PREFIX}play <link do youtube>** 🤗`, client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed("Ops! Ainda não consigo tocar tracks do Spotify 😞", `➡️ Tenta tocar uma playlist com **${process.env.COMMAND_PREFIX}spotify <link da playlist>** ou tocar um vídeo do Youtube com **${process.env.COMMAND_PREFIX}add <link do youtube>** 🤗`, client.user.username, client.user.avatarURL())
             );
         }
 

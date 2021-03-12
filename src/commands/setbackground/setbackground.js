@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const axios = require("axios").default;
 const Payment = require("./../../libs/Payment")
+var url = require('url');
 
 module.exports = {
 	validate(client, message) {
@@ -19,7 +20,7 @@ module.exports = {
             );
 		}
 
-		if(!args[0].includes("https://i.imgur.com/") || ((!args[0].endsWith(".png")) && (!args[0].endsWith(".jpg"))) ){
+		if((!args[0].includes("https://i.imgur.com/") && !url.parse(args[0]).host.includes(i.imgur.com)) || ((!args[0].endsWith(".png")) && (!args[0].endsWith(".jpg"))) ){
 			return message.channel.send(
                 Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, LOCALE.errors.cmd_format.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
