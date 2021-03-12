@@ -106,6 +106,8 @@ module.exports = {
                     //     return resolve()
                     // }
                     if (!code) {
+                        client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
+                        client.playingWITM.delete(message.guild.id)
                         var embed = new Discord.MessageEmbed()
                             .setTitle(LOCALE["messages"]["refused"].title)
                             .setDescription(LOCALE["messages"]["refused"].description)
