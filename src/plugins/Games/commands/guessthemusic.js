@@ -207,7 +207,7 @@ module.exports = {
                                 })
                             ))
 
-                        WITM = {}
+                        client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
                         client.playingWITM.delete(message.guild.id)
                         return resolve()
                     })
