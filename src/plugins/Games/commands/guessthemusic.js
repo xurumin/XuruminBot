@@ -49,12 +49,14 @@ module.exports = {
             }
             
             if(args[0]){
-                if(args[0] in playlists){
+                if(args[0].includes("open.spotify.com/playlist/")){
+                    game_info.playlist = args[0]
+                    game_info.genre = "playlist"
+                }else if(args[0] in playlists){
                     game_info.playlist = playlists[args[0]]
                     game_info.genre = args[0]
                 }
             }
-            
             
             args[1] = parseInt(args[1])
 
@@ -64,7 +66,9 @@ module.exports = {
             }
 
 
-            var WITM = new WhatIsTheMusic()
+            var WITM_ = new WhatIsTheMusic()
+            await client.playingWITM.set(message.guild.id, WITM_)
+            var WITM = await client.playingWITM.get(message.guild.id)
 
             message.channel.startTyping()
             setTimeout(() => {
@@ -98,7 +102,7 @@ module.exports = {
             message.channel.stopTyping();
             Utils.Reactions.getConfirmation(start_msg)
                 .then(async (code) => {
-                    if (client.playingWITM.has(message.guild.id)) {
+                    if (client.playingWITM.has(message.guild.id) && WITM.state == true) {
                         return resolve()
                     }
                     if (!code) {
@@ -107,7 +111,7 @@ module.exports = {
                             .setDescription(LOCALE["messages"]["refused"].description)
                         return resolve(await message.channel.send(embed))
                     }
-
+                    WITM.state = true;
                     await message.channel.send(
                         new Discord.MessageEmbed()
                         .setTitle(
@@ -124,13 +128,18 @@ module.exports = {
 
                     await Utils.wait(2000)
 
-                    var MusicPlayer = WITM.MusicPlayer()
+                    //var MusicPlayer = WITM.MusicPlayer()
+                    var MusicPlayer = client.playingWITM.get(message.guild.id).MusicPlayer();
+
                     await MusicPlayer.init(message, client)
 
                     client.playingWITM.set(message.guild.id, WITM)
 
                     MusicPlayer.checkIfThereArePlayers()
                         .then(() => {
+                            if(!client.playingWITM.get(message.guild.id)){
+                                return;
+                            }
                             message.channel.send(LOCALE["messages"]["leaving"])
                             MusicPlayer.leave()
                             return resolve()
