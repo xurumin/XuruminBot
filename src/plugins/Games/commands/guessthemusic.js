@@ -57,6 +57,8 @@ module.exports = {
                     game_info.genre = args[0]
                 }
             }
+
+            client.playingWITM.get(message.guild.id).playlist_link = game_info.playlist
             
             args[1] = parseInt(args[1])
 
@@ -150,7 +152,7 @@ module.exports = {
                     var count = 0;
 
                     client.playingWITM.set(message.guild.id, WITM)
-                    WITM.play_game(MusicPlayer, LOCALE, message, game_info.playlist, () => {
+                    WITM.play_game(MusicPlayer, LOCALE, message, client.playingWITM.get(message.guild.id).playlist_link, () => {
                         message.channel.send(new Discord.MessageEmbed().setTitle(
                             LOCALE["messages"]["playing"].interpolate({
                                 index: count + 1
@@ -173,7 +175,7 @@ module.exports = {
 
                         //start another round
                         client.playingWITM.set(message.guild.id, WITM)
-                        WITM.play_game(MusicPlayer, LOCALE, message, game_info.playlist, () => {
+                        WITM.play_game(MusicPlayer, LOCALE, message, client.playingWITM.get(message.guild.id).playlist_link, () => {
                             message.channel.send(new Discord.MessageEmbed().setTitle(
                                 LOCALE["messages"]["playing"].interpolate({
                                     index: count + 1
