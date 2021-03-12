@@ -220,7 +220,7 @@ module.exports = {
                         .setTitle(msgs.errors.something_went_wrong.title)
                         .setDescription(msgs.errors.something_went_wrong.description)
                     await message.channel.send(embed)
-                    return;
+                    return resolve();
                 })
 
         })
