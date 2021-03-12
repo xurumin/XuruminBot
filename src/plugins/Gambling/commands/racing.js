@@ -193,7 +193,7 @@ module.exports = {
                                 .setDescription(winnerList)))
                             }
                         }       
-                        await Utils.wait(1200)
+                        await Utils.wait(750)
                     }
                 })
                 .catch(async (err) => {
