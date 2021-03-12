@@ -159,8 +159,9 @@ module.exports = {
                     })
 
                     WITM.EventEmitter.on("round", async (res)=>{
+                        WITM = await client.playingWITM.get(message.guild.id)
                         count += 1
-                        if(count >= game_info.rounds){
+                        if(count >= game_info.rounds && WITM){
                             return WITM.EventEmitter.emit("finish")
                         }
                         if (res.status == 0) {
