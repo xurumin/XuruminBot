@@ -100,7 +100,7 @@ module.exports = {
                 .setDescription(msgs.messages.start.description)
             var start_msg = await message.channel.send(start_embed)
             message.channel.stopTyping();
-            Utils.Reactions.getConfirmation(start_msg)
+            Utils.Reactions.getConfirmation(start_msg, message.author.id)
                 .then(async (code) => {
                     // if (client.playingWITM.has(message.guild.id) && WITM.state == true) {
                     //     return resolve()
