@@ -153,6 +153,19 @@ module.exports = {
                     await Utils.wait(1500)
 
 
+                    var txt = ""
+                    for (let i = 0; i < race_pos.length; i++) {
+                        const element = race_pos[i];
+                        for (let i2 = 0; i2 < element.length; i2++) {
+                            const element2 = element[i2];
+                            txt += `${element2}`
+                        }
+                        txt += "\n"
+                    }
+                    main_embed.setDescription("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"+txt)
+                    await msg.edit(main_embed)
+
+                    await Utils.wait(500)
 
                     var rn = true
                     while (rn) {
