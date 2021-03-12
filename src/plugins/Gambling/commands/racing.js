@@ -95,7 +95,7 @@ module.exports = {
                         racingGame.delete(message.guild.id)
                         return resolve(await message.channel.send(LOCALE["messages"].game_cancelled))
                     }
-                    var race_pos = [
+                    var race_pos = [ 
                         ["<:red_car:820020310996680774>"],
                         ["<:green_car:820020310903619614>"],
                         ["<:blue_car:820020310857482240>"],
