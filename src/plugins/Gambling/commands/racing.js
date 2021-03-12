@@ -8,46 +8,6 @@ require('dotenv/config');
 
 var racingGame = new Discord.Collection()
 
-async function _sendRectsLight(message) {
-    await message.react("✅")
-}
-
-/**
-     * @param  {Discord.Message} message
-     */
-function getConfirmation(message, playerId) {
-    return new Promise(async (resolve, reject) => {
-        await _sendRectsLight(message)
-        const filter = (reaction, user) => {
-            if(["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != playerId) return false;
-            return true;
-        };
-        message.awaitReactions(filter, {
-                max: 1,
-                time: 10 * 60 * 1000,
-                errors: ['time']
-            })
-            .then(collected => {
-                const reaction = collected.first();
-                switch (reaction.emoji.name) {
-                    case "✅":
-                        resolve(true)
-                        break;
-                    default:
-                        resolve(false)
-                        break;
-                }
-            })
-            .catch(collected => {
-                if(collected.size == 0){
-                    resolve(true)
-                }else{
-                    reject(collected)
-                }
-            });
-
-    })
-}
 async function payBettors(color, message) {
     var totalPrize = racingGame.get(message.guild.id).bettors.length * 100
     var bettors = racingGame.get(message.guild.id).bettors.filter(elm => elm.car == color)
@@ -129,7 +89,7 @@ module.exports = {
                 bettors: [],
                 isRuning: false
             })
-            getConfirmation(msg, message.author.id)
+            Utils.Reactions.getConfirmation(msg, message.author.id, 10 * 60 * 1000)
                 .then(async (status) => {
                     if (!status) {
                         racingGame.delete(message.guild.id)

@@ -68,7 +68,7 @@ module.exports = {
             }
             var msg = await message.channel.send(Utils.createSimpleEmbed(confirmation_msg.title,confirmation_msg.description))
             Utils.Reactions.getConfirmation(
-                msg
+                msg, message.author.id
             ).then(async (value)=>{
                 await msg.delete()
                 if(!value){

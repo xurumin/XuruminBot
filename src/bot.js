@@ -198,6 +198,7 @@ const init = async () => {
 		}, process.env.ACTIVITY_UPDATE_COOLDOWN)
 		process.env.SHARD_ID = client.shard.ids[0]
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
+		console.log(`Total commands: ${client.commands.size}`);
 	});
 }
 init();

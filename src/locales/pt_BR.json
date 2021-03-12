@@ -224,8 +224,8 @@
             },
             "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
             "confirmation": [{
-                "title": "Você tem certeza?",
-                "description": "Trocar o background custa **X$100.00**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                    "title": "Você tem certeza?",
+                    "description": "Trocar o background custa **X$100.00**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
                 },
                 {
                     "title": ":x: A operação foi cancelada."
@@ -305,8 +305,8 @@
                 "description": "Foi enviada uma mensagem privada com os detalhes :)"
             },
             "confirmation": [{
-                "title": "Você está prestes a realizar uma transação.",
-                "description": "Clique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                    "title": "Você está prestes a realizar uma transação.",
+                    "description": "Clique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
                 },
                 {
                     "title": ":x: A operação foi cancelada."
@@ -443,7 +443,7 @@
                 "title": "Qual você prefere?",
                 "loading": "Carregando nova mensagem em 5 segundos..."
             },
-            "finished":{
+            "finished": {
                 "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
             },
             "errors": {
@@ -481,7 +481,7 @@
                     "description": "Escreva x!gtm <nome da música> para tentar acertar!"
                 }
             },
-            "finished":{
+            "finished": {
                 "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
             },
             "errors": {
@@ -515,6 +515,32 @@
                 },
                 "no_winner": "Ninguém ganhou :("
             }
+        },
+        "dice": {
+            "title": "🎲 Jogo de dados",
+            "start": {
+                "description": "❔ **Como funciona?**\n O Xurumin irá lançar um dado mágico, que só ele tem (é confiável. confia. :eyes:).\n Se o dado cair no lado que você escolheu, você ganha. Se não cair, bom... Você ganha ao contrário.  (ou seja, você perde...)\n\n⚠️ **Como jogar**\nPara participar, basta usar o comando {{prefix}}dice <valor da aposta> <lado do dado> \n(é um dado de 6 lados, ok?)\nExemplo: `{{prefix}}dice 100 5`\n\n❗️ **Atenção**\nVocê pode ganhar entre 10% e 100% do valor apostado...\nÉ bom ter sorte, hein?"
+            },
+            "loading": {
+                "title": "<a:loading:809177799969079326> Lançando o dado...",
+                "description": "Nossos gatinhos lançadores de dados estão... bom...\nfazendo o trabalho deles..."
+            },
+            "confirmation": {
+                "title": "🎲 Jogar os dados - Confirmação",
+                "description": "Você irá gastar **X${{value}}** no lado **{{face}}**.\nVocê tem certeza?\n\nClique em ✅ para **confirmar** ou em ❌ para **cancelar**"
+            },
+            "refused": "❌ Jogo cancelado com sucesso!",
+            "standard_error": "Ocorreu um erro durante a sua operação.\nTente novamente mais tarde :(",
+            "user_do_not_have_funds": {
+                "title": "❌ Você não possui dinheiro suficiente",
+                "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+            },
+            "player_won": "Wow! Você ganhou!\n Seu prêmio foi de **X${{prize}}**\nNão vá gastar tudo em doçes, hein?",
+            "player_lost": [
+                "Caiu o lado **{{face}}** \n\nDesculpe, amigo. Não foi dessa vez. Quem sabe na próxima?",
+                "Caiu o lado **{{face}}** \n\nPoxa vida... A próxima é a da sorte. É o que dizem, né?",
+                "Caiu o lado **{{face}}** \n\nFoi quase... Quem sabe na próxima."
+            ]
         }
     }
 }

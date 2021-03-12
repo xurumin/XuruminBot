@@ -91,6 +91,9 @@ var exp = {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
+  randomFloat(min, max) {
+    return Math.random() * (max - min) + min;
+  },
   choice(array) {
     return array[Math.floor(Math.random() * array.length)]
   },
@@ -191,15 +194,16 @@ var exp = {
       await message.react("✅")
       await message.react("❌")
     },
-    getConfirmation(message) {
+    getConfirmation(message, userId, time=100000) {
       return new Promise(async (resolve, reject) => {
         await exp.Reactions._sendRectsLight(message)
         const filter = (reaction, user) => {
-          return !["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id);
+          if(["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != userId) return false;
+          return true;
         };
         message.awaitReactions(filter, {
             max: 1,
-            time: 100000,
+            time: time,
             errors: ['time']
           })
           .then(collected => {
@@ -221,7 +225,7 @@ var exp = {
           });
 
       })
-    },
+    }
   }
 }
 module.exports = exp
