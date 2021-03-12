@@ -20,7 +20,7 @@ class MusicPlayerClass {
     async checkIfThereArePlayers() {
         return new Promise(async (resolve, reject) => {
             var runner = setInterval(() => {
-                if (!this.connection || this.connection == {} || this.connection.channel.members.size <= 1) {
+                if (!this.connection || this.connection == {} || ( this.connection.channel && this.connection.channel.members.size <= 1)) {
                     clearInterval(runner);
                     return resolve()
                 }
@@ -56,6 +56,7 @@ class Game {
         this.EventEmitter = new EE()
         this.isOpen = false
         this.leaderboard = new Discord.Collection()
+        this.state = false;
     }
     async getRandomMusic(playlistUrl) {
         try {

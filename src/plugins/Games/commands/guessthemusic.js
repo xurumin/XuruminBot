@@ -102,9 +102,9 @@ module.exports = {
             message.channel.stopTyping();
             Utils.Reactions.getConfirmation(start_msg)
                 .then(async (code) => {
-                    if (client.playingWITM.has(message.guild.id) && WITM.state == true) {
-                        return resolve()
-                    }
+                    // if (client.playingWITM.has(message.guild.id) && WITM.state == true) {
+                    //     return resolve()
+                    // }
                     if (!code) {
                         var embed = new Discord.MessageEmbed()
                             .setTitle(LOCALE["messages"]["refused"].title)
@@ -141,7 +141,8 @@ module.exports = {
                                 return;
                             }
                             message.channel.send(LOCALE["messages"]["leaving"])
-                            MusicPlayer.leave()
+                            client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
+                            client.playingWITM.delete(message.guild.id)
                             return resolve()
                         })
                     var count = 0;
@@ -181,6 +182,7 @@ module.exports = {
                     WITM.EventEmitter.on("leave", async ()=>{
                         count = game_info.rounds+5
                         WITM = {}
+                        MusicPlayer.leave()
                         client.playingWITM.delete(message.guild.id)
                         return resolve()
                     })
