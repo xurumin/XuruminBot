@@ -12,11 +12,15 @@ async function _sendRectsLight(message) {
     await message.react("✅")
 }
 
-function getConfirmation(message) {
+/**
+     * @param  {Discord.Message} message
+     */
+function getConfirmation(message, playerId) {
     return new Promise(async (resolve, reject) => {
         await _sendRectsLight(message)
         const filter = (reaction, user) => {
-            return !["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id);
+            if(["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != playerId) return false;
+            return true;
         };
         message.awaitReactions(filter, {
                 max: 1,
@@ -30,12 +34,16 @@ function getConfirmation(message) {
                         resolve(true)
                         break;
                     default:
-                        reject()
+                        resolve(false)
                         break;
                 }
             })
             .catch(collected => {
-                reject(collected)
+                if(collected.size == 0){
+                    resolve(true)
+                }else{
+                    reject(collected)
+                }
             });
 
     })
@@ -70,7 +78,6 @@ module.exports = {
      */
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
-
             var game_info = {
                 title: LOCALE["messages"].title,
                 run_is_over: false,
@@ -78,11 +85,8 @@ module.exports = {
                     "blue", "red", "black", "green"
                 ]
             }
-
             if (racingGame.has(message.guild.id)) {
-                if(racingGame.get(message.guild.id).isRuning == true){
-                    return;
-                }
+                if(racingGame.get(message.guild.id).isRuning == true) return;
                 if (args[0] == "bet") {
                     var car_color = args[1]
                     if (game_info.cars.includes(car_color)) {
@@ -107,8 +111,6 @@ module.exports = {
                     user: message.author
                 }))
             }
-
-
             message.channel.startTyping()
             setTimeout(() => {
                 message.channel.stopTyping();
@@ -116,29 +118,31 @@ module.exports = {
 
             var main_embed = new Discord.MessageEmbed()
             main_embed.setTitle(game_info.title)
-            main_embed.setDescription(LOCALE["messages"].start.description)
-            //main_embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
+            main_embed.setDescription(LOCALE["messages"].start.description.interpolate({
+                prefix: process.env.COMMAND_PREFIX
+            }))
 
             var msg = await message.channel.send(main_embed)
+            message.channel.stopTyping();
 
             racingGame.set(message.guild.id, {
                 bettors: [],
                 isRuning: false
             })
-            getConfirmation(msg)
+            getConfirmation(msg, message.author.id)
                 .then(async (status) => {
                     if (!status) {
                         racingGame.delete(message.guild.id)
                         return resolve(await message.channel.send(LOCALE["messages"].game_cancelled))
                     }
                     var race_pos = [
-                        [":red_car:"],
-                        [":articulated_lorry:"],
-                        [":blue_car:"],
-                        [":police_car:"]
+                        ["<:red_car:820020310996680774>"],
+                        ["<:green_car:820020310903619614>"],
+                        ["<:blue_car:820020310857482240>"],
+                        ["<:black_car:820020310686171196>"]
                     ]
                     racingGame.get(message.guild.id).isRuning = true;
-                    //🔴 🟠 🟡 🟢
+
                     const red_light = "🔴🔴🔴🔴\n🔴🔴🔴🔴\n🔴🔴🔴🔴\n🔴🔴🔴🔴\n"
                     main_embed.setDescription("                             \n"+red_light)
                     await msg.edit(main_embed)
@@ -151,7 +155,6 @@ module.exports = {
                     main_embed.setDescription("                             \n"+green_light)
                     await msg.edit(main_embed)
                     await Utils.wait(1500)
-
 
                     var txt = ""
                     for (let i = 0; i < race_pos.length; i++) {
@@ -174,8 +177,7 @@ module.exports = {
                             break;
                         }
                         const car_choice = Utils.random(0,3)
-                        //const car_choice = 0;
-                        race_pos[car_choice].unshift("➖")
+                        race_pos[car_choice].unshift(":white_small_square:")
 
                         var txt = ""
                         for (let i = 0; i < race_pos.length; i++) {
@@ -235,14 +237,10 @@ module.exports = {
                     }
                 })
                 .catch(async (err) => {
-                    console.log(err);
+                    //console.log(err);
                     racingGame.delete(message.guild.id)
                     return await message.channel.send("oops");
                 })
-
-            message.channel.stopTyping();
-
-
         })
     },
     get command() {
