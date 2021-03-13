@@ -1,7 +1,9 @@
 //const numCpus = require("os").cpus().length
 require('dotenv/config');
 
-const { default: axios } = require('axios');
+const {
+  default: axios
+} = require('axios');
 const {
   ShardingManager
 } = require('discord.js');
@@ -24,10 +26,10 @@ shard.spawn(Number(process.env.SHARDS))
       async function postDBL() {
         //client.guilds.cache.size
         try {
-          await axios.post("https://discord.bots.gg/api/v1/bots/753723888671785042/stats",{
+          await axios.post("https://discord.bots.gg/api/v1/bots/753723888671785042/stats", {
             guildCount: await getServerCount()
-          },{
-            headers:{
+          }, {
+            headers: {
               Authorization: DISCORD_BOTS_GG_API
             }
           })
@@ -41,11 +43,9 @@ shard.spawn(Number(process.env.SHARDS))
         postDBL()
       }, 1800000);
     }
-
-
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`)
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`)
-    
+
   });
 
 const getVoiceConnectionsCount = async () => {
