@@ -21,8 +21,6 @@ shard.spawn(Number(process.env.SHARDS))
       const DBL = require("dblapi.js");
       const dbl = new DBL(process.env.TOPGG_API, shard);
 
-      
-
       async function postDBL() {
         //client.guilds.cache.size
         try {

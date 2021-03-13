@@ -2,6 +2,7 @@
 const cache = require('memory-cache');
 require('dotenv/config');
 const fs = require('fs-extra');
+const colors = require('colors');
 
 const Discord = require('discord.js');
 const utils = require('./utils/utils');
@@ -34,8 +35,8 @@ const init = async () => {
 	var locales = await fs.readdir('src/locales')
 
 	console.log(
-		'[#LOG]',
-		`Loading ${locales.length} locale(s).`
+		'[#LOG]'.magenta,
+		`Loading ${locales.length} locale(s).`.magenta
 	);
 
 	locales.forEach(async (localeFileName) => {
@@ -46,7 +47,7 @@ const init = async () => {
 
 			LOCALES.set(localeName, localeFile)
 
-			console.log(`	> LOCALE ${localeName} loaded.`)
+			console.log(`	> LOCALE ${localeName.green} loaded.`)
 		} catch (error) {
 			console.log(`[#ERROR] Could not load locale ${localeFileName}:`);
 			console.error(error)
@@ -64,8 +65,8 @@ const init = async () => {
 	}
 
 	console.log(
-		'[#LOG]',
-		`Loading ${cmdFiles.length} command(s).`
+		'[#LOG]'.magenta,
+		`Loading ${cmdFiles.length} command(s).`.magenta
 	);
 
 	cmdFiles.forEach(async (cmdFolder) => {
@@ -78,7 +79,7 @@ const init = async () => {
 					client.aliases.set(aliase, command.command.name);
 				});
 			}
-			console.log(`	> Command ${command.command.name} loaded.`)
+			console.log(`	> Command ${command.command.name.green} loaded.`)
 		} catch (error) {
 			console.log(`[#ERROR] Could not load command ${cmdFolder}:`);
 			console.error(error)
@@ -92,14 +93,14 @@ const init = async () => {
 	var evntFiles = await fs.readdir('src/events/')
 
 	console.log(
-		'[#LOG]',
-		`Loading ${evntFiles.length} events(s).`
+		'[#LOG]'.magenta,
+		`Loading ${evntFiles.length} events(s).`.magenta
 	);
 
 	evntFiles.forEach(async (eventName) => {
 		try {
 			const props = require(`./events/${eventName}`);
-			console.log(`[event-loader] ${props.event.eventName} loaded.`)
+			console.log(`[event-loader] ${props.event.eventName.green} loaded.`)
 
 			client.on(props.event.eventName, (data) => {
 				props.run(client, data, LOCALES)
@@ -118,15 +119,14 @@ const init = async () => {
 	var pluginsFiles = await fs.readdir('src/plugins/')
 
 	console.log(
-		'[#LOG]',
-		`Loading ${pluginsFiles.length} plugin(s).`
+		'[#LOG]'.magenta,
+		`Loading ${pluginsFiles.length} plugin(s).`.magenta
 	);
 
-	pluginsFiles.forEach(async (controllerName) => {
+	for(var controllerName of pluginsFiles){
 		try {
-			console.log(`[plugin-loader] Loading ${controllerName}`)
+			console.log(`[plugin-loader] Loading ${controllerName}`.yellow)
 			const main = require(`./plugins/${controllerName}/${controllerName}.js`);
-			console.log(`[plugin-loader] loading ${controllerName} commands...`)
 			const commandList = await fs.readdir(`${__dirname}/plugins/${controllerName}/${main.commands.path}/`)
 			for(var element of commandList){
 				const command = await require(`${__dirname}/plugins/${controllerName}/${main.commands.path}/${element}`);
@@ -136,13 +136,13 @@ const init = async () => {
 						client.aliases.set(aliase, command.command.name);
 					});
 				}
-				console.log(`	> Command ${command.command.name} loaded.`)
+				console.log(`	> Command ${command.command.name.green} loaded.`)
 			}
 		} catch (error) {
 			console.log(`[#ERROR] Could not load command ${controllerName}:`);
 			console.error(error)
 		}
-	})
+	}
 	pluginsFiles = []
 
 	const Music = require('./plugins/Music/utils/Music');
