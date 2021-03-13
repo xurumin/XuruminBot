@@ -5,7 +5,8 @@
   "main": "./src/bot.js",
   "scripts": {
     "start": "node ./src/shard.js",
-    "dev": "nodemon ./src/shard.js"
+    "dev": "nodemon ./src/shard.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "jonatas araujo <jonatasaraujofx@gmail.com>",
   "license": "ISC",
