@@ -98,7 +98,8 @@ module.exports = {
 			}, 5000);
 			
 			//Utils.choice(LOCALE["noiaPhrases"])
-			ImageProcessor(user_pic, LOCALE["noiaPhrases"][LOCALE["noiaPhrases"].length-1])
+			//LOCALE["noiaPhrases"][LOCALE["noiaPhrases"].length-1]
+			ImageProcessor(user_pic, Utils.choice(LOCALE["noiaPhrases"]))
 			.then((image)=>{
 				const embed = new Discord.MessageEmbed()
 				.setTitle(LOCALE.title)
