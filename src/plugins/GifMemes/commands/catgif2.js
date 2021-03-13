@@ -30,7 +30,6 @@ function run_gen(client, message, args,loading_msg, LOCALE) {
                 Utils.createSimpleEmbed(msg.title, msg.description)
             ));
         }
-
 		ImageGenerator(user_pic, message)
 		.then(async (image)=>{
 			loading_msg = await loading_msg
