@@ -12,12 +12,16 @@ const { randomBytes } = require('crypto');
 
 module.exports = function process(userimagelink, message) {
     return new Promise(async (resolve, reject) => {
+        var video_info = {
+            width: 250,
+            height: 250
+        }
         var videoOptions = {
             loop: 1/6,
             transition: false,
-            videoBitrate: 100,
+            videoBitrate: 200,
             videoCodec: 'libx264',
-            size: '250x250',
+            size: `${video_info.width}x${video_info.height}`,
             audioChannels: 2,
             format: 'mp4',
             pixelFormat: 'yuv420p'
@@ -27,20 +31,19 @@ module.exports = function process(userimagelink, message) {
 
         var images = []
 
-        const canvas = createCanvas(250, 250)
+        const canvas = createCanvas(video_info.width,video_info.height)
         const ctx = canvas.getContext('2d')
         const user_img = await loadImage(userimagelink)
 
-        for (const img_url of fs.readdirSync(path.join(__dirname, "..", "/files/catgif"))) {
-            ctx.clearRect(0,0,250,250)
-            ctx.drawImage(user_img, 0, 0, 250,250);
-            ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/catgif/${img_url}`)), 0, 80, 175,175);  
+        for (const img_url of fs.readdirSync(path.join(__dirname, "..", "/files/catvibing"))) {
+            ctx.clearRect(0,0,video_info.width,video_info.height)
+            ctx.drawImage(user_img, 0, 0, video_info.width,video_info.height);
+            ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/catvibing/${img_url}`)), 0, 0.32 * video_info.height, 0.7 * video_info.width, 0.7 * video_info.height);  
 
             const random_png_name = randomBytes(5).toString("hex")
             const png_path = path.join(__dirname, "..", `/files/temp/images/${random_png_name}.jpg`)
-            await fs.writeFileSync(png_path, canvas.toBuffer('image/jpeg', { quality: 0.5 }))
+            await fs.writeFileSync(png_path, canvas.toBuffer('image/jpeg', { quality: 0.75 }))
             images.push(png_path)
-            //images.push(path.join(__dirname, "..", `/files/catgif/${img_url}`))
         }
         var d_images = []
         for (let index = 0; index < 4; index++) {
@@ -48,13 +51,13 @@ module.exports = function process(userimagelink, message) {
                 d_images.push(image)
             }
         }
-        
+
         const random_name = randomBytes(25).toString("hex")
         const video_path = path.join(__dirname, "..", `/files/temp/${random_name}.mp4`)
 
         var data;
         videoshow(d_images, videoOptions)
-            .audio(audio_path)
+            .audio(audio_path, {fade: false})
             .save(video_path)
             .on('error', function (err, stdout, stderr) {
                 console.error('Error:', err)

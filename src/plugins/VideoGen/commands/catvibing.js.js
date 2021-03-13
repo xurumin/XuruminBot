@@ -4,8 +4,7 @@ const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const fs = require("fs")
 
-const ImageGenerator = require("./../ImageGenerators/catgif2");
-const utils = require('./../../../utils/utils');
+const VideoGenerator = require("./../VideoGenerator/catvibing");
 
 
 var globalCooldown = []
@@ -30,7 +29,7 @@ function run_gen(client, message, args,loading_msg, LOCALE) {
                 Utils.createSimpleEmbed(msg.title, msg.description)
             ));
         }
-		ImageGenerator(user_pic, message)
+		VideoGenerator(user_pic, message)
 		.then(async (image)=>{
 			loading_msg = await loading_msg
 			await message.channel.send(image[0])
@@ -67,7 +66,7 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args, LOCALE) => {
-        const isPremium = await utils.Profile.isPremium(client, message.author.id)
+        const isPremium = await Utils.Profile.isPremium(client, message.author.id)
         if(!isPremium){
             const notPremiumEmbed = new Discord.MessageEmbed()
             .setColor('#9d65c9')
@@ -100,7 +99,8 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'catgif2'
+            name: 'catvibing',
+            aliases: ["catvideo"]
         }
     },
 };

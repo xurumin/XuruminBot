@@ -162,6 +162,42 @@
                 "footer": "Mensagem de {{author}}"
             }
         },
+        "noia": {
+            "title": "Noia frases",
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            },
+            "noiaPhrases": [
+                ["A mina vem mi\npergunta se eu uso\nlança", "tenho cara di\nindio carai?"],
+                ["amai uns\nauos outros", "mesmo sem\nretribuição!!!!"],
+                ["si deus nao existe\nfml\nqm coloca","o chocolate\ndas americanas\nno meu bolso?\nsem condisao kk"],
+                ["\"queria ter bundão\"\nosh fia e esse teu","namorado cabeludo\ndas unha pintada\neoqkkkkkkkkkk\n0 condisão"],
+                ["a mina só usa preto\ne anda di bota", "ta imitano o dracula \nai vida?\nsen condisaokkkk"],
+                ["i essa boquinha aí\nvida", "beija eu nao? kkkkkkk"],
+                ["qi papo eh esse\nde namoro vida?", "quer romance\ncompra um livrokkkk\nnos eh dog sem colera"],
+                ["iso tudo pq deus ehh\npor nos", "imagina si ele fosse\ncontrakkkkk slc"],
+                ["iai 9vinha ta ouvindo\nooq nesse teu fone?", "lil peep?afff\nlamentavel di vdd"],
+                ["iai 9vinha ta ouvindo\nooq nesse teu fone?", "artic monkeis?afff\nlamentavel di vdd"],
+                ["iai 9vinha ta ouvindo\nooq nesse teu fone?", "aurora? afff\nlamentavel di vdd"],
+                ["qi papo eh essi\nde ouvi trap princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi rock princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi pop princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi musica ingles\n princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi trap princesa", "vamo escuta seu jorge"],
+                ["qi papo eh essi\nde ouvi rock princesa", "vamo escuta\nevidencias"],
+                ["qi papo eh essi\nde ouvi pop princesa", "vamo escuta matue"],
+                ["qi papo eh essi\nde ouvi musica ingles\n princesa", "vamo escuta\n tonico e tinoco"],
+                ["aff", "ta em gatinha"]
+            ],
+            "message": {
+                "title": "😘 Oie...",
+                "description": "Oi, {{metioned_user}}. Né? 😊 Então... tava aqui {{sent_1}} e pensei em falar que {{sent_2}}.\nSei que parece estranho 🥺, mas {{sent_3}}.\nIae, alguma chance {{sent_4}}? 😚🥰",
+                "footer": "Mensagem de {{author}}"
+            }
+        },
         "espelhoespelhomeu": {
             "message": {
                 "title": "Espelho, espelho meu: existe alguém mais bela do que eu?",
@@ -437,7 +473,7 @@
                 }
             }
         },
-        "catgif2": {
+        "catvibing": {
             "messages": {
                 "loading": {
                     "title": "<a:loading:809177799969079326> Carregando...",
