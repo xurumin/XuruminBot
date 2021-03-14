@@ -1,29 +1,27 @@
-const {
-    default: axios
-} = require("axios")
+const {default: axios} = require("axios");
 const cheerio = require('cheerio');
-const Utils = require("./../../../../utils/utils")
+const Utils = require("./../../../../utils/utils");
 
 var game = {
     getQuestion: async (id, translate=false) => {
         try {
-            var r = (await axios.get(`http://either.io/${id}`, {
+            var data = (await axios.get(`http://either.io/${id}`, {
                 timeout: 10*1000
             })).data
         } catch (error) {
             return await game.getQuestion(Utils.random(0,5000), translate)
         }
         
-        const c = cheerio.load(r)
+        const $ = cheerio.load(data);
         var questions = {
             red_choice: {
-                question: c("div.red-choice div.option a").html().replace("\n", ""),
-                total_votes: parseInt(c("div.red-choice div.total-votes span.count").html().replace(/,/g, "")),
+                question: $("div.red-choice div.option a").html().replace("\n", ""),
+                total_votes: parseInt($("div.red-choice div.total-votes span.count").html().replace(/,/g, "")),
                 percentage: 0
             },
             blue_choice: {
-                question: c("div.blue-choice div.option a").html().replace("\n", ""),
-                total_votes: parseInt(c("div.blue-choice div.total-votes span.count").html().replace(/,/g, "")),
+                question: $("div.blue-choice div.option a").html().replace("\n", ""),
+                total_votes: parseInt($("div.blue-choice div.total-votes span.count").html().replace(/,/g, "")),
                 percentage: 0
             },
             total_votes: 0
@@ -37,8 +35,9 @@ var game = {
             questions.blue_choice.question = await Utils.translate("en", "pt",questions.blue_choice.question)
         }
 
-        return questions
-    },
+        return questions;
+    } ,
+
     Reactions: {
         async _sendRectsLight(message) {
             await message.react("🟦")
@@ -47,13 +46,14 @@ var game = {
         },
         reactEmbed(message, playerId, onReact) {
             return new Promise(async (resolve, reject) => {
+                
                 await game.Reactions._sendRectsLight(message)
                 const filter = (reaction, user) => {
                     if(!message.embeds[0].fields[0] || !message){
-                        return resolve()
+                        return resolve();
                     }
                     if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != playerId) {
-                        return false
+                            return false;
                     }
                     switch (reaction.emoji.name) {
                         case "🟦":
@@ -73,8 +73,8 @@ var game = {
                 message.awaitReactions(filter, {
                         time: 300000,
                         max: 50
-                    })
-                    .then(collected => {
+                })
+                    .then(() => {
                         return resolve()
                     })
                     .catch(err => {
@@ -85,4 +85,4 @@ var game = {
         },
     }
 }
-module.exports = game
+module.exports = game;
