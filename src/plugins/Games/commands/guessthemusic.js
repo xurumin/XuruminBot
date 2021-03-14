@@ -21,12 +21,12 @@ module.exports = {
             if (client.playingWITM.has(message.guild.id)) {
                 if(args[0]=="-leave"){
                     client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                    client.playingWITM.delete(message.guild.id)
                     return message.channel.send(LOCALE["messages"]["leaving"])
                 }
 
-                const witm_c = client.playingWITM.get(message.guild.id)
+                var witm_c = client.playingWITM.get(message.guild.id)
                 if (!witm_c.isOpen) return;
+
                 var m_result = witm_c.musicMatch(args.join(" "))
                 if (m_result[0] == true) {
                     witm_c.playerGRAnswer(message.author.id)
@@ -107,7 +107,6 @@ module.exports = {
                     // }
                     if (!code) {
                         client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                        client.playingWITM.delete(message.guild.id)
                         var embed = new Discord.MessageEmbed()
                             .setTitle(LOCALE["messages"]["refused"].title)
                             .setDescription(LOCALE["messages"]["refused"].description)
@@ -144,7 +143,6 @@ module.exports = {
                             }
                             message.channel.send(LOCALE["messages"]["leaving"])
                             client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                            client.playingWITM.delete(message.guild.id)
                             return resolve()
                         })
                     var count = 0;
@@ -209,14 +207,13 @@ module.exports = {
                             ))
 
                         client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                        client.playingWITM.delete(message.guild.id)
                         return resolve()
                     })
 
                 })
                 .catch(async (err) => {
                     console.log(err);
-                    client.playingWITM.delete(message.guild.id)
+                    client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
                     var embed = new Discord.MessageEmbed()
                         .setTitle(msgs.errors.something_went_wrong.title)
                         .setDescription(msgs.errors.something_went_wrong.description)
