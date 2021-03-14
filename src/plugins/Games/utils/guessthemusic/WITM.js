@@ -68,45 +68,54 @@ class Game {
         return music
     }
     play_game(MusicPlayer,LOCALE, message, plt_url, cb) {
-        return new Promise(async (resolve, reject)=>{
+
+        return new Promise(async () => {
+
             var random_music = await this.getRandomMusic(plt_url)
             cb()
-            this.isOpen = true
-            this.random_music = random_music
+            this.isOpen = true;
+            this.random_music = random_music;
 
-            this.gm_tm = setTimeout(()=>{
-                if(!this.isOpen) return;
-                this.isOpen = false;
-                return this.EventEmitter.emit("round", {
-                    status: 0,
-                    music: `${this.random_music.name} - ${this.random_music.author}`
-                })
+            this.gm_tm = setTimeout( () => {
+                if(this.isOpen) {
+                    this.isOpen = false;
+                    return this.EventEmitter.emit("round", {
+                        status: 0,
+                        music: `${this.random_music.name} - ${this.random_music.author}`
+                    })
+                }
+                return;
             }, 60000)
 
-            MusicPlayer.play(random_music.url, 15000)
+            MusicPlayer.play(random_music.url, 15000);
     
-            this.EventEmitter.on("pgra", async (playerId)=>{
-                if(this.isOpen == false){
-                    return;
-                }
+            this.EventEmitter.on("pgra", async (playerId) => {
 
-                clearTimeout(this.gm_tm)
+                if(this.isOpen) {
+                    clearTimeout(this.gm_tm);
+                    this.isOpen = false;
 
-                this.isOpen = false
-                await message.channel.send(LOCALE["messages"]["right_answer"].interpolate({
-                    author: `<@${playerId}>`,
-                    music_name: `${this.random_music.name} - ${this.random_music.author}`
-                }))
-                if(this.leaderboard.has(playerId)){
-                    this.leaderboard.set(playerId, parseInt(this.leaderboard.get(playerId)) + 1)
-                }else{
-                    this.leaderboard.set(playerId, 1)
+                    try {
+                        await message.channel.send(LOCALE["messages"]["right_answer"]
+                            .interpolate({
+                                author: `<@${playerId}>`,
+                                music_name: `${this.random_music.name} - ${this.random_music.author}`
+                            }))
+                        if(this.leaderboard.has(playerId)){
+                            this.leaderboard.set(playerId, parseInt(this.leaderboard.get(playerId)) + 1)
+                        }else{
+                            this.leaderboard.set(playerId, 1)
+                        }
+                        return this.EventEmitter.emit("round", {
+                            status: 1,
+                            playerId: playerId,
+                            music: `${this.random_music.name} - ${this.random_music.author}`
+                        })
+                    }catch(err) {
+                        console.error(err);
+                    }     
                 }
-                return this.EventEmitter.emit("round", {
-                    status: 1,
-                    playerId: playerId,
-                    music: `${this.random_music.name} - ${this.random_music.author}`
-                })
+                return;
             })
         })
     }
