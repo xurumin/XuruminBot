@@ -16,7 +16,7 @@ module.exports = {
      */
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
-            var translate = true
+            var translate = true;
 
             if(args[0] == "false") translate == false;
 
@@ -89,22 +89,20 @@ module.exports = {
                     main_embed.setFooter(msg.loading)
                     await main_msg.edit(main_embed)
 
-                    setTimeout(async ()=>{
-                        if(isDeleted){
-                            return;
+                    setTimeout(async () => {
+                        if(!isDeleted){
+                            var new_embed = new Discord.MessageEmbed()
+                            
+                            new_embed.setTitle(msg.title)
+                            new_embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
+                            new_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
+                            new_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
+
+                            main_msg.edit(new_embed)
                         }
-                        var new_embed = new Discord.MessageEmbed()
-
-                        new_embed.setTitle(msg.title)
-                        new_embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
-                        new_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
-                        new_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
-
-                        main_msg.edit(new_embed)
-
                     }, 5000)
                     question = await EitherGame.getQuestion(Utils.random(0, 5000), translate)
-                })
+            })
                 .then(async() => {
                     if(isDeleted) return;
                     await main_msg.delete()
