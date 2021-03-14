@@ -1,12 +1,14 @@
-const {
-    default: axios
-} = require("axios")
+const {default: axios} = require("axios")
 const Music = require('./../../../Music/utils/Music');
-const Utils = require("./../../../../utils/utils")
-const ytdl = require("ytdl-core")
-const EE = require("events").EventEmitter
-const Discord = require("discord.js")
+const Utils = require("./../../../../utils/utils");
+const ytdl = require("ytdl-core");
+const EE = require("events").EventEmitter;
+const Discord = require("discord.js");
 
+/**
+ * @class MusicPlayer
+ *
+ */
 class MusicPlayerClass {
     constructor() {
 
@@ -18,17 +20,20 @@ class MusicPlayerClass {
     }
 
     async checkIfThereArePlayers() {
+
         return new Promise(async (resolve, reject) => {
             var runner = setInterval(() => {
-                if (!this.connection || this.connection == {} || this.connection.channel.members.size <= 1) {
+                if (!this.connection || this.connection == {} || this.connection.channel.members.size < 2) {
                     clearInterval(runner);
                     return resolve()
                 }
             }, 5000);
         })
+
     }
 
     async play(url, time = 10000) {
+
         try {
             var stream = ytdl(url, {
                 filter: 'audioonly'
@@ -42,22 +47,29 @@ class MusicPlayerClass {
         } catch (error) {
             console.log(error);
         }
+
     }
 
     leave() {
+
         this.connection.disconnect()
         this.connection = {}
         this.client.playingWITM.delete(this.message.guild.id)
+
     }
 }
-
+/**
+ * @class Game
+ */
 class Game {
+
     constructor(){
-        this.EventEmitter = new EE()
-        this.isOpen = false
-        this.leaderboard = new Discord.Collection()
+        this.EventEmitter = new EE();
+        this.isOpen = false;
+        this.leaderboard = new Discord.Collection();
     }
     async getRandomMusic(playlistUrl) {
+
         try {
             var music = (await Music.getSpotifyPlaylist(playlistUrl, 1))[0]
             var search_term = music.name + " " + music.author
@@ -65,7 +77,9 @@ class Game {
         } catch (error) {
             return this.getRandomMusic(playlistUrl)
         }
-        return music
+
+        return music;
+
     }
     play_game(MusicPlayer,LOCALE, message, plt_url, cb) {
 
@@ -160,31 +174,36 @@ class Game {
         s2 = s2.toLowerCase();
       
         var costs = new Array();
+
         for (var i = 0; i <= s1.length; i++) {
-          var lastValue = i;
-          for (var j = 0; j <= s2.length; j++) {
-            if (i == 0)
-              costs[j] = j;
-            else {
-              if (j > 0) {
-                var newValue = costs[j - 1];
-                if (s1.charAt(i - 1) != s2.charAt(j - 1))
-                  newValue = Math.min(Math.min(newValue, lastValue),
-                    costs[j]) + 1;
-                costs[j - 1] = lastValue;
-                lastValue = newValue;
-              }
-            }
-          }
-          if (i > 0)
+            var lastValue = i;
+
+            for (var j = 0; j <= s2.length; j++) {
+                
+                if(i == 0) {
+                    costs[j] = j;
+                } 
+                else if (j > 0) {
+                    var newValue = costs[j - 1];
+
+                    if (s1.charAt(i - 1) != s2.charAt(j - 1)){
+                        newValue = Math.min(Math.min(newValue, lastValue),costs[j]) + 1;
+                    }
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+
+            } 
+          if (i > 0) {
             costs[s2.length] = lastValue;
+          }
         }
         return costs[s2.length];
-      }
+    }
 
-    MusicPlayer() {
+    MusicPlayer () {
         return new MusicPlayerClass()
     }
 
 }
-module.exports = Game
+module.exports = Game;
