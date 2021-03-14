@@ -120,44 +120,40 @@ class Game {
         })
     }
 
-    musicMatch(term){
+    musicMatch(term) { 
+
         term = term.toLowerCase()
         var title = this.random_music.name.toLowerCase()
         title = title.split("(")[0]
-        title=title.split(" ").join("")
+        title = title.split(" ").join("")
 
         title = title.split("-")[0]
-        title=title.split(" ").join("")
+        title = title.split(" ").join("")
 
-        term=term.split(" ").join("")
+        term = term.split(" ").join("")
 
         var smty = this.similarity(term, title)
 
-        if(smty >= 0.85){
-            return [true, smty]
-        }else{
-            return [false, smty]
-        }
+        return (smty >= 0.85) ? [true, smty] : [false, smty];
     }
 
-    async playerGRAnswer(playerId){
-        this.EventEmitter.emit("pgra", playerId)
+    async playerGRAnswer(playerId) {
+        this.EventEmitter.emit("pgra", playerId);
     }
-
 
     similarity(s1, s2) {
+
         var longer = s1;
         var shorter = s2;
+
         if (s1.length < s2.length) {
           longer = s2;
           shorter = s1;
         }
         var longerLength = longer.length;
-        if (longerLength == 0) {
-          return 1.0;
-        }
-        return (longerLength - this.__editDistance(longer, shorter)) / parseFloat(longerLength);
-      }
+        return (!longerLength) ? 1.0 : (longerLength - this.__editDistance(longer, shorter)) / parseFloat(longerLength);
+    
+    }
 
     __editDistance(s1, s2) {
         s1 = s1.toLowerCase();
