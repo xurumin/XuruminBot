@@ -25,7 +25,9 @@ module.exports = {
                 }
 
                 var witm_c = client.playingWITM.get(message.guild.id)
-                if (!witm_c.isOpen) return;
+                if (!witm_c.isOpen){
+                    return message.channel.send(LOCALE["messages"]["there_is_a_game"])
+                };
 
                 var m_result = witm_c.musicMatch(args.join(" "))
                 if (m_result[0] == true) {

@@ -539,6 +539,7 @@
                     "description": "Vejo você em breve! :)"
                 },
                 "leaving": "Saindo...",
+                "there_is_a_game": "Um jogo está para iniciar. Se quiser iniciar um novo, **cancele** o anterior.",
                 "timeout": "Ninguém acertou :(\n``{{music_name}}``",
                 "playing": "Tocando música [{{index}}]",
                 "accuracy": "{{author}} -> Você está {{accuracy}}% perto da resposta.\nVocê precisa de pelo menos 85% para acertar.",
