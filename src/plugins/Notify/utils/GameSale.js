@@ -92,9 +92,7 @@ class GameSale {
             ["epicgames.com", "Epic Games"],
             ["origin.com", "Origin"],
             ["gog.com", "GOG"],
-            ["nuuvem.com", "Nuuvem"],
-            ["itch.io", "ITCH.IO"],
-            ["dpbolvw.net", "SDA22"]
+            ["nuuvem.com", "Nuuvem"]
         ]
         var sites = []
         for(var price of site_info.price){
