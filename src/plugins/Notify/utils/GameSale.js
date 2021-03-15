@@ -54,7 +54,7 @@ class GameSale {
             //     }
             // })
         } catch (error) {
-            return;
+            return [];
         }
         return res.data
     }
