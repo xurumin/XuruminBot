@@ -190,7 +190,8 @@ module.exports = {
     },
     get command() {
         return {
-            name: 'add'
+            name: 'add',
+            aliases: ["youtube", "spotify", "play"]
         }
     },
 };
