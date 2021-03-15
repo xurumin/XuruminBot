@@ -93,17 +93,19 @@ class GameSale {
             ["origin.com", "Origin"],
             ["gog.com", "GOG"],
             ["nuuvem.com", "Nuuvem"],
-            ["itch.io", "ITCH.IO"]
+            ["itch.io", "ITCH.IO"],
+            ["dpbolvw.net", "SDA22"]
         ]
         var sites = []
         for(var price of site_info.price){
             var siteUrl = url.parse(price.href).hostname
+            if(!siteUrl) continue;
             if(siteUrl){
                 siteUrl = siteUrl.replace("www.", "")
             }
             console.log(siteUrl);
             var sitePrice = price.price
-            var index = siteList.findIndex((elm)=> elm[0].endsWith(siteUrl))
+            var index = siteList.findIndex((elm)=> siteUrl.endsWith(elm[0]))
 
             if(index == -1){
                 continue;
@@ -120,12 +122,12 @@ class GameSale {
         };
     }
     async __verify(last=15){
-        console.log("[GAMESALE LOG] Runing check");
+        //console.log("[GAMESALE LOG] Runing check");
         const newSales = await this.__getLastGames(20)
 
 
         if(newSales[0] && this.__gameSale.lastSales.length > 0 && newSales[0].name == this.__gameSale.lastSales[0].name){
-            console.log("no new games");
+            //console.log("no new games");
             return;
         }
 

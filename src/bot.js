@@ -209,29 +209,36 @@ const init = async () => {
 		async function init(){
 			await GameSale.init()
 			let listeners = await updateListeners()
-	
+
 			setInterval(async ()=>{
 				listeners = await updateListeners()
-			}, 60 * 60 * 1000)
+			}, 12 * 60 * 60 * 1000)
 	
 			
 			//gameoffers notify
 			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
-			GameSale.run(60000)
+
+			GameSale.run(60 * 1000)
 			GameSale.EventEmitter.on("newGames", async (newGames)=>{
 				console.log("New games!".green);
-				for(var channel in listeners){
+				if(newGames[0].prices.length <= 0) return;
+				for(var channelId of listeners){
 					try {
-						console.log(channel);
-						await client.channels.cache.find(channel=>channel.id==channel).send(new Discord.MessageEmbed()
-						.setTitle("New game")
-						.addField(newGames[0].game_name, `[${newGames[0][0].siteName} - ${newGames[0][0].price}]([${newGames[0][0].url})`)
+						var channel = client.channels.cache.find(channel=>channel.id==channelId)
+						if(!channel){
+							await Utils.GameOffers.removeChannel(channelId)
+							continue;
+						}
+						await channel.send(new Discord.MessageEmbed()
+							.setAuthor("🎮 New game")
+							.setTitle(`${newGames[0].game_name}`)
+							.setDescription(`**[${newGames[0].prices[0].siteName} - ${newGames[0].prices[0].price}](${newGames[0].prices[0].url})**`)
+							.setFooter("Please, check the website before buying.")
 						)
 					} catch (error) {
-						await Utils.GameOffers.removeChannel(channel)
+						console.log(error);
 					}
 				}
-				console.log(newGames);
 				console.log(`${listeners.length} channels notified`);
 			})
 		}
