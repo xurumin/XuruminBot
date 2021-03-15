@@ -60,6 +60,7 @@ class Game {
         this.client = client
         this.message = message
         this.LOCALE = LOCALE
+        this.isPlaying == true
         this.MusicPlayer = new MusicPlayerClass()
         this.eventListening()
     }
@@ -77,12 +78,13 @@ class Game {
     }
     eventListening() {
         this.EventEmitter.on("leave", async () => {
+            this.isPlaying == false;
             await this.MusicPlayer.leave()
             this.client.playingWITM.delete(this.message.guild.id)
         })
         this.EventEmitter.on("round", async (res) => {
             this.count += 1
-            if (this.count >= this.game_info.rounds) {
+            if (this.count >= this.game_info.rounds || this.isPlaying==false) {
                 return this.EventEmitter.emit("finish")
             }
             if (res.status == 0) {
