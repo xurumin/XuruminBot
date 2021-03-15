@@ -19,12 +19,14 @@ const { randomBytes } = require('crypto');
 
 module.exports = function process(userimagelink, message) {
     return new Promise(async (resolve, reject) => {
+
         var video_info = {
             width: 250,
             height: 250
         }
         var videoOptions = {
             loop: 1/6,
+            flags:["-threads 1"],
             transition: false,
             videoBitrate: 200,
             videoCodec: 'libx264',
