@@ -54,8 +54,7 @@ class GameSale {
             //     }
             // })
         } catch (error) {
-            //console.log("err at GameSale get");
-            //console.log(error);
+            return;
         }
         return res.data
     }
