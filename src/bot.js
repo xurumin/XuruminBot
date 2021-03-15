@@ -206,7 +206,7 @@ const init = async () => {
 	}
 
 	client.on("ready", () => {
-		async function init(){
+		async function init_GameOffers(){
 			await GameSale.init()
 			let listeners = await updateListeners()
 
@@ -242,7 +242,8 @@ const init = async () => {
 				console.log(`${listeners.length} channels notified`);
 			})
 		}
-		init()
+		if(process.env.NODE_ENV != "development") init_GameOffers()
+		
 
 		setActv()
 		setInterval(async () => {

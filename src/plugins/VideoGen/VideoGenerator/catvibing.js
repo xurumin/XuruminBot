@@ -43,12 +43,12 @@ module.exports = function process(userimagelink, message) {
             const random_png_name = randomBytes(5).toString("hex")
             const png_path = path.join(__dirname, "..", `/files/temp/images/`)
 
-            if(!fs.existsSync(path)){
-                fs.mkdirSync(path)
+            if(!fs.existsSync(png_path)){
+                fs.mkdirSync(png_path)
             }
 
             fs.writeFileSync(png_path+`${random_png_name}.jpg`, canvas.toBuffer('image/jpeg', { quality: 0.75 }))
-            images.push(png_path)
+            images.push(png_path+`${random_png_name}.jpg`)
         }
         var d_images = []
         for (let index = 0; index < 4; index++) {
