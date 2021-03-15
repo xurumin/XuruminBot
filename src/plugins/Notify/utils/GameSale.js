@@ -101,7 +101,6 @@ class GameSale {
             if(siteUrl){
                 siteUrl = siteUrl.replace("www.", "")
             }
-            console.log(siteUrl);
             var sitePrice = price.price
             var index = siteList.findIndex((elm)=> siteUrl.endsWith(elm[0]))
 
