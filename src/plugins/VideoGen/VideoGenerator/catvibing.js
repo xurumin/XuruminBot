@@ -4,7 +4,11 @@ const {
     Image
 } = require('canvas')
 const Discord = require('discord.js');
+
+var pathToFfmpeg = require('ffmpeg-static');
 var videoshow = require('videoshow')
+videoshow.ffmpeg.setFfmpegPath(pathToFfmpeg)
+
 const fs = require('fs');
 const path = require("path");
 const { randomBytes } = require('crypto');
