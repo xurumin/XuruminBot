@@ -41,8 +41,13 @@ module.exports = function process(userimagelink, message) {
             ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/catvibing/${img_url}`)), 0, 0.32 * video_info.height, 0.7 * video_info.width, 0.7 * video_info.height);  
 
             const random_png_name = randomBytes(5).toString("hex")
-            const png_path = path.join(__dirname, "..", `/files/temp/images/${random_png_name}.jpg`)
-            await fs.writeFileSync(png_path, canvas.toBuffer('image/jpeg', { quality: 0.75 }))
+            const png_path = path.join(__dirname, "..", `/files/temp/images/`)
+
+            if(!fs.existsSync(path)){
+                fs.mkdirSync(path)
+            }
+
+            fs.writeFileSync(png_path+`${random_png_name}.jpg`, canvas.toBuffer('image/jpeg', { quality: 0.75 }))
             images.push(png_path)
         }
         var d_images = []
