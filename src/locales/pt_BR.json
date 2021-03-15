@@ -625,6 +625,33 @@
             "errors": {
                 "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos."
             }
+        },
+        "MUSIC": "PLUGIN",
+        "add": {
+            "title": ":musical_note: Música",
+            "musics_added":{
+                "title": "✅ Suas músicas foram adicionada à playlist",
+                "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
+            },
+            "playing": "🔊 Tocando {{music_name}} - ⌛️{{music_duration}}",
+            "youtube_search":{
+                "title": "👨‍💻 Sua pesquisa retornou:\n\n",
+                "txt_format": "➡️ {{index}}: **{{title}}** de **{{author}}**",
+                "footer": "\n🔔 Clique no número abaixo para adicionar à playlist\n\n"
+            },
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "user_is_not_on_voice_chat":"Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format":{
+                    "title": "❌ Ops! Você digitou o comando errado!",
+                    "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
+            }
         }
     }
 }
