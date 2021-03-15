@@ -6,8 +6,11 @@ const {
 const Discord = require('discord.js');
 
 var pathToFfmpeg = require('ffmpeg-static');
+var ffprobeStatic = require('ffprobe-static');
+
 var videoshow = require('videoshow')
 videoshow.ffmpeg.setFfmpegPath(pathToFfmpeg)
+videoshow.ffmpeg.setFfprobePath(ffprobeStatic.path)
 
 const fs = require('fs');
 const path = require("path");
