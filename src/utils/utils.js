@@ -101,7 +101,10 @@ var exp = {
   stringTemplateParser: stringTemplateParser,
   XP2LV(xp) {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
-    var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
+    //var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
+    
+    var lv = xp / 25
+    
     return parseInt(lv.toFixed(0))
   },
   async translate(from, to, message){

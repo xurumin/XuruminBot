@@ -6,14 +6,14 @@
                 "description": "Você precisa esperar **{{cooldown}} segundos** antes de mandar outra mensagem! 🤠"
             },
             "bot_tagged": {
-                "title": "Oi! Meu nome é {{username}}! 😁`)",
-                "description": "Para me usar, basta utilizar o prefixo **{{prefix}}** + o comando que você quiser! 🤓\nExperimenta usar **{{prefix}}meme** 🤠",
+                "title": "Oi! Meu nome é {{username}}! 😁",
+                "description": "Eu sou um bot brasileiro que toca música (com playlists!) enquanto você joga com seus amigos e te deixa ouvir aquele podcast no fim de tarde.\n\nPara me usar, basta utilizar o prefixo **{{prefix}}** + o comando que você quiser! 🤓\nExperimenta usar **{{prefix}}meme** 🤠",
                 "fields": [
                     ["Prefixo"],
                     ["Ajuda?"],
                     ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
-                    ["Github do Xurumin"],
-                    ["Site do Xurumin"]
+                    ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"],
+                    ["Site do Xurumin", "https://xurumin.github.io/"]
                 ]
             },
             "errors": {
@@ -34,19 +34,12 @@
             }
         },
         "guildCreate": {
-            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://xurumin.github.io/ptbr/comandos.html\n\nEspero que possamos nos divertir :)",
-            "errors": {
-                "command_not_found": {
-                    "title": "Não achei esse comando 😞",
-                    "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
-                    "fields": [
-                        ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
-                        ["Site do Xurumin", "https://xurumin.github.io/"],
-                        ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
-                    ]
-                }
-            }
+            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://xurumin.github.io/ptbr/comandos.html\n\nEspero que possamos nos divertir :)"
+        },
+        "nextLevel": {
+            "message": ":clap: :heart_eyes: Parabéns, {{user}}!\nVocê subiu para o nível **{{new_level}}** :partying_face:\n:star2: Como recompensa, você recebeu **X${{prize}}**!\n\nPara verificar seu nível e dinheiro, use **{{prefix}}profile** em um servidor.\n:nerd: Continue usando os comandos do bot para aumentar seu nível ainda mais."
         }
+
     },
     "commands": {
         "help": {

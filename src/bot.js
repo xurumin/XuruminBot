@@ -168,28 +168,38 @@ const init = async () => {
 	setInterval(async () => {
 		const t1 = (new Date()).getTime()
 
-		if (process.env.NODE_ENV != "development") {
-			Utils.BotDB.setBotInfo(client.commandsSent + parseInt(await Utils.BotDB.getSentCmds()))
+		if (process.env.NODE_ENV != "development" || true) {
+			//Utils.BotDB.setBotInfo(client.commandsSent + parseInt(await Utils.BotDB.getSentCmds()))
+
+			for (const user of client.cachedPoints) {
+				try {
+					var userInfo = {
+						userId: user[0],
+						points: user[1]
+					}
+					if (await Utils.Profile.hasProfile(client, userInfo.userId)) {
+						const userProfile = await Utils.Profile.getProfile(client, userInfo.userId);
+						var sumOfPoints = (parseFloat((userProfile).points) + parseFloat(userInfo.points)).toFixed(2)
+
+						if(Utils.XP2LV(sumOfPoints) - Utils.XP2LV(parseFloat((userProfile).points)) >= 1){
+							client.emit("nextLevel", {
+								userId: userInfo.userId,
+								newLevel: Utils.XP2LV(sumOfPoints)
+							})
+						}
+						await Utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
+					} else {
+						var standard_profile = Utils.Profile.getStandardProfile()
+						await Utils.Profile.setProfile(client, userInfo.userId, standard_profile.bg_url, standard_profile.aboutme, standard_profile.level, userInfo.points)
+					}
+				} catch (error) {
+					console.log(error)
+				}
+			};
+
+			const t2 = (new Date()).getTime()
+			console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
 		}
-		// for (const user of client.cachedPoints) {
-		// 	try {
-		// 		var userInfo = {
-		// 			userId: user[0],
-		// 			points: user[1]
-		// 		}
-		// 		if (await Utils.Profile.hasProfile(client, userInfo.userId)) {
-		// 			var sumOfPoints = (parseFloat((await Utils.Profile.getProfile(client, userInfo.userId)).points) + parseFloat(userInfo.points)).toFixed(2)
-		// 			await Utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
-		// 		} else {
-		// 			var standard_profile = Utils.Profile.getStandardProfile()
-		// 			await Utils.Profile.setProfile(client, userInfo.userId, standard_profile.bg_url, standard_profile.aboutme, standard_profile.level, userInfo.points)
-		// 		}
-		// 	} catch (error) {
-		// 		console.log(error)
-		// 	}
-		// }
-		const t2 = (new Date()).getTime()
-		console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)
 
 		client.cachedPoints.clear()
 		client.commandsSent = 0;
@@ -209,15 +219,10 @@ const init = async () => {
 		async function init_GameOffers(){
 			await GameSale.init()
 			let listeners = await updateListeners()
-
 			setInterval(async ()=>{
 				listeners = await updateListeners()
 			}, 12 * 60 * 60 * 1000)
-	
-			
-			//gameoffers notify
 			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
-
 			GameSale.run(60 * 1000)
 			GameSale.EventEmitter.on("newGames", async (newGames)=>{
 				console.log("New games!".green);
@@ -243,7 +248,6 @@ const init = async () => {
 			})
 		}
 		if(process.env.NODE_ENV != "development") init_GameOffers()
-		
 
 		setActv()
 		setInterval(async () => {
@@ -252,6 +256,14 @@ const init = async () => {
 		process.env.SHARD_ID = client.shard.ids[0]
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 		console.log(`Total commands: ${client.commands.size}`);
+
+		console.log(9, Utils.XP2LV(9));
+		console.log(10, Utils.XP2LV(10));
+		console.log(11, Utils.XP2LV(11));
+		console.log(45, Utils.XP2LV(45));
+		console.log(50, Utils.XP2LV(50));
+		console.log(51, Utils.XP2LV(51));
+		console.log(500, Utils.XP2LV(500));
 	});
 }
 init();

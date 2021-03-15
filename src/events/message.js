@@ -8,6 +8,15 @@ require('dotenv/config');
 const talkedRecently = new Discord.Collection();
 const antiFloodCooldown = new Discord.Collection();
 
+
+function addPoint(client, userId){
+	if(client.cachedPoints.has(userId)){
+		client.cachedPoints.set(userId, client.cachedPoints.get(userId) + 1)
+	}else{
+		client.cachedPoints.set(userId,1)
+	}
+}
+
 module.exports = {
 	/**
 	 * @param  {Discord.Client} client
@@ -28,8 +37,7 @@ module.exports = {
 		// 		antiFloodCooldown.delete(message.author.id);
 		// 	}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
 		// }
-
-		if ( (!message.content.startsWith(process.env.COMMAND_PREFIX)) && !(message.content == `<@!${client.user.id}>`) ) return;
+		if ( (!message.content.toLocaleLowerCase().startsWith(process.env.COMMAND_PREFIX)) && !(message.content.startsWith(`<@!${client.user.id}>`)) ) return;
 
 		//get guild language
 		const LANGUAGE = "pt_BR"
@@ -58,15 +66,15 @@ module.exports = {
 		/**
 		 * If bot was tagged
 		 */
-		if (message.content == `<@!${client.user.id}>`) {
+		if (message.content.startsWith(`<@!${client.user.id}>`)){
 			const embed = new Discord.MessageEmbed()
 				.setTitle(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.title, {username: client.user.username}))
 				.setDescription(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.description, {prefix: process.env.COMMAND_PREFIX}))
 				.addField(LOCALE.events.message.bot_tagged.fields[0][0], process.env.COMMAND_PREFIX)
 				.addField(LOCALE.events.message.bot_tagged.fields[1][0], `${process.env.COMMAND_PREFIX}help`)
 				.addField(LOCALE.events.message.bot_tagged.fields[2][0], LOCALE.events.message.bot_tagged.fields[2][1])
-				.addField(LOCALE.events.message.bot_tagged.fields[3][0], "https://github.com/jnaraujo/xurumin_discord_bot/")
-				.addField(LOCALE.events.message.bot_tagged.fields[4][0], "https://xurumin.github.io/")
+				.addField(LOCALE.events.message.bot_tagged.fields[3][0], LOCALE.events.message.bot_tagged.fields[3][1])
+				.addField(LOCALE.events.message.bot_tagged.fields[4][0], LOCALE.events.message.bot_tagged.fields[4][1])
 				.setThumbnail(client.user.avatarURL())
 				.setColor('#8146DC')
 				.setFooter(`All rights reserved @ ${client.user.username} - ${new Date().getFullYear()}`, client.user.avatarURL());;
@@ -105,6 +113,8 @@ module.exports = {
 					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
 				}
 
+				addPoint(client, message.author.id)
+
 				return MessageLog.log(command, message); // ADD MESSAGE TO MessageLog
 			} else if (aliase) {
 				//Register +1 cmd to log
@@ -118,6 +128,8 @@ module.exports = {
 					const t2 = (new Date()).getTime()
 					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
 				}
+
+				addPoint(client, message.author.id)
 
 				return MessageLog.log(aliase, message); // ADD MESSAGE TO MessageLog
 			} else {

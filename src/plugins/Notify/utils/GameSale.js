@@ -54,6 +54,7 @@ class GameSale {
             //     }
             // })
         } catch (error) {
+            console.log(error);
             return false;
         }
         return res.data
