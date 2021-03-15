@@ -30,6 +30,7 @@ admin.initializeApp({
 var db = admin.database()
 var profilesRef = db.ref("profiles");
 var botInfoRef = db.ref("bot");
+var gameOffersRef = db.ref("gameOffers");
 
 var $;
 
@@ -113,6 +114,20 @@ var exp = {
       //console.log(error);
       return message;
       return this.translate(from, to, message)
+    }
+  },
+  GameOffers: {
+    async setChannel(channelId) {
+      var child = await gameOffersRef.child("channels")
+      return await child.child(channelId).set("")
+    },
+    async removeChannel(channelId) {
+      var child = await gameOffersRef.child("channels")
+      return await child.child(channelId).remove()
+    },
+    async getAllListeners() {
+      var child = await gameOffersRef.child("channels")
+      return await (await child.once("value")).val()
     }
   },
   BotDB: {

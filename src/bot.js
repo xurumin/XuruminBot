@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const colors = require('colors');
 
 const Discord = require('discord.js');
-const utils = require('./utils/utils');
+const Utils = require('./utils/utils');
 const {
 	default: axios
 } = require('axios');
@@ -144,6 +144,20 @@ const init = async () => {
 		}
 	}
 	pluginsFiles = []
+	
+	// NOTIFIERS
+
+	const GameSaleClass = require("./plugins/Notify/utils/GameSale")
+	const GameSale = new GameSaleClass()
+
+	async function updateListeners(){
+		let listeners = []
+		const dbListeners = await Utils.GameOffers.getAllListeners()
+		for(var channel in dbListeners){
+			listeners.push(channel)
+		}
+		return listeners;
+	}
 
 	const Music = require('./plugins/Music/utils/Music');
 	Music.authorizeSpotify()
@@ -155,7 +169,7 @@ const init = async () => {
 		const t1 = (new Date()).getTime()
 
 		if (process.env.NODE_ENV != "development") {
-			utils.BotDB.setBotInfo(client.commandsSent + parseInt(await utils.BotDB.getSentCmds()))
+			Utils.BotDB.setBotInfo(client.commandsSent + parseInt(await Utils.BotDB.getSentCmds()))
 		}
 		// for (const user of client.cachedPoints) {
 		// 	try {
@@ -163,12 +177,12 @@ const init = async () => {
 		// 			userId: user[0],
 		// 			points: user[1]
 		// 		}
-		// 		if (await utils.Profile.hasProfile(client, userInfo.userId)) {
-		// 			var sumOfPoints = (parseFloat((await utils.Profile.getProfile(client, userInfo.userId)).points) + parseFloat(userInfo.points)).toFixed(2)
-		// 			await utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
+		// 		if (await Utils.Profile.hasProfile(client, userInfo.userId)) {
+		// 			var sumOfPoints = (parseFloat((await Utils.Profile.getProfile(client, userInfo.userId)).points) + parseFloat(userInfo.points)).toFixed(2)
+		// 			await Utils.Profile.setTag(client, userInfo.userId, "points", sumOfPoints)
 		// 		} else {
-		// 			var standard_profile = utils.Profile.getStandardProfile()
-		// 			await utils.Profile.setProfile(client, userInfo.userId, standard_profile.bg_url, standard_profile.aboutme, standard_profile.level, userInfo.points)
+		// 			var standard_profile = Utils.Profile.getStandardProfile()
+		// 			await Utils.Profile.setProfile(client, userInfo.userId, standard_profile.bg_url, standard_profile.aboutme, standard_profile.level, userInfo.points)
 		// 		}
 		// 	} catch (error) {
 		// 		console.log(error)
@@ -185,13 +199,44 @@ const init = async () => {
 
 	async function setActv() {
 		var activities = (await axios.get(process.env.GIST_URL)).data.split("\n")
-		var activitie = utils.choice(activities)
+		var activitie = Utils.choice(activities)
 		client.user.setActivity({
 			name: activitie
 		})
 	}
 
 	client.on("ready", () => {
+		async function init(){
+			await GameSale.init()
+			let listeners = await updateListeners()
+	
+			setInterval(async ()=>{
+				listeners = await updateListeners()
+			}, 60 * 60 * 1000)
+	
+			
+			//gameoffers notify
+			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
+			GameSale.run(60000)
+			GameSale.EventEmitter.on("newGames", async (newGames)=>{
+				console.log("New games!".green);
+				for(var channel in listeners){
+					try {
+						console.log(channel);
+						await client.channels.cache.find(channel=>channel.id==channel).send(new Discord.MessageEmbed()
+						.setTitle("New game")
+						.addField(newGames[0].game_name, `[${newGames[0][0].siteName} - ${newGames[0][0].price}]([${newGames[0][0].url})`)
+						)
+					} catch (error) {
+						await Utils.GameOffers.removeChannel(channel)
+					}
+				}
+				console.log(newGames);
+				console.log(`${listeners.length} channels notified`);
+			})
+		}
+		init()
+
 		setActv()
 		setInterval(async () => {
 			setActv()

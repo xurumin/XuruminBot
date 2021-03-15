@@ -11,7 +11,7 @@
                 "fields": [
                     ["Prefixo"],
                     ["Ajuda?"],
-                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
                     ["Github do Xurumin"],
                     ["Site do Xurumin"]
                 ]
@@ -22,7 +22,7 @@
                     "title": "Não achei esse comando 😞",
                     "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
                     "fields": [
-                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
                         ["Site do Xurumin", "https://xurumin.github.io/"],
                         ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                     ]
@@ -34,13 +34,13 @@
             }
         },
         "guildCreate": {
-            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md\n\nEspero que possamos nos divertir :)",
+            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://xurumin.github.io/ptbr/comandos.html\n\nEspero que possamos nos divertir :)",
             "errors": {
                 "command_not_found": {
                     "title": "Não achei esse comando 😞",
                     "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
                     "fields": [
-                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
                         ["Site do Xurumin", "https://xurumin.github.io/"],
                         ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                     ]
@@ -53,7 +53,7 @@
             "message": {
                 "title": "Precisa de ajuda? 🤓",
                 "fields": [
-                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
                     ["Site do Xurumin", "https://xurumin.github.io/"],
                     ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                 ]
@@ -613,6 +613,18 @@
                 "Caiu o lado **{{face}}** \n\nPoxa vida... A próxima é a da sorte. É o que dizem, né?",
                 "Caiu o lado **{{face}}** \n\nFoi quase... Quem sabe na próxima."
             ]
+        },
+        "NOTIFY": "PLUGIN",
+        "gameoffers": {
+            "title": "Oferta de jogos",
+            "setup": {
+                "description": "❔ **Como funciona?**\n Utilize o comando `{{prefix}}gameoffers set` no canal que você deseja receber ofertas de jogos.\nPara remover o canal, utilize `{{prefix}}gameoffers remove`.\n\n**:exclamation: Importante**\nVocê precisa ter a **permissão de administrador** para utilizar os comandos."
+            },
+            "channel_added": "O canal {{channel_name}} foi **adicionado** com sucesso!",
+            "channel_removed": "O canal {{channel_name}} foi **removido** com sucesso!",
+            "errors": {
+                "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos."
+            }
         }
     }
 }
