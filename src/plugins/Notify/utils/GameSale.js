@@ -54,7 +54,7 @@ class GameSale {
             //     }
             // })
         } catch (error) {
-            return [];
+            return false;
         }
         return res.data
     }
@@ -63,6 +63,11 @@ class GameSale {
     }
     async __getLastGames(last=15){
         var site = await this.get(this.__gameSale.url)
+        
+        if(site == false){
+            return []
+        }
+
         var c = cheerio.load(site)
         var games = c("div#games div.game")
 
