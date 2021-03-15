@@ -223,7 +223,7 @@ const init = async () => {
 				listeners = await updateListeners()
 			}, 12 * 60 * 60 * 1000)
 			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
-			GameSale.run(60 * 1000)
+			GameSale.run(10 * 60 * 1000)
 			GameSale.EventEmitter.on("newGames", async (newGames)=>{
 				console.log("New games!".green);
 				if(newGames[0].prices.length <= 0) return;
@@ -256,14 +256,6 @@ const init = async () => {
 		process.env.SHARD_ID = client.shard.ids[0]
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 		console.log(`Total commands: ${client.commands.size}`);
-
-		console.log(9, Utils.XP2LV(9));
-		console.log(10, Utils.XP2LV(10));
-		console.log(11, Utils.XP2LV(11));
-		console.log(45, Utils.XP2LV(45));
-		console.log(50, Utils.XP2LV(50));
-		console.log(51, Utils.XP2LV(51));
-		console.log(500, Utils.XP2LV(500));
 	});
 }
 init();
