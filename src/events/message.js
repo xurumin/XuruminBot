@@ -37,7 +37,8 @@ module.exports = {
 		// 		antiFloodCooldown.delete(message.author.id);
 		// 	}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
 		// }
-		if ( (!message.content.toLocaleLowerCase().startsWith(process.env.COMMAND_PREFIX)) && !(message.content.startsWith(`<@!${client.user.id}>`)) ) return;
+
+		if ( (!message.content.toLocaleLowerCase().startsWith(process.env.COMMAND_PREFIX)) && !(message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)) ) return;
 
 		//get guild language
 		const LANGUAGE = "pt_BR"
@@ -62,11 +63,10 @@ module.exports = {
 				.setColor('#8146DC')
 			return message.channel.send(embed);
 		}
-
 		/**
 		 * If bot was tagged
 		 */
-		if (message.content.startsWith(`<@!${client.user.id}>`)){
+		if (message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)){
 			const embed = new Discord.MessageEmbed()
 				.setTitle(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.title, {username: client.user.username}))
 				.setDescription(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.description, {prefix: process.env.COMMAND_PREFIX}))
