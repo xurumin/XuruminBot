@@ -78,6 +78,7 @@ class Game {
     }
     eventListening() {
         this.EventEmitter.on("leave", async () => {
+            this.count = this.game_info.rounds+1
             this.isPlaying == false;
             await this.MusicPlayer.leave()
             this.client.playingWITM.delete(this.message.guild.id)
@@ -107,17 +108,21 @@ class Game {
 
             var winner_id = leaderboard[leaderboard.length - 1]
 
-            this.message.channel.send(new Discord.MessageEmbed()
-                .setTitle(
-                    this.LOCALE["messages"]["game_over"].title
-                )
-                .setDescription(
-                    this.LOCALE["messages"]["game_over"].description.interpolate({
-                        points: this.leaderboard.get(winner_id),
-                        author: `<@${winner_id}>`,
-                        total: this.game_info.rounds
-                    })
-                ))
+            var embed = new Discord.MessageEmbed()
+            .setTitle(
+                this.LOCALE["messages"]["game_over"].title
+            )
+            .setDescription(
+                this.LOCALE["messages"]["game_over"].description.interpolate({
+                    points: this.leaderboard.get(winner_id),
+                    author: `<@${winner_id}>`,
+                    total: this.game_info.rounds
+                })
+            )
+            if(!winner_id){
+                embed.setDescription("")
+            }
+            this.message.channel.send(embed)
 
             this.EventEmitter.emit("leave")
         })
