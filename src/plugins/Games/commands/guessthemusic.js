@@ -4,12 +4,7 @@ const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const WhatIsTheMusic = require("./../utils/guessthemusic/WITM")
 const playlists = require("./../files/guessthemusic/playlists.json")
-
 require('dotenv/config');
-
-function deleteGame(guildId) {
-
-}
 
 module.exports = {
     validate(client, message) {
@@ -124,8 +119,7 @@ module.exports = {
                         return message.channel.send(LOCALE["messages"]["there_is_a_game"])
                     };
 
-                    var WITM_ = new WhatIsTheMusic(client,message, LOCALE)
-                    client.playingWITM.set(message.guild.id, WITM_)
+                    client.playingWITM.set(message.guild.id,  new WhatIsTheMusic(client,message, LOCALE))
 
                     client.playingWITM.get(message.guild.id).state = true;
                     await message.channel.send(
@@ -144,110 +138,7 @@ module.exports = {
 
                     await Utils.wait(1000)
 
-                    //var MusicPlayer = WITM.MusicPlayer()
-                    // var MusicPlayer = client.playingWITM.get(message.guild.id).MusicPlayer();
                     await client.playingWITM.get(message.guild.id).startGame(game_info)
-
-                    //await MusicPlayer.init(message, client)
-
-                    //client.playingWITM.set(message.guild.id, WITM)
-
-                    // MusicPlayer.checkIfThereArePlayers()
-                    //     .then(() => {
-                    //         if (!client.playingWITM.get(message.guild.id)) {
-                    //             return;
-                    //         }
-                    //         message.channel.send(LOCALE["messages"]["leaving"])
-                    //         client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                    //         return resolve()
-                    //     })
-                    // var count = 0;
-
-                    // client.playingWITM.set(message.guild.id, WITM)
-                    // WITM.play_game(MusicPlayer, LOCALE, message, game_info.playlist, () => {
-                    //     message.channel.send(new Discord.MessageEmbed().setTitle(
-                    //         LOCALE["messages"]["playing"].interpolate({
-                    //             index: count + 1
-                    //         })
-                    //     ))
-                    // })
-
-                    // WITM.EventEmitter.on("round", async (res) => {
-                    //     WITM = await client.playingWITM.get(message.guild.id)
-                    //     count += 1
-                    //     if (count >= game_info.rounds && WITM) {
-                    //         return WITM.EventEmitter.emit("finish")
-                    //     }
-                    //     if (res.status == 0) {
-                    //         await message.channel.send(
-                    //             LOCALE["messages"]["timeout"].interpolate({
-                    //                 music_name: res.music
-                    //             }))
-                    //     }
-
-                    //     //start another round
-                    //     client.playingWITM.set(message.guild.id, WITM)
-                    //     WITM.play_game(MusicPlayer, LOCALE, message, game_info.playlist, () => {
-                    //         message.channel.send(new Discord.MessageEmbed().setTitle(
-                    //             LOCALE["messages"]["playing"].interpolate({
-                    //                 index: count + 1
-                    //             })
-                    //         ))
-                    //     })
-                    // })
-                    // client.playingWITM.get(message.guild.id).EventEmitter.on("round", async (res) => {
-                    //     WITM = await client.playingWITM.get(message.guild.id)
-                    //     count += 1
-                    //     if (count >= game_info.rounds && WITM) {
-                    //         return client.playingWITM.get(message.guild.id).EventEmitter.emit("finish")
-                    //     }
-                    //     if (res.status == 0) {
-                    //         await message.channel.send(
-                    //             LOCALE["messages"]["timeout"].interpolate({
-                    //                 music_name: res.music
-                    //             }))
-                    //     }
-
-                    //     //start another round
-                    //     client.playingWITM.set(message.guild.id, WITM)
-                    //     WITM.play_game(MusicPlayer, LOCALE, message, game_info.playlist, () => {
-                    //         message.channel.send(new Discord.MessageEmbed().setTitle(
-                    //             LOCALE["messages"]["playing"].interpolate({
-                    //                 index: count + 1
-                    //             })
-                    //         ))
-                    //     })
-                    // })
-                    // client.playingWITM.get(message.guild.id).EventEmitter.on("leave", async () => {
-                    //     console.log("leave");
-                    //     count = game_info.rounds + 5
-                    //     WITM = {}
-                    //     MusicPlayer.leave()
-                    //     client.playingWITM.delete(message.guild.id)
-                    //     return resolve()
-                    // })
-
-                    // WITM.EventEmitter.on("finish", async () => {
-                    //     var leaderboard = WITM.leaderboard.sort().keyArray()
-
-
-                    //     var winner_id = leaderboard[leaderboard.length - 1]
-
-                    //     message.channel.send(new Discord.MessageEmbed()
-                    //         .setTitle(
-                    //             LOCALE["messages"]["game_over"].title
-                    //         )
-                    //         .setDescription(
-                    //             LOCALE["messages"]["game_over"].description.interpolate({
-                    //                 points: WITM.leaderboard.get(winner_id),
-                    //                 author: `<@${winner_id}>`,
-                    //                 total: game_info.rounds
-                    //             })
-                    //         ))
-
-                    //     client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                    //     return resolve()
-                    // })
 
                 })
                 .catch(async (err) => {
