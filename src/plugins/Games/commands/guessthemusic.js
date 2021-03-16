@@ -137,9 +137,7 @@ module.exports = {
                     )
 
                     await Utils.wait(1000)
-
                     await client.playingWITM.get(message.guild.id).startGame(game_info)
-
                 })
                 .catch(async (err) => {
                     console.log(err);
@@ -150,7 +148,6 @@ module.exports = {
                     await message.channel.send(embed)
                     return resolve();
                 })
-
         })
     },
     get command() {
