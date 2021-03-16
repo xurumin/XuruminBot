@@ -104,7 +104,7 @@ var exp = {
     //var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
     
     var lv = xp / 25
-    
+
     return parseInt(lv.toFixed(0))
   },
   async translate(from, to, message){
@@ -187,7 +187,7 @@ var exp = {
       var profile = await exp.Profile.getProfile(client, user_id_raw)
 
 
-      if (profile["status"]) {
+      if (profile && profile["status"]) {
         return (profile["status"]) == "premium" ? true : false;
       }
       return false;

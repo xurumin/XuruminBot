@@ -115,7 +115,7 @@ module.exports = {
                 return showLastsEps(searchlist[index].url, searchlist[index].name, searchlist[index].author, client, sMsg, 0)
             }).catch(err => {
                 if(err["message"]){
-                    err["message"].reactions.removeAll()
+                    //err["message"].reactions.removeAll()
                     return err["message"].edit("Desculpe, mas só achei esses epsódios 😥");
                 }else{
                     return err;
