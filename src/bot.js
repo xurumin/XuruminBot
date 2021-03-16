@@ -222,10 +222,11 @@ const init = async () => {
 				listeners = await updateListeners()
 			}, 12 * 60 * 60 * 1000)
 			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
-			GameSale.run(10 * 60 * 1000)
+
+			GameSale.run(30 * 60 * 1000)
+
 			GameSale.EventEmitter.on("newGames", async (newGames)=>{
 				console.log("New games!".green);
-				if(newGames[0].prices.length <= 0) return;
 				for(var channelId of listeners){
 					try {
 						var channel = client.channels.cache.find(channel=>channel.id==channelId)
@@ -235,8 +236,8 @@ const init = async () => {
 						}
 						await channel.send(new Discord.MessageEmbed()
 							.setAuthor("🎮 New game")
-							.setTitle(`${newGames[0].game_name}`)
-							.setDescription(`**[${newGames[0].prices[0].siteName} - ${newGames[0].prices[0].price}](${newGames[0].prices[0].url})**`)
+							.setTitle(`${newGames.title}`)
+							.setDescription(`**[${newGames.store.name} - ${newGames.price} (${newGames.price_cut}% OFF)](${newGames.store.href})**`)
 							.setFooter("Please, check the website before buying.")
 						)
 					} catch (error) {
@@ -246,7 +247,11 @@ const init = async () => {
 				console.log(`${listeners.length} channels notified`);
 			})
 		}
-		if(process.env.NODE_ENV != "development") init_GameOffers()
+		try {
+			if(process.env.NODE_ENV != "development") init_GameOffers()
+		} catch (error) {
+			console.log("[GameOffers]", error);
+		}
 
 		setActv()
 		setInterval(async () => {

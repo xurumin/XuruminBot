@@ -131,6 +131,14 @@ var exp = {
     async getAllListeners() {
       var child = await gameOffersRef.child("channels")
       return await (await child.once("value")).val()
+    },
+    async setLastGame(gameHash) {
+      var child = await gameOffersRef.child("lastGame")
+      return await child.child("hash").set(gameHash)
+    },
+    async getLastGame() {
+      var child = await gameOffersRef.child("lastGame")
+      return await (await child.get("hash")).val().hash
     }
   },
   BotDB: {
