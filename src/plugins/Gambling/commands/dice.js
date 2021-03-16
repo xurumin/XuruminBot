@@ -56,10 +56,11 @@ module.exports = {
                             var random = Utils.random(1,6)
 
                             if(random == game_info.play.face){
-                                var prize = game_info.play.value * Utils.randomFloat(1.1, 2).toFixed(1)
+                                var prize = game_info.play.value * Utils.randomFloat(1.01, 1.5).toFixed(1)
                                 embed.setDescription(LOCALE["player_won"].interpolate({
                                     prize: prize
                                 }))
+                                await Payment.fastPayXurumin(message.author.id, prize)
                                 return resolve(confirmation.edit(embed))
                             }else{
                                 embed.setDescription(Utils.choice(LOCALE["player_lost"]).interpolate({

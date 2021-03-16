@@ -181,7 +181,7 @@ const init = async () => {
 						var sumOfPoints = (parseFloat((userProfile).points) + parseFloat(userInfo.points)).toFixed(2)
 
 						if(Utils.XP2LV(sumOfPoints) - Utils.XP2LV(parseFloat((userProfile).points)) >= 1){
-							client.emit("nextLevel", {
+							await client.emit("nextLevel", {
 								userId: userInfo.userId,
 								newLevel: Utils.XP2LV(sumOfPoints)
 							})

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const utils = require('../utils/utils');
+const Utils = require('../utils/utils');
+const Payment = require("../libs/Payment")
 require('dotenv/config');
 
 module.exports = {
@@ -20,13 +21,15 @@ module.exports = {
 		}else{
 			LOCALE = locale_list.get(DEFAULT_LANGUAGE)
 		}
+		const prize = Utils.random(50,150);
 		var user = client.users.cache.find(user=>user.id==userInfo.userId)
 		user.send(LOCALE["events"]["nextLevel"].message.interpolate({
 			user: user,
 			new_level: userInfo.newLevel,
-			prize: 100,
+			prize: prize,
 			prefix: process.env.COMMAND_PREFIX
 		}))
+		return await Payment.fastPayXurumin(userInfo.userId, prize)
 
 	},
 

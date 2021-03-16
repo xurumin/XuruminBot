@@ -584,7 +584,7 @@
         "dice": {
             "title": "🎲 Jogo de dados",
             "start": {
-                "description": "❔ **Como funciona?**\n O Xurumin irá lançar um dado mágico, que só ele tem (é confiável. confia. :eyes:).\n Se o dado cair no lado que você escolheu, você ganha. Se não cair, bom... Você ganha ao contrário.  (ou seja, você perde...)\n\n⚠️ **Como jogar**\nPara participar, basta usar o comando {{prefix}}dice <valor da aposta> <lado do dado> \n(é um dado de 6 lados, ok?)\nExemplo: `{{prefix}}dice 100 5`\n\n❗️ **Atenção**\nVocê pode ganhar entre 10% e 100% do valor apostado...\nÉ bom ter sorte, hein?"
+                "description": "❔ **Como funciona?**\n O Xurumin irá lançar um dado mágico, que só ele tem (é confiável. confia. :eyes:).\n Se o dado cair no lado que você escolheu, você ganha. Se não cair, bom... Você ganha ao contrário.  (ou seja, você perde...)\n\n⚠️ **Como jogar**\nPara participar, basta usar o comando {{prefix}}dice <valor da aposta> <lado do dado> \n(é um dado de 6 lados, ok?)\nExemplo: `{{prefix}}dice 100 5`\n\n❗️ **Atenção**\nVocê pode ganhar entre 1% e 50% do valor apostado...\nÉ bom ter sorte, hein?"
             },
             "loading": {
                 "title": "<a:loading:809177799969079326> Lançando o dado...",
