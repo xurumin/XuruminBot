@@ -32,11 +32,11 @@ module.exports = {
 
                 if(!payerInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
                 }
                 if(!payeeInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
                 }
 
                 if(!payeeInfo.money)payeeInfo.money=0;
@@ -86,7 +86,7 @@ module.exports = {
 
                 if(!payerInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
                 }
 
             } catch (error) {
@@ -123,6 +123,11 @@ module.exports = {
             var payeeInfo;
             try {
                 payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
+                
+                if(!payeeInfo){
+                    var standard_profile = Utils.Profile.getStandardProfile()
+                    await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                }
             } catch (error) {
                 transaction.status="error"
                 reject(error)
