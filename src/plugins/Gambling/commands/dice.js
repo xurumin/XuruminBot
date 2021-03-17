@@ -76,8 +76,7 @@ module.exports = {
                                 user: message.author,
                                 prefix: process.env.COMMAND_PREFIX
                             }))
-                            await confirmation.edit(embed)
-                            return reject(err)
+                            return resolve(await confirmation.edit(embed))
                         })
                 })
                 .catch(async (err) => {

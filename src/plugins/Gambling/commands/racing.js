@@ -60,10 +60,10 @@ module.exports = {
                                     user: message.author
                                 }))
                             }).catch(async (err) => {
-                                return await message.channel.send(LOCALE["messages"]["user_do_not_have_funds"].interpolate({
+                                return resolve(await message.channel.send(LOCALE["messages"]["user_do_not_have_funds"].interpolate({
                                     user: message.author,
                                     prefix: process.env.COMMAND_PREFIX
-                                }))
+                                })))
                             })
                     }
                 }
