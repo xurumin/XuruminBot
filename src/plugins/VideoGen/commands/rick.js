@@ -51,9 +51,9 @@ module.exports = {
 
             var loading_msg = await message.channel.send(embed)
 
-            axios.get(`${process.env.KARINNA_API_PATH}/rick`,{
+            axios.get(`${process.env.KARINNA_API_PATH}/v1/video/rick`,{
                 headers:{
-                    token: process.env.KARINNA_API_TOKEN
+                    authorization: process.env.KARINNA_API_TOKEN
                 },
                 params: {
                     img_url: user_pic
@@ -62,7 +62,7 @@ module.exports = {
                 responseType: "arraybuffer"
             }).then(async (res)=>{
                 loading_msg.delete()
-                return await message.channel.send(new Discord.MessageAttachment(res.data, 'video.mp4'))
+                return await resolve(message.channel.send(new Discord.MessageAttachment(res.data, 'video.mp4')))
             }).catch(async (err)=>{
                 loading_msg.delete()
                 console.log(err);

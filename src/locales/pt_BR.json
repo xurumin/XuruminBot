@@ -482,6 +482,32 @@
                 }
             }
         },
+        "catgif2": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                },
+                "loaded": {
+                    "title": "Gatinhooo",
+                    "description": "Tuts tuts tuts 🥳🥳🥳"
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                }
+            }
+        },
         "catvibing": {
             "messages": {
                 "loading": {
