@@ -141,7 +141,7 @@ module.exports = {
                 })
                 .catch(async (err) => {
                     console.log(err);
-                    client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
+                    if(client.playingWITM.has(message.guild.id))  client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
                     var embed = new Discord.MessageEmbed()
                         .setTitle(msgs.errors.something_went_wrong.title)
                         .setDescription(msgs.errors.something_went_wrong.description)

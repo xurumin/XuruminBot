@@ -22,7 +22,7 @@
     "dblapi.js": "^2.4.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "ffmpeg-static": "^4.2.7",
+    "ffmpeg-static": "^4.2.8",
     "ffprobe-static": "^3.0.0",
     "firebase-admin": "^9.5.0",
     "fluent-ffmpeg": "^2.1.2",
