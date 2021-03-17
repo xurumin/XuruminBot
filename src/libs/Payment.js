@@ -33,13 +33,17 @@ module.exports = {
                 if(!payerInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
                     await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+
+                    payerInfo = await Utils.Profile.getProfile({}, transaction.payerId)
                 }
                 if(!payeeInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
                     await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+
+                    payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
                 }
 
-                if(!payeeInfo.money)payeeInfo.money=0;
+                if(!payeeInfo.money) payeeInfo.money=0;
             } catch (error) {
                 transaction.status="error"
                 reject(error)
@@ -87,6 +91,8 @@ module.exports = {
                 if(!payerInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
                     await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+
+                    payerInfo = await Utils.Profile.getProfile({}, transaction.payerId)
                 }
 
             } catch (error) {
@@ -123,10 +129,12 @@ module.exports = {
             var payeeInfo;
             try {
                 payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
-                
+
                 if(!payeeInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
                     await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+
+                    payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
                 }
             } catch (error) {
                 transaction.status="error"
