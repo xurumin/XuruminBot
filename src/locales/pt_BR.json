@@ -571,6 +571,10 @@
                 "cmd_run_error": {
                     "title": "❌ Erro ao executar comando:",
                     "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "nsfw_channel": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
                 }
             }
         },
