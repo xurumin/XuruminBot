@@ -113,27 +113,25 @@ module.exports = {
     },
     searchYoutubeVideos(term, limit=5) {
         return new Promise((resolve, reject)=>{
-            // ytsr(term, {
-            //     limit: limit+3
-            // }).then(data => {
-            //     resolve(data["items"].map((element, i, a) => {
-            //         if(element["type"] == "video" && a.length < limit)
-            //             return element
-            //     }))
-            // }).catch(err => {
-            //     reject(err)
-            // });
-            temoytsearch(term, {
-                limit: limit+3
+            ytsr(term, {
+                limit: limit+3,
+                safeSearch: true
             }).then(data => {
-                resolve(data.map((element, i, a) => {
-                    if(element["url"]){
-                        return element
-                    }
-                }).slice(0,limit))
+                resolve(data["items"].filter((element) => element["type"] == "video").slice(0,limit))
             }).catch(err => {
                 reject(err)
             });
+            // temoytsearch(term, {
+            //     limit: limit+3
+            // }).then(data => {
+            //     resolve(data.map((element, i, a) => {
+            //         if(element["url"]){
+            //             return element
+            //         }
+            //     }).slice(0,limit))
+            // }).catch(err => {
+            //     reject(err)
+            // });
         })
     },
     
