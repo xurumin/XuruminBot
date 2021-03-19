@@ -31,6 +31,31 @@ async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
         })));
     }
 }
+async function spotifyTrack(client, message, track_url, LOCALE) {
+    var spotifyTrack;
+    try {
+        spotifyTrack = await Music.getSpotifyTrack(track_url)
+    } catch (error) {
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+    }
+    var player = client.players.get(message.guild.id)
+    if (!player) {
+        player = await new MusicPlayer(message.guild.id, client, message)
+        await player.__connectVoice()
+        client.players.set(message.guild.id, player)
+        player.setPlaylist([spotifyTrack])
+        player.play()
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+            music_name: spotifyTrack.name,
+            music_duration: spotifyTrack.duration
+        })));
+    } else {
+        player.appendPlaylist([spotifyTrack])
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+            prefix: process.env.COMMAND_PREFIX
+        })));
+    }
+}
 async function youtubePlaylist(client, message, playlist_url, LOCALE) {
     let youtube_playlist;
     try {
@@ -186,6 +211,9 @@ module.exports = {
             return youtubeLink(client, message, userMsg, LOCALE)
         }
         if (userMsg.includes("open.spotify.com/track/")) {
+
+            return spotifyTrack(client, message, userMsg, LOCALE);
+
             return message.channel.send(
                 Utils.createSimpleEmbed("Ops! Ainda não consigo tocar tracks do Spotify 😞", `➡️ Tenta tocar uma playlist com **${process.env.COMMAND_PREFIX}add <link da playlist>** ou tocar um vídeo do Youtube com **${process.env.COMMAND_PREFIX}add <link do youtube>** 🤗`, client.user.username, client.user.avatarURL())
             );

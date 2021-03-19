@@ -1,10 +1,7 @@
 const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
-
 const urlQ = require("url")
-const ytsr = require('ytsr');
-const ytpl = require('ytpl');
 const ytdl = require("ytdl-core")
 
 
@@ -133,7 +130,6 @@ class MusicPlayer {
             var current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
-
             let music_url;
 
             try {
@@ -147,7 +143,9 @@ class MusicPlayer {
                     filter: 'audioonly',
                     quality: 'lowestaudio'
                 });
+                
                 this.dispatcher = await this.connection.play(stream)
+
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
@@ -170,6 +168,7 @@ class MusicPlayer {
                 }
 
                 this.dispatcher = await this.connection.play(music_url)
+
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
@@ -193,7 +192,6 @@ class MusicPlayer {
                 this.setPlaylist(current_playlist)
                 this.connection.emit("play")
             }
-
         });
         this.connection.on('pause', () => {
             if (this.dispatcher) dispatcher.pause();
@@ -227,9 +225,7 @@ class MusicPlayer {
             }
         });
         this.dispatcher.on('error', (err) => {
-            //console.log("dasdasd")
             return this.connection.emit("skip")
-            console.log("MusicPlayer", err)
         });
     }
 

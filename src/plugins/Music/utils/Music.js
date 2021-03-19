@@ -41,8 +41,11 @@ module.exports = {
         var playlist_id = splt[splt.length - 1]
 
         return new Promise((resolve, reject)=>{
-            if(!process.env.SPOTIFY_TOKEN){ authorizeSpotify();}
-            this.setSpotifyToken();
+            if(!process.env.SPOTIFY_TOKEN){
+                authorizeSpotify();
+                this.setSpotifyToken();
+            }
+            
 
             spotifyApi.getPlaylist(playlist_id)
             .then((data) => {
@@ -58,6 +61,28 @@ module.exports = {
                         }
                     })
                     )
+            }).catch(function (err) {
+                reject( err )
+            })
+
+        })
+    },
+    getSpotifyTrack(track_url) {
+        let spttrack = urlQ.parse(track_url).path.split("/").pop()
+        return new Promise((resolve, reject)=>{
+            if(!process.env.SPOTIFY_TOKEN){
+                authorizeSpotify();
+                this.setSpotifyToken();
+            }
+            spotifyApi.getTrack(spttrack)
+            .then((data) => {
+                return resolve(
+                    {
+                        name: data["body"]["name"],
+                        author: data["body"]["album"]["artists"][0]["name"],
+                        duration: Utils.toHHMMSS(data["body"]["duration_ms"] / (1000))
+                    }
+                )
             }).catch(function (err) {
                 reject( err )
             })
@@ -93,7 +118,16 @@ module.exports = {
     },
     getVideoLinkBySearch(name) {
         return new Promise((resolve, reject)=>{
-            // ytsr(name)
+            ytsr(name, {
+                limit: 1
+            })
+            .then((data)=>{
+                resolve(data["items"][0]["url"])
+            })
+            .catch((err)=>{
+                reject(err)
+            })
+            // temoytsearch(name)
             // .then((data)=>{
             //     var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
             //     resolve(url)
@@ -101,21 +135,12 @@ module.exports = {
             // .catch((err)=>{
             //     reject(err)
             // })
-            temoytsearch(name)
-            .then((data)=>{
-                var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
-                resolve(url)
-            })
-            .catch((err)=>{
-                reject(err)
-            })
         })
     },
     searchYoutubeVideos(term, limit=5) {
         return new Promise((resolve, reject)=>{
             ytsr(term, {
-                limit: limit+3,
-                safeSearch: true
+                limit: limit+3
             }).then(data => {
                 resolve(data["items"].filter((element) => element["type"] == "video").slice(0,limit))
             }).catch(err => {

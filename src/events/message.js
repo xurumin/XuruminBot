@@ -66,7 +66,7 @@ module.exports = {
 		/**
 		 * If bot was tagged
 		 */
-		if (message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)){
+		if (message.content.replace(/ /g, "") == `<@!${client.user.id}>` || message.content.replace(/ /g, "") == `<@${client.user.id}>`){
 			const embed = new Discord.MessageEmbed()
 				.setTitle(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.title, {username: client.user.username}))
 				.setDescription(utils.stringTemplateParser(LOCALE.events.message.bot_tagged.description, {prefix: process.env.COMMAND_PREFIX}))
@@ -81,12 +81,25 @@ module.exports = {
 			return message.channel.send(embed);
 		}
 
-		const args = message.content
+		let args;
+		if(message.content.trim().toLocaleLowerCase().startsWith(`<@!${client.user.id}>`)){
+			args = message.content
+			.slice(`<@!${client.user.id}>`.length)
+			.trim()
+			.split(/ +/g);
+		}else if(message.content.trim().toLocaleLowerCase().startsWith(`<@${client.user.id}>`)){
+			args = message.content
+			.slice(`<@${client.user.id}>`.length)
+			.trim()
+			.split(/ +/g);
+		}else{
+			args = message.content
 			.slice(process.env.COMMAND_PREFIX.length)
 			.trim()
 			.split(/ +/g);
-
+		}
 		const command = args.shift().toLowerCase();
+
 		try {
 			const cmd = client.commands.get(command);
 			const aliase = client.aliases.get(command);
