@@ -249,11 +249,7 @@ module.exports = {
                             index = 6
                             break;
                         default:
-                            reject({
-                                status: 3,
-                                data: "usuário não selecionou nenhum dos emojis",
-                                message: message
-                            })
+                            return resolve(-1)
                             break;
                     }
                     resolve(index)

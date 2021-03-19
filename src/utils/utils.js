@@ -242,7 +242,7 @@ var exp = {
                 resolve(false)
                 break;
               default:
-                reject()
+                resolve(false)
                 break;
             }
           })

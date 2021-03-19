@@ -137,8 +137,10 @@ function searchTerm(client, message, args, LOCALE) {
             txt.setFooter(LOCALE["youtube_search"].footer)
 
             var msg = await message.channel.send(txt)
-
+            
             var reactIndex = await Music.getReact(msg, message.author)
+
+            if(reactInde == -1) return;
 
             const video_info = {
                 name: searchlist[reactIndex]["title"],
