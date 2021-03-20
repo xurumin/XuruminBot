@@ -140,7 +140,7 @@ function searchTerm(client, message, args, LOCALE) {
             
             var reactIndex = await Music.getReact(msg, message.author)
 
-            if(reactInde == -1) return;
+            if(reactIndex == -1) return;
 
             const video_info = {
                 name: searchlist[reactIndex]["title"],

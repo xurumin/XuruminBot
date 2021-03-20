@@ -12,7 +12,7 @@
   "author": "jonatas araujo <jonatasaraujofx@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.4.0",
+    "@discordjs/opus": "^0.5.0",
     "axios": "^0.21.1",
     "better-sqlite3": "^7.1.2",
     "canvas": "^2.7.0",
@@ -21,6 +21,7 @@
     "cross-blob": "^2.0.0",
     "dblapi.js": "^2.4.1",
     "discord.js": "^12.5.1",
+    "discord.js-light": "^3.5.4",
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.2.8",
     "ffprobe-static": "^3.0.0",

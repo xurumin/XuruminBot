@@ -1,4 +1,5 @@
 "use strict";
+
 const cache = require('memory-cache');
 require('dotenv/config');
 const fs = require('fs-extra');
@@ -122,12 +123,12 @@ const init = async () => {
 		`Loading ${pluginsFiles.length} plugin(s).`.magenta
 	);
 
-	for(var controllerName of pluginsFiles){
+	for (var controllerName of pluginsFiles) {
 		try {
 			console.log(`[plugin-loader] Loading ${controllerName}`.yellow)
 			const main = require(`./plugins/${controllerName}/${controllerName}.js`);
 			const commandList = await fs.readdir(`${__dirname}/plugins/${controllerName}/${main.commands.path}/`)
-			for(var element of commandList){
+			for (var element of commandList) {
 				const command = await require(`${__dirname}/plugins/${controllerName}/${main.commands.path}/${element}`);
 				client.commands.set(command.command.name, command);
 				if (command.command.aliases && command.command.aliases != []) {
@@ -143,16 +144,16 @@ const init = async () => {
 		}
 	}
 	pluginsFiles = []
-	
+
 	// NOTIFIERS
 
 	const GameSaleClass = require("./plugins/Notify/utils/GameSale")
 	const GameSale = new GameSaleClass()
 
-	async function updateListeners(){
+	async function updateListeners() {
 		let listeners = []
 		const dbListeners = await Utils.GameOffers.getAllListeners()
-		for(var channel in dbListeners){
+		for (var channel in dbListeners) {
 			listeners.push(channel)
 		}
 		return listeners;
@@ -180,7 +181,7 @@ const init = async () => {
 						const userProfile = await Utils.Profile.getProfile(client, userInfo.userId);
 						var sumOfPoints = (parseFloat((userProfile).points) + parseFloat(userInfo.points)).toFixed(2)
 
-						if(Utils.XP2LV(sumOfPoints) - Utils.XP2LV(parseFloat((userProfile).points)) >= 1){
+						if (Utils.XP2LV(sumOfPoints) - Utils.XP2LV(parseFloat((userProfile).points)) >= 1) {
 							await client.emit("nextLevel", {
 								userId: userInfo.userId,
 								newLevel: Utils.XP2LV(sumOfPoints)
@@ -202,7 +203,7 @@ const init = async () => {
 
 		client.cachedPoints.clear()
 		client.commandsSent = 0;
-	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN?process.env.UPLOAD_CACHED_POINTS_COOLDOWN:1000*60*60*24)
+	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN ? process.env.UPLOAD_CACHED_POINTS_COOLDOWN : 1000 * 60 * 60 * 24)
 
 	client.login(process.env.DISCORD_API)
 
@@ -215,22 +216,22 @@ const init = async () => {
 	}
 
 	client.on("ready", () => {
-		async function init_GameOffers(){
+		async function init_GameOffers() {
 			await GameSale.init()
 			let listeners = await updateListeners()
-			setInterval(async ()=>{
+			setInterval(async () => {
 				listeners = await updateListeners()
 			}, 12 * 60 * 60 * 1000)
 			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
 
 			GameSale.run(30 * 60 * 1000)
 
-			GameSale.EventEmitter.on("newGames", async (newGames)=>{
+			GameSale.EventEmitter.on("newGames", async (newGames) => {
 				console.log("New games!".green);
-				for(var channelId of listeners){
+				for (var channelId of listeners) {
 					try {
-						var channel = client.channels.cache.find(channel=>channel.id==channelId)
-						if(!channel){
+						var channel = client.channels.cache.find(channel => channel.id == channelId)
+						if (!channel) {
 							await Utils.GameOffers.removeChannel(channelId)
 							continue;
 						}
@@ -248,7 +249,7 @@ const init = async () => {
 			})
 		}
 		try {
-			if(process.env.NODE_ENV != "development") init_GameOffers()
+			if (process.env.NODE_ENV != "development") init_GameOffers()
 		} catch (error) {
 			console.log("[GameOffers]", error);
 		}
@@ -258,6 +259,7 @@ const init = async () => {
 			setActv()
 		}, process.env.ACTIVITY_UPDATE_COOLDOWN)
 		process.env.SHARD_ID = client.shard.ids[0]
+
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 		console.log(`Total commands: ${client.commands.size}`);
 	});

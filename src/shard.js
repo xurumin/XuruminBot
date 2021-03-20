@@ -14,8 +14,6 @@ var DISCORD_BOTS_GG_API = process.env.DISCORD_BOTS_GG_API
 
 const BotStatusSocket = require("./libs/BotStatusSocket")
 
-
-
 shard.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
 shard.spawn(Number(process.env.SHARDS))
   .then(async () => {
@@ -24,7 +22,6 @@ shard.spawn(Number(process.env.SHARDS))
       const dbl = new DBL(process.env.TOPGG_API, shard);
 
       async function postDBL() {
-        //client.guilds.cache.size
         try {
           await axios.post("https://discord.bots.gg/api/v1/bots/753723888671785042/stats", {
             guildCount: await getServerCount()
