@@ -78,7 +78,7 @@ var game = {
                         return resolve()
                     })
                     .catch(err => {
-                        return reject(err)
+                        return resolve()
                     });
 
             })

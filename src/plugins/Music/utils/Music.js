@@ -220,7 +220,7 @@ module.exports = {
             };
             message.awaitReactions(filter, {
                     max: 1,
-                    time: 100000,
+                    time: 120000,
                     errors: ['time']
                 })
                 .then(collected => {
@@ -252,13 +252,10 @@ module.exports = {
                             return resolve(-1)
                             break;
                     }
-                    resolve(index)
+                    return resolve(index)
                 })
                 .catch(collected => {
-                    reject({
-                        status: 0,
-                        data: collected
-                    })
+                    return resolve(-1)
                 });
 
         })

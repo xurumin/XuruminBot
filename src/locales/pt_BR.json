@@ -11,7 +11,7 @@
                 "fields": [
                     ["Prefixo"],
                     ["Ajuda?"],
-                    ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
+                    ["Lista de comandos", "https://xurumin.github.io/comandos"],
                     ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
                     ["Site do Xurumin", "https://xurumin.github.io/"],
                     ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
@@ -23,7 +23,7 @@
                     "title": "Não achei esse comando 😞",
                     "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
                     "fields": [
-                        ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
+                        ["Lista de comandos", "https://xurumin.github.io/comandos"],
                         ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
                         ["Site do Xurumin", "https://xurumin.github.io/"],
                         ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
@@ -36,7 +36,7 @@
             }
         },
         "guildCreate": {
-            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Precisa de suporte?** https://discord.com/invite/bvb8YKSCQR\n**Para mais comandos:** https://xurumin.github.io/ptbr/comandos.html\n\nEspero que possamos nos divertir :)"
+            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Precisa de suporte?** https://discord.com/invite/bvb8YKSCQR\n**Para mais comandos:** https://xurumin.github.io/comandos\n\nEspero que possamos nos divertir :)"
         },
         "nextLevel": {
             "message": ":clap: :heart_eyes: Parabéns, {{user}}!\nVocê subiu para o nível **{{new_level}}** :partying_face:\n:star2: Como recompensa, você recebeu **X${{prize}}**!\n\nPara verificar seu nível e dinheiro, use **{{prefix}}profile** em um servidor.\n:nerd: Continue usando os comandos do bot para aumentar seu nível ainda mais."
@@ -48,7 +48,7 @@
             "message": {
                 "title": "Precisa de ajuda? 🤓",
                 "fields": [
-                    ["Lista de comandos", "https://xurumin.github.io/ptbr/comandos.html"],
+                    ["Lista de comandos", "https://xurumin.github.io/comandos"],
                     ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
                     ["Site do Xurumin", "https://xurumin.github.io/"],
                     ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
