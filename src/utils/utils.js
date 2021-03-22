@@ -178,9 +178,6 @@ var exp = {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       return (await usersRef.get(user_id)).val()[user_id]
-
-
-
       //return client.profiles.get(user_id)
     },
     hasProfile: async (client, user_id_raw) => {

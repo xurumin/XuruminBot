@@ -53,15 +53,18 @@ module.exports = {
 			}
 
 			var avatar = user.avatarURL({
-				format: "png"
+				format: "png",
+				size: 256
 			})
 
 			var badgeList = []
 			if(!profile.badges) profile.badges = []
-			for(var badgeId in profile.badges.sort()){
+			for(var badgeId of profile.badges.sort()){
 				var badge = allBadges.find(elm=>elm.id==badgeId)
 				if(badge != null) badgeList.push(badge)
 			}
+
+
 			profile.badges = badgeList;
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
 			if(!profile.money) profile.money=0
