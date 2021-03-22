@@ -105,7 +105,7 @@ class MusicPlayer {
                 resolve()
             } catch (error) {
                 this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
-                reject(error)
+                return reject(error)
             }
             
         })
@@ -160,6 +160,7 @@ class MusicPlayer {
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
+                console.log(error);
                 return this.connection.emit("skip")
             }
             
@@ -183,6 +184,7 @@ class MusicPlayer {
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
+                console.log(error);
                 return this.connection.emit("skip")
             }
             

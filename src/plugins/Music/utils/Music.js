@@ -41,11 +41,6 @@ module.exports = {
         var playlist_id = splt[splt.length - 1]
 
         return new Promise((resolve, reject)=>{
-            if(!process.env.SPOTIFY_TOKEN){
-                authorizeSpotify();
-                this.setSpotifyToken();
-            }
-            
 
             spotifyApi.getPlaylist(playlist_id)
             .then((data) => {
@@ -83,6 +78,28 @@ module.exports = {
                         duration: Utils.toHHMMSS(data["body"]["duration_ms"] / (1000))
                     }
                 )
+            }).catch(function (err) {
+                reject( err )
+            })
+
+        })
+    },
+    getSpotifyAlbum(album_url, limit=20) {
+        let album_id = urlQ.parse(album_url).path.split("/").pop()
+        return new Promise((resolve, reject)=>{
+            spotifyApi.getAlbumTracks(album_id)
+            .then((data) => {
+                resolve(
+                    Utils
+                    .shuffle(data["body"]["tracks"]["items"])
+                    .slice(0, limit).map(element => {
+                        return {
+                            name: element["name"],
+                            author: element["artists"][0]["name"],
+                            duration: Utils.toHHMMSS(element["duration_ms"] / (1000))
+                        }
+                    })
+                    )
             }).catch(function (err) {
                 reject( err )
             })
@@ -146,17 +163,6 @@ module.exports = {
             }).catch(err => {
                 reject(err)
             });
-            // temoytsearch(term, {
-            //     limit: limit+3
-            // }).then(data => {
-            //     resolve(data.map((element, i, a) => {
-            //         if(element["url"]){
-            //             return element
-            //         }
-            //     }).slice(0,limit))
-            // }).catch(err => {
-            //     reject(err)
-            // });
         })
     },
     

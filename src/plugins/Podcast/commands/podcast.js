@@ -88,6 +88,13 @@ module.exports = {
 
         let data = await PodcastUtil.getPodcastsByTerm(searchTerm);
 
+        if(data.length <= 0){
+            if(args[0].includes("open.spotify.com/show/")){
+                return message.channel.send("Hey! Tente procurar o **nome** do podcast :) ")
+            }
+            return message.channel.send("Oops! Não achei nenhum podcast com esse nome.\nVerifique se você escreveu o nome corretamente.")
+        }
+
         let messageBody = new Discord.MessageEmbed();
         messageBody.setTitle("Podcats - Resultado da sua pesquisa")
         messageBody.setAuthor(client.user.username)
