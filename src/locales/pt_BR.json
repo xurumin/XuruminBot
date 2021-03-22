@@ -257,7 +257,7 @@
             "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
             "confirmation": [{
                     "title": "Você tem certeza?",
-                    "description": "Trocar o background custa **X$100.00**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                    "description": "Trocar o background custa **X${{price}}**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
                 },
                 {
                     "title": ":x: A operação foi cancelada."
@@ -645,7 +645,7 @@
             "messages": {
                 "title": "🏎 Racing",
                 "start": {
-                    "description": "❔ **Como funciona?**\nO bot irá iniciar uma corrida entre 4 carros.\nO primeiro que chegar na linha ganha. Os jogadores que votaram no carro, terão o premio da mesa divido.\nPara participar, basta usar **{{prefix}}racing bet <cor>**\nAs cores são: `blue, red, black, green`.\n\n⚠️ **Importante**\nPara participar, será cobrado um valor de **X$100.00**.\n\n❗️ **Atenção**\nSomente será distribuído **85%** das apostas (15% fica pra casa)\nEntão, não tente fazer todos seus amigos votarem no mesmo carro só para tentar ganhar mais, viu?\n\n**Se não iniciado, jogo irá rodar automaticamente em 10 minutos.** \n\nClique em ✅ para **começar**."
+                    "description": "❔ **Como funciona?**\nO bot irá iniciar uma corrida entre 4 carros.\nO primeiro que chegar na linha ganha. Os jogadores que votaram no carro, terão o premio da mesa divido.\nPara participar, basta usar **{{prefix}}racing bet <cor>**\nAs cores são: `blue, red, black, green`.\n\n⚠️ **Importante**\nPara participar, será cobrado um valor de **X${{price}}**.\n\n❗️ **Atenção**\nSomente será distribuído **85%** das apostas (15% fica pra casa)\nEntão, não tente fazer todos seus amigos votarem no mesmo carro só para tentar ganhar mais, viu?\n\n**Se não iniciado, jogo irá rodar automaticamente em 10 minutos.** \n\nClique em ✅ para **começar**."
                 },
                 "bet_accepted": "{{user}} -> Sua aposta foi registrada!",
                 "bet_not_accepted": "{{user}} -> Sua aposta **não foi** registrada",
@@ -721,6 +721,14 @@
                     "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
                 },
                 "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
+            }
+        },
+        "rewind": {
+            "message": "Tempo do áudio alterado.",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "not_playing":"O bot não está tocando nada no momento",
+                "cmd_run_error": "Você precisa digitar `{{prefix}}rwd <segundos>`"
             }
         }
     }

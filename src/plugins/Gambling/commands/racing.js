@@ -3,6 +3,7 @@
 const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const Payment = require("./../../../libs/Payment")
+const config = require("./../../../config")
 require('dotenv/config');
 
 
@@ -50,7 +51,7 @@ module.exports = {
                 if (args[0] == "bet") {
                     var car_color = args[1]
                     if (game_info.cars.includes(car_color)) {
-                        return Payment.fastPay(message.author.id, 100)
+                        return Payment.fastPay(message.author.id, config.prices.games.racing)
                             .then(async (pmtResponse) => {
                                 racingGame.get(message.guild.id).bettors.push({
                                     id: message.author.id,
@@ -79,7 +80,8 @@ module.exports = {
             var main_embed = new Discord.MessageEmbed()
             main_embed.setTitle(game_info.title)
             main_embed.setDescription(LOCALE["messages"].start.description.interpolate({
-                prefix: process.env.COMMAND_PREFIX
+                prefix: process.env.COMMAND_PREFIX,
+                price: `${config.prices.games.racing}`
             }))
 
             var msg = await message.channel.send(main_embed)
@@ -125,7 +127,7 @@ module.exports = {
                         }
                         txt += "\n"
                     }
-                    main_embed.setDescription("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"+txt)
+                    main_embed.setDescription("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"+txt)
                     await msg.edit(main_embed)
 
                     await Utils.wait(500)
@@ -152,7 +154,7 @@ module.exports = {
                         await msg.edit(main_embed)
 
                         for (let index = 0; index < race_pos.length; index++) {
-                            if (race_pos[index].length == 8) {
+                            if (race_pos[index].length == 6) {
                                 /** 
                                  * 0 == red
                                  * 1 == green

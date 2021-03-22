@@ -6,6 +6,15 @@ module.exports = {
     "blockedcommands": [
     ],
     "noCooldownCommands":[
-        "guessthemusic"
-    ]
+        "guessthemusic",
+        "help"
+    ],
+    "prices": {
+        profile: {
+            background: 100
+        },
+        games: {
+            racing: 100
+        }
+    }
 }

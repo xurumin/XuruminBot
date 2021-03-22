@@ -71,6 +71,17 @@ class MusicPlayer {
         this.deletePlaylist();
     }
 
+    forward(ms){
+        this.dispatcher.streamTime += ms
+    }
+    //voltar
+    rewind(ms){
+        this.dispatcher.streamTime -= ms
+    }
+    streamTime(){
+        return this.dispatcher.streamTime
+    }
+
     aliveConCooldown(){
         var intv = setInterval(() => {
             if(!this.connection){

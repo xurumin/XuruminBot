@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
+const config = require("./../../config")
 const axios = require("axios").default;
 const Payment = require("./../../libs/Payment")
 var url = require('url');
@@ -44,7 +45,9 @@ module.exports = {
 
 		var confirmation_msg = {
 			title: LOCALE["confirmation"][0].title,
-			description: LOCALE["confirmation"][0].description
+			description: LOCALE["confirmation"][0].description.interpolate({
+				price: config.prices.profile.background
+			})
 		}
 		var operation_refused_msg = {
 			title: LOCALE["confirmation"][1].title
@@ -57,15 +60,15 @@ module.exports = {
 			if(!value){
 				return await message.channel.send(Utils.createSimpleEmbed(operation_refused_msg.title,""))
 			}
-			Payment.fastPay(message.author.id, 100)
+			Payment.fastPay(message.author.id, config.prices.profile.background)
 			.then(async (pmtResponse)=>{
-				message.author.send(LOCALE.pv_message.interpolate({
-					transaction_id: pmtResponse.id,
-					creation_time: pmtResponse.create_time,
-					payer: pmtResponse.payerId,
-					payee: client.user.username,
-					value: pmtResponse.value,
-				}))
+				// message.author.send(LOCALE.pv_message.interpolate({
+				// 	transaction_id: pmtResponse.id,
+				// 	creation_time: pmtResponse.create_time,
+				// 	payer: pmtResponse.payerId,
+				// 	payee: client.user.username,
+				// 	value: pmtResponse.value,
+				// }))
 				
 				if(await Utils.Profile.hasProfile(client, message.author.id)){
 					await Utils.Profile.setTag(client, message.author.id, "bg_url", `${args[0]}`)
@@ -85,13 +88,13 @@ module.exports = {
 				if(err.status && err.status==100){
 					var user_do_not_have_funds = {
 						title: LOCALE["errors"]["user_do_not_have_funds"].title,
-						description: LOCALE["confirmation"]["user_do_not_have_funds"].description
+						description: LOCALE["errors"]["user_do_not_have_funds"].description
 					}
 					return await message.channel.send(Utils.createSimpleEmbed(user_do_not_have_funds.title,user_do_not_have_funds.description))
 				}else{
 					var error_occurred= {
 						title: LOCALE["errors"]["error_occurred"].title,
-						description: LOCALE["confirmation"]["error_occurred"].description
+						description: LOCALE["errors"]["error_occurred"].description
 					}
 					return await message.channel.send(Utils.createSimpleEmbed(error_occurred.title,error_occurred.description))
 				}
