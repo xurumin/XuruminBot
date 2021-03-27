@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Music = require('../../Music/utils/Music');
 const PodcastUtil = require('../utils/PodcastUtil');
 const Utils = require("./../../../utils/utils")
 const MusicPlayer = require("./../../Music/utils/MusicPlayer")
@@ -85,7 +86,7 @@ module.exports = {
                 Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
             );
         }
-
+        
         let data = await PodcastUtil.getPodcastsByTerm(searchTerm);
 
         if(data.length <= 0){
