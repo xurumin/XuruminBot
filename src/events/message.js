@@ -138,7 +138,7 @@ module.exports = {
 				}, totalCooldown);
 			}
 
-			if ((cmd || aliase) && config.blockedcommands.includes(command)) return message.channel.send(LOCALE.events.message.errors.blocked_command)
+			if ((cmd || aliase) && (config.blockedcommands.includes(command)) || config.blockedcommands.includes(aliase) ) return message.channel.send(LOCALE.events.message.errors.blocked_command)
 			if (cmd) {
 				//Register +1 cmd to log
 				client.commandsSent++;

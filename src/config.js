@@ -4,6 +4,7 @@ module.exports = {
         "821153589233844285"
     ],
     "blockedcommands": [
+        "meme"
     ],
     "noCooldownCommands":[
         "guessthemusic",
