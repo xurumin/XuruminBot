@@ -203,6 +203,18 @@ const init = async () => {
 
 		client.cachedPoints.clear()
 		client.commandsSent = 0;
+
+
+		// CHECKS IMAGE API STATUS
+
+		axios.get(process.env.KARINNA_API_PATH)
+		.then(res=>{})
+		.catch(err=>{
+			console.log(`[IMAGE API LOG] Error:`, err);
+		})
+
+
+
 	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN ? process.env.UPLOAD_CACHED_POINTS_COOLDOWN : 1000 * 60 * 60 * 24)
 
 	client.login(process.env.DISCORD_API)
