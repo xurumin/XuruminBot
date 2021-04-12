@@ -17,6 +17,16 @@ module.exports = {
 	 */
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
+			if (!message.channel.nsfw) {
+                var msg = {
+                    title: "❌ Ops!",
+                    description: "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                }
+                return resolve(message.channel.send(
+                    Utils.createSimpleEmbed(msg.title, msg.description)
+                ));
+            }
+
 			const metioned_user = message.mentions.users.entries().next()
 
 			let user = message.author
