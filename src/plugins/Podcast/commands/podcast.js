@@ -46,7 +46,7 @@ async function showLastsEps(podcastUrl, podcastName,podcastAuthor, client, messa
                 return message.edit(new Discord.MessageEmbed().setTitle("Você precisa estar em um chat de voz para executar o comando 😥"));
             }
 
-            let player = await new MusicPlayer(userMsg.guild.id, client, userMsg)
+            let player = await new MusicPlayer(userMsg.guild.id, client, userMsg, "mp3")
             await player.__connectVoice()
             client.players.set(message.guild.id, player)
             const podcastEpisode = searchlist[i]

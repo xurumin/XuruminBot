@@ -11,12 +11,13 @@ class MusicPlayer {
      * @param  {Discord.Message} message
      * @param  {String} guild_id
      */
-    constructor(guild_id, client, message) {
+    constructor(guild_id, client, message, type="music") {
         this.guild_id = guild_id;
         this.client = client;
         this.message = message;
         this.isPlaying = false;
         this.dispatcher;
+        this.type = type
     }
     getPlaylist() {
         return this.client.playlist.get(this.guild_id)
@@ -70,16 +71,25 @@ class MusicPlayer {
         this.deletePlayer();
         this.deletePlaylist();
     }
-
-    forward(ms){
-        this.dispatcher.streamTime += ms
-    }
     //voltar
-    rewind(ms){
-        this.dispatcher.streamTime -= ms
+    changeTime(secs){
+        var current_playlist = this.getPlaylist()
+        current_playlist[0].time = secs
+        this.setPlaylist(current_playlist)
+        if (this.dispatcher){
+            this.dispatcher.destroy();
+        }
+        if(this.type == "mp3"){
+            this.playMp3()
+        }else{
+            this.play()
+        }
     }
-    streamTime(){
+    getStreamTime(){
         return this.dispatcher.streamTime
+    }
+    getTotalTime(){
+        return Utils.hmsToSeconds(this.getPlaylist()[0].duration)*1000 || 0
     }
 
     aliveConCooldown(){
@@ -155,7 +165,11 @@ class MusicPlayer {
                     quality: 'lowestaudio'
                 });
                 
-                this.dispatcher = await this.connection.play(stream)
+                this.dispatcher = await this.connection.play(stream,
+                    {
+                        seek: current_playlist[0].time || 0
+                    }
+                )
 
                 this.aliveConCooldown()
                 this.onEventDispatcher()
@@ -179,7 +193,11 @@ class MusicPlayer {
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
 
-                this.dispatcher = await this.connection.play(music_url)
+                this.dispatcher = await this.connection.play(music_url,
+                    {
+                        seek: current_playlist[0].time || 0
+                    }
+                )
 
                 this.aliveConCooldown()
                 this.onEventDispatcher()

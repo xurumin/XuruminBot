@@ -723,12 +723,12 @@
                 "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
             }
         },
-        "rewind": {
-            "message": "Tempo do áudio alterado.",
+        "timetravel": {
+            "message": "Tempo do áudio alterado para {{time}}.",
             "errors": {
                 "ops_title": "❌ Ops!",
                 "not_playing":"O bot não está tocando nada no momento",
-                "cmd_run_error": "Você precisa digitar `{{prefix}}rwd <segundos>`"
+                "cmd_run_error": "Você precisa digitar `{{prefix}}tt <milissegundos ou tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
             }
         }
     }

@@ -20,25 +20,34 @@ module.exports = {
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        const tm = Number.parseInt(args[0])
-        if(!args[0] || isNaN(tm)){
+        const tm = args[0]
+        if(!args[0]){
             return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        // console.log(player.streamTime());
-        // player.rewind(tm/1000)
-        // console.log(player.streamTime());
-        return message.channel.send(LOCALE.message);
+        let convertedTm;
+        convertedTm = Utils.globalTimeToMS(tm)/1000
+        if(!convertedTm){
+            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
+                prefix: process.env.COMMAND_PREFIX
+            }))
+        }
+        player.changeTime(convertedTm)
+        return message.channel.send(LOCALE.message.interpolate({
+            time: Utils.toHHMMSS(convertedTm)
+        }));
     },
 
     get command() {
         return {
-            name: 'rewind',
+            name: 'timetravel',
             aliases: [
-                "retroceder",
-                "rwd",
-                "voltartempo"
+                "tt",
+                "changetime",
+                "mudartempo",
+                "tempo",
+                "musictime"
             ]
         }
     },

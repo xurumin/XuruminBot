@@ -210,7 +210,7 @@ const init = async () => {
 		axios.get(process.env.KARINNA_API_PATH)
 		.then(res=>{})
 		.catch(err=>{
-			console.log(`[IMAGE API LOG] Error:`, err);
+			console.log(`[IMAGE API LOG] API IS OFF:`);
 		})
 
 

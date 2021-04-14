@@ -1,6 +1,7 @@
 "use strict"
 const discord = require("discord.js");
 const crypto = require("crypto");
+const ms = require("ms")
 require('dotenv/config');
 
 String.prototype.interpolate = function (params) {
@@ -19,7 +20,9 @@ function stringTemplateParser(expression, valueObj) {
 }
 
 var admin = require("firebase-admin");
-const { default: axios } = require("axios");
+const {
+  default: axios
+} = require("axios");
 
 var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
@@ -77,9 +80,26 @@ var exp = {
       .filter((v, i) => v !== "00" || i > 0)
       .join(":")
   },
+  hmsToSeconds(str) {
+    var p = str.split(':'),
+      s = 0,
+      m = 1;
+
+    while (p.length > 0) {
+      s += m * parseInt(p.pop(), 10);
+      m *= 60;
+    }
+
+    return s;
+  },
+  globalTimeToMS(input) {
+    const msT = ms(input)
+    const hmsT = this.hmsToSeconds(input)*1000
+    return msT || hmsT || null
+  },
   wait(ms) {
-    return new Promise((resolve, reject)=>{
-      setTimeout(()=>{
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
         resolve();
       }, ms)
     })
@@ -102,14 +122,14 @@ var exp = {
   XP2LV(xp) {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
     //var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
-    
+
     var lv = xp / 25
 
     return parseInt(lv.toFixed(0))
   },
-  async translate(from, to, message){
-    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + from + "&tl="
-    + to + "&dt=t&q=" + message + "&ie=UTF-8&oe=UTF-8"
+  async translate(from, to, message) {
+    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + from + "&tl=" +
+      to + "&dt=t&q=" + message + "&ie=UTF-8&oe=UTF-8"
     try {
       var translation = (await axios.get(url)).data
       return translation[0][0][0]
@@ -217,11 +237,11 @@ var exp = {
       await message.react("✅")
       await message.react("❌")
     },
-    getConfirmation(message, userId, time=100000) {
+    getConfirmation(message, userId, time = 100000) {
       return new Promise(async (resolve, reject) => {
         await exp.Reactions._sendRectsLight(message)
         const filter = (reaction, user) => {
-          if(["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != userId) return false;
+          if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != userId) return false;
           return true;
         };
         message.awaitReactions(filter, {
