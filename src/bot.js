@@ -21,6 +21,7 @@ client.profiles = new Discord.Collection();
 client.commandsSent = 0;
 client.cachedPoints = new Discord.Collection();
 client.playingWITM = new Discord.Collection();
+client.userBanList = new Discord.Collection();
 
 const LOCALES = new Discord.Collection();
 
@@ -165,6 +166,8 @@ const init = async () => {
 		Music.authorizeSpotify()
 	}, 2500 * 1000)
 
+	client.userBanList = await Utils.Ban.getBanList()
+
 	setInterval(async () => {
 		const t1 = (new Date()).getTime()
 
@@ -212,9 +215,7 @@ const init = async () => {
 		.catch(err=>{
 			console.log(`[IMAGE API LOG] API IS OFF:`);
 		})
-
-
-
+		client.userBanList = await Utils.Ban.getBanList()
 	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN ? process.env.UPLOAD_CACHED_POINTS_COOLDOWN : 1000 * 60 * 60 * 24)
 
 	client.login(process.env.DISCORD_API)
@@ -227,7 +228,7 @@ const init = async () => {
 		})
 	}
 
-	client.on("ready", () => {
+	client.on("ready", async () => {
 		async function init_GameOffers() {
 			await GameSale.init()
 			let listeners = await updateListeners()

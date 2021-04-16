@@ -34,6 +34,7 @@ var db = admin.database()
 var profilesRef = db.ref("profiles");
 var botInfoRef = db.ref("bot");
 var gameOffersRef = db.ref("gameOffers");
+var banRef = db.ref("ban");
 
 var $;
 
@@ -170,6 +171,20 @@ var exp = {
     async getSentCmds() {
       var sentCmds = (await botInfoRef.get("commandsSent")).val().commandsSent
       return sentCmds ? sentCmds : 0
+    }
+  },
+  Ban: {
+    async setBan(userid) {
+      await banRef.child(userid).set(Date.now())
+    },
+    async removeBan(userid) {
+      await banRef.child(userid).remove()
+    },
+    async isBanned(userid) {
+      return (await banRef.child(userid).get()).exists()
+    },
+    async getBanList(){
+      return (await banRef.get()).val()
     }
   },
   Profile: {

@@ -53,6 +53,9 @@ module.exports = {
 			LOCALE = locale_list.get(DEFAULT_LANGUAGE)
 		}
 
+		// Checks if user is banned.
+		if(client.userBanList[message.author.id]) return message.channel.send("Sorry. You are banned.")
+
 
 		if (talkedRecently.has(message.author.id)) {
 			const currentTime = (new Date()).getTime()
