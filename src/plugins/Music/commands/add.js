@@ -197,6 +197,32 @@ function searchTerm(client, message, args, LOCALE) {
             return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
         })
 }
+async function podcastEpisode(client, message, track_url, LOCALE) {
+    var podcastEp;
+    try {
+        podcastEp = await Music.getSpotifyPodcastEp(track_url)
+    } catch (error) {
+        console.log(error);
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+    }
+    var player = client.players.get(message.guild.id)
+    if (!player) {
+        player = await new MusicPlayer(message.guild.id, client, message)
+        await player.__connectVoice()
+        client.players.set(message.guild.id, player)
+        player.setPlaylist([podcastEp])
+        player.playMp3()
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+            music_name: podcastEp.name,
+            music_duration: podcastEp.duration
+        })));
+    } else {
+        player.appendPlaylist([podcastEp])
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+            prefix: process.env.COMMAND_PREFIX
+        })));
+    }
+}
 
 module.exports = {
     validate(client, message) {
@@ -242,8 +268,11 @@ module.exports = {
         }
 
         if (userMsg.includes("open.spotify.com/album/") && url_.includes("open.spotify.com")){
-            console.log(1);
             return spotifyAlbum(client, message, userMsg, LOCALE);
+        }
+
+        if (userMsg.includes("open.spotify.com/episode/") && url_.includes("open.spotify.com")){
+            return podcastEpisode(client, message, userMsg, LOCALE);
         }
 
         return message.channel.send(LOCALE["errors"].not_found)

@@ -730,6 +730,28 @@
                 "not_playing":"O bot não está tocando nada no momento",
                 "cmd_run_error": "Você precisa digitar `{{prefix}}tt <milissegundos ou tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
             }
+        },
+        "PODCAST": "PLUGIN",
+        "podcast": {
+            "title": "Podcats",
+            "podcast_added":{
+                "title": "✅ Suas músicas foram adicionada à playlist",
+                "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
+            },
+            "playing": "🔊 Tocando {{title}} - ⌛️{{duration}}",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "user_is_not_on_voice_chat":"Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format":{
+                    "title": "❌ Ops! Você digitou o comando errado!",
+                    "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
+            }
         }
     }
 }
