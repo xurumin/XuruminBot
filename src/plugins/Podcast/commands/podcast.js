@@ -99,7 +99,7 @@ module.exports = {
             }
             var player = client.players.get(message.guild.id)
             if (!player) {
-                player = await new MusicPlayer(message.guild.id, client, message)
+                player = await new MusicPlayer(message.guild.id, client, message, "mp3")
                 await player.__connectVoice()
                 client.players.set(message.guild.id, player)
                 player.setPlaylist([podcastEp])
