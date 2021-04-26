@@ -454,6 +454,11 @@
                 }
             }
         },
+        "tropa": {
+            "title": ":detective: Tropa",
+            "true": "{{user}} Parabéns! Você é da tropa. :sunglasses: :thumbsup: ",
+            "false": "{{user}} Pera lá! :face_with_raised_eyebrow::raised_back_of_hand:  Você não é da tropa. :rage:"
+        },
         "piadas": {
             "message": {
                 "title": "Piadocas do dia :zany_face:",
@@ -575,6 +580,28 @@
                 "nsfw_channel": {
                     "title": "❌ Ops!",
                     "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                }
+            }
+        },
+        "valorant": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
                 }
             }
         },

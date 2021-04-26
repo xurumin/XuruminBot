@@ -22,7 +22,7 @@ async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
         player.play()
         return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: spotify_playlist[0].name,
-            music_duration:spotify_playlist[0].duration
+            music_duration: spotify_playlist[0].duration
         })));
     } else {
         player.appendPlaylist(spotify_playlist)
@@ -110,7 +110,7 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
         })));
     }
 }
-async function youtubeLink(client, message,  video_url, LOCALE) {
+async function youtubeLink(client, message, video_url, LOCALE) {
     try {
         var video_info = await Music.getVideoInfoByUrl(video_url)
     } catch (error) {
@@ -141,8 +141,8 @@ function searchTerm(client, message, args, LOCALE) {
     Music.searchYoutubeVideos(search_term, 5)
         .then(async (res) => {
             var searchlist = []
-           // var txt = LOCALE["youtube_search"].title
-           var txt = new Discord.MessageEmbed().setTitle(LOCALE["youtube_search"].title)
+            // var txt = LOCALE["youtube_search"].title
+            var txt = new Discord.MessageEmbed().setTitle(LOCALE["youtube_search"].title)
             var searchlist = res.map((element, i) => {
                 var title = element["title"]
                 var author = element["author"] ? element["author"]["name"] : "Youtube"
@@ -152,20 +152,20 @@ function searchTerm(client, message, args, LOCALE) {
                 //     author: author
                 // })
                 txt.addField("\u200b", LOCALE["youtube_search"].txt_format.interpolate({
-                        index: i+1,
-                        title: title,
-                        author: author
-                    }))
+                    index: i + 1,
+                    title: title,
+                    author: author
+                }))
                 return element
             })
             //txt +=  LOCALE["youtube_search"].footer
             txt.setFooter(LOCALE["youtube_search"].footer)
 
             var msg = await message.channel.send(txt)
-            
+
             var reactIndex = await Music.getReact(msg, message.author)
 
-            if(reactIndex == -1) return;
+            if (reactIndex == -1) return;
 
             const video_info = {
                 name: searchlist[reactIndex]["title"],
@@ -267,11 +267,11 @@ module.exports = {
             return spotifyTrack(client, message, userMsg, LOCALE);
         }
 
-        if (userMsg.includes("open.spotify.com/album/") && url_.includes("open.spotify.com")){
+        if (userMsg.includes("open.spotify.com/album/") && url_.includes("open.spotify.com")) {
             return spotifyAlbum(client, message, userMsg, LOCALE);
         }
 
-        if (userMsg.includes("open.spotify.com/episode/") && url_.includes("open.spotify.com")){
+        if (userMsg.includes("open.spotify.com/episode/") && url_.includes("open.spotify.com")) {
             return podcastEpisode(client, message, userMsg, LOCALE);
         }
 
@@ -281,7 +281,15 @@ module.exports = {
     get command() {
         return {
             name: 'add',
-            aliases: ["youtube", "spotify", "play"]
+            description: "Toque playlists do Spotify e do Youtube, links de vídeos, faça buscas de vídeos...",
+            aliases: ["youtube", "spotify", "play"],
+            options: [{
+                "type": 3,
+                "name": "data",
+                "description": "Link do Youtube, Spotify, termo de pesquisa....",
+                "default": false,
+                "required": true
+            }]
         }
     },
 };

@@ -137,6 +137,7 @@ const init = async () => {
 						client.aliases.set(aliase, command.command.name);
 					});
 				}
+
 				console.log(`	> Command ${command.command.name.green} loaded.`)
 			}
 		} catch (error) {
@@ -172,8 +173,6 @@ const init = async () => {
 		const t1 = (new Date()).getTime()
 
 		if (process.env.NODE_ENV != "development" || true) {
-			//Utils.BotDB.setBotInfo(client.commandsSent + parseInt(await Utils.BotDB.getSentCmds()))
-
 			for (const user of client.cachedPoints) {
 				try {
 					var userInfo = {
@@ -211,10 +210,10 @@ const init = async () => {
 		// CHECKS IMAGE API STATUS
 
 		axios.get(process.env.KARINNA_API_PATH)
-		.then(res=>{})
-		.catch(err=>{
-			console.log(`[IMAGE API LOG] API IS OFF:`);
-		})
+			.then(res => {})
+			.catch(err => {
+				console.log(`[IMAGE API LOG] API IS OFF:`);
+			})
 		client.userBanList = await Utils.Ban.getBanList()
 	}, process.env.UPLOAD_CACHED_POINTS_COOLDOWN ? process.env.UPLOAD_CACHED_POINTS_COOLDOWN : 1000 * 60 * 60 * 24)
 
@@ -227,6 +226,7 @@ const init = async () => {
 			name: activitie
 		})
 	}
+
 
 	client.on("ready", async () => {
 		async function init_GameOffers() {
