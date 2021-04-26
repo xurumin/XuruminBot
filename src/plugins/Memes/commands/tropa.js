@@ -21,11 +21,6 @@ module.exports = {
             var user = message.author
             if (tagged_user.value) user = tagged_user.value[1];
 
-            message.channel.startTyping()
-            setTimeout(() => {
-                message.channel.stopTyping();
-            }, 5000);
-
             var embed = new Discord.MessageEmbed()
             embed.setTitle(LOCALE.title)
 
