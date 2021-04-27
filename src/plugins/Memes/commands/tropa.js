@@ -24,7 +24,7 @@ module.exports = {
             var embed = new Discord.MessageEmbed()
             embed.setTitle(LOCALE.title)
 
-            if(user.id && user.id % 2 == 0){
+            if(Number.parseInt(user.id.split("").pop()) % 2 == 0){
                 embed.setDescription(LOCALE.true.interpolate({
                     user: user
                 }))
