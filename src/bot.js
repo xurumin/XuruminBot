@@ -285,13 +285,13 @@ const init = async () => {
 
 		setInterval(async () => {
 			const lv = (await api.getVotes()).slice(0, 3)
-			lv.push({"a": 2})
 
 			if (JSON.stringify(lastVotes) != JSON.stringify(lv)) {
 				lastVotes = (await api.getVotes()).slice(0, 3)
 				try {
 					const prize = Utils.random(450, 550);
 					var user = client.users.cache.find(user => user.id == lastVotes[0].id)
+					console.log(user);
 					if (!user) return;
 
 					user.send(new Discord.MessageEmbed().setTitle(`:star2: Obrigado por votar no Xurumin! :star2:`).setDescription(`\nComo recompensa, você ganhou **X$${prize}**!\n(você pode usar \`x!profile\` em um servidor para ver quantos X$ você tem)\n\nContinue votando para ganhar mais!`).setColor("#9d65c9"))
@@ -301,6 +301,8 @@ const init = async () => {
 				}
 			}
 		}, 5000);
+
+		console.log(client.users.cache.find(user => user.id == "837084843455152168"));
 
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 		console.log(`Total commands: ${client.commands.size}`);
