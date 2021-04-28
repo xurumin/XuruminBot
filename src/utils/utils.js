@@ -188,7 +188,7 @@ var exp = {
     }
   },
   Profile: {
-    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges = []) => {
+    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, money=0, badges = []) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       await usersRef.child(user_id).set({
@@ -197,7 +197,8 @@ var exp = {
         level: level,
         points: points,
         badges: badges,
-        userId: user_id_raw
+        userId: user_id_raw,
+        money: money
       });
     },
     setTag: async (client, user_id_raw, tag, value) => {
@@ -212,7 +213,17 @@ var exp = {
     getProfile: async (client, user_id_raw) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
-      return (await usersRef.get(user_id)).val()[user_id]
+      var user_profile = (await usersRef.get(user_id)).val()[user_id]
+      const profile_pattern = {
+        aboutme: user_profile.aboutme || "",
+        bg_url: user_profile.bg_url,
+        level: user_profile.level || 0,
+        points: user_profile.points || 0,
+        badges: user_profile.badges || [],
+        userId: user_id_raw,
+        money: user_profile.money || 0
+      }
+      return profile_pattern
       //return client.profiles.get(user_id)
     },
     hasProfile: async (client, user_id_raw) => {
@@ -238,6 +249,7 @@ var exp = {
         bg_url: "https://i.imgur.com/MbGPZQR.png",
         level: 0,
         points: 0,
+        money: 0,
         aboutme: "",
         badges: []
       }

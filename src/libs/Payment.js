@@ -32,13 +32,13 @@ module.exports = {
 
                 if(!payerInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points, 0)
 
                     payerInfo = await Utils.Profile.getProfile({}, transaction.payerId)
                 }
                 if(!payeeInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points, 0)
 
                     payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
                 }
@@ -90,7 +90,7 @@ module.exports = {
 
                 if(!payerInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payerId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points, 0)
 
                     payerInfo = await Utils.Profile.getProfile({}, transaction.payerId)
                 }
@@ -132,7 +132,7 @@ module.exports = {
 
                 if(!payeeInfo){
                     var standard_profile = Utils.Profile.getStandardProfile()
-                    await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points)
+                    await Utils.Profile.setProfile({}, transaction.payeeId,standard_profile.bg_url,standard_profile.aboutme, standard_profile.level, standard_profile.points, 0)
 
                     payeeInfo = await Utils.Profile.getProfile({}, transaction.payeeId)
                 }

@@ -49,8 +49,8 @@ module.exports = {
 			}
 
 			var avatar = user.avatarURL({
-				format: "png",
-				size: 256
+				format: "jpg",
+				size: 512
 			})
 
 			var badgeList = []
@@ -60,7 +60,6 @@ module.exports = {
 				if(badge != null) badgeList.push(badge)
 			}
 
-
 			profile.badges = badgeList;
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
 			if(!profile.money) profile.money=0
@@ -69,10 +68,8 @@ module.exports = {
 			profile.username = user.username
 			profile.tag = user.tag
 
-			console.log(JSON.stringify(profile));
-
 			Utils.KarinnaAPI.get("/v1/image/profile", {
-				img_url: message.author.avatarURL({format:"jpg", size:512}),
+				img_url: avatar,
 				profile: JSON.stringify(profile)
 
 			}).then(async res=>{

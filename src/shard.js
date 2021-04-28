@@ -10,17 +10,17 @@ const {
 const shard = new ShardingManager('./src/bot.js', {
   token: process.env.DISCORD_API
 });
-var DISCORD_BOTS_GG_API = process.env.DISCORD_BOTS_GG_API
 
+var DISCORD_BOTS_GG_API = process.env.DISCORD_BOTS_GG_API
 const BotStatusSocket = require("./libs/BotStatusSocket")
 
 shard.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
 shard.spawn(Number(process.env.SHARDS))
   .then(async () => {
-    if (process.env.NODE_ENV == "production") {
-      const DBL = require("dblapi.js");
-      const dbl = new DBL(process.env.TOPGG_API, shard);
+    const Topgg = require('@top-gg/sdk')
+    const api = new Topgg.Api(process.env.TOPGG_API)
 
+    if (process.env.NODE_ENV == "production") {
       async function postDBL() {
         try {
           await axios.post("https://discord.bots.gg/api/v1/bots/753723888671785042/stats", {
@@ -30,7 +30,9 @@ shard.spawn(Number(process.env.SHARDS))
               Authorization: DISCORD_BOTS_GG_API
             }
           })
-          dbl.postStats(await getServerCount());
+          api.postStats({
+            serverCount: await getServerCount()
+          })
         } catch (error) {
           console.log(error);
         }
