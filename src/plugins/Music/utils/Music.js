@@ -210,7 +210,7 @@ module.exports = {
                 const video_info = {
                     name: video_dat["title"],
                     url: url,
-                    author: video_dat["author"],
+                    author: video_dat["author"].name,
                     duration: this.toHHMMSS(video_dat["lengthSeconds"])
                 }
                 resolve(video_info)
