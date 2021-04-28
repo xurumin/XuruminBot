@@ -2,14 +2,10 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor");
-const utils = require('./../../utils/utils');
-
-
 var allBadges = [];
 
 async function getAllBadges(){
-	allBadges = await utils.Profile.getBadges();
+	allBadges = await Utils.Profile.getBadges();
 }
 setInterval(async () => {
 	console.log("[LOG] Auto updating badges")
@@ -41,15 +37,15 @@ module.exports = {
 			}
 
 			let profile;
-			if(await utils.Profile.hasProfile(client, user.id)){
-				profile = await utils.Profile.getProfile(client, user.id)
+			if(await Utils.Profile.hasProfile(client, user.id)){
+				profile = await Utils.Profile.getProfile(client, user.id)
 				if(!(profile.aboutme) || profile.aboutme == ""){
 					profile["aboutme"] = LOCALE.stardard.aboutme
-					await utils.Profile.setTag(client, user.id, "aboutme",LOCALE.stardard.aboutme)
+					await Utils.Profile.setTag(client, user.id, "aboutme",LOCALE.stardard.aboutme)
 				}
 			}else{
-				await utils.Profile.setProfile(client, user.id, "https://i.imgur.com/MbGPZQR.png",LOCALE.stardard.aboutme, 0, 0)
-				profile = await utils.Profile.getProfile(client,user.id)
+				await Utils.Profile.setProfile(client, user.id, "https://i.imgur.com/MbGPZQR.png",LOCALE.stardard.aboutme, 0, 0)
+				profile = await Utils.Profile.getProfile(client,user.id)
 			}
 
 			var avatar = user.avatarURL({
@@ -69,22 +65,23 @@ module.exports = {
 			if(avatar==null) avatar="https://i.imgur.com/ACByvW9.png"
 			if(!profile.money) profile.money=0
 
-			profile.level = utils.XP2LV(profile.points)
+			profile.level = Utils.XP2LV(profile.points)
+			profile.username = user.username
+			profile.tag = user.tag
 
-			ImageProcessor(avatar, user,profile, LOCALE.profile)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle(LOCALE.message.title.interpolate({author: user.username}))
-				.setDescription("Background Photo by Unsplash")
-				.setAuthor(client.user.username)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
+			console.log(JSON.stringify(profile));
+
+			Utils.KarinnaAPI.get("/v1/image/profile", {
+				img_url: message.author.avatarURL({format:"jpg", size:512}),
+				profile: JSON.stringify(profile)
+
+			}).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
 			})
-			.catch((err)=>{
-				reject(err)
+			.catch(async err=>{
+				message.channel.stopTyping()
+				return reject(err)
 			})
 		})
 	},

@@ -1,10 +1,5 @@
 const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
-const fs = require("fs")
-
-const ImageProcessor = require("./ImageProcessor")
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -23,23 +18,15 @@ module.exports = {
 					message.channel.stopTyping();
 				}, 5000);
 
-				ImageProcessor(message.mentions.users.entries().next().value[1].avatarURL({
-					format: "png"
-				}))
-				.then((image)=>{
-					const embed = new Discord.MessageEmbed()
-					.setColor('#9d65c9')
-					.setTitle("Funcionário do Mês! 🥳")
-					.setAuthor(client.user.username)
-					.setDescription(`Parabéns ${message.mentions.users.entries().next().value[1]}!\nVocê ganho o título de **Funcionário do Mês** por ${message.author}`)
-					.attachFiles(image)
-					.setImage("attachment://image.png")
-					message.channel.stopTyping()
-					resolve(message.channel.send(embed))
+				Utils.KarinnaAPI.get("/v1/image/funcionariodomes", {
+					img_url: message.mentions.users.entries().next().value[1].avatarURL({format:"jpg", size:512})
+				}).then(async res=>{
+					message.channel.stopTyping();
+					return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
 				})
-				.catch((err)=>{
+				.catch(async err=>{
 					message.channel.stopTyping()
-					reject(err)
+					return reject(err)
 				})
 	
 			} else {

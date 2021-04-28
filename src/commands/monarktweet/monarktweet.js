@@ -1,11 +1,6 @@
 const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
-
-const ImageProcessor = require("./ImageProcessor")
-
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -20,13 +15,7 @@ module.exports = {
 			let text = args.join(" ").slice(0,218)
 			text = text.replace(/\n/gi, ' ')
 			if(args.length <= 0 ){
-				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
-			}
-	
-			if(text == ""){
-				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}monarktweet <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}monarktweet** que eu pego a ultima mensagem mandada! 🤗`, client.user.username, client.user.avatarURL())
-				);
+				text = "Wow"
 			}
 	
 			message.channel.startTyping()
@@ -39,22 +28,16 @@ module.exports = {
 			if(text.length <= 74) img_code=1;
 			if(text.length > 74 && text.length <= 151) img_code=2;
 	
-			ImageProcessor(text, img_code)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle("O que o Monark tweetou?")
-				.setAuthor("Monark")
-				.setDescription(`Mensagem de: ${message.author.username}\n\n*Esta imagem não é verdadeira.*`)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
-			})
-			.catch((err)=>{
-				message.channel.stopTyping()
-				reject(err)
-			})
+			Utils.KarinnaAPI.get("/v1/image/monarktweet", {
+                text: text
+            }).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+            })
+            .catch(async err=>{
+                message.channel.stopTyping()
+				return reject(err)
+            })
 		})
 	},
 

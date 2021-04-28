@@ -95,7 +95,7 @@ var exp = {
   },
   globalTimeToMS(input) {
     const msT = ms(input)
-    const hmsT = this.hmsToSeconds(input)*1000
+    const hmsT = this.hmsToSeconds(input) * 1000
     return msT || hmsT || null
   },
   wait(ms) {
@@ -183,7 +183,7 @@ var exp = {
     async isBanned(userid) {
       return (await banRef.child(userid).get()).exists()
     },
-    async getBanList(){
+    async getBanList() {
       return (await banRef.get()).val()
     }
   },
@@ -282,6 +282,24 @@ var exp = {
             reject(collected)
           });
 
+      })
+    }
+  },
+  KarinnaAPI: {
+    get(path, params, timeout = 120000) {
+      return new Promise(async(resolve, reject) => {
+        axios.get(`${process.env.KARINNA_API_PATH}${path}`, {
+          headers: {
+            authorization: process.env.KARINNA_API_TOKEN
+          },
+          params: params,
+          timeout: timeout,
+          responseType: "arraybuffer"
+        }).then(async (res) => {
+          return resolve(res.data)
+        }).catch(async (err) => {
+          return reject(err)
+        })
       })
     }
   }

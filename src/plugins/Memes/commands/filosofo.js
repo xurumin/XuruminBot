@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
+const Utils = require('./../../../utils/utils');
 const fs = require("fs")
 
 module.exports = {
@@ -13,27 +13,26 @@ module.exports = {
 	 */
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
-			let text = args.join(" ").slice(0,23)
+			let text = args.join(" ").slice(0,220)
 			text = text.replace(/\n/gi, ' ')
-			if(args.length <= 0 || text==""){
-				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}indoatras <frase que você quiser>** para ir daquele que fez alquilo! 🤗`, client.user.username, client.user.avatarURL())
-				);
+			if(args.length <= 0 ){
+				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
 			}
+			
 			message.channel.startTyping()
 
 			setTimeout(() => {
 				message.channel.stopTyping();
 			}, 5000);
 
-			Utils.KarinnaAPI.get("/v1/image/indoatras", {
+			Utils.KarinnaAPI.get("/v1/image/filosofo", {
                 text: text
             }).then(async res=>{
-				message.channel.stopTyping();
-				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+				resolve(message.inlineReply(new Discord.MessageAttachment(res, "filosofo.jpeg")))
             })
             .catch(async err=>{
                 message.channel.stopTyping()
+				message.inlineReply("Ocorreu um erro ao carregar esse comando. Mas não se preocupe! Nossos gatinhos estão trabalhando para resolver isso!")
 				return reject(err)
             })
 		})
@@ -41,11 +40,12 @@ module.exports = {
 
 	get command() {
 		return {
-			name: 'indoatras',
+			name: 'filosofo',
+			description: 'O que será que o filósofo disse?',
+			usage: 'filosofo',
 			aliases: [
-				"indoatrasdessetalde",
-				"indoatrasdesse",
-				"iadtd"
+				"filosofos",
+				"filo"
 			]
 		};
 	},

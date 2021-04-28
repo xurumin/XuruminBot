@@ -2,10 +2,6 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./imageProcessor")
-
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -28,33 +24,22 @@ module.exports = {
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}manualdomundo <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}manualdomundo** que eu pego a ultima mensagem mandada! 🤗`, client.user.username, client.user.avatarURL())
 				);
 			}
-	
 			message.channel.startTyping()
 
 			setTimeout(() => {
 				message.channel.stopTyping();
 			}, 5000);
 			
-			var img_code = 3;
-			if(text.length <= 74) img_code=1;
-			if(text.length > 74 && text.length <= 151) img_code=2;
-	
-			ImageProcessor(text, img_code)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle("Qual o novo vídeo do Manual do Mundo?")
-				.setAuthor("Mdm")
-				.setDescription(`Mensagem de: ${message.author.username}`)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
-			})
-			.catch((err)=>{
-				message.channel.stopTyping()
-				reject(err)
-			})
+			Utils.KarinnaAPI.get("/v1/image/manualdomundo", {
+                text: text
+            }).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+            })
+            .catch(async err=>{
+                message.channel.stopTyping()
+				return reject(err)
+            })
 		})
 	},
 

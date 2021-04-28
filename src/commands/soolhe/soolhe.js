@@ -2,10 +2,6 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor")
-
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -23,21 +19,17 @@ module.exports = {
 			if(metioned_user.value) user=metioned_user.value[1];
 
 			message.channel.startTyping()
-			ImageProcessor(user.avatarURL({format:"png"}), user.username)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle("Digite amem ou só olhe ")
-				.setDescription(`${user}\n\n*Mensagem de: ${message.author}*`)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
-			})
-			.catch((err)=>{
-				message.channel.stopTyping()
+
+			Utils.KarinnaAPI.get("/v1/image/soolhe", {
+				img_url: user.avatarURL({format:"jpg", size:512})
+            }).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+            })
+            .catch(async err=>{
+                message.channel.stopTyping()
 				return reject(err)
-			})
+            })
 		})
 	},
 

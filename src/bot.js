@@ -6,6 +6,7 @@ const fs = require('fs-extra');
 const colors = require('colors');
 
 const Discord = require('discord.js');
+require("./utils/ExtendedMessage");
 const Utils = require('./utils/utils');
 const {
 	default: axios
