@@ -290,10 +290,10 @@ const init = async () => {
 				lastVotes = (await api.getVotes()).slice(0, 3)
 				try {
 					const prize = Utils.random(450, 550);
-					var user = client.users.cache.find(user => user.id == lastVotes[0].id)
-					if (!user) return;
-					user.send(new Discord.MessageEmbed().setTitle(`:star2: Obrigado por votar no Xurumin! :star2:`).setDescription(`\nComo recompensa, você ganhou **X$${prize}**!\n(você pode usar \`x!profile\` em um servidor para ver quantos X$ você tem)\n\nContinue votando para ganhar mais!`).setColor("#9d65c9"))
-					await Payment.fastPayXurumin(user.id, prize)
+					const fetchUser = await client.users.fetch("253990931441778688")
+					if (!fetchUser) return;
+					fetchUser.send(new Discord.MessageEmbed().setTitle(`:star2: Obrigado por votar no Xurumin! :star2:`).setDescription(`\nComo recompensa, você ganhou **X$${prize}**!\n(você pode usar \`x!profile\` em um servidor para ver quantos X$ você tem)\n\nContinue votando para ganhar mais!`).setColor("#9d65c9"))
+					await Payment.fastPayXurumin(fetchUser.id, prize)
 				} catch (error) {
 					console.log(error);
 				}
