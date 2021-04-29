@@ -62,7 +62,7 @@ module.exports = {
                 responseType: "arraybuffer"
             }).then(async (res)=>{
                 loading_msg.delete()
-                return await resolve(message.channel.send(new Discord.MessageAttachment(res.data, 'video.mp4')))
+                return await resolve(message.inlineReply(new Discord.MessageAttachment(res.data, 'video.mp4')))
             }).catch(async (err)=>{
                 loading_msg.delete()
                 console.log(err);
