@@ -24,7 +24,7 @@
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.3.0",
     "ffprobe-static": "^3.0.0",
-    "firebase-admin": "^9.6.0",
+    "firebase-admin": "^9.7.0",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^9.1.0",
     "gif-encoder-2": "^1.0.5",
@@ -39,7 +39,7 @@
     "videoshow": "^0.1.12",
     "xml2js": "^0.4.23",
     "ytdl-core": "^4.5.0",
-    "ytpl": "^2.1.1",
-    "ytsr": "^3.4.1"
+    "ytpl": "^2.2.0",
+    "ytsr": "^3.5.0"
   }
 }
