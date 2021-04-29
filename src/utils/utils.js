@@ -221,7 +221,8 @@ var exp = {
         points: user_profile.points || 0,
         badges: user_profile.badges || [],
         userId: user_id_raw,
-        money: user_profile.money || 0
+        money: user_profile.money || 0,
+        ...user_profile
       }
       return profile_pattern
       //return client.profiles.get(user_id)
@@ -237,9 +238,8 @@ var exp = {
     isPremium: async (client, user_id_raw) => {
       var profile = await exp.Profile.getProfile(client, user_id_raw)
 
-
       if (profile && profile["status"]) {
-        return (profile["status"]) == "premium" ? true : false;
+        return (profile["status"]) == "premium";
       }
       return false;
 
