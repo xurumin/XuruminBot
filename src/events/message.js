@@ -171,7 +171,7 @@ module.exports = {
 
 				return MessageLog.log(aliase, message); // ADD MESSAGE TO MessageLog
 			} else {
-				return message.channel.send(
+				message.channel.send(
 					new Discord.MessageEmbed()
 					.setColor('#9d65c9')
 					.setTitle(LOCALE.events.message.errors.command_not_found.title)
@@ -181,6 +181,7 @@ module.exports = {
 					.addField(LOCALE.events.message.errors.command_not_found.fields[2][0], LOCALE.events.message.errors.command_not_found.fields[2][1])
 					.setAuthor(client.user.username)
 				)
+				return MessageLog.log("NOT FOUND", message);
 			}
 		} catch (error) {
 			message.channel.stopTyping();
