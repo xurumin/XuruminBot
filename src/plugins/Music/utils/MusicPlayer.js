@@ -11,13 +11,17 @@ class MusicPlayer {
      * @param  {Discord.Message} message
      * @param  {String} guild_id
      */
-    constructor(guild_id, client, message, type="music") {
+    constructor(guild_id, client, message, type="music", audioquality="lowestaudio") {
         this.guild_id = guild_id;
         this.client = client;
         this.message = message;
         this.isPlaying = false;
         this.dispatcher;
+        this.audioquality = audioquality
         this.type = type
+    }
+    setAudioQuality(audioquality){
+        this.audioquality = audioquality
     }
     getPlaylist() {
         return this.client.playlist.get(this.guild_id)
@@ -162,7 +166,7 @@ class MusicPlayer {
 
                 const stream = ytdl(music_url, {
                     filter: 'audioonly',
-                    quality: 'lowestaudio'
+                    quality: this.audioquality
                 });
                 
                 this.dispatcher = await this.connection.play(stream,

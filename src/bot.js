@@ -222,9 +222,9 @@ const init = async () => {
 
 	async function setActv() {
 		var activities = (await axios.get(process.env.GIST_URL)).data.split("\n")
-		var activitie = Utils.choice(activities)
+		var activity = Utils.choice(activities)
 		client.user.setActivity({
-			name: activitie
+			name: activity
 		})
 	}
 
@@ -299,6 +299,8 @@ const init = async () => {
 				}
 			}
 		}, 5000);
+
+
 
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`)
 		console.log(`Total commands: ${client.commands.size}`);

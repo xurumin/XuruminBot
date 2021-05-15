@@ -5,13 +5,22 @@ const fs = require("fs")
 var allBadges = [];
 
 async function getAllBadges(){
-	allBadges = await Utils.Profile.getBadges();
+	try {
+		allBadges = await Utils.Profile.getBadges();
+	} catch (error) {
+		setTimeout(() => {
+			getAllBadges()
+		}, 60 * 1000);
+	}
 }
+
+getAllBadges()
+
 setInterval(async () => {
 	console.log("[LOG] Auto updating badges")
 	await getAllBadges()
 }, 24 * 60 * 60 * 1000);
-getAllBadges()
+
 
 module.exports = {
 	validate(client, message) {
@@ -67,6 +76,8 @@ module.exports = {
 			profile.level = Utils.XP2LV(profile.points)
 			profile.username = user.username
 			profile.tag = user.tag
+
+			console.log(profile);
 
 			Utils.KarinnaAPI.get("/v1/image/profile", {
 				img_url: avatar,

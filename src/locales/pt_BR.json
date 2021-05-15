@@ -463,6 +463,11 @@
             "true": "{{user}} Parabéns! Você é da tropa. :sunglasses: :thumbsup: ",
             "false": "{{user}} Pera lá! :face_with_raised_eyebrow::raised_back_of_hand:  Você não é da tropa. :rage:"
         },
+        "ship": {
+            "title": ":detective: Tropa",
+            "true": "{{user}} Parabéns! Você é da tropa. :sunglasses: :thumbsup: ",
+            "false": "{{user}} Pera lá! :face_with_raised_eyebrow::raised_back_of_hand:  Você não é da tropa. :rage:"
+        },
         "piadas": {
             "message": {
                 "title": "Piadocas do dia :zany_face:",
