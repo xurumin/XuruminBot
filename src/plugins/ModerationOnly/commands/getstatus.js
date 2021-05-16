@@ -10,6 +10,12 @@ const getVoiceConnectionsCount = async (client) => {
     const req = await client.shard.fetchClientValues('voice.connections.size');
     return req.reduce((p, n) => p + n, 0);
 }
+
+const getUsersVoiceConnection= async (client) => {
+    const req = await client.shard.fetchClientValues('voice.connections');
+    console.log(req);
+    return req.reduce((p, n) => p + n, 0);
+}
   
 const getServerCount = async (client) => {
     const req = await client.shard.fetchClientValues('guilds.cache.size');

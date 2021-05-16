@@ -274,7 +274,6 @@ const init = async () => {
 		}, process.env.ACTIVITY_UPDATE_COOLDOWN)
 		process.env.SHARD_ID = client.shard.ids[0]
 
-
 		const Topgg = require('@top-gg/sdk')
 		const api = new Topgg.Api(process.env.TOPGG_API)
 		const Payment = require("./libs/Payment")

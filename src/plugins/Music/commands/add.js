@@ -5,6 +5,7 @@ const MusicPlayer = require("./../utils/MusicPlayer")
 require('dotenv/config');
 var url = require('url');
 
+const config = require("./../../../config");
 
 async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
     var spotify_playlist;
@@ -16,6 +17,7 @@ async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
     var player = client.players.get(message.guild.id)
     if (!player) {
         player = await new MusicPlayer(message.guild.id, client, message)
+        player.setAudioQuality(message.audioquality)
         await player.__connectVoice()
         client.players.set(message.guild.id, player)
         player.setPlaylist(spotify_playlist)
@@ -41,6 +43,7 @@ async function spotifyTrack(client, message, track_url, LOCALE) {
     var player = client.players.get(message.guild.id)
     if (!player) {
         player = await new MusicPlayer(message.guild.id, client, message)
+        player.setAudioQuality(message.audioquality)
         await player.__connectVoice()
         client.players.set(message.guild.id, player)
         player.setPlaylist([spotifyTrack])
@@ -66,6 +69,7 @@ async function spotifyAlbum(client, message, album_url, LOCALE) {
     var player = client.players.get(message.guild.id)
     if (!player) {
         player = await new MusicPlayer(message.guild.id, client, message)
+        player.setAudioQuality(message.audioquality)
         await player.__connectVoice()
         client.players.set(message.guild.id, player)
         player.setPlaylist(spotifyAlbum)
@@ -95,6 +99,7 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
     var player = client.players.get(message.guild.id)
     if (!player) {
         player = await new MusicPlayer(message.guild.id, client, message)
+        player.setAudioQuality(message.audioquality)
         await player.__connectVoice()
         client.players.set(message.guild.id, player)
         player.setPlaylist(youtube_playlist)
@@ -119,6 +124,7 @@ async function youtubeLink(client, message, video_url, LOCALE) {
     var player = client.players.get(message.guild.id)
     if (!player) {
         player = await new MusicPlayer(message.guild.id, client, message)
+        player.setAudioQuality(message.audioquality)
         await player.__connectVoice()
         client.players.set(message.guild.id, player)
         player.setPlaylist([video_info])
@@ -134,7 +140,6 @@ async function youtubeLink(client, message, video_url, LOCALE) {
         })));
     }
 }
-
 function searchTerm(client, message, args, LOCALE) {
     let search_term = args.join(" ")
 
@@ -176,6 +181,7 @@ function searchTerm(client, message, args, LOCALE) {
             var player = client.players.get(message.guild.id)
             if (!player) {
                 player = await new MusicPlayer(message.guild.id, client, message)
+                player.setAudioQuality(message.audioquality)
                 await player.__connectVoice()
                 client.players.set(message.guild.id, player)
                 player.setPlaylist([video_info])
@@ -208,6 +214,7 @@ async function podcastEpisode(client, message, track_url, LOCALE) {
     var player = client.players.get(message.guild.id)
     if (!player) {
         player = await new MusicPlayer(message.guild.id, client, message, "mp3")
+        player.setAudioQuality(message.audioquality)
         await player.__connectVoice()
         client.players.set(message.guild.id, player)
         player.setPlaylist([podcastEp])
@@ -250,6 +257,14 @@ module.exports = {
                 }))
             );
         }
+
+        // const isPremium = await Utils.Profile.isPremium({}, message.author.id)
+        const isPremium = config.specialusers.includes(message.author.id)
+        message.audioquality = "lowestaudio"
+        if (isPremium) {
+            message.audioquality = "highestaudio"
+        }
+
 
         if (userMsg.includes("open.spotify.com/playlist/") && url_.includes("open.spotify.com")) {
             return spotifyPlaylist(client, message, userMsg, LOCALE)
