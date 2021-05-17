@@ -13,6 +13,7 @@ require('dotenv/config');
 
 const SpotifyWebApi = require('spotify-web-api-node');
 const { resolve } = require('path');
+const { default: axios } = require('axios');
 let spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_SECRET
@@ -94,14 +95,20 @@ module.exports = {
             spotifyApi.getEpisode(spttrack,{
                 market: "BR"
             })
-            .then((data) => {
+            .then(async (data) => {
+                var sp_info = await axios.get(`https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/${data["body"]["id"]}/com.widevine.alpha?market=BR`)
                 return resolve(
                     {
                         name: data["body"]["name"],
                         author: data["body"]["show"]["name"],
                         duration: Utils.toHHMMSS(data["body"]["duration_ms"] / (1000)),
-                        url: `https://anon-podcast.scdn.co/${data["body"]["audio_preview_url"].split("/").pop()}`
+                        url: sp_info.data["url"][0].replace("=", "")
+                        
                     }
+                    // url: `https://anon-podcast.scdn.co/${data["body"]["audio_preview_url"].split("/").pop()}`
+                    //https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/1r38FxmFb5Dzql4TLs0Lk2/com.widevine.alpha?market=BR
+
+                    //https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/08Sb0rruDu2TXGehKQ1bgL/com.widevine.alpha?market=BR
                 )
             }).catch(function (err) {
                 reject( err )

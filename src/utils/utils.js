@@ -162,6 +162,13 @@ var exp = {
       return await (await child.get("hash")).val().hash
     }
   },
+  Updaters: {
+    getPremiumUsers: ()=>{
+      return new Promise(async (resolve, reject)=>{
+        const premiumUsers = this
+      })
+    }
+  },
   BotDB: {
     async setBotInfo(cmdSent) {
       await botInfoRef.set({

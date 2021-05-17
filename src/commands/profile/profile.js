@@ -77,8 +77,6 @@ module.exports = {
 			profile.username = user.username
 			profile.tag = user.tag
 
-			console.log(profile);
-
 			Utils.KarinnaAPI.get("/v1/image/profile", {
 				img_url: avatar,
 				profile: JSON.stringify(profile)
