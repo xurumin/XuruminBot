@@ -297,7 +297,7 @@ module.exports = {
         return {
             name: 'add',
             description: "Toque playlists do Spotify e do Youtube, links de vídeos, faça buscas de vídeos...",
-            aliases: ["youtube", "spotify", "play"],
+            aliases: ["youtube", "spotify", "play", "p", "yt", "spt"],
             options: [{
                 "type": 3,
                 "name": "data",

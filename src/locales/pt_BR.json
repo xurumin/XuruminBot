@@ -55,6 +55,18 @@
                 ]
             }
         },
+        "commands": {
+            "message": {
+                "title": "Quer saber todos os comandos do Xurumin? 🤓",
+                "description": "Você pode acessar todos os comandos em https://xurumin.github.io/comandos"
+            }
+        },
+        "invite": {
+            "message": {
+                "title": "Convite do Xurumin 🤓",
+                "description": "Você pode adicionar o Xurumin em https://xurumin.github.io/addxurumin"
+            }
+        },
         "bolsonarotweet": {
             "message": {
                 "title": "O que o presidente tweetou?",
