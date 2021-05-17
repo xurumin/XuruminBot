@@ -90,9 +90,29 @@ module.exports = {
 
         const url_ = url.parse(searchTerm).host
         if (searchTerm.includes("open.spotify.com/episode/") && url_.includes("open.spotify.com")) {
+            var podcastShow;
             var podcastEp;
+            var ep_url;
             try {
                 podcastEp = await Music.getSpotifyPodcastEp(searchTerm)
+                podcastShow = await PodcastUtil.getPodcastsByTerm(podcastEp["show_name"])
+                podcastShow = podcastShow.find(ep=>{
+                    return ep.kind == "podcast" && ep.artistName == podcastEp["publisher"] && ep.trackName == podcastEp["show_name"]
+                })
+
+                if(!podcastShow){
+                    return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+                }
+
+                var eps = await PodcastUtil.getLastEpsByUrl(podcastShow["feedUrl"], 0, 5000)
+                var episodeF = eps.find(ep=>{
+                    return (String(ep["title"][0]).toLowerCase() == String(podcastEp["name"]).toLowerCase()) || String(ep["itunes:title"]).toLowerCase() == String(podcastEp["name"]).toLowerCase()
+                })
+                if(!episodeF){
+                    return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+                }
+                podcastEp.url = episodeF["enclosure"][0]["$"]["url"]
+
             } catch (error) {
                 console.log(error);
                 return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));

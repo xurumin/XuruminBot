@@ -96,14 +96,14 @@ module.exports = {
                 market: "BR"
             })
             .then(async (data) => {
-                var sp_info = await axios.get(`https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/${data["body"]["id"]}/com.widevine.alpha?market=BR`)
+                //var sp_info = await axios.get(`https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/${data["body"]["id"]}/com.widevine.alpha?market=BR`)
                 return resolve(
                     {
                         name: data["body"]["name"],
-                        author: data["body"]["show"]["name"],
+                        show_name: data["body"]["show"]["name"],
+                        publisher: data["body"]["show"]["publisher"],
                         duration: Utils.toHHMMSS(data["body"]["duration_ms"] / (1000)),
-                        url: sp_info.data["url"][0].replace("=", "")
-                        
+                        duration_ms: data["body"]["duration_ms"]
                     }
                     // url: `https://anon-podcast.scdn.co/${data["body"]["audio_preview_url"].split("/").pop()}`
                     //https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/1r38FxmFb5Dzql4TLs0Lk2/com.widevine.alpha?market=BR
