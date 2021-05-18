@@ -30,8 +30,10 @@ module.exports = {
     get command() {
         return {
             name: 'leave',
-            description: '',
-            usage: 'leave'
+            aliases: [
+                "sair",
+                "stop"
+            ]
         }
     },
 };

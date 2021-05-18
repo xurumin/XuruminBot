@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
 const MusicPlayer = require("./../utils/MusicPlayer")
+const PodcastUtil = require('./../../../plugins/Podcast/utils/PodcastUtil');
 require('dotenv/config');
 var url = require('url');
 
@@ -140,6 +141,7 @@ async function youtubeLink(client, message, video_url, LOCALE) {
         })));
     }
 }
+
 function searchTerm(client, message, args, LOCALE) {
     let search_term = args.join(" ")
 
@@ -204,9 +206,30 @@ function searchTerm(client, message, args, LOCALE) {
         })
 }
 async function podcastEpisode(client, message, track_url, LOCALE) {
+    var podcastShow;
     var podcastEp;
     try {
+        // podcastEp = await Music.getSpotifyPodcastEp(track_url)
         podcastEp = await Music.getSpotifyPodcastEp(track_url)
+        podcastShow = await PodcastUtil.getPodcastsByTerm(podcastEp["show_name"])
+        podcastShow = podcastShow.find(ep => {
+            return ep.kind == "podcast" && ep.artistName == podcastEp["publisher"] && ep.trackName == podcastEp["show_name"]
+        })
+
+        if (!podcastShow) {
+            return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+        }
+
+        var eps = await PodcastUtil.getLastEpsByUrl(podcastShow["feedUrl"], 0, 5000)
+        var episodeF = eps.find(ep => {
+            return (String(ep["title"][0]).toLowerCase() == String(podcastEp["name"]).toLowerCase()) || String(ep["itunes:title"]).toLowerCase() == String(podcastEp["name"]).toLowerCase()
+        })
+        if (!episodeF) {
+            return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+        }
+        podcastEp.url = episodeF["enclosure"][0]["$"]["url"]
+
+
     } catch (error) {
         console.log(error);
         return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));

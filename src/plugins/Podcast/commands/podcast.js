@@ -92,7 +92,6 @@ module.exports = {
         if (searchTerm.includes("open.spotify.com/episode/") && url_.includes("open.spotify.com")) {
             var podcastShow;
             var podcastEp;
-            var ep_url;
             try {
                 podcastEp = await Music.getSpotifyPodcastEp(searchTerm)
                 podcastShow = await PodcastUtil.getPodcastsByTerm(podcastEp["show_name"])
