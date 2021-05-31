@@ -150,6 +150,10 @@ const init = async () => {
 
 	// NOTIFIERS
 
+	// const PodcastNotify = require("./plugins/Notify/utils/PodcastNotification")
+	// PodcastNotify.run(30 * 60 * 1000)
+	
+	
 	const GameSaleClass = require("./plugins/Notify/utils/GameSale")
 	const GameSale = new GameSaleClass()
 

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
+const Utils = require("./../../../utils/utils")
 const fs = require("fs")
 
 var allBadges = [];
@@ -96,6 +96,7 @@ module.exports = {
 		return {
 			name: 'profile',
 			aliases: [
+				"perfil"
 			]
 		};
 	},

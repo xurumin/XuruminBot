@@ -383,7 +383,7 @@
         "MEMES": "PLUGIN",
         "outravida": {
             "message": {
-                "title": "O que você seria em outra universo?",
+                "title": "O que você seria em outro universo?",
                 "description": ":disguised_face: Em outra vida, isto é o que {{user}} seria:\n\nMensagem de: {{author}}"
             },
             "errors": {
@@ -453,7 +453,7 @@
                 },
                 "need_more_users": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar marcar pelo menos **2 usuários**."
+                    "description": "Você precisa marcar pelo menos **2 usuários**."
                 }
             }
         },
@@ -466,7 +466,7 @@
                 },
                 "need_more_users": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar marcar **2 usuários**."
+                    "description": "Você precisa marcar **2 usuários**."
                 }
             }
         },
@@ -504,7 +504,7 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 }
             }
         },
@@ -526,7 +526,7 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 },
                 "cmd_run_error": {
                     "title": "❌ Erro ao executar comando:",
@@ -552,7 +552,7 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 }
             }
         },
@@ -570,7 +570,7 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 },
                 "cmd_run_error": {
                     "title": "❌ Erro ao executar comando:",
@@ -592,7 +592,7 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 },
                 "cmd_run_error": {
                     "title": "❌ Erro ao executar comando:",
@@ -618,7 +618,7 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
                 },
                 "cmd_run_error": {
                     "title": "❌ Erro ao executar comando:",

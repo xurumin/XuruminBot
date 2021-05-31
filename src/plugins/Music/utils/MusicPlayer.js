@@ -229,7 +229,7 @@ class MusicPlayer {
             }
         });
         this.connection.on('pause', () => {
-            if (this.dispatcher) dispatcher.pause();
+            if (this.dispatcher) this.dispatcher.pause();
         });
         this.connection.on('resume', () => {
             if (this.dispatcher) this.dispatcher.resume();
