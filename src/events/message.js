@@ -1,10 +1,9 @@
+"use strict";
+
 const Discord = require('discord.js');
 const utils = require('../utils/utils');
 const MessageLog = require('./../utils/MessageLog');
 const config = require("./../config");
-const {
-	toLocaleLowerCase
-} = require('ffmpeg-static');
 require('dotenv/config');
 
 const talkedRecently = new Discord.Collection();
@@ -43,7 +42,7 @@ module.exports = {
 		if ((!message.content.toLocaleLowerCase().startsWith(process.env.COMMAND_PREFIX)) && !(message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`))) return;
 
 		//get guild language
-		const LANGUAGE = "pt_BR"
+		const LANGUAGE = message.guild ? message.guild.preferredLocale.replace("-", "_") : "pt_BR"
 		const DEFAULT_LANGUAGE = "pt_BR"
 		var LOCALE;
 
@@ -148,6 +147,10 @@ module.exports = {
 
 				const t1 = (new Date()).getTime()
 
+				if(!LOCALE.commands[command]){
+					LOCALE = locale_list.get(DEFAULT_LANGUAGE)
+				}
+
 				const response = await cmd.run(client, message, args, LOCALE.commands[command]);
 
 				if (process.env.NODE_ENV == "development") {
@@ -161,6 +164,10 @@ module.exports = {
 				client.commandsSent++;
 
 				const t1 = (new Date()).getTime()
+
+				if(!LOCALE.commands[aliase]){
+					LOCALE = locale_list.get(DEFAULT_LANGUAGE)
+				}
 
 				const response = await client.commands.get(aliase).run(client, message, args, LOCALE.commands[aliase]);
 
