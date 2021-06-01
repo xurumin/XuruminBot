@@ -14,7 +14,6 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args) => {
-
         if (!message.member.voice.channel) {
             return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL()));
         }

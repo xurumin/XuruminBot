@@ -9,7 +9,7 @@
     "heroku-postbuild": "npm install && npm run build",
     "test": "jest"
   },
-  "author": "jonatas araujo <jonatasaraujofx@gmail.com>",
+  "author": "jônatas araujo <jonatasaraujofx@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
