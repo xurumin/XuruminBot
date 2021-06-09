@@ -11,8 +11,6 @@ module.exports = {
 	 */
 	run: async (client, guild, locale_list) => {
 
-		
-
 		//guild.region
 
 		const LANGUAGE = "pt_BR"

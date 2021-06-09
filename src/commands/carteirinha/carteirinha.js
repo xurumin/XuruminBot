@@ -2,9 +2,6 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor")
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -26,23 +23,19 @@ module.exports = {
 			const carteirinha_list = LOCALE.word_list
 			const tag = carteirinha_list[Math.floor(Math.random() * carteirinha_list.length)]
 
-			ImageProcessor(message.author.avatarURL({
-				format: "png"
-			}), message.author.username, user_roles, tag)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle(LOCALE.message.title.interpolate({tag: tag}))
-				.setAuthor(client.user.username)
-				.setDescription(LOCALE.message.description.interpolate({author: message.author, tag:tag}))
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
+			Utils.KarinnaAPI.get("/v1/image/carteirinha", {
+				img_url: message.author.avatarURL({format:"jpg", size:512}),
+				roles: JSON.stringify(user_roles),
+				tag: tag,
+				username: message.author.username
+
+			}).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
 			})
-			.catch((err)=>{
+			.catch(async err=>{
 				message.channel.stopTyping()
-				reject(err)
+				return reject(err)
 			})
 		})
 	},

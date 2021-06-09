@@ -25,10 +25,10 @@ async function sendRectsLight(message) {
 module.exports = {
     getPodcastsByTerm(term, cb) {
         return new Promise((resolve, reject) => {
-            var url = "https://itunes.apple.com/search?entity=podcast&limit=5&term=" + String(term)
+            var url = "https://itunes.apple.com/search?entity=podcast&limit=5&term=" + encodeURIComponent(String(term))
             axios.get(url)
                 .then(res => {
-                    resolve(res.data["results"].slice(0, 5))
+                    resolve(res.data["results"].slice(0, 10))
                 })
                 .catch(err => {
                     reject(err)
@@ -36,7 +36,7 @@ module.exports = {
         })
 
     },
-    getLastEpsByUrl(url, index = 0) {
+    getLastEpsByUrl(url, index = 0, limit=5) {
         return new Promise((resolve, reject) => {
             axios.get(url)
                 .then(xml => {
@@ -44,7 +44,7 @@ module.exports = {
                         if (err) {
                             return reject(err)
                         }
-                        resolve(res["rss"]["channel"][0]["item"].slice(index, index + 5))
+                        resolve(res["rss"]["channel"][0]["item"].slice(index, index + limit))
                     })
 
                 }).catch(err => {
@@ -105,7 +105,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             sendRects(message)
             const filter = (reaction, user) => {
-                return !["754756207507669128", "753723888671785042", "757333853529702461"].includes(user.id);
+                return !["754756207507669128", "753723888671785042", "757333853529702461", "760496747625185330"].includes(user.id);
             };
             message.awaitReactions(filter, {
                     max: 1,

@@ -13,6 +13,7 @@ require('dotenv/config');
 
 const SpotifyWebApi = require('spotify-web-api-node');
 const { resolve } = require('path');
+const { default: axios } = require('axios');
 let spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_SECRET
@@ -24,8 +25,8 @@ module.exports = {
         var a = this
         spotifyApi.clientCredentialsGrant()
             .then(function (data) {
-                console.log('The access token expires in ' + data.body['expires_in']);
-                console.log('The access token is ' + data.body['access_token']);
+                //console.log('The access token expires in ' + data.body['expires_in']);
+                //console.log('The access token is ' + data.body['access_token']);
                 // Save the access token so that it's used in future calls
                 process.env.SPOTIFY_TOKEN = data.body['access_token']
                 a.setSpotifyToken();
@@ -41,8 +42,6 @@ module.exports = {
         var playlist_id = splt[splt.length - 1]
 
         return new Promise((resolve, reject)=>{
-            if(!process.env.SPOTIFY_TOKEN){ authorizeSpotify();}
-            this.setSpotifyToken();
 
             spotifyApi.getPlaylist(playlist_id)
             .then((data) => {
@@ -55,6 +54,81 @@ module.exports = {
                             name: element["track"]["name"],
                             author: element["track"]["album"]["artists"][0]["name"],
                             duration: Utils.toHHMMSS(element["track"]["duration_ms"] / (1000))
+                        }
+                    })
+                    )
+            }).catch(function (err) {
+                reject( err )
+            })
+
+        })
+    },
+    getSpotifyTrack(track_url) {
+        let spttrack = urlQ.parse(track_url).path.split("/").pop()
+        return new Promise((resolve, reject)=>{
+            if(!process.env.SPOTIFY_TOKEN){
+                authorizeSpotify();
+                this.setSpotifyToken();
+            }
+            spotifyApi.getTrack(spttrack)
+            .then((data) => {
+                return resolve(
+                    {
+                        name: data["body"]["name"],
+                        author: data["body"]["album"]["artists"][0]["name"],
+                        duration: Utils.toHHMMSS(data["body"]["duration_ms"] / (1000))
+                    }
+                )
+            }).catch(function (err) {
+                reject( err )
+            })
+
+        })
+    },
+    getSpotifyPodcastEp(track_url) {
+        let spttrack = urlQ.parse(track_url).path.split("/").pop()
+        return new Promise((resolve, reject)=>{
+            if(!process.env.SPOTIFY_TOKEN){
+                authorizeSpotify();
+                this.setSpotifyToken();
+            }
+            spotifyApi.getEpisode(spttrack,{
+                market: "BR"
+            })
+            .then(async (data) => {
+                //var sp_info = await axios.get(`https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/${data["body"]["id"]}/com.widevine.alpha?market=BR`)
+                return resolve(
+                    {
+                        name: data["body"]["name"],
+                        show_name: data["body"]["show"]["name"],
+                        publisher: data["body"]["show"]["publisher"],
+                        duration: Utils.toHHMMSS(data["body"]["duration_ms"] / (1000)),
+                        duration_ms: data["body"]["duration_ms"]
+                    }
+                    // url: `https://anon-podcast.scdn.co/${data["body"]["audio_preview_url"].split("/").pop()}`
+                    //https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/1r38FxmFb5Dzql4TLs0Lk2/com.widevine.alpha?market=BR
+
+                    //https://spclient.wg.spotify.com/soundfinder/v1/unauth/episode/08Sb0rruDu2TXGehKQ1bgL/com.widevine.alpha?market=BR
+                )
+            }).catch(function (err) {
+                reject( err )
+            })
+
+        })
+    },
+    getSpotifyAlbum(album_url, limit=20) {
+        let album_id = urlQ.parse(album_url).path.split("/").pop()
+        return new Promise((resolve, reject)=>{
+            spotifyApi.getAlbumTracks(album_id)
+            .then((data) => {
+                resolve(
+                    Utils
+                    .shuffle(data["body"]["tracks"]["items"])
+                    .slice(0, limit).map(element => {
+                        return {
+                            name: element["name"],
+                            author: element["artists"][0]["name"],
+                            duration: Utils.toHHMMSS(element["duration_ms"] / (1000))
                         }
                     })
                     )
@@ -93,7 +167,16 @@ module.exports = {
     },
     getVideoLinkBySearch(name) {
         return new Promise((resolve, reject)=>{
-            // ytsr(name)
+            ytsr(name, {
+                limit: 1
+            })
+            .then((data)=>{
+                resolve(data["items"][0]["url"])
+            })
+            .catch((err)=>{
+                reject(err)
+            })
+            // temoytsearch(name)
             // .then((data)=>{
             //     var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
             //     resolve(url)
@@ -101,36 +184,14 @@ module.exports = {
             // .catch((err)=>{
             //     reject(err)
             // })
-            temoytsearch(name)
-            .then((data)=>{
-                var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
-                resolve(url)
-            })
-            .catch((err)=>{
-                reject(err)
-            })
         })
     },
     searchYoutubeVideos(term, limit=5) {
         return new Promise((resolve, reject)=>{
-            // ytsr(term, {
-            //     limit: limit+3
-            // }).then(data => {
-            //     resolve(data["items"].map((element, i, a) => {
-            //         if(element["type"] == "video" && a.length < limit)
-            //             return element
-            //     }))
-            // }).catch(err => {
-            //     reject(err)
-            // });
-            temoytsearch(term, {
+            ytsr(term, {
                 limit: limit+3
             }).then(data => {
-                resolve(data.map((element, i, a) => {
-                    if(element["url"]){
-                        return element
-                    }
-                }).slice(0,limit))
+                resolve(data["items"].filter((element) => element["type"] == "video").slice(0,limit))
             }).catch(err => {
                 reject(err)
             });
@@ -156,7 +217,7 @@ module.exports = {
                 const video_info = {
                     name: video_dat["title"],
                     url: url,
-                    author: video_dat["author"],
+                    author: video_dat["author"].name,
                     duration: this.toHHMMSS(video_dat["lengthSeconds"])
                 }
                 resolve(video_info)
@@ -197,7 +258,7 @@ module.exports = {
             };
             message.awaitReactions(filter, {
                     max: 1,
-                    time: 100000,
+                    time: 120000,
                     errors: ['time']
                 })
                 .then(collected => {
@@ -226,20 +287,13 @@ module.exports = {
                             index = 6
                             break;
                         default:
-                            reject({
-                                status: 3,
-                                data: "usuário não selecionou nenhum dos emojis",
-                                message: message
-                            })
+                            return resolve(-1)
                             break;
                     }
-                    resolve(index)
+                    return resolve(index)
                 })
                 .catch(collected => {
-                    reject({
-                        status: 0,
-                        data: collected
-                    })
+                    return resolve(-1)
                 });
 
         })

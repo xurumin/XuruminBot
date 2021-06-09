@@ -2,10 +2,6 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor")
-
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -37,23 +33,16 @@ module.exports = {
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;
 			if(text.length > 74 && text.length <= 151) img_code=2;
-	
-			ImageProcessor(text, img_code)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle(LOCALE.message.title)
-				.setAuthor(LOCALE.message.author)
-				.setDescription(Utils.stringTemplateParser(LOCALE.message.description,{author:message.author.username}))
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
-			})
-			.catch((err)=>{
-				message.channel.stopTyping()
-				reject(err)
-			})
+
+			Utils.KarinnaAPI.get("/v1/image/bolsonarotweet", {
+                text: text
+            }).then(async res=>{
+				resolve(message.inlineReply(new Discord.MessageAttachment(res, "tweet.jpg")))
+            })
+            .catch(async err=>{
+                message.channel.stopTyping()
+				return reject(err)
+            })
 		})
 	},
 

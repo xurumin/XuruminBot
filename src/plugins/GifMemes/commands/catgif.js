@@ -2,63 +2,10 @@
 
 const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
-const fs = require("fs")
-
-const ImageGenerator = require("./../ImageGenerators/catgif");
-const utils = require('./../../../utils/utils');
-
-
-var globalCooldown = []
-
-function run_gen(client, message, args,loading_msg, LOCALE) {
-	return new Promise(async(resolve, reject)=>{
-        const tagged_user = message.mentions.users.entries().next()
-        var user = message.author
-        if (tagged_user.value) user = tagged_user.value[1];
-        var user_pic = user.avatarURL({
-            format: "png",
-            size: 256
-        })
-        if (!user_pic) {
-            loading_msg = await loading_msg
-            var msg = {
-                title: LOCALE.errors.user_do_not_have_pic.title,
-                description: LOCALE.errors.user_do_not_have_pic.description
-            }
-            globalCooldown.shift()
-            return resolve(loading_msg.edit(
-                Utils.createSimpleEmbed(msg.title, msg.description)
-            ));
-        }
-
-		ImageGenerator(user_pic, message)
-		.then(async (image)=>{
-			const embed = new Discord.MessageEmbed()
-			.setColor('#9d65c9')
-			.setTitle(LOCALE.messages.loaded.title)
-			.setDescription(LOCALE.messages.loaded.description)
-			.attachFiles(image)
-			.setImage("attachment://image.gif")
-
-            
-			loading_msg = await loading_msg
-			resolve(await message.channel.send(embed))
-			loading_msg.delete()
-			return globalCooldown.shift()
-		})
-		.catch((err)=>{
-			message.channel.stopTyping()
-			reject(err)
-		})
-	})
-}
-
-function isMe(id){
-	if(globalCooldown[0]==id){
-		return true
-	}
-	return false
-}
+const fs = require("fs");
+const {
+    default: axios
+} = require('axios');
 
 module.exports = {
     validate(client, message) {
@@ -69,37 +16,62 @@ module.exports = {
      * @param  {Discord.Message} message
      * @param  {} args
      */
-    run: async (client, message, args, LOCALE) => {
-        const isPremium = await utils.Profile.isPremium(client, message.author.id)
-        if(!isPremium){
+    run: (client, message, args, LOCALE) => {
+       return new Promise(async (resolve, reject)=>{
+        const isPremium = await Utils.Profile.isPremium(client, message.author.id)
+        if (!isPremium) {
             const notPremiumEmbed = new Discord.MessageEmbed()
-            .setColor('#9d65c9')
-            .setTitle(LOCALE.errors.user_is_not_premium.title)
-            .setDescription(LOCALE.errors.user_is_not_premium.description.interpolate({
-                prefix: process.env.COMMAND_PREFIX
-            }))
-            return message.channel.send(notPremiumEmbed)
+                .setColor('#9d65c9')
+                .setTitle(LOCALE.errors.user_is_not_premium.title)
+                .setDescription(LOCALE.errors.user_is_not_premium.description.interpolate({
+                    prefix: process.env.COMMAND_PREFIX
+                }))
+            return resolve(message.channel.send(notPremiumEmbed))
+        }
+        const tagged_user = message.mentions.users.entries().next()
+        var user = message.author
+        if (tagged_user.value) user = tagged_user.value[1];
+        var user_pic = user.avatarURL({
+            format: "png",
+            size: 256
+        })
+        if (!user_pic) {
+            var msg = {
+                title: LOCALE.errors.user_do_not_have_pic.title,
+                description: LOCALE.errors.user_do_not_have_pic.description
+            }
+            return resolve(message.channel.send(
+                Utils.createSimpleEmbed(msg.title, msg.description)
+            ));
         }
         const embed = new Discord.MessageEmbed()
             .setColor('#9d65c9')
             .setTitle(LOCALE.messages.loading.title)
             .setDescription(LOCALE.messages.loading.description)
 
-        var loading_msg = message.channel.send(embed)
+        var loading_msg = await message.channel.send(embed)
 
-        globalCooldown.push(message.id)
-        if (isMe(message.id)) {
-            return run_gen(client, message, args, loading_msg, LOCALE)
-        }
-
-
-
-        var cd = setInterval(() => {
-            if (isMe(message.id)) {
-                clearInterval(cd)
-                return run_gen(client, message, args, loading_msg, LOCALE)
-            }
-        }, 2000)
+        axios.get(`${process.env.KARINNA_API_PATH}/v1/gif/catgif`, {
+            headers: {
+                authorization: process.env.KARINNA_API_TOKEN
+            },
+            params: {
+                img_url: user_pic
+            },
+            timeout: 60 * 1000,
+            responseType: "arraybuffer"
+        }).then(async (res) => {
+            loading_msg.delete()
+            return resolve(await message.channel.send(new Discord.MessageAttachment(res.data, 'xurumin.gif')))
+        }).catch(async (err) => {
+            loading_msg.delete()
+            console.log(err);
+            resolve(message.channel.send(new Discord.MessageEmbed()
+                .setTitle(LOCALE.errors.cmd_run_error.title)
+                .setDescription(LOCALE.errors.cmd_run_error.description))
+            );
+        })
+       })
     },
     get command() {
         return {

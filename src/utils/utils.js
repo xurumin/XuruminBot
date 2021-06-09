@@ -1,6 +1,7 @@
 "use strict"
 const discord = require("discord.js");
 const crypto = require("crypto");
+const ms = require("ms")
 require('dotenv/config');
 
 String.prototype.interpolate = function (params) {
@@ -19,7 +20,9 @@ function stringTemplateParser(expression, valueObj) {
 }
 
 var admin = require("firebase-admin");
-const { default: axios } = require("axios");
+const {
+  default: axios
+} = require("axios");
 
 var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
@@ -30,6 +33,9 @@ admin.initializeApp({
 var db = admin.database()
 var profilesRef = db.ref("profiles");
 var botInfoRef = db.ref("bot");
+var gameOffersRef = db.ref("gameOffers");
+var banRef = db.ref("ban");
+var podcastNotifyRef = db.ref("podcastNotify");
 
 var $;
 
@@ -76,9 +82,26 @@ var exp = {
       .filter((v, i) => v !== "00" || i > 0)
       .join(":")
   },
+  hmsToSeconds(str) {
+    var p = str.split(':'),
+      s = 0,
+      m = 1;
+
+    while (p.length > 0) {
+      s += m * parseInt(p.pop(), 10);
+      m *= 60;
+    }
+
+    return s;
+  },
+  globalTimeToMS(input) {
+    const msT = ms(input)
+    const hmsT = this.hmsToSeconds(input) * 1000
+    return msT || hmsT || null
+  },
   wait(ms) {
-    return new Promise((resolve, reject)=>{
-      setTimeout(()=>{
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
         resolve();
       }, ms)
     })
@@ -91,23 +114,82 @@ var exp = {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
+  randomFloat(min, max) {
+    return Math.random() * (max - min) + min;
+  },
   choice(array) {
     return array[Math.floor(Math.random() * array.length)]
   },
   stringTemplateParser: stringTemplateParser,
   XP2LV(xp) {
     //var lv = ((10**((Math.log10(xp/0.05) - 3)/1.5))+1)
-    var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
+    //var lv = ((10 ** ((Math.log10(xp) - 2) / 1.5)) + 1)
+
+    var lv = xp / 25
+
     return parseInt(lv.toFixed(0))
   },
-  async translate(from, to, message){
-    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + from + "&tl="
-    + to + "&dt=t&q=" + message + "&ie=UTF-8&oe=UTF-8"
+  async translate(from, to, message) {
+    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + from + "&tl=" +
+      to + "&dt=t&q=" + message + "&ie=UTF-8&oe=UTF-8"
     try {
       var translation = (await axios.get(url)).data
       return translation[0][0][0]
     } catch (error) {
-      return translation(from, to, message)
+      //console.log(error);
+      return message;
+      return this.translate(from, to, message)
+    }
+  },
+  GameOffers: {
+    async setChannel(channelId) {
+      var child = await gameOffersRef.child("channels")
+      return await child.child(channelId).set("")
+    },
+    async removeChannel(channelId) {
+      var child = await gameOffersRef.child("channels")
+      return await child.child(channelId).remove()
+    },
+    async getAllListeners() {
+      var child = await gameOffersRef.child("channels")
+      return await (await child.once("value")).val()
+    },
+    async setLastGame(gameHash) {
+      var child = await gameOffersRef.child("lastGame")
+      return await child.child("hash").set(gameHash)
+    },
+    async getLastGame() {
+      var child = await gameOffersRef.child("lastGame")
+      return await (await child.get("hash")).val().hash
+    }
+  },
+  PodcastNotify: {
+    async addChannelToPodcast(podcastFeedHash, channelId) {
+      var child = await podcastNotifyRef.child("podcasts")
+      return await child.child(podcastFeedHash).child("channels").child(channelId).set(new Date().getTime())
+    },
+    async setPodcast(podcastFeedHash, feedUrl) {
+      var child = await podcastNotifyRef.child("podcasts")
+      return await child.child(podcastFeedHash).child("feedUrl").set(feedUrl)
+    },
+    async doesPodcastExists(podcastFeedHash) {
+      var child = await podcastNotifyRef.child("podcasts")
+      return (await child.child(podcastFeedHash).get()).exists()
+    },
+    async getAllPodcasts() {
+      var child = await podcastNotifyRef.child("podcasts")
+      return await (await child.once("value")).val()
+    },
+    getPodcastFeedHash(feedUrl){
+      return crypto.createHash("sha256").update(feedUrl).digest("hex")
+    }
+  },
+  
+  Updaters: {
+    getPremiumUsers: ()=>{
+      return new Promise(async (resolve, reject)=>{
+        const premiumUsers = this
+      })
     }
   },
   BotDB: {
@@ -121,8 +203,22 @@ var exp = {
       return sentCmds ? sentCmds : 0
     }
   },
+  Ban: {
+    async setBan(userid) {
+      await banRef.child(userid).set(Date.now())
+    },
+    async removeBan(userid) {
+      await banRef.child(userid).remove()
+    },
+    async isBanned(userid) {
+      return (await banRef.child(userid).get()).exists()
+    },
+    async getBanList() {
+      return (await banRef.get()).val()
+    }
+  },
   Profile: {
-    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, badges = []) => {
+    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, money=0, badges = []) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       await usersRef.child(user_id).set({
@@ -131,7 +227,8 @@ var exp = {
         level: level,
         points: points,
         badges: badges,
-        userId: user_id_raw
+        userId: user_id_raw,
+        money: money
       });
     },
     setTag: async (client, user_id_raw, tag, value) => {
@@ -146,10 +243,18 @@ var exp = {
     getProfile: async (client, user_id_raw) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
-      return (await usersRef.get(user_id)).val()[user_id]
-
-
-
+      var user_profile = (await usersRef.get(user_id)).val()[user_id]
+      const profile_pattern = {
+        aboutme: user_profile.aboutme || "",
+        bg_url: user_profile.bg_url,
+        level: user_profile.level || 0,
+        points: user_profile.points || 0,
+        badges: user_profile.badges || [],
+        userId: user_id_raw,
+        money: user_profile.money || 0,
+        ...user_profile
+      }
+      return profile_pattern
       //return client.profiles.get(user_id)
     },
     hasProfile: async (client, user_id_raw) => {
@@ -163,9 +268,8 @@ var exp = {
     isPremium: async (client, user_id_raw) => {
       var profile = await exp.Profile.getProfile(client, user_id_raw)
 
-
-      if (profile["status"]) {
-        return (profile["status"]) == "premium" ? true : false;
+      if (profile && profile["status"]) {
+        return (profile["status"]) == "premium";
       }
       return false;
 
@@ -175,6 +279,7 @@ var exp = {
         bg_url: "https://i.imgur.com/MbGPZQR.png",
         level: 0,
         points: 0,
+        money: 0,
         aboutme: "",
         badges: []
       }
@@ -189,15 +294,16 @@ var exp = {
       await message.react("✅")
       await message.react("❌")
     },
-    getConfirmation(message) {
+    getConfirmation(message, userId, time = 100000) {
       return new Promise(async (resolve, reject) => {
         await exp.Reactions._sendRectsLight(message)
         const filter = (reaction, user) => {
-          return !["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id);
+          if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != userId) return false;
+          return true;
         };
         message.awaitReactions(filter, {
             max: 1,
-            time: 100000,
+            time: time,
             errors: ['time']
           })
           .then(collected => {
@@ -210,7 +316,7 @@ var exp = {
                 resolve(false)
                 break;
               default:
-                reject()
+                resolve(false)
                 break;
             }
           })
@@ -219,7 +325,25 @@ var exp = {
           });
 
       })
-    },
+    }
+  },
+  KarinnaAPI: {
+    get(path, params, timeout = 120000) {
+      return new Promise(async(resolve, reject) => {
+        axios.get(`${process.env.KARINNA_API_PATH}${path}`, {
+          headers: {
+            authorization: process.env.KARINNA_API_TOKEN
+          },
+          params: params,
+          timeout: timeout,
+          responseType: "arraybuffer"
+        }).then(async (res) => {
+          return resolve(res.data)
+        }).catch(async (err) => {
+          return reject(err)
+        })
+      })
+    }
   }
 }
 module.exports = exp

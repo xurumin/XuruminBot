@@ -6,14 +6,15 @@
                 "description": "Você precisa esperar **{{cooldown}} segundos** antes de mandar outra mensagem! 🤠"
             },
             "bot_tagged": {
-                "title": "Oi! Meu nome é {{username}}! 😁`)",
-                "description": "Para me usar, basta utilizar o prefixo **{{prefix}}** + o comando que você quiser! 🤓\nExperimenta usar **{{prefix}}meme** 🤠",
+                "title": "Oi! Meu nome é {{username}}! 😁",
+                "description": "Eu sou um bot brasileiro que toca música (com playlists!) enquanto você joga com seus amigos e te deixa ouvir aquele podcast no fim de tarde.\n\nPara me usar, basta utilizar o prefixo **{{prefix}}** + o comando que você quiser! 🤓\nExperimenta usar **{{prefix}}meme** 🤠",
                 "fields": [
                     ["Prefixo"],
                     ["Ajuda?"],
-                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
-                    ["Github do Xurumin"],
-                    ["Site do Xurumin"]
+                    ["Lista de comandos", "https://xurumin.github.io/comandos"],
+                    ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
+                    ["Site do Xurumin", "https://xurumin.github.io/"],
+                    ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                 ]
             },
             "errors": {
@@ -22,7 +23,8 @@
                     "title": "Não achei esse comando 😞",
                     "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
                     "fields": [
-                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                        ["Lista de comandos", "https://xurumin.github.io/comandos"],
+                        ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
                         ["Site do Xurumin", "https://xurumin.github.io/"],
                         ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                     ]
@@ -34,29 +36,35 @@
             }
         },
         "guildCreate": {
-            "message": "Oie! Fico feliz que tenha me adicionado no servidor {{server_name}} 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Para mais comandos:** https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md\n\nEspero que possamos nos divertir :)",
-            "errors": {
-                "command_not_found": {
-                    "title": "Não achei esse comando 😞",
-                    "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
-                    "fields": [
-                        ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
-                        ["Site do Xurumin", "https://xurumin.github.io/"],
-                        ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
-                    ]
-                }
-            }
+            "message": "Oie! Fico feliz que tenha me adicionado no servidor **{{server_name}}** 🤗 \nSe precisar de alguma ajuda, digite em seu servidor {{prefix}}help 🤓\n\nQuer saber os últimos updates do Xurumin? **{{prefix}}novidades** \n\nAlguns comandos que você pode testar:\n - {{prefix}}filosofo\n - {{prefix}}monarktweet\n - {{prefix}}xvidros\n\n**Precisa de suporte?** https://discord.com/invite/bvb8YKSCQR\n**Para mais comandos:** https://xurumin.github.io/comandos\n\nEspero que possamos nos divertir :)"
+        },
+        "nextLevel": {
+            "message": ":clap: :heart_eyes: Parabéns, {{user}}!\nVocê subiu para o nível **{{new_level}}** :partying_face:\n:star2: Como recompensa, você recebeu **X${{prize}}**!\n\nPara verificar seu nível e dinheiro, use **{{prefix}}profile** em um servidor.\n:nerd: Continue usando os comandos do bot para aumentar seu nível ainda mais."
         }
+
     },
     "commands": {
         "help": {
             "message": {
                 "title": "Precisa de ajuda? 🤓",
                 "fields": [
-                    ["Lista de comandos", "https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md"],
+                    ["Lista de comandos", "https://xurumin.github.io/comandos"],
+                    ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
                     ["Site do Xurumin", "https://xurumin.github.io/"],
                     ["Github do Xurumin", "https://github.com/jnaraujo/xurumin_discord_bot/"]
                 ]
+            }
+        },
+        "commands": {
+            "message": {
+                "title": "Quer saber todos os comandos do Xurumin? 🤓",
+                "description": "Você pode acessar todos os comandos em https://xurumin.github.io/comandos"
+            }
+        },
+        "invite": {
+            "message": {
+                "title": "Convite do Xurumin 🤓",
+                "description": "Você pode adicionar o Xurumin em https://xurumin.github.io/addxurumin"
             }
         },
         "bolsonarotweet": {
@@ -69,7 +77,8 @@
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
                     "description": "Use  **{{prefix}}monarktweet <frase que você quiser>** ou somente **{{prefix}}monarktweet** que eu pego a ultima mensagem mandada! 🤗"
-                }
+                },
+                "cmd_run_error": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
             }
         },
         "carteirinha": {
@@ -89,7 +98,10 @@
                 "Rei do Gado",
                 "Primo do Toin",
                 "Amigo do Cleiton"
-            ]
+            ],
+            "errors": {
+                "cmd_run_error": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+            }
         },
         "cat": {
             "message": {
@@ -162,6 +174,42 @@
                 "footer": "Mensagem de {{author}}"
             }
         },
+        "noia": {
+            "title": "Noia frases",
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                }
+            },
+            "noiaPhrases": [
+                ["A mina vem mi\npergunta se eu uso\nlança", "tenho cara di\nindio carai?"],
+                ["amai uns\nauos outros", "mesmo sem\nretribuição!!!!"],
+                ["si deus nao existe\nfml\nqm coloca","o chocolate\ndas americanas\nno meu bolso?\nsem condisao kk"],
+                ["\"queria ter bundão\"\nosh fia e esse teu","namorado cabeludo\ndas unha pintada\neoqkkkkkkkkkk\n0 condisão"],
+                ["a mina só usa preto\ne anda di bota", "ta imitano o dracula \nai vida?\nsen condisaokkkk"],
+                ["i essa boquinha aí\nvida", "beija eu nao? kkkkkkk"],
+                ["qi papo eh esse\nde namoro vida?", "quer romance\ncompra um livrokkkk\nnos eh dog sem colera"],
+                ["iso tudo pq deus ehh\npor nos", "imagina si ele fosse\ncontrakkkkk slc"],
+                ["iai 9vinha ta ouvindo\nooq nesse teu fone?", "lil peep?afff\nlamentavel di vdd"],
+                ["iai 9vinha ta ouvindo\nooq nesse teu fone?", "artic monkeis?afff\nlamentavel di vdd"],
+                ["iai 9vinha ta ouvindo\nooq nesse teu fone?", "aurora? afff\nlamentavel di vdd"],
+                ["qi papo eh essi\nde ouvi trap princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi rock princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi pop princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi musica ingles\n princesa", "vamo escuta baroes\nda pisadinha"],
+                ["qi papo eh essi\nde ouvi trap princesa", "vamo escuta seu jorge"],
+                ["qi papo eh essi\nde ouvi rock princesa", "vamo escuta\nevidencias"],
+                ["qi papo eh essi\nde ouvi pop princesa", "vamo escuta matue"],
+                ["qi papo eh essi\nde ouvi musica ingles\n princesa", "vamo escuta\n tonico e tinoco"],
+                ["aff", "ta em gatinha"]
+            ],
+            "message": {
+                "title": "😘 Oie...",
+                "description": "Oi, {{metioned_user}}. Né? 😊 Então... tava aqui {{sent_1}} e pensei em falar que {{sent_2}}.\nSei que parece estranho 🥺, mas {{sent_3}}.\nIae, alguma chance {{sent_4}}? 😚🥰",
+                "footer": "Mensagem de {{author}}"
+            }
+        },
         "espelhoespelhomeu": {
             "message": {
                 "title": "Espelho, espelho meu: existe alguém mais bela do que eu?",
@@ -224,8 +272,8 @@
             },
             "pv_message": "**➡️ Seu recibo da transação `{{transaction_id}}`**\n\nID: `{{transaction_id}}`\nHorário: `{{creation_time}}`\nPagador: `{{payer}}`\nBeneficiário: `{{payee}}`\nValor: `{{value}}`",
             "confirmation": [{
-                "title": "Você tem certeza?",
-                "description": "Trocar o background custa **X$100.00**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                    "title": "Você tem certeza?",
+                    "description": "Trocar o background custa **X${{price}}**.\nClique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
                 },
                 {
                     "title": ":x: A operação foi cancelada."
@@ -305,8 +353,8 @@
                 "description": "Foi enviada uma mensagem privada com os detalhes :)"
             },
             "confirmation": [{
-                "title": "Você está prestes a realizar uma transação.",
-                "description": "Clique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
+                    "title": "Você está prestes a realizar uma transação.",
+                    "description": "Clique em :white_check_mark: se **realmente** deseja prosseguir.\nSe houve algum engano, pode **cancelar** a operação clicando em :x:"
                 },
                 {
                     "title": ":x: A operação foi cancelada."
@@ -335,7 +383,7 @@
         "MEMES": "PLUGIN",
         "outravida": {
             "message": {
-                "title": "O que você seria em outra universo?",
+                "title": "O que você seria em outro universo?",
                 "description": ":disguised_face: Em outra vida, isto é o que {{user}} seria:\n\nMensagem de: {{author}}"
             },
             "errors": {
@@ -369,7 +417,7 @@
                 }
             }
         },
-        "mucagas": {
+        "gas": {
             "message": {
                 "title": ":rofl: :rofl: :rofl: MU QUI NHA? ENTREGADOR?",
                 "description": "Mensagem de: {{author}}"
@@ -405,9 +453,32 @@
                 },
                 "need_more_users": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar marcar pelo menos **2 usuários**."
+                    "description": "Você precisa marcar pelo menos **2 usuários**."
                 }
             }
+        },
+        "pontofraco": {
+            "title": ":pleading_face:  Ponto fraco",
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "need_more_users": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa marcar **2 usuários**."
+                }
+            }
+        },
+        "tropa": {
+            "title": ":detective: Tropa",
+            "true": "{{user}} Parabéns! Você é da tropa. :sunglasses: :thumbsup: ",
+            "false": "{{user}} Pera lá! :face_with_raised_eyebrow::raised_back_of_hand:  Você não é da tropa. :rage:"
+        },
+        "ship": {
+            "title": ":detective: Tropa",
+            "true": "{{user}} Parabéns! Você é da tropa. :sunglasses: :thumbsup: ",
+            "false": "{{user}} Pera lá! :face_with_raised_eyebrow::raised_back_of_hand:  Você não é da tropa. :rage:"
         },
         "piadas": {
             "message": {
@@ -433,7 +504,125 @@
                 },
                 "user_is_not_premium": {
                     "title": "❌ Ops!",
-                    "description": "Você precisar ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                }
+            }
+        },
+        "catgif2": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                },
+                "loaded": {
+                    "title": "Gatinhooo",
+                    "description": "Tuts tuts tuts 🥳🥳🥳"
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                }
+            }
+        },
+        "catvibing": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                },
+                "loaded": {
+                    "title": "Gatinhooo",
+                    "description": "Tuts tuts tuts 🥳🥳🥳"
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                }
+            }
+        },
+        "rick": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                }
+            }
+        },
+        "animescream": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "nsfw_channel": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa estar em um canal **NSFW** para executar esse comando :("
+                }
+            }
+        },
+        "valorant": {
+            "messages": {
+                "loading": {
+                    "title": "<a:loading:809177799969079326> Carregando...",
+                    "description": "Nossos gatinhos editores estão trabalhando nisso..."
+                }
+            },
+            "errors": {
+                "user_do_not_have_pic": {
+                    "title": "❌ Ops!",
+                    "description": "Usuário informado não tem foto de perfil :("
+                },
+                "user_is_not_premium": {
+                    "title": "❌ Ops!",
+                    "description": "Você precisa ser **Premium** para usar este comando.\nSaiba mais em **{{prefix}}premium**"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
                 }
             }
         },
@@ -443,7 +632,7 @@
                 "title": "Qual você prefere?",
                 "loading": "Carregando nova mensagem em 5 segundos..."
             },
-            "finished":{
+            "finished": {
                 "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
             },
             "errors": {
@@ -457,7 +646,7 @@
             "messages": {
                 "title": "🔊 Qual a música?",
                 "start": {
-                    "description": "❔ **Como funciona?**\nOs usuários participantes devem estar no mesmo chat de áudio do bot.\nUma música aleatória irá tocar por **15 segundos**.\nCada rodada tem **60 segundos**. O usuário que acertar a música primeiro ganha.\nUse x!gtm <nome da música> para tentar acertar.\n\n❗️ **Atenção**\nVocê pode escolher o gênero das músicas e o número de rodadas com x!gtm <genero> <número de rodadas>\nPor padrão, o gênero é aleatório e as partidas duram 10 rounds.\nGêneros disponíveis: `pop, rock, mpb, random`\nDeve ter no mínimo **3 rounds** e no máximo **15 rounds**.\n\nPara sair durante a partida, use `x!gtm -stop`\n\nClique em ✅ para **confirmar** e em ❌ para **cancelar**."
+                    "description": "❔ **Como funciona?**\nOs usuários participantes devem estar no mesmo chat de áudio do bot.\nUma música aleatória irá tocar por **15 segundos**.\nCada rodada tem **60 segundos**. O usuário que acertar a música primeiro ganha.\nUse x!gtm <nome da música> para tentar acertar.\n\n❗️ **Atenção**\nVocê pode escolher o gênero das músicas e o número de rodadas com x!gtm <gênero *ou* playlist do Spotify> <número de rodadas>\nPor padrão, o gênero é aleatório e as partidas duram 10 rounds.\nGêneros disponíveis: `pop, rock, mpb, random`\nDeve ter no mínimo **3 rounds** e no máximo **15 rounds**.\n\nPara sair durante a partida, use `x!gtm -leave`\nPara pular a música, use `x!gtm -skip`\n\nClique em ✅ para **confirmar** e em ❌ para **cancelar**."
                 },
                 "about_the_game": {
                     "title": "Informações do jogo",
@@ -468,6 +657,7 @@
                     "description": "Vejo você em breve! :)"
                 },
                 "leaving": "Saindo...",
+                "there_is_a_game": "Um jogo está para iniciar. Se quiser iniciar um novo, **cancele** o anterior.",
                 "timeout": "Ninguém acertou :(\n``{{music_name}}``",
                 "playing": "Tocando música [{{index}}]",
                 "accuracy": "{{author}} -> Você está {{accuracy}}% perto da resposta.\nVocê precisa de pelo menos 85% para acertar.",
@@ -481,7 +671,7 @@
                     "description": "Escreva x!gtm <nome da música> para tentar acertar!"
                 }
             },
-            "finished":{
+            "finished": {
                 "description": "O jogo acabou :(\nSe quiser jogar de novo, utilize novamente o comando :)"
             },
             "errors": {
@@ -496,6 +686,119 @@
                 "already_playing": {
                     "title": "❌ Ops! Já estão jogando \"GUESS THE MUSIC\" no servidor."
                 }
+            }
+        },
+        "GAMBLING": "PLUGIN",
+        "racing": {
+            "messages": {
+                "title": "🏎 Racing",
+                "start": {
+                    "description": "❔ **Como funciona?**\nO bot irá iniciar uma corrida entre 4 carros.\nO primeiro que chegar na linha ganha. Os jogadores que votaram no carro, terão o premio da mesa divido.\nPara participar, basta usar **{{prefix}}racing bet <cor>**\nAs cores são: `blue, red, black, green`.\n\n⚠️ **Importante**\nPara participar, será cobrado um valor de **X${{price}}**.\n\n❗️ **Atenção**\nSomente será distribuído **85%** das apostas (15% fica pra casa)\nEntão, não tente fazer todos seus amigos votarem no mesmo carro só para tentar ganhar mais, viu?\n\n**Se não iniciado, jogo irá rodar automaticamente em 10 minutos.** \n\nClique em ✅ para **começar**."
+                },
+                "bet_accepted": "{{user}} -> Sua aposta foi registrada!",
+                "bet_not_accepted": "{{user}} -> Sua aposta **não foi** registrada",
+                "game_cancelled": "Jogo cancelado.",
+                "user_do_not_have_funds": "❌ Você não possui dinheiro suficiente\nUse **{{prefix}}profile** para ver seu saldo.",
+                "winners": {
+                    "title": ":moneybag: Ganhadores:",
+                    "description": ":money_with_wings: Prêmio total: **X${{total_prize}}**"
+                },
+                "no_winner": "Ninguém ganhou :("
+            }
+        },
+        "dice": {
+            "title": "🎲 Jogo de dados",
+            "start": {
+                "description": "❔ **Como funciona?**\n O Xurumin irá lançar um dado mágico, que só ele tem (é confiável. confia. :eyes:).\n Se o dado cair no lado que você escolheu, você ganha. Se não cair, bom... Você ganha ao contrário.  (ou seja, você perde...)\n\n⚠️ **Como jogar**\nPara participar, basta usar o comando {{prefix}}dice <valor da aposta> <lado do dado> \n(é um dado de 6 lados, ok?)\nExemplo: `{{prefix}}dice 100 5`\n\n❗️ **Atenção**\nVocê pode ganhar entre 1% e 50% do valor apostado...\nÉ bom ter sorte, hein?"
+            },
+            "loading": {
+                "title": "<a:loading:809177799969079326> Lançando o dado...",
+                "description": "Nossos gatinhos lançadores de dados estão... bom...\nfazendo o trabalho deles..."
+            },
+            "confirmation": {
+                "title": "🎲 Jogar os dados - Confirmação",
+                "description": "Você irá gastar **X${{value}}** no lado **{{face}}**.\nVocê tem certeza?\n\nClique em ✅ para **confirmar** ou em ❌ para **cancelar**"
+            },
+            "refused": "❌ Jogo cancelado com sucesso!",
+            "standard_error": "Ocorreu um erro durante a sua operação.\nTente novamente mais tarde :(",
+            "user_do_not_have_funds": {
+                "title": "❌ Você não possui dinheiro suficiente",
+                "description": "👉 Tente **{{prefix}}profile** para ver quanto dinheiro você tem."
+            },
+            "player_won": "Wow! Você ganhou!\n Seu prêmio foi de **X${{prize}}**\nNão vá gastar tudo em doçes, hein?",
+            "player_lost": [
+                "Caiu o lado **{{face}}** \n\nDesculpe, amigo. Não foi dessa vez. Quem sabe na próxima?",
+                "Caiu o lado **{{face}}** \n\nPoxa vida... A próxima é a da sorte. É o que dizem, né?",
+                "Caiu o lado **{{face}}** \n\nFoi quase... Quem sabe na próxima."
+            ]
+        },
+        "NOTIFY": "PLUGIN",
+        "gameoffers": {
+            "title": "Oferta de jogos",
+            "setup": {
+                "description": "❔ **Como funciona?**\n Utilize o comando `{{prefix}}gameoffers set` no canal que você deseja receber ofertas de jogos.\nPara remover o canal, utilize `{{prefix}}gameoffers remove`.\n\n**:exclamation: Importante**\nVocê precisa ter a **permissão de administrador** para utilizar os comandos."
+            },
+            "channel_added": "O canal ``{{channel_name}}`` foi **adicionado** com sucesso!",
+            "channel_removed": "O canal ``{{channel_name}}`` foi **removido** com sucesso!",
+            "errors": {
+                "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos."
+            }
+        },
+        "MUSIC": "PLUGIN",
+        "add": {
+            "title": ":musical_note: Música",
+            "musics_added":{
+                "title": "✅ Suas músicas foram adicionada à playlist",
+                "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
+            },
+            "playing": "🔊 Tocando {{music_name}} - ⌛️{{music_duration}}",
+            "youtube_search":{
+                "title": "👨‍💻 Sua pesquisa retornou:\n\n",
+                "txt_format": "➡️ {{index}}: **{{title}}** de **{{author}}**",
+                "footer": "\n🔔 Clique no número abaixo para adicionar à playlist\n\n"
+            },
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "user_is_not_on_voice_chat":"Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format":{
+                    "title": "❌ Ops! Você digitou o comando errado!",
+                    "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
+            }
+        },
+        "timetravel": {
+            "message": "Tempo do áudio alterado para {{time}}.",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "not_playing":"O bot não está tocando nada no momento",
+                "cmd_run_error": "Você precisa digitar `{{prefix}}tt <milissegundos ou tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
+            }
+        },
+        "PODCAST": "PLUGIN",
+        "podcast": {
+            "title": "Podcats",
+            "podcast_added":{
+                "title": "✅ Suas músicas foram adicionada à playlist",
+                "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
+            },
+            "playing": "🔊 Tocando {{title}} - ⌛️{{duration}}",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "user_is_not_on_voice_chat":"Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format":{
+                    "title": "❌ Ops! Você digitou o comando errado!",
+                    "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
             }
         }
     }

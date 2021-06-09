@@ -14,63 +14,83 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args) => {
-        return new Promise(async (resolve, reject)=>{
-            if (!message.member.voice.channel) {
-                return resolve(message.channel.send(
-                    Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
-                ));
-            }
-            let player = client.players.get(message.guild.id)
-            if (!player) {
-                return resolve(message.channel.send(
-                    Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`, client.user.username, client.user.avatarURL())
-                ));
-            }
-            let current_playing_song = player.getPlaylist()[0]
+        return new Promise(async (resolve, reject) => {
+
+
+            let current_playing_song = args.join(" ")
             let lyric;
-            try {
-                lyric = await Music.getLyricByMusicName(current_playing_song["name"] + current_playing_song["author"])
-            } catch (error) { 
-                const embed = new Discord.MessageEmbed()
-                .setColor('#9d65c9')
-                .setTitle(`Letra da música não encontrada :(`)
-                .setAuthor(client.user.username)
-                return reject(message.channel.send(embed));
+
+            if (current_playing_song.length <= 0) {
+                if (!message.member.voice.channel) {
+                    return resolve(message.channel.send(
+                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
+                    ));
+                }
+                if (!player) {
+                    return resolve(message.channel.send(
+                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`, client.user.username, client.user.avatarURL())
+                    ));
+                }
+
+                var player = client.players.get(message.guild.id)
+                current_playing_song = player.getPlaylist()[0]
+                current_playing_song = current_playing_song["name"] + " " + current_playing_song["author"]
             }
 
-            if(!lyric || lyric==undefined || lyric != String){
+            message.channel.startTyping()
+            setTimeout(()=>{
+                message.channel.stopTyping()
+            }, 4000)
+
+            try {
+                lyric = await Music.getLyricByMusicName(current_playing_song)
+            } catch (error) {
+                console.log(error);
                 const embed = new Discord.MessageEmbed()
-                .setColor('#9d65c9')
-                .setTitle(`Letra da música não encontrada :(`)
-                .setAuthor(client.user.username)
+                    .setColor('#9d65c9')
+                    .setTitle(`Letra da música não encontrada :(`)
+                    .setAuthor(client.user.username)
+                
+                message.channel.stopTyping()
                 return resolve(message.channel.send(embed));
             }
-    
-            if(lyric.length < 3000 && lyric.length > 1999){
+
+            if (!lyric || lyric == undefined) {
+                const embed = new Discord.MessageEmbed()
+                    .setColor('#9d65c9')
+                    .setTitle(`Letra da música não encontrada :(`)
+                    .setAuthor(client.user.username)
+                
+                message.channel.stopTyping()
+                return resolve(message.channel.send(embed));
+            }
+
+            if (lyric.length < 3000 && lyric.length > 1999) {
                 let txt = lyric.slice(0, 1500)
                 const embed = new Discord.MessageEmbed()
-                .setColor('#9d65c9')
-                .setTitle(`${current_playing_song.name} - ${current_playing_song.author} | Music lyrics`)
-                .setAuthor(client.user.username)
-                .setDescription(txt)
+                    .setColor('#9d65c9')
+                    .setTitle(`Music Lyrics for ${current_playing_song}`)
+                    .setAuthor(client.user.username)
+                    .setDescription(txt)
                 await message.channel.send(embed);
-    
+
                 const embed2 = new Discord.MessageEmbed()
-                .setColor('#9d65c9')
-                .setDescription(lyric.slice(1500, lyric.length))
-    
+                    .setColor('#9d65c9')
+                    .setDescription(lyric.slice(1500, lyric.length))
+
+                message.channel.stopTyping()
                 return resolve(message.channel.send(embed2));
-            }else{
+            } else {
                 const embed = new Discord.MessageEmbed()
-                .setColor('#9d65c9')
-                .setTitle(`${current_playing_song.name} - ${current_playing_song.author} | Music lyrics`)
-                .setAuthor(client.user.username)
-                .setDescription(lyric)
-    
+                    .setColor('#9d65c9')
+                    .setTitle(`Music Lyrics for ${current_playing_song}`)
+                    .setAuthor(client.user.username)
+                    .setDescription(lyric)
+                message.channel.stopTyping()
                 return resolve(message.channel.send(embed));
             }
         })
-        
+
     },
     get command() {
         return {

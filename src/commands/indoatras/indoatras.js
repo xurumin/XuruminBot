@@ -2,25 +2,6 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor")
-
-var whathedoeslist = [
-	"que tira o sono dela",
-	"que vive molhando ela",
-	"que vive beijando a boca dela",
-	"que vive travando o zap dela",
-	"que vive matando ela no among",
-	"que vive robando os itens dela no minecraft",
-	"que vive fazendo ela chorar",
-	"que vive chateando ela",
-	"que vive tirando a bateria do iphone dela",
-	"que vive ligando pra ela",
-	"que vive indo matar o rato na casa dela",
-	"que vive ligando pra casa dela",
-	"que vive marcando ela em meme",
-	"que vive marcando ela em meme de cozinha"
-]
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -44,23 +25,17 @@ module.exports = {
 			setTimeout(() => {
 				message.channel.stopTyping();
 			}, 5000);
-			
-			ImageProcessor(text, whathedoeslist[Math.floor(Math.random() * whathedoeslist.length)])
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle("Indo atrás daquele...")
-				.setAuthor(message.author.username)
-				.setDescription(`Mensagem de: ${message.author.username}`)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
-			})
-			.catch((err)=>{
-				message.channel.stopTyping()
-				reject(err)
-			})
+
+			Utils.KarinnaAPI.get("/v1/image/indoatras", {
+                text: text
+            }).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+            })
+            .catch(async err=>{
+                message.channel.stopTyping()
+				return reject(err)
+            })
 		})
 	},
 

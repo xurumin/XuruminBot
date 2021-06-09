@@ -33,7 +33,7 @@ module.exports = {
                 return message.channel.send(
                     Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, LOCALE.errors.cmd_format.description.interpolate({
                         prefix: process.env.COMMAND_PREFIX
-                    }), client.user.username, client.user.avatarURL())
+                    }), client.user.username)
                 );
             }
             const taggedUser = client.users.cache.get(getUserFromMention(args[0]))
@@ -42,7 +42,7 @@ module.exports = {
                 return message.channel.send(
                     Utils.createSimpleEmbed(LOCALE.errors.user_not_found.title, LOCALE.errors.user_not_found.description.interpolate({
                         prefix: process.env.COMMAND_PREFIX
-                    }), client.user.username, client.user.avatarURL())
+                    }), client.user.username)
                 );
             }
             const paymentInfo = {
@@ -54,7 +54,7 @@ module.exports = {
                 return message.channel.send(
                     Utils.createSimpleEmbed(LOCALE.errors.user_do_not_have_funds.title, LOCALE.errors.user_do_not_have_funds.description.interpolate({
                         prefix: process.env.COMMAND_PREFIX
-                    }), client.user.username, client.user.avatarURL())
+                    }), client.user.username)
                 );
             }
 
@@ -68,7 +68,7 @@ module.exports = {
             }
             var msg = await message.channel.send(Utils.createSimpleEmbed(confirmation_msg.title,confirmation_msg.description))
             Utils.Reactions.getConfirmation(
-                msg
+                msg, message.author.id
             ).then(async (value)=>{
                 await msg.delete()
                 if(!value){
@@ -93,7 +93,7 @@ module.exports = {
                     return message.channel.send(
                         Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({
                             prefix: process.env.COMMAND_PREFIX
-                        }), client.user.username, client.user.avatarURL())
+                        }), client.user.username)
                     );
                 })
                 .catch(error => {
@@ -101,7 +101,7 @@ module.exports = {
                         return message.channel.send(
                             Utils.createSimpleEmbed(LOCALE.errors.invalid_value.title, LOCALE.errors.invalid_value.description.interpolate({
                                 prefix: process.env.COMMAND_PREFIX
-                            }), client.user.username, client.user.avatarURL())
+                            }), client.user.username)
                         );
                     }
                     return reject(error);

@@ -1,10 +1,7 @@
 const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
-
 const urlQ = require("url")
-const ytsr = require('ytsr');
-const ytpl = require('ytpl');
 const ytdl = require("ytdl-core")
 
 
@@ -14,12 +11,17 @@ class MusicPlayer {
      * @param  {Discord.Message} message
      * @param  {String} guild_id
      */
-    constructor(guild_id, client, message) {
+    constructor(guild_id, client, message, type="music", audioquality="lowestaudio") {
         this.guild_id = guild_id;
         this.client = client;
         this.message = message;
         this.isPlaying = false;
         this.dispatcher;
+        this.audioquality = audioquality
+        this.type = type
+    }
+    setAudioQuality(audioquality){
+        this.audioquality = audioquality
     }
     getPlaylist() {
         return this.client.playlist.get(this.guild_id)
@@ -73,6 +75,26 @@ class MusicPlayer {
         this.deletePlayer();
         this.deletePlaylist();
     }
+    //voltar
+    changeTime(secs){
+        var current_playlist = this.getPlaylist()
+        current_playlist[0].time = secs
+        this.setPlaylist(current_playlist)
+        if (this.dispatcher){
+            this.dispatcher.destroy();
+        }
+        if(this.type == "mp3"){
+            this.playMp3()
+        }else{
+            this.play()
+        }
+    }
+    getStreamTime(){
+        return this.dispatcher.streamTime
+    }
+    getTotalTime(){
+        return Utils.hmsToSeconds(this.getPlaylist()[0].duration)*1000 || 0
+    }
 
     aliveConCooldown(){
         var intv = setInterval(() => {
@@ -97,7 +119,7 @@ class MusicPlayer {
                 resolve()
             } catch (error) {
                 this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
-                reject(error)
+                return reject(error)
             }
             
         })
@@ -133,7 +155,6 @@ class MusicPlayer {
             var current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
-
             let music_url;
 
             try {
@@ -145,12 +166,19 @@ class MusicPlayer {
 
                 const stream = ytdl(music_url, {
                     filter: 'audioonly',
-                    quality: 'lowestaudio'
+                    quality: this.audioquality
                 });
-                this.dispatcher = await this.connection.play(stream)
+                
+                this.dispatcher = await this.connection.play(stream,
+                    {
+                        seek: current_playlist[0].time || 0
+                    }
+                )
+
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
+                console.log(error);
                 return this.connection.emit("skip")
             }
             
@@ -169,10 +197,16 @@ class MusicPlayer {
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
 
-                this.dispatcher = await this.connection.play(music_url)
+                this.dispatcher = await this.connection.play(music_url,
+                    {
+                        seek: current_playlist[0].time || 0
+                    }
+                )
+
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
+                console.log(error);
                 return this.connection.emit("skip")
             }
             
@@ -193,10 +227,9 @@ class MusicPlayer {
                 this.setPlaylist(current_playlist)
                 this.connection.emit("play")
             }
-
         });
         this.connection.on('pause', () => {
-            if (this.dispatcher) dispatcher.pause();
+            if (this.dispatcher) this.dispatcher.pause();
         });
         this.connection.on('resume', () => {
             if (this.dispatcher) this.dispatcher.resume();
@@ -227,9 +260,7 @@ class MusicPlayer {
             }
         });
         this.dispatcher.on('error', (err) => {
-            //console.log("dasdasd")
             return this.connection.emit("skip")
-            console.log("MusicPlayer", err)
         });
     }
 

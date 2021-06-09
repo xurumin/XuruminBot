@@ -28,8 +28,9 @@ module.exports = {
 	get command() {
 		return {
 			name: 'meme',
-			description: 'Usuário irá receber um meme.',
-			usage: 'meme',
+			aliases: [
+				"memes"
+			]
 		};
 	},
 };

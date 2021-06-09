@@ -29,7 +29,10 @@ module.exports = {
 
 	get command() {
 		return {
-			name: 'help'
+			name: 'help',
+			aliases:[
+				"ajuda"
+			]
 		};
 	},
 };

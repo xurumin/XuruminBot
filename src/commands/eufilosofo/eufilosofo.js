@@ -2,10 +2,6 @@ const Discord = require('discord.js');
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const ImageProcessor = require("./ImageProcessor")
-
-
-
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -34,28 +30,22 @@ module.exports = {
 			setTimeout(() => {
 				message.channel.stopTyping();
 			}, 5000);
-	
-			ImageProcessor(message.author.username, message.author.avatarURL({
-				format: "png"
-			}), text)
-			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setColor('#9d65c9')
-				.setTitle(LOCALE.message.title)
-				.setAuthor(message.author.username)
-				.setDescription(LOCALE.message.description.interpolate({
-					author: message.author.username
-				}))
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				message.channel.stopTyping()
-				resolve(message.channel.send(embed))
-			})
-			.catch((err)=>{
-				message.channel.stopTyping()
-				reject(err)
-				//return message.channel.send(Utils.getErrorMessage())
-			})
+
+			Utils.KarinnaAPI.get("/v1/image/eufilosofo", {
+                text: text,
+				username: message.author.username,
+				img_url: message.author.avatarURL({
+					format: "jpg",
+					size: 512
+				})
+            }).then(async res=>{
+				message.channel.stopTyping();
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+            })
+            .catch(async err=>{
+                message.channel.stopTyping()
+				return reject(err)
+            })
 		})
 	},
 
