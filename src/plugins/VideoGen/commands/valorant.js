@@ -16,6 +16,16 @@ module.exports = {
      */
     run: (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
+            const isPremium = await Utils.Profile.isPremium(client, message.author.id)
+            if (!isPremium) {
+                const notPremiumEmbed = new Discord.MessageEmbed()
+                    .setColor('#9d65c9')
+                    .setTitle(LOCALE.errors.user_is_not_premium.title)
+                    .setDescription(LOCALE.errors.user_is_not_premium.description.interpolate({
+                        prefix: process.env.COMMAND_PREFIX
+                    }))
+                return resolve(message.channel.send(notPremiumEmbed))
+            }
             const tagged_user = message.mentions.users.entries().next()
             var user = message.author
             if (tagged_user.value) user = tagged_user.value[1];
