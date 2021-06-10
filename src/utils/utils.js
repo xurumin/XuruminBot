@@ -168,9 +168,17 @@ var exp = {
       var child = await podcastNotifyRef.child("podcasts")
       return await child.child(podcastFeedHash).child("channels").child(channelId).set(new Date().getTime())
     },
+    async removeChannel(podcastFeedHash, channelId) {
+      var child = await podcastNotifyRef.child("podcasts")
+      return await child.child(podcastFeedHash).child("channels").child(channelId).remove()
+    },
     async setPodcast(podcastFeedHash, feedUrl) {
       var child = await podcastNotifyRef.child("podcasts")
       return await child.child(podcastFeedHash).child("feedUrl").set(feedUrl)
+    },
+    async setLastEp(podcastFeedHash, lastEpUrl) {
+      var child = await podcastNotifyRef.child("podcasts")
+      return await child.child(podcastFeedHash).child("lastEpUrl").set(lastEpUrl)
     },
     async doesPodcastExists(podcastFeedHash) {
       var child = await podcastNotifyRef.child("podcasts")

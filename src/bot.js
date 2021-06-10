@@ -148,12 +148,9 @@ const init = async () => {
 	}
 	pluginsFiles = []
 
-	// NOTIFIERS
 
-	// const PodcastNotify = require("./plugins/Notify/utils/PodcastNotification")
-	// PodcastNotify.run(30 * 60 * 1000)
-	
-	
+
+
 	const GameSaleClass = require("./plugins/Notify/utils/GameSale")
 	const GameSale = new GameSaleClass()
 
@@ -302,6 +299,38 @@ const init = async () => {
 				}
 			}
 		}, 5000);
+
+		// NOTIFIERS
+
+		const PodcastNotify = require("./plugins/Notify/utils/PodcastNotification")
+		PodcastNotify.run(60 * 60 * 1000)
+		PodcastNotify.EventEmitter.on("newEps", async (newEps) => {
+			console.log("NEW EPS");
+			let episodes = newEps["eps"]
+
+			let embed = new Discord.MessageEmbed()
+			embed.setTitle(`New Podcast from ${episodes[0]["show"]} - ${episodes[0]["author"]}`)
+
+			for (const ep of episodes) {
+
+				embed.setDescription(`**EP:** \`${ep["title"]}\`\n**SHOW:** \`${ep["show"]}\`\n**AUTHOR:** \`${ep["author"]}\`\n[MP3 LINK](${ep["url"]})`)
+
+				if (ep["pic"] && ep["pic"] != "") {
+					embed.setThumbnail(ep["pic"])
+				}
+
+				for (const channelId of newEps["channels"]) {
+
+					var channel = client.channels.cache.find(channel => channel.id == channelId)
+					if (!channel) {
+						await Utils.PodcastNotify.removeChannel(Utils.PodcastNotify.getPodcastFeedHash(newEps["feedUrl"]), channelId)
+						continue;
+					}
+
+					channel.send(embed)
+				}
+			}
+		})
 
 
 

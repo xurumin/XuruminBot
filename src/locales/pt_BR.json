@@ -733,6 +733,17 @@
             ]
         },
         "NOTIFY": "PLUGIN",
+        "podcastnotify": {
+            "title": "Notificar Podcast",
+            "setup": {
+                "description": "❔ **Como funciona?**\n Utilize o comando `{{prefix}}gameoffers set` no canal que você deseja receber ofertas de jogos.\nPara remover o canal, utilize `{{prefix}}gameoffers remove`.\n\n**:exclamation: Importante**\nVocê precisa ter a **permissão de administrador** para utilizar os comandos."
+            },
+            "channel_added": "O canal ``{{channel_name}}`` foi **adicionado** com sucesso!",
+            "channel_removed": "O canal ``{{channel_name}}`` foi **removido** com sucesso!",
+            "errors": {
+                "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos."
+            }
+        },
         "gameoffers": {
             "title": "Oferta de jogos",
             "setup": {
