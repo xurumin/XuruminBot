@@ -116,6 +116,24 @@ module.exports = {
 
         })
     },
+    getSpotifyPodcastShow(track_url) {
+        let spttrack = urlQ.parse(track_url).path.split("/").pop()
+        return new Promise((resolve, reject)=>{
+            if(!process.env.SPOTIFY_TOKEN){
+                authorizeSpotify();
+                this.setSpotifyToken();
+            }
+            spotifyApi.getShow(spttrack,{
+                market: "BR"
+            })
+            .then(async (data) => {
+                return resolve(data["body"])
+            }).catch(function (err) {
+                reject( err )
+            })
+
+        })
+    },
     getSpotifyAlbum(album_url, limit=20) {
         let album_id = urlQ.parse(album_url).path.split("/").pop()
         return new Promise((resolve, reject)=>{

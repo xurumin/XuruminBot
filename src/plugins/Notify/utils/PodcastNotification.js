@@ -15,7 +15,12 @@ class PodcastNotify {
         this.EventEmitter = new EventEmitter()
     }
     async __getLastPodcastEp(feedUrl){
-        const feedData = (await parseStringPromise((await axios.get(feedUrl)).data))
+        let feedData;
+        try {
+            feedData = (await parseStringPromise((await axios.get(feedUrl)).data))
+        } catch (error) {
+            return;
+        }
         let parsedFeed = feedData["rss"]["channel"][0]["item"][0]
         return {
             title: parsedFeed["title"][0],
@@ -25,7 +30,12 @@ class PodcastNotify {
         }
     }
     async __getLastEps(feedUrl, lastEpUrl){
-        const feedData = (await parseStringPromise((await axios.get(feedUrl)).data))
+        let feedData;
+        try {
+            feedData = (await parseStringPromise((await axios.get(feedUrl)).data))
+        } catch (error) {
+            return [];
+        }
         let parsedFeed = feedData["rss"]["channel"][0]["item"].slice(0,10)
 
         let lastEp = parsedFeed.find(ep=> {

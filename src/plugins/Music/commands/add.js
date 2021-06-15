@@ -8,6 +8,17 @@ var url = require('url');
 
 const config = require("./../../../config");
 
+
+/**
+ * playlist format
+ * {
+    name:
+    url:
+    author:
+    duration:
+    }
+*/
+
 async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
     var spotify_playlist;
     try {
@@ -153,11 +164,6 @@ function searchTerm(client, message, args, LOCALE) {
             var searchlist = res.map((element, i) => {
                 var title = element["title"]
                 var author = element["author"] ? element["author"]["name"] : "Youtube"
-                // txt += LOCALE["youtube_search"].txt_format.interpolate({
-                //     index: i+1,
-                //     title: title,
-                //     author: author
-                // })
                 txt.addField("\u200b", LOCALE["youtube_search"].txt_format.interpolate({
                     index: i + 1,
                     title: title,
@@ -253,6 +259,36 @@ async function podcastEpisode(client, message, track_url, LOCALE) {
         })));
     }
 }
+async function playMp3(client, message, track_url, LOCALE) {
+    var player = client.players.get(message.guild.id)
+    if (!player) {
+        player = await new MusicPlayer(message.guild.id, client, message, "mp3")
+        player.setAudioQuality(message.audioquality)
+        await player.__connectVoice()
+        client.players.set(message.guild.id, player)
+        player.setPlaylist([{
+            name: "MP3",
+            url: track_url,
+            author: "MP3",
+            duration: Infinity
+        }])
+        player.playMp3()
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing_mp3"].interpolate({
+            music_name: "MP3",
+            music_duration: "#"
+        })));
+    } else {
+        player.appendPlaylist([{
+            name: "MP3",
+            url: track_url,
+            author: "MP3",
+            duration: Infinity
+        }])
+        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+            prefix: process.env.COMMAND_PREFIX
+        })));
+    }
+}
 
 module.exports = {
     validate(client, message) {
@@ -312,6 +348,10 @@ module.exports = {
         if (userMsg.includes("open.spotify.com/episode/") && url_.includes("open.spotify.com")) {
             return podcastEpisode(client, message, userMsg, LOCALE);
         }
+        if (userMsg.endsWith(".mp3")) {
+            return playMp3(client, message, userMsg, LOCALE);
+        }
+
 
         return message.channel.send(LOCALE["errors"].not_found)
 

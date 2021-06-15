@@ -185,8 +185,8 @@
             "noiaPhrases": [
                 ["A mina vem mi\npergunta se eu uso\nlança", "tenho cara di\nindio carai?"],
                 ["amai uns\nauos outros", "mesmo sem\nretribuição!!!!"],
-                ["si deus nao existe\nfml\nqm coloca","o chocolate\ndas americanas\nno meu bolso?\nsem condisao kk"],
-                ["\"queria ter bundão\"\nosh fia e esse teu","namorado cabeludo\ndas unha pintada\neoqkkkkkkkkkk\n0 condisão"],
+                ["si deus nao existe\nfml\nqm coloca", "o chocolate\ndas americanas\nno meu bolso?\nsem condisao kk"],
+                ["\"queria ter bundão\"\nosh fia e esse teu", "namorado cabeludo\ndas unha pintada\neoqkkkkkkkkkk\n0 condisão"],
                 ["a mina só usa preto\ne anda di bota", "ta imitano o dracula \nai vida?\nsen condisaokkkk"],
                 ["i essa boquinha aí\nvida", "beija eu nao? kkkkkkk"],
                 ["qi papo eh esse\nde namoro vida?", "quer romance\ncompra um livrokkkk\nnos eh dog sem colera"],
@@ -736,12 +736,24 @@
         "podcastnotify": {
             "title": "Notificar Podcast",
             "setup": {
-                "description": "❔ **Como funciona?**\n Utilize o comando `{{prefix}}gameoffers set` no canal que você deseja receber ofertas de jogos.\nPara remover o canal, utilize `{{prefix}}gameoffers remove`.\n\n**:exclamation: Importante**\nVocê precisa ter a **permissão de administrador** para utilizar os comandos."
+                "description": "❔ **Como funciona?**\n Utilize o comando `{{prefix}}podcastnotify set` no canal que você deseja receber ofertas de jogos.\nPara remover o canal, utilize `{{prefix}}podcastnotify remove`.\n\n**:exclamation: Importante**\nVocê precisa ter a **permissão de administrador** para utilizar os comandos."
             },
             "channel_added": "O canal ``{{channel_name}}`` foi **adicionado** com sucesso!",
             "channel_removed": "O canal ``{{channel_name}}`` foi **removido** com sucesso!",
             "errors": {
-                "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos."
+                "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos.",
+                "ops_title": "❌ Ops!",
+                "user_is_not_on_voice_chat": "Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format": {
+                    "title": "❌ Ops! Você digitou o comando errado!",
+                    "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "podcast_not_found": "Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)",
+                "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
             }
         },
         "gameoffers": {
@@ -758,20 +770,21 @@
         "MUSIC": "PLUGIN",
         "add": {
             "title": ":musical_note: Música",
-            "musics_added":{
+            "musics_added": {
                 "title": "✅ Suas músicas foram adicionada à playlist",
                 "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
             },
             "playing": "🔊 Tocando {{music_name}} - ⌛️{{music_duration}}",
-            "youtube_search":{
+            "playing_mp3": "🔊 Tocando track de mp3",
+            "youtube_search": {
                 "title": "👨‍💻 Sua pesquisa retornou:\n\n",
                 "txt_format": "➡️ {{index}}: **{{title}}** de **{{author}}**",
                 "footer": "\n🔔 Clique no número abaixo para adicionar à playlist\n\n"
             },
             "errors": {
                 "ops_title": "❌ Ops!",
-                "user_is_not_on_voice_chat":"Você precisa estar em um chat de voz para executar o comando 😉",
-                "wrong_format":{
+                "user_is_not_on_voice_chat": "Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format": {
                     "title": "❌ Ops! Você digitou o comando errado!",
                     "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
                 },
@@ -786,22 +799,22 @@
             "message": "Tempo do áudio alterado para {{time}}.",
             "errors": {
                 "ops_title": "❌ Ops!",
-                "not_playing":"O bot não está tocando nada no momento",
+                "not_playing": "O bot não está tocando nada no momento",
                 "cmd_run_error": "Você precisa digitar `{{prefix}}tt <milissegundos ou tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
             }
         },
         "PODCAST": "PLUGIN",
         "podcast": {
             "title": "Podcats",
-            "podcast_added":{
+            "podcast_added": {
                 "title": "✅ Suas músicas foram adicionada à playlist",
                 "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
             },
             "playing": "🔊 Tocando {{title}} - ⌛️{{duration}}",
             "errors": {
                 "ops_title": "❌ Ops!",
-                "user_is_not_on_voice_chat":"Você precisa estar em um chat de voz para executar o comando 😉",
-                "wrong_format":{
+                "user_is_not_on_voice_chat": "Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format": {
                     "title": "❌ Ops! Você digitou o comando errado!",
                     "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
                 },

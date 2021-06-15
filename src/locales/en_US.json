@@ -720,6 +720,7 @@
                 "description": "Use **{{prefix}}queue** to see your new playlist! 😉"
             },
             "playing": "🔊 Playing {{music_name}} - ⌛️{{music_duration}}",
+            "playing_mp3": "🔊 Playing track from mp3",
             "youtube_search":{
                 "title": "👨‍💻 Your search returned:\n\n",
                 "txt_format": "➡️ {{index}}: **{{title}}** de **{{author}}**",
@@ -736,7 +737,7 @@
                     "title": "❌ Error executing command:",
                     "description": "This command is ** TEMPORARILY ** unavailable 😞\nOur programmers kittens are doing their best to solve this 🤗"
                 },
-                "not_found": "This has not yet been implemented sweetie."
+                "not_found": "That hasn't been implemented yet, dear. "
             }
         },
         "timetravel": {

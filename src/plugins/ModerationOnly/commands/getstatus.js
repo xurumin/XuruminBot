@@ -42,6 +42,7 @@ module.exports = {
             if(!config.specialusers.includes(message.author.id)){
                 return message.channel.send("Sorry you can not send this command.")
             }
+
             var txt = "";
             txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
             txt+= `Server count: ${await getServerCount(client)}\n`
