@@ -15,7 +15,7 @@ module.exports = {
 	run: async (client, message, args, LOCALE) => {
 		if (!message.mentions.users.size > 0) {
 			return message.channel.send(
-                Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, LOCALE.errors.cmd_format.description.interpolate({prefix: process.env.COMMAND_PREFIX}), client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, LOCALE.errors.cmd_format.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
 
 		}
@@ -23,13 +23,13 @@ module.exports = {
 
 		if(message.author == metioned_user){
 			return message.channel.send(
-				Utils.createSimpleEmbed(LOCALE.errors.auto_crush.title, LOCALE.errors.auto_crush.description, client.user.username, client.user.avatarURL())
+				Utils.createSimpleEmbed(LOCALE.errors.auto_crush.title, LOCALE.errors.auto_crush.description)
 			)
 		}
 
 		if(metioned_user == client.user){
 			return message.channel.send(
-				Utils.createSimpleEmbed(LOCALE.errors.tag_bot.title,LOCALE.errors.tag_bot.description, client.user.username, client.user.avatarURL())
+				Utils.createSimpleEmbed(LOCALE.errors.tag_bot.title,LOCALE.errors.tag_bot.description)
 			)
 		}
 

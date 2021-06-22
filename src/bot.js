@@ -312,7 +312,7 @@ const init = async () => {
 
 			for (const ep of episodes) {
 
-				embed.setDescription(`**EP:**  \`${ep["title"]}\`\n**SHOW:**  \`${ep["show"]}\`\n**AUTHOR:**  \`${ep["author"]}\`\n\nUse  \`${process.env.COMMAND_PREFIX}add ${ep["url"]}\n`)
+				embed.setDescription(`**EP:**  \`${ep["title"]}\`\n**SHOW:**  \`${ep["show"]}\`\n**AUTHOR:**  \`${ep["author"]}\`\n\nUse  \`${process.env.COMMAND_PREFIX}add ${ep["url"]}\``)
 
 				if (ep["pic"] && ep["pic"] != "") {
 					embed.setThumbnail(ep["pic"])

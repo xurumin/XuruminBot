@@ -164,6 +164,8 @@ class MusicPlayer {
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
 
+                // console.log(current_playlist[0]["name"], music_url);
+
                 const stream = ytdl(music_url, {
                     filter: 'audioonly',
                     quality: this.audioquality
@@ -178,7 +180,7 @@ class MusicPlayer {
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
-                console.log(error);
+                console.log("[MusicPlayer][play]",error);
                 return this.connection.emit("skip")
             }
             
@@ -206,7 +208,7 @@ class MusicPlayer {
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
-                console.log(error);
+                console.log("[MusicPlayer][playMp3]", error);
                 return this.connection.emit("skip")
             }
             
@@ -260,6 +262,7 @@ class MusicPlayer {
             }
         });
         this.dispatcher.on('error', (err) => {
+            console.log("[MusicPlayer][dispatcher]", err);
             return this.connection.emit("skip")
         });
     }

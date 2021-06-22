@@ -23,12 +23,12 @@ module.exports = {
             if (current_playing_song.length <= 0) {
                 if (!message.member.voice.channel) {
                     return resolve(message.channel.send(
-                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
+                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`)
                     ));
                 }
                 if (!player) {
                     return resolve(message.channel.send(
-                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`, client.user.username, client.user.avatarURL())
+                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`)
                     ));
                 }
 

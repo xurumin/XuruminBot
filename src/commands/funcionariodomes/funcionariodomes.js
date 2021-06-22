@@ -31,7 +31,7 @@ module.exports = {
 	
 			} else {
 				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}funcionariodomes @usuario** para dar o título de **Funcionário do Mês** 🤗`, client.user.username, client.user.avatarURL())
+					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}funcionariodomes @usuario** para dar o título de **Funcionário do Mês** 🤗`)
 				);
 			}
 		})

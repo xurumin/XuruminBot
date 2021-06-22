@@ -107,7 +107,7 @@ var exp = {
     })
   },
   getErrorMessage() {
-    return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`, client.user.username, client.user.avatarURL())
+    return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`)
   },
   random(min, max) {
     min = Math.ceil(min);
@@ -168,8 +168,17 @@ var exp = {
       var child = await podcastNotifyRef.child("podcasts")
       return await child.child(podcastFeedHash).child("channels").child(channelId).set(new Date().getTime())
     },
-    async removeChannel(podcastFeedHash, channelId) {
+    async removeChannel(channelId) {
       var child = await podcastNotifyRef.child("podcasts")
+
+      child.orderByChild('name').equalTo('John Doe').on("value", function(snapshot) {
+        console.log(snapshot.val());
+        snapshot.forEach(function(data) {
+            console.log(data.key);
+        });
+    });
+
+
       return await child.child(podcastFeedHash).child("channels").child(channelId).remove()
     },
     async setPodcast(podcastFeedHash, feedUrl) {

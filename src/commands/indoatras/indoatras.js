@@ -17,7 +17,7 @@ module.exports = {
 			text = text.replace(/\n/gi, ' ')
 			if(args.length <= 0 || text==""){
 				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}indoatras <frase que você quiser>** para ir daquele que fez alquilo! 🤗`, client.user.username, client.user.avatarURL())
+					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}indoatras <frase que você quiser>** para ir daquele que fez alquilo! 🤗`)
 				);
 			}
 			message.channel.startTyping()

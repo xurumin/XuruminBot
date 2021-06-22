@@ -15,7 +15,7 @@ module.exports = {
 	run: async (client, message, args) => {
 		if (!message.mentions.users.size > 0) {
 			return message.channel.send(
-                Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}marcarbeijo @usuario** para marcar o beijin! 🤗`, client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}marcarbeijo @usuario** para marcar o beijin! 🤗`)
             );
 
 		}
@@ -23,13 +23,13 @@ module.exports = {
 
 		if(message.author == metioned_user){
 			return message.channel.send(
-				Utils.createSimpleEmbed("❌ Pera lá né amigo", `Você não pode beijar com você mesmo... 😑\n Ou será que pode? 🤔`, client.user.username, client.user.avatarURL())
+				Utils.createSimpleEmbed("❌ Pera lá né amigo", `Você não pode beijar com você mesmo... 😑\n Ou será que pode? 🤔`)
 			)
 		}
 
 		if(metioned_user == client.user){
 			return message.channel.send(
-				Utils.createSimpleEmbed("😬 Opa, então né...", `Agradeço e tals mas tô passando`, client.user.username, client.user.avatarURL())
+				Utils.createSimpleEmbed("😬 Opa, então né...", `Agradeço e tals mas tô passando`)
 			)
 		}
 

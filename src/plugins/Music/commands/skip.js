@@ -15,14 +15,14 @@ module.exports = {
      */
     run: async (client, message, args) => {
         if (!message.member.voice.channel) {
-            return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL()));
+            return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`));
         }
         var player = client.players.get(message.guild.id)
         if (!player) {
-            return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`, client.user.username, client.user.avatarURL()));
+            return message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`));
         }else{
             player.skip()
-            return message.channel.send(Utils.createSimpleEmbed("Musica pulada! 🤠", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`, client.user.username, client.user.avatarURL()));
+            return message.channel.send(Utils.createSimpleEmbed("Musica pulada! 🤠", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`));
         }
     },
     get command() {

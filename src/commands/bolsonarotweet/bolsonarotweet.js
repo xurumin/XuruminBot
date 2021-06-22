@@ -22,7 +22,7 @@ module.exports = {
 	
 			if(text == ""){
 				return message.channel.send(
-					Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, Utils.stringTemplateParser(LOCALE.errors.cmd_format.description, {prefix: process.env.COMMAND_PREFIX}), client.user.username, client.user.avatarURL())
+					Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, Utils.stringTemplateParser(LOCALE.errors.cmd_format.description, {prefix: process.env.COMMAND_PREFIX}))
 				);
 			}
 	

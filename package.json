@@ -22,7 +22,7 @@
     "dblapi.js": "^2.4.1",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
-    "ffmpeg-static": "^4.3.0",
+    "ffmpeg-static": "^4.4.0",
     "ffprobe-static": "^3.0.0",
     "firebase-admin": "^9.9.0",
     "fluent-ffmpeg": "^2.1.2",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "css-what": ">=5.0.1",
-    "normalize-url": ">=6.0.1",
-    "ws": ">=7.4.6"
+    "normalize-url": ">=6.1.0",
+    "ws": ">=7.5.0"
   }
 }

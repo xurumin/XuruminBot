@@ -79,12 +79,12 @@ module.exports = {
         const searchTerm = args.join(" ")
         if (!searchTerm) {
             return message.channel.send(
-                Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}podcast <nome do podcast>** para tocar alguma coisa! 🤗`, client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}podcast <nome do podcast>** para tocar alguma coisa! 🤗`)
             );
         }
         if (!message.member.voice.channel) {
             return message.channel.send(
-                Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`, client.user.username, client.user.avatarURL())
+                Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`)
             );
         }
 

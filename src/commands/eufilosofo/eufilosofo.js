@@ -21,7 +21,7 @@ module.exports = {
 	
 			if(text == ""){
 				return message.channel.send(
-					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}filosofo <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}filosofo** que eu pego a ultima mensagem mandada! 🤗`, client.user.username, client.user.avatarURL())
+					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}filosofo <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}filosofo** que eu pego a ultima mensagem mandada! 🤗`)
 				);
 			}
 	

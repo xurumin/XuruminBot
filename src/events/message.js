@@ -193,7 +193,7 @@ module.exports = {
 		} catch (error) {
 			message.channel.stopTyping();
 			console.log("[MESSAGE_EVENT]", error)
-			return message.channel.send(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description, client.user.username, client.user.avatarURL()));
+			return message.channel.send(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
 		}
 	},
 
