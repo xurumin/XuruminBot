@@ -130,7 +130,6 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
 async function youtubeLink(client, message, video_url, LOCALE) {
     try {
         var video_info = await Music.getVideoInfoByUrl(video_url)
-        console.log(video_info);
     } catch (error) {
         var video_info = {
             name: "#",
