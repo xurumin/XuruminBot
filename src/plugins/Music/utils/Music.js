@@ -230,15 +230,25 @@ module.exports = {
     getVideoInfoByUrl(url) {
         return new Promise(async (resolve, reject) => {
             try {
-                var video_dat = await ytdl.getBasicInfo(url)
-                video_dat = video_dat["videoDetails"]
-                const video_info = {
+                var video_dat = (await ytsr(url, {
+                    limit: 3
+                }))["items"][0]
+
+                return resolve({
                     name: video_dat["title"],
                     url: url,
                     author: video_dat["author"].name,
-                    duration: this.toHHMMSS(video_dat["lengthSeconds"])
-                }
-                resolve(video_info)
+                    duration: video_dat["duration"]
+                })
+                // var video_dat = await ytdl.getBasicInfo(url)
+                // video_dat = video_dat["videoDetails"]
+                // const video_info = {
+                //     name: video_dat["title"],
+                //     url: url,
+                //     author: video_dat["author"].name,
+                //     duration: this.toHHMMSS(video_dat["lengthSeconds"])
+                // }
+                // resolve(video_info)
             } catch (error) {
                 reject(error)
             }

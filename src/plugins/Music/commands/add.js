@@ -130,8 +130,15 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
 async function youtubeLink(client, message, video_url, LOCALE) {
     try {
         var video_info = await Music.getVideoInfoByUrl(video_url)
+        console.log(video_info);
     } catch (error) {
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        var video_info = {
+            name: "#",
+            author: "Youtube",
+            url: video_url,
+            duration: "99:99"
+        }
+        // return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
