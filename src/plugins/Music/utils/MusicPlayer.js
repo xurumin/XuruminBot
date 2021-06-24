@@ -3,7 +3,7 @@ const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
 const urlQ = require("url")
 // const ytdl = require("ytdl-core")
-const ytdl = require("./../../../libs/ytdl-temp/lib/")
+const ytdl = require("./../../../libs/ytdl-temp/")
 
 
 class MusicPlayer {
