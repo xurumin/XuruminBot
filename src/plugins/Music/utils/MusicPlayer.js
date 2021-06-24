@@ -4,7 +4,7 @@ const Music = require("./../utils/Music")
 const urlQ = require("url")
 // const ytdl = require("ytdl-core")
 const path = require("path")
-const ytdl = require(path.join(__dirname, "./../../../libs/ytdl-temp/lib/index.js"))
+const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
     /**
