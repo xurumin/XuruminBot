@@ -19,30 +19,18 @@ const twitch = require("twitch-m3u8");
     duration:
     }
 */
-async function playMp3(client, message, track_url, LOCALE) {
-    var player = client.players.get(message.guild.id)
-    if (!player) {
-        player = await new MusicPlayer(message.guild.id, client, message, "mp3")
-        player.setAudioQuality(message.audioquality)
-        await player.__connectVoice()
-        client.players.set(message.guild.id, player)
-        player.setPlaylist([{
-            name: "TWITCH",
-            url: track_url,
-            author: "TWITCH",
-            duration: Infinity
-        }])
-        player.playMp3()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE.title, LOCALE["stream_added"]));
-    } else {
-        player.appendPlaylist([{
-            name: "TWITCH",
-            url: track_url,
-            author: "TWITCH",
-            duration: Infinity
-        }])
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE.title, LOCALE["stream_added"]));
-    }
+async function playTwitch(client, message, track_url, LOCALE) {
+    var player = await new MusicPlayer(message.guild.id, client, message, "mp3")
+    await player.__connectVoice()
+    client.players.set(message.guild.id, player)
+    player.setPlaylist([{
+        name: "TWITCH",
+        url: track_url,
+        author: "TWITCH",
+        duration: Infinity
+    }])
+    player.playMp3()
+    return message.channel.send(Utils.createSimpleEmbed(LOCALE.title, LOCALE["stream_added"]));
 }
 
 module.exports = {
@@ -57,24 +45,42 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         const url_ = url.parse(args.join(""))
 
-        if(!url_.host){
+        if (!url_.host) {
             var twitch_user = args.join("")
 
-        }else{
-            if(!args.join("") || (url_.host != "twitch.tv" && url_.host != "www.twitch.tv")){
+        } else {
+            if (!args.join("") || (url_.host != "twitch.tv" && url_.host != "www.twitch.tv")) {
                 return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
             }
             var twitch_user = url_.path.split("/")[1]
         }
-        
         twitch.getStream(twitch_user)
-        .then(data => {
-            var audio = data.find(elm=> elm.quality="audio_only")["url"]
-            return playMp3(client, message, audio, LOCALE);
-        })
-        .catch((err)=>{
-            return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
-        })
+            .then(async data => {
+
+                var player = client.players.get(message.guild.id)
+                if (!player) {
+                    var audio = data.find(elm => elm.quality = "audio_only")["url"]
+                    return playTwitch(client, message, audio, LOCALE);
+                }
+
+                var msg = await message.channel.send(Utils.createSimpleEmbed(LOCALE["already_playing"]["title"], LOCALE["already_playing"].description))
+                Utils.Reactions.getConfirmation(
+                        msg, message.author.id
+                    ).then(async (value) => {
+                        await msg.delete()
+                        if (!value) {
+                            return await message.channel.send(Utils.createSimpleEmbed(LOCALE["decline"], ""))
+                        }
+                        var audio = data.find(elm => elm.quality = "audio_only")["url"]
+                        return playTwitch(client, message, audio, LOCALE);
+                    })
+                    .catch(async (err) => {
+                        return await message.channel.send(Utils.createSimpleEmbed(LOCALE["decline"], ""))
+                    })
+            })
+            .catch((err) => {
+                return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
+            })
 
     },
     get command() {

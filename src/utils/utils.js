@@ -177,8 +177,6 @@ var exp = {
             console.log(data.key);
         });
     });
-
-
       return await child.child(podcastFeedHash).child("channels").child(channelId).remove()
     },
     async setPodcast(podcastFeedHash, feedUrl) {
