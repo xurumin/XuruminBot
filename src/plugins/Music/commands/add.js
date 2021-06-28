@@ -325,10 +325,11 @@ module.exports = {
 
         // const isPremium = await Utils.Profile.isPremium({}, message.author.id)
         const isPremium = config.specialusers.includes(message.author.id)
-        message.audioquality = "lowestaudio"
-        if (isPremium) {
-            message.audioquality = "highestaudio"
-        }
+        message.audioquality = "highestaudio"
+        // message.audioquality = "lowestaudio"
+        // if (isPremium) {
+        //     message.audioquality = "highestaudio"
+        // }
 
 
         if (userMsg.includes("open.spotify.com/playlist/") && url_.includes("open.spotify.com")) {
