@@ -2,9 +2,9 @@ const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
 const urlQ = require("url")
-// const ytdl = require("ytdl-core")
+const ytdl = require("ytdl-core")
 const path = require("path")
-const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
+// const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
     /**
