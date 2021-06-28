@@ -85,7 +85,7 @@ module.exports = {
     get command() {
         return {
             name: 'gas',
-            aliase: [
+            aliases: [
                 "smurfdomucaentregador",
                 "mucagas"
             ]

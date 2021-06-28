@@ -110,7 +110,7 @@ module.exports = {
     get command() {
         return {
             name: 'licencadepesca',
-            aliase: [
+            aliases: [
                 "fishinglicense",
                 "fishinglicensepatrick"
             ]

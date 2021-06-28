@@ -126,7 +126,7 @@ module.exports = {
     get command() {
         return {
             name: 'daqueeutedououtra',
-            aliase: [
+            aliases: [
                 "dqetdo"
             ]
         }

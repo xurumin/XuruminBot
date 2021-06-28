@@ -90,7 +90,7 @@ module.exports = {
     get command() {
         return {
             name: 'sedutoresdainternet',
-            aliase: [
+            aliases: [
                 "cuidadosedutores"
             ]
         }
