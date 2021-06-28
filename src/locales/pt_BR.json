@@ -795,6 +795,23 @@
                 "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
             }
         },
+        "twitch": {
+            "title": "<:twitch:857426597736087613> Twitch",
+            "stream_added": "A stream pode demorar um pouco para tocar. Culpa da Twitch 😞",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "user_is_not_on_voice_chat": "Você precisa estar em um chat de voz para executar o comando 😉",
+                "wrong_format": {
+                    "title": "❌ Ops! Você digitou o comando errado!",
+                    "description": "Tente usar **{{prefix}}help** para saber como usar os comandos ou tenta tocar uma playlist do Spotify com **{{prefix}}add <link da playlist>** 🤗"
+                },
+                "cmd_run_error": {
+                    "title": "❌ Erro ao executar comando:",
+                    "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
+                },
+                "not_found": "Não achei a stream. Desculpe 😞"
+            }
+        },
         "timetravel": {
             "message": "Tempo do áudio alterado para {{time}}.",
             "errors": {
