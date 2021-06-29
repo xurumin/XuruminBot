@@ -4,6 +4,7 @@ const Music = require("./../utils/Music")
 const urlQ = require("url")
 const ytdl = require("ytdl-core")
 const path = require("path")
+const prism = require('prism-media');
 // const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
@@ -207,10 +208,42 @@ class MusicPlayer {
 
                 // console.log(current_playlist[0]["name"], music_url);
 
+                // const filters = [
+                //     'bass=g=20,dynaudnorm=f=200',//bassboost
+                //     'apulsator=hz=0.08', //8D
+                //     'aresample=48000,asetrate=48000*0.8',//vaporwave
+                //     'aresample=48000,asetrate=48000*1.25',//nightcore
+                //     'aphaser=in_gain=0.4',//phaser
+                //     'tremolo',//tremolo
+                //     'vibrato=f=6.5',//vibrato
+                //     'surround',//surrounding
+                //     'apulsator=hz=1',//pulsator
+                //     'asubboost',//subboost
+                //     'chorus=0.5:0.9:50|60|40:0.4|0.32|0.3:0.25|0.4|0.3:2|2.3|1.3',//chorus of 3
+                //     'stereotools=mlev=0.015625',//karaoke
+                //     'sofalizer=sofa=/path/to/ClubFritz12.sofa:type=freq:radius=2:rotation=5',//sofa
+                //     'silenceremove=window=0:detection=peak:stop_mode=all:start_mode=all:stop_periods=-1:stop_threshold=0',//desilencer
+                //     "remove",
+                //   ];
+
+                // const transcoder = new prism.FFmpeg({
+                //     args: [
+                //       '-analyzeduration', '0',
+                //       '-loglevel', '0',
+                //       '-f', 's16le',
+                //       '-ar', '48000',
+                //       '-ac', '2',
+                //       '-af', filters[0],
+                //       "-af", "apulsator=hz=1"
+                      
+                //     ],
+                //   });
+
                 const stream = ytdl(music_url, {
                     filter: 'audioonly',
                     quality: this.audioquality
                 });
+                // const output = stream.pipe(transcoder);
                 
                 this.dispatcher = await this.connection.play(stream,
                     {
@@ -219,6 +252,14 @@ class MusicPlayer {
                         volume: false
                     }
                 )
+                // this.dispatcher = await this.connection.play(output,
+                //     {
+                //         seek: current_playlist[0].time || 0,
+                //         bitrate: this.bitrate,
+                //         volume: false,
+                //         type: 'converted'
+                //     }
+                // )
 
                 this.aliveConCooldown()
                 this.onEventDispatcher()

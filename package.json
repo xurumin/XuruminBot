@@ -32,6 +32,7 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "pidusage": "^2.0.21",
+    "prism-media": "github:amishshah/prism-media",
     "solenolyrics": "^5.0.0",
     "spotify-web-api-node": "^5.0.2",
     "twitch-m3u8": "^1.1.4",
