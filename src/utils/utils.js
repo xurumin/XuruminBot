@@ -83,7 +83,7 @@ var exp = {
       .join(":")
   },
   hmsToSeconds(str) {
-    var p = str.split(':'),
+    var p = String(str).split(':'),
       s = 0,
       m = 1;
 

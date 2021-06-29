@@ -21,7 +21,10 @@ module.exports = {
         var pb = ["▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬"]
         const current_time = player.getPlayingTime() / 1000
         const current_music = player.getPlaylist()[0]
-        const duration = current_music["duration"]
+        let duration = current_music["duration"] || 0
+
+        if(!Number.isInteger(duration)) duration = 0
+        
         var current_pb = Math.round((current_time * 20) / Utils.hmsToSeconds(duration))
         if(current_pb > 20) current_pb = 20
         
