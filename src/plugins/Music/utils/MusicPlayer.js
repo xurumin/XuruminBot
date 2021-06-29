@@ -4,7 +4,7 @@ const Music = require("./../utils/Music")
 const urlQ = require("url")
 const ytdl = require("ytdl-core")
 const path = require("path")
-const prism = require('prism-media');
+// const prism = require('prism-media');
 // const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
