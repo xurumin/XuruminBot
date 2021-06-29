@@ -22,6 +22,7 @@
                 "command_not_found": {
                     "title": "Não achei esse comando 😞",
                     "description": "Se precisar de ajuda, aqui vai alguns links que podem ser úteis 🤗",
+                    "description_similar": "Será que você não quis digitar `{{prefix}}{{cmd}}`?\n\nSe precisar de mais ajuda, aqui vai alguns links que podem ser úteis",
                     "fields": [
                         ["Lista de comandos", "https://xurumin.github.io/comandos"],
                         ["Precisa de suporte?", "https://discord.com/invite/bvb8YKSCQR"],
@@ -76,7 +77,7 @@
             "errors": {
                 "cmd_format": {
                     "title": "❌ Erro ao digitar comando:",
-                    "description": "Use  **{{prefix}}monarktweet <frase que você quiser>** ou somente **{{prefix}}monarktweet** que eu pego a ultima mensagem mandada! 🤗"
+                    "description": "Use  **{{prefix}}bolsonarotweet <frase que você quiser>** ou somente **{{prefix}}bolsonarotweet** que eu pego a ultima mensagem mandada! 🤗"
                 },
                 "cmd_run_error": "Um erro ocorreu na execução desse comando. 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
             }

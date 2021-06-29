@@ -106,6 +106,46 @@ var exp = {
       }, ms)
     })
   },
+  similarity(s1, s2) {
+    var longer = s1;
+    var shorter = s2;
+    if (s1.length < s2.length) {
+      longer = s2;
+      shorter = s1;
+    }
+    var longerLength = longer.length;
+    if (longerLength == 0) {
+      return 1.0;
+    }
+    return (longerLength - this.__editDistance(longer, shorter)) / parseFloat(longerLength);
+  },
+
+  __editDistance(s1, s2) {
+    s1 = s1.toLowerCase();
+    s2 = s2.toLowerCase();
+
+    var costs = new Array();
+    for (var i = 0; i <= s1.length; i++) {
+      var lastValue = i;
+      for (var j = 0; j <= s2.length; j++) {
+        if (i == 0)
+          costs[j] = j;
+        else {
+          if (j > 0) {
+            var newValue = costs[j - 1];
+            if (s1.charAt(i - 1) != s2.charAt(j - 1))
+              newValue = Math.min(Math.min(newValue, lastValue),
+                costs[j]) + 1;
+            costs[j - 1] = lastValue;
+            lastValue = newValue;
+          }
+        }
+      }
+      if (i > 0)
+        costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+  },
   getErrorMessage() {
     return this.createSimpleEmbed("❌ Erro ao executar comando:", `O serviço está temporariamente indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗`)
   },
@@ -171,12 +211,12 @@ var exp = {
     async removeChannel(channelId) {
       var child = await podcastNotifyRef.child("podcasts")
 
-      child.orderByChild('name').equalTo('John Doe').on("value", function(snapshot) {
+      child.orderByChild('name').equalTo('John Doe').on("value", function (snapshot) {
         console.log(snapshot.val());
-        snapshot.forEach(function(data) {
-            console.log(data.key);
+        snapshot.forEach(function (data) {
+          console.log(data.key);
         });
-    });
+      });
       return await child.child(podcastFeedHash).child("channels").child(channelId).remove()
     },
     async setPodcast(podcastFeedHash, feedUrl) {
@@ -195,14 +235,14 @@ var exp = {
       var child = await podcastNotifyRef.child("podcasts")
       return await (await child.once("value")).val()
     },
-    getPodcastFeedHash(feedUrl){
+    getPodcastFeedHash(feedUrl) {
       return crypto.createHash("sha256").update(feedUrl).digest("hex")
     }
   },
-  
+
   Updaters: {
-    getPremiumUsers: ()=>{
-      return new Promise(async (resolve, reject)=>{
+    getPremiumUsers: () => {
+      return new Promise(async (resolve, reject) => {
         const premiumUsers = this
       })
     }
@@ -233,7 +273,7 @@ var exp = {
     }
   },
   Profile: {
-    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, money=0, badges = []) => {
+    setProfile: async (client, user_id_raw, bg_url, aboutme, level, points, money = 0, badges = []) => {
       const user_id = crypto.createHash("sha256").update(user_id_raw).digest("hex");
       var usersRef = profilesRef.child("users")
       await usersRef.child(user_id).set({
@@ -344,7 +384,7 @@ var exp = {
   },
   KarinnaAPI: {
     get(path, params, timeout = 120000) {
-      return new Promise(async(resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         axios.get(`${process.env.KARINNA_API_PATH}${path}`, {
           headers: {
             authorization: process.env.KARINNA_API_TOKEN

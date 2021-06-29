@@ -178,15 +178,30 @@ module.exports = {
 
 				return MessageLog.log(aliase, message); // ADD MESSAGE TO MessageLog
 			} else {
+				var similar_cmd = client.commands.find(elm => utils.similarity(elm.command.name, command) > 0.7)
+				if(similar_cmd) similar_cmd = similar_cmd.command.name
+				var similar_aliase = client.aliases.find(elm => utils.similarity(elm, command) > 0.7)
+
+				if(!similar_cmd) similar_cmd = similar_aliase
+
+				var embed = new Discord.MessageEmbed()
+				.setColor('#9d65c9')
+				.setTitle(LOCALE.events.message.errors.command_not_found.title)
+				.setDescription(LOCALE.events.message.errors.command_not_found.description)
+				.addField(LOCALE.events.message.errors.command_not_found.fields[0][0], LOCALE.events.message.errors.command_not_found.fields[0][1])
+				.addField(LOCALE.events.message.errors.command_not_found.fields[1][0], LOCALE.events.message.errors.command_not_found.fields[1][1])
+				.addField(LOCALE.events.message.errors.command_not_found.fields[2][0], LOCALE.events.message.errors.command_not_found.fields[2][1])
+				.setAuthor(client.user.username)
+
+				if(similar_cmd){
+					embed.setDescription(LOCALE.events.message.errors.command_not_found.description_similar.interpolate({
+						prefix: process.env.COMMAND_PREFIX,
+						cmd: similar_cmd
+					}))
+				}
+
 				message.channel.send(
-					new Discord.MessageEmbed()
-					.setColor('#9d65c9')
-					.setTitle(LOCALE.events.message.errors.command_not_found.title)
-					.setDescription(LOCALE.events.message.errors.command_not_found.description)
-					.addField(LOCALE.events.message.errors.command_not_found.fields[0][0], LOCALE.events.message.errors.command_not_found.fields[0][1])
-					.addField(LOCALE.events.message.errors.command_not_found.fields[1][0], LOCALE.events.message.errors.command_not_found.fields[1][1])
-					.addField(LOCALE.events.message.errors.command_not_found.fields[2][0], LOCALE.events.message.errors.command_not_found.fields[2][1])
-					.setAuthor(client.user.username)
+					embed
 				)
 				return MessageLog.log("NOT FOUND", message);
 			}

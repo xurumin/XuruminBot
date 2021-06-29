@@ -22,6 +22,7 @@
                 "command_not_found": {
                     "title": "I didn't find this command 😞",
                     "description": "If you need help, here are some links that may be useful 🤗",
+                    "description_similar": "Did you not want to type `{{prefix}}{{cmd}}`?\n\nIf you need help, here are some links that may be useful",
                     "fields": [
                         ["Command List", "https://xurumin.github.io/comandos"],
                         ["Need support?", "https://discord.com/invite/bvb8YKSCQR"],
@@ -65,20 +66,6 @@
             "message": {
                 "title": "Xurumin Invite 🤓",
                 "description": "You can add Xurumin on https://xurumin.github.io/addxurumin"
-            }
-        },
-        "bolsonarotweet": {
-            "message": {
-                "title": "What did President Bolsonaro tweet?",
-                "author": "Bolsonaro",
-                "description": "Message from: {{author}}\n\n*This image is not true.*"
-            },
-            "errors": {
-                "cmd_format": {
-                    "title": "❌ Error typing command:",
-                    "description": "Use  **{{prefix}}monarktweet <phrase you want>** or just **{{prefix}}monarktweet** that I get the last message sent!! 🤗"
-                },
-                "cmd_run_error": "An error occurred while executing this command. 😞 \nOur programmers kittens are doing their best to solve this 🤗"
             }
         },
         "carteirinha": {
