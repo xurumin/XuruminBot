@@ -23,6 +23,7 @@ class MusicPlayer {
         this.time = 0
         this.maxPlaylist = 100
         this.t247 = false;
+        this.bitrate = 64
     }
     setAudioQuality(audioquality){
         this.audioquality = audioquality
@@ -120,6 +121,10 @@ class MusicPlayer {
             this.play()
         }
     }
+    setBitrate(value){
+        this.bitrate = value
+        if(this.dispatcher) this.dispatcher.setBitrate(this.bitrate)
+    }
     getStreamTime(){
         if(!this.dispatcher) return 0;
         return this.dispatcher.streamTime;
@@ -209,7 +214,9 @@ class MusicPlayer {
                 
                 this.dispatcher = await this.connection.play(stream,
                     {
-                        seek: current_playlist[0].time || 0
+                        seek: current_playlist[0].time || 0,
+                        bitrate: this.bitrate,
+                        volume: false
                     }
                 )
 
@@ -235,12 +242,13 @@ class MusicPlayer {
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
 
-                this.dispatcher = await this.connection.play(music_url,
+                this.dispatcher = this.connection.play(music_url,
                     {
-                        seek: current_playlist[0].time || 0
+                        seek: current_playlist[0].time || 0,
+                        bitrate: this.bitrate,
+                        volume: false
                     }
                 )
-
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {

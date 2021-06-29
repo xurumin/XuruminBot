@@ -4,7 +4,7 @@ const Utils = require("./../../../utils/utils")
 const config = require("./../../../config");
 const os = require('os');
 require('dotenv/config');
-
+var pidusage = require('pidusage')
 
 const getVoiceConnectionsCount = async (client) => {
     const req = await client.shard.fetchClientValues('voice.connections.size');
@@ -43,12 +43,29 @@ module.exports = {
                 return message.channel.send("Sorry you can not send this command.")
             }
 
+            var usg = (await pidusage(process.pid))
+
             var txt = "";
             txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
             txt+= `Server count: ${await getServerCount(client)}\n`
             txt+= `Member count: ${await getMemberCount(client)}\n`
-            txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
-            txt+= `CPU usage: ${os.loadavg()}`
+            // txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
+            txt+= `Process memory ${formatMemoryUsage(usg.memory)}\n`
+            txt+= `CPU usage: ${usg.cpu.toFixed(2)}%`
+
+            // setInterval(async () => {
+            //     var usg = (await pidusage(process.pid))
+
+            //     var txt = "";
+            //     txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
+            //     txt+= `Server count: ${await getServerCount(client)}\n`
+            //     txt+= `Member count: ${await getMemberCount(client)}\n`
+            //     // txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
+            //     txt+= `Process memory ${formatMemoryUsage(usg.memory)}\n`
+            //     txt+= `CPU usage: ${usg.cpu.toFixed(2)}%`
+            //     console.log(txt);
+            // }, 1000);
+
             return message.channel.send(txt)
 
         })
