@@ -120,7 +120,7 @@ class MusicPlayer {
         }
     }
     getStreamTime(){
-        if(!this.dispatcher.streamTime) return 0;
+        if(!this.dispatcher) return 0;
         return this.dispatcher.streamTime;
     }
     getPlayingTime(){

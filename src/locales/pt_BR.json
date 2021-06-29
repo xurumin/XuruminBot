@@ -819,7 +819,7 @@
             }
         },
         "now": {
-            "message": "Tempo de reprodução: {{time}}",
+            "message": "`{{title}}` - `{{author}}`\n\n{{progress_bar}}",
             "errors": {
                 "not_playing": "O bot não está tocando nada no momento"
             }
