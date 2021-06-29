@@ -34,21 +34,21 @@ module.exports = {
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        player.changeTime(convertedTm)
+
+        const newTime = convertedTm + (player.getPlayingTime() / 1000)
+
+        player.changeTime(newTime)
         return message.channel.send(LOCALE.message.interpolate({
-            time: Utils.toHHMMSS(convertedTm)
+            time: Utils.toHHMMSS(newTime)
         }));
     },
 
     get command() {
         return {
-            name: 'timetravel',
+            name: 'forward',
             aliases: [
-                "tt",
-                "changetime",
-                "mudartempo",
-                "tempo",
-                "musictime"
+                "avancar",
+                "fwd"
             ]
         }
     },

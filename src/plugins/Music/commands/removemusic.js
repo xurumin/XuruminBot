@@ -20,35 +20,39 @@ module.exports = {
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        const tm = args[0]
+        const indexes = args.join("").split(",")
 
-        if(!args[0]){
+        if(indexes.lenght <= 0){
             return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        let convertedTm;
-        convertedTm = Utils.globalTimeToMS(tm)/1000
-        if(!convertedTm){
-            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
+
+        var musicToRemove = []
+
+        for (let index = 0; index < indexes.length; index++) {
+            const element = Number.parseInt(indexes[index]);
+            if(!Number.isInteger(element)) return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
+
+            musicToRemove.push(player.getPlaylist()[element-1])
         }
-        player.changeTime(convertedTm)
-        return message.channel.send(LOCALE.message.interpolate({
-            time: Utils.toHHMMSS(convertedTm)
-        }));
+
+        player.filterPlaylist(musicToRemove)
+
+        return await message.channel.send(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
+            prefix: process.env.COMMAND_PREFIX
+        })))
     },
 
     get command() {
         return {
-            name: 'timetravel',
+            name: 'removemusic',
             aliases: [
-                "tt",
-                "changetime",
-                "mudartempo",
-                "tempo",
-                "musictime"
+                "rmvmsc",
+                "remove",
+                "rmv"
             ]
         }
     },

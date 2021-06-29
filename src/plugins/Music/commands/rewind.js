@@ -34,21 +34,26 @@ module.exports = {
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        player.changeTime(convertedTm)
+        if(convertedTm <= 0) convertedTm = 0
+
+        let newTime = (player.getPlayingTime() / 1000) - convertedTm
+
+        if(newTime < 0) newTime = 0
+
+        player.changeTime(newTime)
+
         return message.channel.send(LOCALE.message.interpolate({
-            time: Utils.toHHMMSS(convertedTm)
+            time: Utils.toHHMMSS(newTime)
         }));
     },
 
     get command() {
         return {
-            name: 'timetravel',
+            name: 'rewind',
             aliases: [
-                "tt",
-                "changetime",
-                "mudartempo",
-                "tempo",
-                "musictime"
+                "retroceder",
+                "rtcdr",
+                "rwd"
             ]
         }
     },

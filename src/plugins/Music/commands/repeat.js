@@ -20,35 +20,20 @@ module.exports = {
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
-        const tm = args[0]
 
-        if(!args[0]){
-            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
-                prefix: process.env.COMMAND_PREFIX
-            }))
-        }
-        let convertedTm;
-        convertedTm = Utils.globalTimeToMS(tm)/1000
-        if(!convertedTm){
-            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
-                prefix: process.env.COMMAND_PREFIX
-            }))
-        }
-        player.changeTime(convertedTm)
-        return message.channel.send(LOCALE.message.interpolate({
-            time: Utils.toHHMMSS(convertedTm)
-        }));
+        player.unshiftPlaylist([player.getPlaylist()[0]])
+
+        return await message.channel.send(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
+            prefix: process.env.COMMAND_PREFIX
+        })))
     },
 
     get command() {
         return {
-            name: 'timetravel',
+            name: 'repeat',
             aliases: [
-                "tt",
-                "changetime",
-                "mudartempo",
-                "tempo",
-                "musictime"
+                "repetir",
+                "rpt"
             ]
         }
     },

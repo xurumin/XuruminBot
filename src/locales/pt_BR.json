@@ -818,12 +818,55 @@
                 "not_found": "Não achei a stream. Desculpe 😞"
             }
         },
+        "now": {
+            "message": "Tempo de reprodução: {{time}}",
+            "errors": {
+                "not_playing": "O bot não está tocando nada no momento"
+            }
+        },
+        "forward": {
+            "message": "Tempo do áudio alterado para {{time}}.",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "not_playing": "O bot não está tocando nada no momento",
+                "cmd_run_error": "Você precisa digitar `{{prefix}}avancar <milissegundos ou tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}avancar 20s`\n`{{prefix}}avancar 2:30`"
+            }
+        },
+        "rewind": {
+            "message": "Tempo do áudio alterado para {{time}}.",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "not_playing": "O bot não está tocando nada no momento",
+                "cmd_run_error": "Você precisa digitar `{{prefix}}rwd <tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}rwd 20s`\n`{{prefix}}rwd 2:30`"
+            }
+        },
         "timetravel": {
             "message": "Tempo do áudio alterado para {{time}}.",
             "errors": {
                 "ops_title": "❌ Ops!",
                 "not_playing": "O bot não está tocando nada no momento",
-                "cmd_run_error": "Você precisa digitar `{{prefix}}tt <milissegundos ou tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
+                "cmd_run_error": "Você precisa digitar `{{prefix}}tt <tempo>` para ir ao momento da música/podcast indicado.\nExemplos:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
+            }
+        },
+        "removemusic": {
+            "playlist_changed": {
+                "title": "✅ Playlist editada com sucesso!",
+                "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
+            },
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "current_music": "Para remover a música que está tocando use `{prefix}}skip`",
+                "not_playing": "O bot não está tocando nada no momento",
+                "cmd_run_error": "Você precisa digitar `{{prefix}}rmv <posição>` para remover a música.\nExemplos:\n`{{prefix}}rmv 2`\n`{{prefix}}rmv 2,3`"
+            }
+        },
+        "repeat": {
+            "playlist_changed": {
+                "title": "✅ A música atual será repetida!",
+                "description": "Utilize **{{prefix}}queue** para ver sua nova playlist! 😉"
+            },
+            "errors": {
+                "not_playing": "O bot não está tocando nada no momento"
             }
         },
         "PODCAST": "PLUGIN",

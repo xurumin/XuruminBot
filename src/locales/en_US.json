@@ -742,11 +742,27 @@
             }
         },
         "timetravel": {
-            "message": "Audio time changed to {{time}}.",
+            "message": "Time changed to {{time}}.",
             "errors": {
                 "ops_title": "❌ Oops!",
-                "not_playing":"The bot is not playing anything at the moment",
-                "cmd_run_error": "You need to type `{{prefix}}tt <milliseconds or time>` to go to the indicated song/podcast moment.\nExamples:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
+                "not_playing":"Xurumin is not playing",
+                "cmd_run_error": "You need to type `{{prefix}}tt <time>` to go to the indicated song/podcast moment.\nExamples:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
+            }
+        },
+        "forward": {
+            "message": "Time changed to {{time}}.",
+            "errors": {
+                "ops_title": "❌ Oops!",
+                "not_playing": "Xurumin is not playing",
+                "cmd_run_error": "You need to type `{{prefix}}tt <time>` to go to the indicated song/podcast moment.\nExamples:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
+            }
+        },
+        "rewind": {
+            "message": "Time changed to {{time}}.",
+            "errors": {
+                "ops_title": "❌ Oops!",
+                "not_playing": "Xurumin is not playing",
+                "cmd_run_error": "You need to type `{{prefix}}tt <time>` to go to the indicated song/podcast moment.\nExamples:\n`{{prefix}}tt 20s`\n`{{prefix}}tt 2:30`"
             }
         },
         "PODCAST": "PLUGIN",

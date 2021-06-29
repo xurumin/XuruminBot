@@ -20,6 +20,8 @@ class MusicPlayer {
         this.dispatcher;
         this.audioquality = audioquality
         this.type = type
+        this.time = 0
+        this.maxPlaylist = 100
     }
     setAudioQuality(audioquality){
         this.audioquality = audioquality
@@ -38,7 +40,31 @@ class MusicPlayer {
      * @param  {Array} playlist
      */
     appendPlaylist(playlist) {
-        this.client.playlist.set(this.guild_id, this.getPlaylist().concat(playlist).slice(0,100))
+        this.client.playlist.set(this.guild_id, this.getPlaylist().concat(playlist).slice(0,this.maxPlaylist))
+    }
+
+    /**
+     * @param  {Array} playlist
+     */
+     unshiftPlaylist(playlist) {
+        this.client.playlist.set(this.guild_id, playlist.concat(this.getPlaylist()).slice(0,this.maxPlaylist))
+    }
+
+    removePlaylistMusic(index) {
+        var plt = this.getPlaylist()
+        this.setPlaylist(plt.splice(index, 1))
+    }
+    /**
+     * @param  {Array} musics
+     */
+    filterPlaylist(musics) {
+        var plt = this.getPlaylist()
+
+        for (let index = 0; index < musics.length; index++) {
+            const element = musics[index];
+            plt = plt.filter(elm=> elm != element)
+        }
+        this.setPlaylist(plt)
     }
 
     shufflePlaylist() {
@@ -80,6 +106,9 @@ class MusicPlayer {
     changeTime(secs){
         var current_playlist = this.getPlaylist()
         current_playlist[0].time = secs
+
+        this.time = secs * 1000
+
         this.setPlaylist(current_playlist)
         if (this.dispatcher){
             this.dispatcher.destroy();
@@ -91,7 +120,11 @@ class MusicPlayer {
         }
     }
     getStreamTime(){
-        return this.dispatcher.streamTime
+        if(!this.dispatcher.streamTime) return 0;
+        return this.dispatcher.streamTime;
+    }
+    getPlayingTime(){
+        return this.getStreamTime() + this.time
     }
     getTotalTime(){
         return Utils.hmsToSeconds(this.getPlaylist()[0].duration)*1000 || 0
@@ -220,6 +253,8 @@ class MusicPlayer {
         this.connection.on('skip', () => {
             if (this.dispatcher) this.dispatcher.destroy();
             var current_playlist = this.getPlaylist()
+
+            this.time = 0
 
             if (current_playlist.length <= 1) {
                 this.connection.disconnect()
