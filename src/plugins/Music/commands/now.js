@@ -23,7 +23,7 @@ module.exports = {
         const current_music = player.getPlaylist()[0]
         let duration = current_music["duration"] || 0
 
-        if(!Number.isInteger(duration)) duration = 0
+        if(!String(duration).includes(":")) duration = 0
         
         var current_pb = Math.round((current_time * 20) / Utils.hmsToSeconds(duration))
         if(current_pb > 20) current_pb = 20

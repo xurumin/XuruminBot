@@ -22,6 +22,7 @@ class MusicPlayer {
         this.type = type
         this.time = 0
         this.maxPlaylist = 100
+        this.t247 = false;
     }
     setAudioQuality(audioquality){
         this.audioquality = audioquality
@@ -131,6 +132,7 @@ class MusicPlayer {
     }
 
     aliveConCooldown(){
+        if(this.t247 == true) return;
         var intv = setInterval(() => {
             if(!this.connection){
                 return clearInterval(intv);
@@ -278,7 +280,8 @@ class MusicPlayer {
         this.dispatcher.on('finish', (msg) => {
             if (this.dispatcher) this.dispatcher.destroy()
             var playlist = this.getPlaylist()
-            if (this.connection.channel.members.size <= 1) {
+            this.time = 0
+            if (this.connection.channel.members.size <= 1 && this.t247 == false) {
                 this.connection.disconnect()
                 this.deletePlayer();
                 this.deletePlaylist();
