@@ -9,7 +9,6 @@ require('dotenv/config');
 const talkedRecently = new Discord.Collection();
 const antiFloodCooldown = new Discord.Collection();
 
-
 function addPoint(client, userId) {
 	if (client.cachedPoints.has(userId)) {
 		client.cachedPoints.set(userId, client.cachedPoints.get(userId) + 1)
@@ -180,7 +179,9 @@ module.exports = {
 			} else {
 				var similar_cmd = client.commands.find(elm => utils.similarity(elm.command.name, command) > 0.7)
 				if(similar_cmd) similar_cmd = similar_cmd.command.name
-				var similar_aliase = client.aliases.find(elm => utils.similarity(elm, command) > 0.7)
+
+				var similar_aliase = client.aliases_array.find(elm => utils.similarity(elm[0], command) > 0.7)
+				if(similar_aliase) similar_aliase = similar_aliase[0]
 
 				if(!similar_cmd) similar_cmd = similar_aliase
 

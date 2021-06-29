@@ -23,7 +23,7 @@ client.commandsSent = 0;
 client.cachedPoints = new Discord.Collection();
 client.playingWITM = new Discord.Collection();
 client.userBanList = new Discord.Collection();
-
+client.aliases_array = []
 const LOCALES = new Discord.Collection();
 
 const init = async () => {
@@ -148,7 +148,7 @@ const init = async () => {
 	}
 	pluginsFiles = []
 
-
+	client.aliases_array =  Array.from(client.aliases.entries())
 
 
 	const GameSaleClass = require("./plugins/Notify/utils/GameSale")
