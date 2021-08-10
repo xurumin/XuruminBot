@@ -20,7 +20,7 @@
     "colors": "^1.4.0",
     "cross-blob": "^3.0.0",
     "dblapi.js": "^2.4.1",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.0.1",
     "dotenv": "^10.0.0",
     "ffmpeg-static": "^4.4.0",
     "ffprobe-static": "^3.0.0",
@@ -37,9 +37,9 @@
     "twitch-m3u8": "^1.1.4",
     "twitter": "^1.7.1",
     "xml2js": "^0.4.23",
-    "ytdl-core": "^4.9.0",
-    "ytpl": "^2.2.1",
-    "ytsr": "^3.5.0"
+    "ytdl-core": "^4.9.1",
+    "ytpl": "^2.2.3",
+    "ytsr": "^3.5.2"
   },
   "devDependencies": {
     "css-what": ">=5.0.1",
