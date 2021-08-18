@@ -1,4 +1,4 @@
-const { APIMessage, Structures } = require("discord.js");
+const Disccord = require("discord.js");
 
 class ExtAPIMessage extends APIMessage {
     resolveData() {

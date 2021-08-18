@@ -92,10 +92,8 @@ module.exports = {
                 ));
             }
 
-			message.channel.startTyping()
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			message.channel.sendTyping();
+
 			
 			//Utils.choice(LOCALE["noiaPhrases"])
 			//LOCALE["noiaPhrases"][LOCALE["noiaPhrases"].length-1]
@@ -108,11 +106,11 @@ module.exports = {
 				.setImage("attachment://image.png")
 				.setFooter("Phrases by Xurumin, @noiacoisas, pensador.com")
 
-				message.channel.stopTyping()
+				
 				return resolve(message.channel.send(embed))
 			})
 			.catch((err)=>{
-				message.channel.stopTyping()
+				
 				reject(err)
 			})
 		})

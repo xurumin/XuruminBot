@@ -22,10 +22,8 @@ module.exports = {
 
             var isDeleted = false;
 
-            message.channel.startTyping()
-            setTimeout(() => {
-                message.channel.stopTyping();
-            }, 5000);
+            message.channel.sendTyping();
+            
 
             var msg = {
                 title: LOCALE["question"].title,
@@ -39,7 +37,7 @@ module.exports = {
             main_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
             main_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
             var main_msg = await message.channel.send(main_embed)
-            message.channel.stopTyping();
+            
 
 
             EitherGame.Reactions.reactEmbed(main_msg, message.author.id, async (reaction) => {

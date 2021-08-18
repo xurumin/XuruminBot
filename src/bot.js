@@ -6,13 +6,14 @@ const fs = require('fs-extra');
 const colors = require('colors');
 
 const Discord = require('discord.js');
-require("./utils/ExtendedMessage");
+const { Client, Intents } = require('discord.js');
+// require("./utils/ExtendedMessage");
 const Utils = require('./utils/utils');
 const {
 	default: axios
 } = require('axios');
 
-const client = new Discord.Client();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();

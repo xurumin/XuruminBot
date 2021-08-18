@@ -14,10 +14,8 @@ module.exports = {
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 	
-			message.channel.startTyping()
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			message.channel.sendTyping();
+			
 			const member = message.guild.member(message.author);
 			const user_roles = member.roles.cache.sort((a, b) => a.position - b.position || a.id - b.id).map(r=>{ return r.name.replace(/[^a-z0-9 ,.?!]/ig, "")}).reverse().slice(0,3)			
 			const carteirinha_list = LOCALE.word_list
@@ -30,11 +28,11 @@ module.exports = {
 				username: message.author.username
 
 			}).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
 			})
 			.catch(async err=>{
-				message.channel.stopTyping()
+				
 				return reject(err)
 			})
 		})

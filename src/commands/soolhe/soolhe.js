@@ -18,16 +18,16 @@ module.exports = {
 			let user = message.author
 			if(metioned_user.value) user=metioned_user.value[1];
 
-			message.channel.startTyping()
+			message.channel.sendTyping();
 
 			Utils.KarinnaAPI.get("/v1/image/soolhe", {
 				img_url: user.avatarURL({format:"jpg", size:512})
             }).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				return reject(err)
             })
 		})

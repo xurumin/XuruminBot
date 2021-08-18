@@ -18,11 +18,9 @@ module.exports = {
 				text = "Wow"
 			}
 	
-			message.channel.startTyping()
+			message.channel.sendTyping();
 
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			
 			
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;
@@ -31,11 +29,11 @@ module.exports = {
 			Utils.KarinnaAPI.get("/v1/image/monarktweet", {
                 text: text
             }).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				return reject(err)
             })
 		})

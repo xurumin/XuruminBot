@@ -33,10 +33,8 @@ module.exports = {
 	 */
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
-			message.channel.startTyping();
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			message.channel.sendTyping();;
+			
 
 			let user;
 			if (message.mentions.users.size > 0) {
@@ -82,11 +80,11 @@ module.exports = {
 				profile: JSON.stringify(profile)
 
 			}).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
 			})
 			.catch(async err=>{
-				message.channel.stopTyping()
+				
 				return reject(err)
 			})
 		})

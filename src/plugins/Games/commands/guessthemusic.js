@@ -80,10 +80,8 @@ module.exports = {
                 game_info.rounds = args[1]
             }
 
-            message.channel.startTyping()
-            setTimeout(() => {
-                message.channel.stopTyping();
-            }, 5000)
+            message.channel.sendTyping();
+            
 
             var msgs = {
                 title: LOCALE["messages"].title,
@@ -103,7 +101,7 @@ module.exports = {
                 .setTitle(msgs.title)
                 .setDescription(msgs.messages.start.description)
             var start_msg = await message.channel.send(start_embed)
-            message.channel.stopTyping();
+            
             Utils.Reactions.getConfirmation(start_msg, message.author.id)
                 .then(async (code) => {
                     // if (client.playingWITM.has(message.guild.id) && WITM.state == true) {

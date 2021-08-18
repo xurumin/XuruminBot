@@ -26,6 +26,20 @@ module.exports = {
 	 */
 	run: async (client, message, locale_list) => {
 
+		message.inlineReply = (msg)=>{
+			if(msg instanceof Discord.MessageAttachment){
+				return message.channel.send({
+					files: [msg],
+					reply: { messageReference: message.id }
+				})
+			}else{
+				return message.channel.send({
+					content: msg,
+					reply: { messageReference: message.id }
+				})
+			}
+		}
+
 		// if(!antiFloodCooldown.has(message.author.id)){
 		// 	if(client.cachedPoints.has(message.author.id)){
 		// 		client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
@@ -207,7 +221,7 @@ module.exports = {
 				return MessageLog.log("NOT FOUND", message);
 			}
 		} catch (error) {
-			message.channel.stopTyping();
+			
 			console.log("[MESSAGE_EVENT]", error)
 			return message.channel.send(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
 		}
@@ -215,7 +229,7 @@ module.exports = {
 
 	get event() {
 		return {
-			eventName: 'message'
+			eventName: 'messageCreate'
 		};
 	},
 };

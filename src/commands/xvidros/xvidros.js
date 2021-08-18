@@ -32,11 +32,11 @@ module.exports = {
                 username: user.username,
 				img_url: user.avatarURL({format:"jpg", size:512})
             }).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				return reject(err)
             })
 		})

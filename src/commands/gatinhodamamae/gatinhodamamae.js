@@ -31,7 +31,7 @@ module.exports = {
 			return message.inlineReply(new Discord.MessageAttachment(res, "image.jpg"))
 		})
 		.catch(async err=>{
-			message.channel.stopTyping()
+			
 			return err
 		})
 

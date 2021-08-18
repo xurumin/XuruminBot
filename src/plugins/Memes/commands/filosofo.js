@@ -19,11 +19,9 @@ module.exports = {
 				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
 			}
 			
-			message.channel.startTyping()
+			message.channel.sendTyping();
 
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			
 
 			Utils.KarinnaAPI.get("/v1/image/filosofo", {
                 text: text
@@ -31,7 +29,7 @@ module.exports = {
 				resolve(message.inlineReply(new Discord.MessageAttachment(res, "filosofo.jpeg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				message.inlineReply("Ocorreu um erro ao carregar esse comando. Mas não se preocupe! Nossos gatinhos estão trabalhando para resolver isso!")
 				return reject(err)
             })

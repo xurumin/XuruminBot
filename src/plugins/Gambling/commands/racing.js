@@ -72,10 +72,8 @@ module.exports = {
                     user: message.author
                 }))
             }
-            message.channel.startTyping()
-            setTimeout(() => {
-                message.channel.stopTyping();
-            }, 5000);
+            message.channel.sendTyping();
+            
 
             var main_embed = new Discord.MessageEmbed()
             main_embed.setTitle(game_info.title)
@@ -85,7 +83,7 @@ module.exports = {
             }))
 
             var msg = await message.channel.send(main_embed)
-            message.channel.stopTyping();
+            
 
             racingGame.set(message.guild.id, {
                 bettors: [],

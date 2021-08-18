@@ -1,9 +1,5 @@
 "use strict";
 
-const {
-    createCanvas,
-    loadImage
-} = require('canvas')
 const Discord = require('discord.js');
 const path = require("path")
 const Utils = require("./../../../utils/utils")
@@ -25,10 +21,8 @@ module.exports = {
      */
     run: (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
-            message.channel.startTyping()
-            setTimeout(() => {
-                message.channel.stopTyping();
-            }, 5000);
+            message.channel.sendTyping();
+            
 
             const action = args[0]
 
@@ -38,7 +32,7 @@ module.exports = {
             ]
 
             if(!action || !avaliableActions.includes(action)){
-                message.channel.stopTyping()
+                
                 return resolve(message.channel.send(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["setup"].description.interpolate({

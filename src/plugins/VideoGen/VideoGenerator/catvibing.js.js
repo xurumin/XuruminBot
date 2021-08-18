@@ -43,7 +43,7 @@ function run_gen(client, message, args,loading_msg, LOCALE) {
 			return globalCooldown.shift()
 		})
 		.catch((err)=>{
-			message.channel.stopTyping()
+			
 			reject(err)
 		})
 	})

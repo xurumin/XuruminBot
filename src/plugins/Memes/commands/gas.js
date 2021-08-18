@@ -53,10 +53,8 @@ module.exports = {
                 ));
             }
 
-            message.channel.startTyping()
-            setTimeout(() => {
-                message.channel.stopTyping();
-            }, 5000);
+            message.channel.sendTyping();
+            
 
             ImageGenerator(user_pic)
                 .then(async (image) => {
@@ -72,12 +70,12 @@ module.exports = {
                         .setDescription(msg.description)
                         .attachFiles(image)
                         .setImage("attachment://image.png")
-                    message.channel.stopTyping()    
+                        
 
                     return resolve(await message.channel.send(embed))
                 })
                 .catch((err) => {
-                    message.channel.stopTyping()
+                    
                     return reject(err)
                 })
         })

@@ -12,7 +12,6 @@ const Utils = require("./../../../utils/utils")
 require('dotenv/config');
 
 const SpotifyWebApi = require('spotify-web-api-node');
-const { resolve } = require('path');
 const { default: axios } = require('axios');
 let spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,

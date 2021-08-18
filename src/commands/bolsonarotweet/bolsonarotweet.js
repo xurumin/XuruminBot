@@ -26,10 +26,8 @@ module.exports = {
 				);
 			}
 	
-			message.channel.startTyping()
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			message.channel.sendTyping();
+			
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;
 			if(text.length > 74 && text.length <= 151) img_code=2;
@@ -40,7 +38,7 @@ module.exports = {
 				resolve(message.inlineReply(new Discord.MessageAttachment(res, "tweet.jpg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				return reject(err)
             })
 		})

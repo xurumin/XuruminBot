@@ -37,10 +37,7 @@ module.exports = {
                 current_playing_song = current_playing_song["name"] + " " + current_playing_song["author"]
             }
 
-            message.channel.startTyping()
-            setTimeout(()=>{
-                message.channel.stopTyping()
-            }, 4000)
+            message.channel.sendTyping();
 
             try {
                 lyric = await Music.getLyricByMusicName(current_playing_song)
@@ -51,7 +48,7 @@ module.exports = {
                     .setTitle(`Letra da música não encontrada :(`)
                     .setAuthor(client.user.username)
                 
-                message.channel.stopTyping()
+                
                 return resolve(message.channel.send(embed));
             }
 
@@ -61,7 +58,7 @@ module.exports = {
                     .setTitle(`Letra da música não encontrada :(`)
                     .setAuthor(client.user.username)
                 
-                message.channel.stopTyping()
+                
                 return resolve(message.channel.send(embed));
             }
 
@@ -78,7 +75,7 @@ module.exports = {
                     .setColor('#9d65c9')
                     .setDescription(lyric.slice(1500, lyric.length))
 
-                message.channel.stopTyping()
+                
                 return resolve(message.channel.send(embed2));
             } else {
                 const embed = new Discord.MessageEmbed()
@@ -86,7 +83,7 @@ module.exports = {
                     .setTitle(`Music Lyrics for ${current_playing_song}`)
                     .setAuthor(client.user.username)
                     .setDescription(lyric)
-                message.channel.stopTyping()
+                
                 return resolve(message.channel.send(embed));
             }
         })

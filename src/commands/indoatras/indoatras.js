@@ -20,20 +20,18 @@ module.exports = {
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}indoatras <frase que você quiser>** para ir daquele que fez alquilo! 🤗`)
 				);
 			}
-			message.channel.startTyping()
+			message.channel.sendTyping();
 
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			
 
 			Utils.KarinnaAPI.get("/v1/image/indoatras", {
                 text: text
             }).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				return reject(err)
             })
 		})

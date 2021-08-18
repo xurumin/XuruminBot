@@ -25,11 +25,9 @@ module.exports = {
 				);
 			}
 	
-			message.channel.startTyping()
+			message.channel.sendTyping();
 
-			setTimeout(() => {
-				message.channel.stopTyping();
-			}, 5000);
+			
 
 			Utils.KarinnaAPI.get("/v1/image/eufilosofo", {
                 text: text,
@@ -39,11 +37,11 @@ module.exports = {
 					size: 512
 				})
             }).then(async res=>{
-				message.channel.stopTyping();
+				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
             })
             .catch(async err=>{
-                message.channel.stopTyping()
+                
 				return reject(err)
             })
 		})

@@ -3,13 +3,6 @@ const database = require("./../../utils/database")
 const Utils = require("./../../utils/utils")
 const fs = require("fs")
 
-const {
-	createCanvas,
-	createImageData,
-	loadImage
-} = require('canvas')
-
-
 const slogan_part_1 = [
 	"Por um Brasil mais",
 	"Por uma nação mais",

@@ -12,20 +12,18 @@ module.exports = {
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
 			if (message.mentions.users.size > 0) {
-				message.channel.startTyping()
+				message.channel.sendTyping();
 
-				setTimeout(() => {
-					message.channel.stopTyping();
-				}, 5000);
+				
 
 				Utils.KarinnaAPI.get("/v1/image/funcionariodomes", {
 					img_url: message.mentions.users.entries().next().value[1].avatarURL({format:"jpg", size:512})
 				}).then(async res=>{
-					message.channel.stopTyping();
+					
 					return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
 				})
 				.catch(async err=>{
-					message.channel.stopTyping()
+					
 					return reject(err)
 				})
 	
