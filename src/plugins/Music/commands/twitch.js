@@ -30,7 +30,7 @@ async function playTwitch(client, message, track_url, LOCALE) {
         duration: Infinity
     }])
     player.playMp3()
-    return message.channel.send(Utils.createSimpleEmbed(LOCALE.title, LOCALE["stream_added"]));
+    return message.send_(Utils.createSimpleEmbed(LOCALE.title, LOCALE["stream_added"]));
 }
 
 module.exports = {
@@ -50,7 +50,7 @@ module.exports = {
 
         } else {
             if (!args.join("") || (url_.host != "twitch.tv" && url_.host != "www.twitch.tv")) {
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
+                return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
             }
             var twitch_user = url_.path.split("/")[1]
         }
@@ -63,23 +63,23 @@ module.exports = {
                     return playTwitch(client, message, audio, LOCALE);
                 }
 
-                var msg = await message.channel.send(Utils.createSimpleEmbed(LOCALE["already_playing"]["title"], LOCALE["already_playing"].description))
+                var msg = await message.send_(Utils.createSimpleEmbed(LOCALE["already_playing"]["title"], LOCALE["already_playing"].description))
                 Utils.Reactions.getConfirmation(
                         msg, message.author.id
                     ).then(async (value) => {
                         await msg.delete()
                         if (!value) {
-                            return await message.channel.send(Utils.createSimpleEmbed(LOCALE["decline"], ""))
+                            return await message.send_(Utils.createSimpleEmbed(LOCALE["decline"], ""))
                         }
                         var audio = data.find(elm => elm.quality = "audio_only")["url"]
                         return playTwitch(client, message, audio, LOCALE);
                     })
                     .catch(async (err) => {
-                        return await message.channel.send(Utils.createSimpleEmbed(LOCALE["decline"], ""))
+                        return await message.send_(Utils.createSimpleEmbed(LOCALE["decline"], ""))
                     })
             })
             .catch((err) => {
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
+                return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
             })
 
     },

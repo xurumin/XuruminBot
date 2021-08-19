@@ -12,7 +12,7 @@ module.exports = {
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
 			if (message.mentions.users.size > 0) {
-				message.channel.sendTyping();
+				message.send_Typing();
 
 				
 
@@ -28,7 +28,7 @@ module.exports = {
 				})
 	
 			} else {
-				return message.channel.send(
+				return message.send_(
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}funcionariodomes @usuario** para dar o título de **Funcionário do Mês** 🤗`)
 				);
 			}

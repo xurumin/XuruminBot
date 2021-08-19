@@ -14,7 +14,7 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args, LOCALE) => {
-		return message.channel.send(
+		return message.send_(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
 			.setTitle(LOCALE.message.title)

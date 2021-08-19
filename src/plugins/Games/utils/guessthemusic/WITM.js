@@ -69,7 +69,7 @@ class Game {
         await this.MusicPlayer.init(this.message, this.client)
         this.count = 0;
         this.play_game(this.message, this.game_info.playlist, () => {
-            this.message.channel.send(new Discord.MessageEmbed().setTitle(
+            this.message.send_(new Discord.MessageEmbed().setTitle(
                 this.LOCALE["messages"]["playing"].interpolate({
                     index: this.count + 1
                 })
@@ -89,14 +89,14 @@ class Game {
                 return this.EventEmitter.emit("finish")
             }
             if (res.status == 0) {
-                await this.message.channel.send(
+                await this.message.send_(
                     this.LOCALE["messages"]["timeout"].interpolate({
                         music_name: res.music
                     }))
             }
 
             this.play_game(this.message, this.game_info.playlist, () => {
-                this.message.channel.send(new Discord.MessageEmbed().setTitle(
+                this.message.send_(new Discord.MessageEmbed().setTitle(
                     this.LOCALE["messages"]["playing"].interpolate({
                         index: this.count + 1
                     })
@@ -122,7 +122,7 @@ class Game {
             if(!winner_id){
                 embed.setDescription("")
             }
-            this.message.channel.send(embed)
+            this.message.send_(embed)
 
             this.EventEmitter.emit("leave")
         })
@@ -131,7 +131,7 @@ class Game {
                 if (!this.client.playingWITM.get(this.message.guild.id)) {
                     return;
                 }
-                this.message.channel.send(this.LOCALE["messages"]["leaving"])
+                this.message.send_(this.LOCALE["messages"]["leaving"])
                 this.EventEmitter.emit("leave")
             })
     }
@@ -171,7 +171,7 @@ class Game {
                 clearTimeout(this.gm_tm)
 
                 this.isOpen = false
-                await this.message.channel.send(this.LOCALE["messages"]["right_answer"].interpolate({
+                await this.message.send_(this.LOCALE["messages"]["right_answer"].interpolate({
                     author: `<@${playerId}>`,
                     music_name: `${this.random_music.name} - ${this.random_music.author}`
                 }))

@@ -26,7 +26,7 @@ module.exports = {
                     answer: joke.resposta
                 })
             }
-            return resolve(message.channel.send(
+            return resolve(message.send_(
                 utils.createSimpleEmbed(msg.title, msg.description)
             ));
 

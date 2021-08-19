@@ -16,7 +16,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         var player = client.players.get(message.guild.id)
         if (!player) {
-            return message.channel.send(LOCALE.errors.not_playing)
+            return message.send_(LOCALE.errors.not_playing)
         }
         var pb = ["▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬","▬"]
         const current_time = player.getPlayingTime() / 1000
@@ -30,7 +30,7 @@ module.exports = {
         
         pb[current_pb] = "🔘"
 
-        return message.channel.send(new Discord.MessageEmbed().setDescription(
+        return message.send_(new Discord.MessageEmbed().setDescription(
             LOCALE.message.interpolate({
                 title: current_music["name"],
                 author: current_music["author"],

@@ -24,7 +24,7 @@ async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
     try {
         spotify_playlist = await Music.getSpotifyPlaylist(playlist_url, process.env.PLAYLIST_ADD_LIMIT ? process.env.PLAYLIST_ADD_LIMIT : 50)
     } catch (error) {
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
@@ -34,13 +34,13 @@ async function spotifyPlaylist(client, message, playlist_url, LOCALE) {
         client.players.set(message.guild.id, player)
         player.setPlaylist(spotify_playlist)
         player.play()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: spotify_playlist[0].name,
             music_duration: spotify_playlist[0].duration
         })));
     } else {
         player.appendPlaylist(spotify_playlist)
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -50,7 +50,7 @@ async function spotifyTrack(client, message, track_url, LOCALE) {
     try {
         spotifyTrack = await Music.getSpotifyTrack(track_url)
     } catch (error) {
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
@@ -60,13 +60,13 @@ async function spotifyTrack(client, message, track_url, LOCALE) {
         client.players.set(message.guild.id, player)
         player.setPlaylist([spotifyTrack])
         player.play()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: spotifyTrack.name,
             music_duration: spotifyTrack.duration
         })));
     } else {
         player.appendPlaylist([spotifyTrack])
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -76,7 +76,7 @@ async function spotifyAlbum(client, message, album_url, LOCALE) {
     try {
         spotifyAlbum = await Music.getSpotifyAlbum(album_url)
     } catch (error) {
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
@@ -86,13 +86,13 @@ async function spotifyAlbum(client, message, album_url, LOCALE) {
         client.players.set(message.guild.id, player)
         player.setPlaylist(spotifyAlbum)
         player.play()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: spotifyAlbum[0].name,
             music_duration: spotifyAlbum[0].duration
         })));
     } else {
         player.appendPlaylist(spotifyAlbum)
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -106,7 +106,7 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
             type: "Erro ao carregar a playlist",
             info: error
         })
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
@@ -116,13 +116,13 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
         client.players.set(message.guild.id, player)
         player.setPlaylist(youtube_playlist)
         player.play()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: youtube_playlist[0].name,
             music_duration: youtube_playlist[0].duration
         })));
     } else {
         player.appendPlaylist(youtube_playlist)
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -137,7 +137,7 @@ async function youtubeLink(client, message, video_url, LOCALE) {
             url: video_url,
             duration: "99:99"
         }
-        // return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        // return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
@@ -147,13 +147,13 @@ async function youtubeLink(client, message, video_url, LOCALE) {
         client.players.set(message.guild.id, player)
         player.setPlaylist([video_info])
         player.play()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: video_info.name,
             music_duration: video_info.duration
         })));
     } else {
         player.appendPlaylist([video_info])
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -180,7 +180,7 @@ function searchTerm(client, message, args, LOCALE) {
             //txt +=  LOCALE["youtube_search"].footer
             txt.setFooter(LOCALE["youtube_search"].footer)
 
-            var msg = await message.channel.send(txt)
+            var msg = await message.send_(txt)
 
             var reactIndex = await Music.getReact(msg, message.author)
 
@@ -200,13 +200,13 @@ function searchTerm(client, message, args, LOCALE) {
                 client.players.set(message.guild.id, player)
                 player.setPlaylist([video_info])
                 player.play()
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+                return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
                     music_name: video_info.name,
                     music_duration: video_info.duration
                 })));
             } else {
                 player.appendPlaylist([video_info])
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+                return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
                     prefix: process.env.COMMAND_PREFIX
                 })));
             }
@@ -214,7 +214,7 @@ function searchTerm(client, message, args, LOCALE) {
         })
         .catch(err => {
             console.log(err);
-            return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+            return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
         })
 }
 async function podcastEpisode(client, message, track_url, LOCALE) {
@@ -229,7 +229,7 @@ async function podcastEpisode(client, message, track_url, LOCALE) {
         })
 
         if (!podcastShow) {
-            return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+            return message.send_(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
         }
 
         var eps = await PodcastUtil.getLastEpsByUrl(podcastShow["feedUrl"], 0, 5000)
@@ -237,14 +237,14 @@ async function podcastEpisode(client, message, track_url, LOCALE) {
             return (String(ep["title"][0]).toLowerCase() == String(podcastEp["name"]).toLowerCase()) || String(ep["itunes:title"]).toLowerCase() == String(podcastEp["name"]).toLowerCase()
         })
         if (!episodeF) {
-            return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+            return message.send_(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
         }
         podcastEp.url = episodeF["enclosure"][0]["$"]["url"]
 
 
     } catch (error) {
         console.log(error);
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+        return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
     }
     var player = client.players.get(message.guild.id)
     if (!player) {
@@ -254,13 +254,13 @@ async function podcastEpisode(client, message, track_url, LOCALE) {
         client.players.set(message.guild.id, player)
         player.setPlaylist([podcastEp])
         player.playMp3()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
             music_name: podcastEp.name,
             music_duration: podcastEp.duration
         })));
     } else {
         player.appendPlaylist([podcastEp])
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -279,7 +279,7 @@ async function playMp3(client, message, track_url, LOCALE) {
             duration: Infinity
         }])
         player.playMp3()
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing_mp3"].interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["playing_mp3"].interpolate({
             music_name: "MP3",
             music_duration: "#"
         })));
@@ -290,7 +290,7 @@ async function playMp3(client, message, track_url, LOCALE) {
             author: "MP3",
             duration: Infinity
         }])
-        return message.channel.send(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
+        return message.send_(Utils.createSimpleEmbed(LOCALE["musics_added"].title, LOCALE["musics_added"].description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })));
     }
@@ -310,13 +310,13 @@ module.exports = {
         const url_ = url.parse(userMsg).host
 
         if (!message.member.voice.channel) {
-            return message.channel.send(
+            return message.send_(
                 Utils.createSimpleEmbed(LOCALE["errors"].ops_title, LOCALE["errors"].user_is_not_on_voice_chat)
             );
         }
 
         if (args.length <= 0 || !args) {
-            return message.channel.send(
+            return message.send_(
                 Utils.createSimpleEmbed(LOCALE["errors"]["wrong_format"].title, LOCALE["errors"]["wrong_format"].description.interpolate({
                     prefix: process.env.COMMAND_PREFIX
                 }))
@@ -360,7 +360,7 @@ module.exports = {
         }
 
 
-        return message.channel.send(LOCALE["errors"].not_found)
+        return message.send_(LOCALE["errors"].not_found)
 
     },
     get command() {

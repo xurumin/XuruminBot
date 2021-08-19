@@ -14,7 +14,7 @@ module.exports = {
 	 */
 	run: async (client, message, args) => {
 		if (!message.mentions.users.size > 0) {
-			return message.channel.send(
+			return message.send_(
                 Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}marcarbriga @usuario** para marcar a briga! 🤗`)
             );
 
@@ -22,7 +22,7 @@ module.exports = {
 		let metioned_user = message.mentions.users.entries().next().value[1]
 
 		if(message.author == metioned_user){
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed("❌ Pera lá né amigo", `Você não pode brigar com você mesmo 😑`)
 			)
 		}
@@ -44,7 +44,7 @@ module.exports = {
 			"Quando você quiser pai ta pronto",
 			"Quando tu largar de ser besta"
 		]
-		return message.channel.send(
+		return message.send_(
 			new Discord.MessageEmbed()
 			.setTitle("😤 Chamado para a briga")
 			.setDescription(`**${message.author}** chamou **${metioned_user}** pra briga\n⌚️ **Horario**: ${schedules[Math.floor(Math.random() * schedules.length)]}\n🗺️ **Local**: ${places[Math.floor(Math.random() * places.length)]}\n**É bom aparecer seu troxão** 😡`)

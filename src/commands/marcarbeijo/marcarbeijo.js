@@ -14,7 +14,7 @@ module.exports = {
 	 */
 	run: async (client, message, args) => {
 		if (!message.mentions.users.size > 0) {
-			return message.channel.send(
+			return message.send_(
                 Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}marcarbeijo @usuario** para marcar o beijin! 🤗`)
             );
 
@@ -22,13 +22,13 @@ module.exports = {
 		let metioned_user = message.mentions.users.entries().next().value[1]
 
 		if(message.author == metioned_user){
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed("❌ Pera lá né amigo", `Você não pode beijar com você mesmo... 😑\n Ou será que pode? 🤔`)
 			)
 		}
 
 		if(metioned_user == client.user){
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed("😬 Opa, então né...", `Agradeço e tals mas tô passando`)
 			)
 		}
@@ -52,7 +52,7 @@ module.exports = {
 			"Quando você quiser pai ta pronto",
 			"Quando tu largar de ser besta"
 		]
-		return message.channel.send(
+		return message.send_(
 			new Discord.MessageEmbed()
 			.setTitle("😘 Chamado para me beijar rs")
 			.setDescription(`**${message.author}** chamou **${metioned_user}** pro beijo 🥰\n⌚️ **Horario**: ${schedules[Math.floor(Math.random() * schedules.length)]}\n🗺️ **Local**: ${places[Math.floor(Math.random() * places.length)]}\n**É bom aparecer seu troxão** 😡`)

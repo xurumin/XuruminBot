@@ -24,7 +24,7 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		return message.channel.send(`Oi! Estou online a ${segParaHora(client.uptime/1000)}`)
+		return message.send_(`Oi! Estou online a ${segParaHora(client.uptime/1000)}`)
 	},
 
 	get command() {

@@ -32,7 +32,7 @@ function run_gen(client, message, args,loading_msg, LOCALE) {
 		VideoGenerator(user_pic, message)
 		.then(async (image)=>{
 			loading_msg = await loading_msg
-			await message.channel.send(image[0])
+			await message.send_(image[0])
             var fi = image[1]
             await fs.unlinkSync(fi.video);
             for(var image of fi.images){
@@ -74,14 +74,14 @@ module.exports = {
             .setDescription(LOCALE.errors.user_is_not_premium.description.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
-            return message.channel.send(notPremiumEmbed)
+            return message.send_(notPremiumEmbed)
         }
         const embed = new Discord.MessageEmbed()
             .setColor('#9d65c9')
             .setTitle(LOCALE.messages.loading.title)
             .setDescription(LOCALE.messages.loading.description)
 
-        var loading_msg = message.channel.send(embed)
+        var loading_msg = message.send_(embed)
 
         globalCooldown.push(message.id)
         if (isMe(message.id)) {

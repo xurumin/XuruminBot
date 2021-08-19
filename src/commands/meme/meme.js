@@ -21,7 +21,7 @@ module.exports = {
 			`${(meme.source).toLocaleUpperCase()} - ${meme.author.screen_name}`,
 			'https://i.imgur.com/PAYbEgv.png'
 		);
-		return message.channel.send(meme_embed);
+		return message.send_(meme_embed);
 		
 	},
 

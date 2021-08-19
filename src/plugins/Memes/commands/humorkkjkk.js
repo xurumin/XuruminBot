@@ -59,12 +59,12 @@ module.exports = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
-                return resolve(message.channel.send(
+                return resolve(message.send_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
 
-            message.channel.sendTyping();
+            message.send_Typing();
             
 
             ImageGenerator(user_pic, utils.choice(ImageList))
@@ -83,7 +83,7 @@ module.exports = {
                         .setImage("attachment://image.png")
                         
 
-                    return resolve(await message.channel.send(embed))
+                    return resolve(await message.send_(embed))
                 })
                 .catch((err) => {
                     

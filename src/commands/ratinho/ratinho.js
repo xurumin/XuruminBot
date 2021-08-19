@@ -14,7 +14,7 @@ module.exports = {
 	 * @param  {Array} args
 	 */
 	run: async (client, message, args) => {
-        return message.channel.send("https://www.youtube.com/watch?v=-d6wB4KyuUk&list=PLJxFlYsd38rLghWxPrtoX2mL7jXCrZq_M&index=12");
+        return message.send_("https://www.youtube.com/watch?v=-d6wB4KyuUk&list=PLJxFlYsd38rLghWxPrtoX2mL7jXCrZq_M&index=12");
 	},
 
 	get command() {

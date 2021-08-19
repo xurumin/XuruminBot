@@ -16,11 +16,11 @@ module.exports = {
 			let text = args.join(" ").slice(0,23)
 			text = text.replace(/\n/gi, ' ')
 			if(args.length <= 0 || text==""){
-				return message.channel.send(
+				return message.send_(
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}indoatras <frase que você quiser>** para ir daquele que fez alquilo! 🤗`)
 				);
 			}
-			message.channel.sendTyping();
+			message.send_Typing();
 
 			
 

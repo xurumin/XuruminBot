@@ -18,7 +18,7 @@ module.exports = {
                     title: "❌ Ops!",
                     description: "Você precisa estar em um canal **NSFW** para executar esse comando :("
                 }
-                return resolve(message.channel.send(
+                return resolve(message.send_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }

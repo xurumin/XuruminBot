@@ -25,12 +25,34 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, locale_list) => {
-
 		message.inlineReply = (msg)=>{
 			if(msg instanceof Discord.MessageAttachment){
 				return message.channel.send({
 					files: [msg],
 					reply: { messageReference: message.id }
+				})
+			}
+			else if(msg instanceof Discord.MessageEmbed){
+				return message.channel.send({
+					embeds: [msg],
+					reply: { messageReference: message.id }
+				})
+			}else{
+				return message.channel.send({
+					content: msg,
+					reply: { messageReference: message.id }
+				})
+			}
+		}
+		message.send_ = (msg)=>{
+			if(msg instanceof Discord.MessageAttachment){
+				return message.channel.send({
+					files: [msg]
+				})
+			}
+			else if(msg instanceof Discord.MessageEmbed){
+				return message.channel.send({
+					embeds: [msg]
 				})
 			}else{
 				return message.channel.send({
@@ -66,7 +88,7 @@ module.exports = {
 		}
 
 		// Checks if user is banned.
-		if(client.userBanList[message.author.id]) return message.channel.send("Sorry. You are banned.")
+		if(client.userBanList[message.author.id]) return message.send_("Sorry. You are banned.")
 
 
 		if (talkedRecently.has(message.author.id)) {
@@ -80,7 +102,7 @@ module.exports = {
 					cooldown: cooldown
 				}))
 				.setColor('#8146DC')
-			return message.channel.send(embed);
+			return message.send_(embed);
 		}
 		/**
 		 * If bot was tagged
@@ -101,7 +123,7 @@ module.exports = {
 				.setThumbnail(client.user.avatarURL())
 				.setColor('#8146DC')
 				.setFooter(`All rights reserved @ ${client.user.username} - ${new Date().getFullYear()}`, client.user.avatarURL());;
-			return message.channel.send(embed);
+			return message.send_(embed);
 		}
 
 		let args;
@@ -153,7 +175,7 @@ module.exports = {
 				}, totalCooldown);
 			}
 
-			if ((cmd || aliase) && (config.blockedcommands.includes(command)) || config.blockedcommands.includes(aliase) ) return message.channel.send(LOCALE.events.message.errors.blocked_command)
+			if ((cmd || aliase) && (config.blockedcommands.includes(command)) || config.blockedcommands.includes(aliase) ) return message.send_(LOCALE.events.message.errors.blocked_command)
 			if (cmd) {
 				//Register +1 cmd to log
 				client.commandsSent++;
@@ -215,7 +237,7 @@ module.exports = {
 					}))
 				}
 
-				message.channel.send(
+				message.send_(
 					embed
 				)
 				return MessageLog.log("NOT FOUND", message);
@@ -223,7 +245,7 @@ module.exports = {
 		} catch (error) {
 			
 			console.log("[MESSAGE_EVENT]", error)
-			return message.channel.send(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
+			return message.send_(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
 		}
 	},
 

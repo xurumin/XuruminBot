@@ -20,7 +20,7 @@ module.exports = {
 		embed.setDescription(LOCALE["message"].description)
 		// embed.setDescription(lastUpdates)
 		// embed.setThumbnail(client.user.avatarURL())
-        return message.channel.send(embed);
+        return message.send_(embed);
 	},
 
 	get command() {

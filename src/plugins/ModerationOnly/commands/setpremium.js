@@ -15,7 +15,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject)=>{
             if(!config.specialusers.includes(message.author.id)){
-                return message.channel.send("Sorry you can not send this command.")
+                return message.send_("Sorry you can not send this command.")
             }
 
             const tagged_user = message.mentions.users.entries().next()
@@ -23,15 +23,15 @@ module.exports = {
             if (tagged_user.value){
                 user = tagged_user.value[1];
             }else{
-                return message.channel.send("Você precisa marcar alguém pra dar o premium, fi.")
+                return message.send_("Você precisa marcar alguém pra dar o premium, fi.")
             }
 
             Utils.Profile.setTag({},user.id, "status", "premium")
             .then(()=>{
-                return message.channel.send("Premium dado com sucesso.")
+                return message.send_("Premium dado com sucesso.")
             })
             .catch(()=>{
-                return message.channel.send("Ocorreu um erro.")
+                return message.send_("Ocorreu um erro.")
             })
 
         })

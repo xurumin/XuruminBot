@@ -106,6 +106,9 @@ const init = async () => {
 			console.log(`[event-loader] ${props.event.eventName.green} loaded.`)
 
 			client.on(props.event.eventName, (data) => {
+				if(data.channel){
+					data.channel.send_ = data.channel.send
+				}
 				props.run(client, data, LOCALES)
 			});
 

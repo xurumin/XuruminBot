@@ -15,7 +15,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject)=>{
             if(!config.specialusers.includes(message.author.id)){
-                return message.channel.send("Sorry you can not send this command.")
+                return message.send_("Sorry you can not send this command.")
             }
 
             const tagged_user = message.mentions.users.entries().next()
@@ -23,29 +23,29 @@ module.exports = {
             if (tagged_user.value){
                 user = tagged_user.value[1];
             }else{
-                return message.channel.send("Você precisa marcar alguém pra dar o banir, fi.")
+                return message.send_("Você precisa marcar alguém pra dar o banir, fi.")
             }
 
             if(args[0] == "ban"){
                 var isBanned = await Utils.Ban.isBanned(user.id)
-                if(isBanned) return message.channel.send("User is already banned.")
+                if(isBanned) return message.send_("User is already banned.")
                 Utils.Ban.setBan(user.id)
                 .then(()=>{
-                    return message.channel.send("Usuário banido com sucesso.")
+                    return message.send_("Usuário banido com sucesso.")
                 })
                 .catch(()=>{
-                    return message.channel.send("Ocorreu um erro.")
+                    return message.send_("Ocorreu um erro.")
                 })
             }else if(args[0] == "unban"){
                 Utils.Ban.removeBan(user.id)
                 .then(()=>{
-                    return message.channel.send("Ban removido.")
+                    return message.send_("Ban removido.")
                 })
                 .catch(()=>{
-                    return message.channel.send("Ocorreu um erro.")
+                    return message.send_("Ocorreu um erro.")
                 })
             }else{
-                return message.channel.send("`ban` or `unban`")
+                return message.send_("`ban` or `unban`")
             }
         })
     },

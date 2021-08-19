@@ -28,13 +28,13 @@ module.exports = {
                 embed.setDescription(LOCALE.true.interpolate({
                     user: user
                 }))
-                return message.channel.send(embed)
+                return message.send_(embed)
 
             }else{
                 embed.setDescription(LOCALE.false.interpolate({
                     user: user
                 }))
-                return message.channel.send(embed)
+                return message.send_(embed)
             }
 
         })

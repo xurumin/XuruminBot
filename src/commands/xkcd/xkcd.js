@@ -14,7 +14,7 @@ module.exports = {
 	 */
 	run: async (client, message, args) => {
 		var meme = await axios.get(`https://xkcd.com/${Utils.random(0,2100)}/info.0.json`)
-		return message.channel.send(
+		return message.send_(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
 			.setTitle(meme.data.safe_title)

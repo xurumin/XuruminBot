@@ -14,20 +14,20 @@ module.exports = {
 	 */
 	run: async (client, message, args, LOCALE) => {
 		if(args.length <= 0){
-			return message.channel.send(
+			return message.send_(
                 Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, LOCALE.errors.cmd_format.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
 		}
 		
 		if(await Utils.Profile.hasProfile(client, message.author.id)){
 			await Utils.Profile.setTag(client, message.author.id, "aboutme", args.join(" ").slice(0,250))
-			return message.channel.send(
+			return message.send_(
                 Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
 		}else{
 			var standard_profile = Utils.Profile.getStandardProfile()
 			await Utils.Profile.setProfile(client, message.author.id,standard_profile.bg_url,args.join(" ").slice(0,250),standard_profile.level, standard_profile.points)
-			return message.channel.send(
+			return message.send_(
                 Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
 		}

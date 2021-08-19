@@ -16,14 +16,14 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         var player = client.players.get(message.guild.id)
         if (!player) {
-            return message.channel.send(LOCALE.errors.not_playing.interpolate({
+            return message.send_(LOCALE.errors.not_playing.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
         const indexes = args.join("").split(",")
 
         if(indexes.lenght <= 0){
-            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
+            return message.send_(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
@@ -32,7 +32,7 @@ module.exports = {
 
         for (let index = 0; index < indexes.length; index++) {
             const element = Number.parseInt(indexes[index]);
-            if(!Number.isInteger(element)) return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
+            if(!Number.isInteger(element)) return message.send_(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
 
@@ -41,7 +41,7 @@ module.exports = {
 
         player.filterPlaylist(musicToRemove)
 
-        return await message.channel.send(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
+        return await message.send_(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })))
     },

@@ -25,7 +25,7 @@ module.exports = {
             }
 
             if (!game_info.play.value || !game_info.play.face || game_info.play.value <= 0 || game_info.play.face <= 0 || game_info.play.face > 6) {
-                return message.channel.send(new Discord.MessageEmbed().setDescription(LOCALE["start"].description.interpolate({
+                return message.send_(new Discord.MessageEmbed().setDescription(LOCALE["start"].description.interpolate({
                         user: message.author,
                         prefix: process.env.COMMAND_PREFIX
                     }))
@@ -37,12 +37,12 @@ module.exports = {
                 value: game_info.play.value,
                 face: game_info.play.face
             }))
-            var confirmation = await message.channel.send(embed)
+            var confirmation = await message.send_(embed)
 
             Utils.Reactions.getConfirmation(confirmation, message.author.id)
                 .then(async (status) => {
                     if (!status) {
-                        return resolve(await message.channel.send(LOCALE["refused"]))
+                        return resolve(await message.send_(LOCALE["refused"]))
                     }
                     Payment.fastPay(message.author.id, game_info.play.value)
                         .then(async (pmtResponse) => {
@@ -80,7 +80,7 @@ module.exports = {
                         })
                 })
                 .catch(async (err) => {
-                    await message.channel.send(LOCALE["standard_error"])
+                    await message.send_(LOCALE["standard_error"])
                     return reject(err)
                 })
         })

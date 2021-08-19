@@ -160,7 +160,7 @@ class MusicPlayer {
                 this.onEventConnections()
                 resolve()
             } catch (error) {
-                this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
+                this.message.send_(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
                 return reject(error)
             }
             
@@ -173,7 +173,7 @@ class MusicPlayer {
             this.deletePlaylist();
             if (this.isPlaying == true){
                 this.isPlaying = false;
-                return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+                return this.message.send_(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
             }else{
                 return;
             }
@@ -184,7 +184,7 @@ class MusicPlayer {
             this.deletePlaylist();
             if (this.isPlaying == true){
                 this.isPlaying = false;
-                return this.message.channel.send(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+                return this.message.send_(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
             }else{
                 return;
             }
@@ -195,7 +195,7 @@ class MusicPlayer {
             this.isPlaying == true
             if (this.dispatcher) this.dispatcher.destroy();
             var current_playlist = this.getPlaylist()
-            if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
+            if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
             let music_url;
 
@@ -272,7 +272,7 @@ class MusicPlayer {
         this.connection.on('playMp3', async () => {
             if (this.dispatcher) this.dispatcher.destroy();
             var current_playlist = this.getPlaylist()
-            if (!current_playlist) return this.message.channel.send(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
+            if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
             let music_url;
 

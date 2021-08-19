@@ -18,7 +18,7 @@ module.exports = {
 		let pedro = fs.readdirSync(__dirname+"/files")
 		pedro = pedro[Math.floor(Math.random() * pedro.length)]
 		
-		return message.channel.send(
+		return message.send_(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
 			.setTitle("Pedro")

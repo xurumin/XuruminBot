@@ -21,12 +21,12 @@ module.exports = {
 			}
 	
 			if(text == ""){
-				return message.channel.send(
+				return message.send_(
 					Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, Utils.stringTemplateParser(LOCALE.errors.cmd_format.description, {prefix: process.env.COMMAND_PREFIX}))
 				);
 			}
 	
-			message.channel.sendTyping();
+			message.send_Typing();
 			
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;

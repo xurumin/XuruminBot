@@ -40,7 +40,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject)=>{
             if(!config.specialusers.includes(message.author.id)){
-                return message.channel.send("Sorry you can not send this command.")
+                return message.send_("Sorry you can not send this command.")
             }
 
             var usg = (await pidusage(process.pid))
@@ -66,7 +66,7 @@ module.exports = {
             //     console.log(txt);
             // }, 1000);
 
-            return message.channel.send(txt)
+            return message.send_(txt)
 
         })
     },

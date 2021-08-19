@@ -16,21 +16,21 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         var player = client.players.get(message.guild.id)
         if (!player) {
-            return message.channel.send(LOCALE.errors.not_playing.interpolate({
+            return message.send_(LOCALE.errors.not_playing.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
         const tm = args[0]
 
         if(!args[0]){
-            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
+            return message.send_(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
         let convertedTm;
         convertedTm = Utils.globalTimeToMS(tm)/1000
         if(!convertedTm){
-            return message.channel.send(LOCALE.errors.cmd_run_error.interpolate({
+            return message.send_(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
@@ -38,7 +38,7 @@ module.exports = {
         const newTime = convertedTm + (player.getPlayingTime() / 1000)
 
         player.changeTime(newTime)
-        return message.channel.send(LOCALE.message.interpolate({
+        return message.send_(LOCALE.message.interpolate({
             time: Utils.toHHMMSS(newTime)
         }));
     },

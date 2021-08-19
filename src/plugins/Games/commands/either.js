@@ -22,7 +22,7 @@ module.exports = {
 
             var isDeleted = false;
 
-            message.channel.sendTyping();
+            message.send_Typing();
             
 
             var msg = {
@@ -36,7 +36,7 @@ module.exports = {
             main_embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
             main_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
             main_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
-            var main_msg = await message.channel.send(main_embed)
+            var main_msg = await message.send_(main_embed)
             
 
 
@@ -54,7 +54,7 @@ module.exports = {
                         embed.setTitle(msg.title)
                         embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
                         embed.setDescription(LOCALE["finished"].description)
-                        message.channel.send(embed)
+                        message.send_(embed)
                         
                         return resolve()
                     }
@@ -112,7 +112,7 @@ module.exports = {
                     embed.setTitle(msg.title)
                     embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
                     embed.setDescription(LOCALE["finished"].description)
-                    message.channel.send(embed)
+                    message.send_(embed)
                     return resolve()
                 })
                 .catch(async(err) => {
@@ -124,7 +124,7 @@ module.exports = {
                     embed.setTitle(LOCALE["errors"]["something_went_wrong"].title)
                     embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
                     embed.setDescription(LOCALE["errors"]["something_went_wrong"].description)
-                    message.channel.send(embed)
+                    message.send_(embed)
                     return reject()
                 })
         })

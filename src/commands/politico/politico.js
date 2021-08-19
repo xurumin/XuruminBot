@@ -42,7 +42,7 @@ module.exports = {
 		if (message.mentions.users.size > 0) {
 			let user = message.mentions.users.entries().next().value[1]
 
-			return message.channel.send(
+			return message.send_(
 				new Discord.MessageEmbed()
 				.setAuthor("Horário político eleitoral")
 				.setDescription(`**👉 ${slogan}\n${emoji_list[Math.floor(Math.random() * emoji_list.length)]} Vote ${user.username}.\n👋 Vote ${numbers}**`)
@@ -52,7 +52,7 @@ module.exports = {
 		} else {
 			let user = message.author
 			
-			return message.channel.send(
+			return message.send_(
 				new Discord.MessageEmbed()
 				.setAuthor("Horário político eleitoral")
 				.setDescription(`**👉 ${slogan}\n${emoji_list[Math.floor(Math.random() * emoji_list.length)]} Vote ${user.username}.\n👋 Vote ${numbers}**`)

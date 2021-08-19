@@ -16,14 +16,14 @@ module.exports = {
     run: async (client, message, args) => {
         var player = client.players.get(message.guild.id)
         if (!player) {
-            return message.channel.send(Utils.createSimpleEmbed("❌ O bot não está tocando nada no momento:", `➡️ Tente usar  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`))
+            return message.send_(Utils.createSimpleEmbed("❌ O bot não está tocando nada no momento:", `➡️ Tente usar  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`))
         }
         var music_playlist = `Suas próximas músicas de um total de **${player.getPlaylist().length}**\n\n`;
         
         player.getPlaylist().slice(0,5).forEach(element => {
             music_playlist += `➡️ **${element["name"]}** - ${element["author"]} - ⌛️ ${element["duration"]} \n`
         });
-        return message.channel.send(Utils.createSimpleEmbed("📻 Your playlist:", music_playlist));
+        return message.send_(Utils.createSimpleEmbed("📻 Your playlist:", music_playlist));
     },
 
     get command() {

@@ -14,7 +14,7 @@ module.exports = {
      * @param  {Array} args
      */
     run: async (client, message, args) => {
-        return message.channel.send("https://www.youtube.com/watch?v=Jvl0L9GRH6o%22");
+        return message.send_("https://www.youtube.com/watch?v=Jvl0L9GRH6o%22");
     },
     get command() {
         return {

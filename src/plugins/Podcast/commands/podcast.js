@@ -78,12 +78,12 @@ module.exports = {
         userMsg = message;
         const searchTerm = args.join(" ")
         if (!searchTerm) {
-            return message.channel.send(
+            return message.send_(
                 Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}podcast <nome do podcast>** para tocar alguma coisa! 🤗`)
             );
         }
         if (!message.member.voice.channel) {
-            return message.channel.send(
+            return message.send_(
                 Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`)
             );
         }
@@ -100,7 +100,7 @@ module.exports = {
                 })
 
                 if(!podcastShow){
-                    return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+                    return message.send_(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
                 }
 
                 var eps = await PodcastUtil.getLastEpsByUrl(podcastShow["feedUrl"], 0, 5000)
@@ -108,13 +108,13 @@ module.exports = {
                     return (String(ep["title"][0]).toLowerCase() == String(podcastEp["name"]).toLowerCase()) || String(ep["itunes:title"]).toLowerCase() == String(podcastEp["name"]).toLowerCase()
                 })
                 if(!episodeF){
-                    return message.channel.send(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
+                    return message.send_(new Discord.MessageEmbed().setDescription("Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)"))
                 }
                 podcastEp.url = episodeF["enclosure"][0]["$"]["url"]
 
             } catch (error) {
                 console.log(error);
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
+                return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["cmd_run_error"].title, LOCALE["errors"]["cmd_run_error"].description));
             }
             var player = client.players.get(message.guild.id)
             if (!player) {
@@ -123,13 +123,13 @@ module.exports = {
                 client.players.set(message.guild.id, player)
                 player.setPlaylist([podcastEp])
                 player.playMp3()
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
+                return message.send_(Utils.createSimpleEmbed(LOCALE["playing"].interpolate({
                     title: podcastEp.name,
                     duration: podcastEp.duration
                 })));
             } else {
                 player.appendPlaylist([podcastEp])
-                return message.channel.send(Utils.createSimpleEmbed(LOCALE["podcast_added"].title, LOCALE["podcast_added"].description.interpolate({
+                return message.send_(Utils.createSimpleEmbed(LOCALE["podcast_added"].title, LOCALE["podcast_added"].description.interpolate({
                     prefix: process.env.COMMAND_PREFIX
                 })));
             }
@@ -139,9 +139,9 @@ module.exports = {
 
         if (data.length <= 0) {
             if (args[0].includes("open.spotify.com/show/")) {
-                return message.channel.send("Hey! Tente procurar o **nome** do podcast :) ")
+                return message.send_("Hey! Tente procurar o **nome** do podcast :) ")
             }
-            return message.channel.send("Oops! Não achei nenhum podcast com esse nome.\nVerifique se você escreveu o nome corretamente.")
+            return message.send_("Oops! Não achei nenhum podcast com esse nome.\nVerifique se você escreveu o nome corretamente.")
         }
 
         let messageBody = new Discord.MessageEmbed();
@@ -161,7 +161,7 @@ module.exports = {
             }
         })
 
-        let sMsg = await message.channel.send(messageBody)
+        let sMsg = await message.send_(messageBody)
 
         PodcastUtil.getReactLight(sMsg)
             .then(index => {

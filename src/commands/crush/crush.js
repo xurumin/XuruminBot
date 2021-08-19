@@ -14,7 +14,7 @@ module.exports = {
 	 */
 	run: async (client, message, args, LOCALE) => {
 		if (!message.mentions.users.size > 0) {
-			return message.channel.send(
+			return message.send_(
                 Utils.createSimpleEmbed(LOCALE.errors.cmd_format.title, LOCALE.errors.cmd_format.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
 
@@ -22,13 +22,13 @@ module.exports = {
 		let metioned_user = message.mentions.users.entries().next().value[1]
 
 		if(message.author == metioned_user){
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed(LOCALE.errors.auto_crush.title, LOCALE.errors.auto_crush.description)
 			)
 		}
 
 		if(metioned_user == client.user){
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed(LOCALE.errors.tag_bot.title,LOCALE.errors.tag_bot.description)
 			)
 		}
@@ -46,7 +46,7 @@ module.exports = {
 		sent_4 = sent_4[Math.floor(Math.random() * sent_4.length)]
 		
 
-		return message.channel.send(
+		return message.send_(
 			new Discord.MessageEmbed()
 			.setTitle(LOCALE.message.title)
 			.setDescription(

@@ -18,7 +18,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
             if (!message.member.voice.channel) {
-                return message.channel.send(
+                return message.send_(
                     new Discord.MessageEmbed()
                     .setTitle(LOCALE["errors"]["user_is_not_on_voice_chat"].title)
                     .setDescription(LOCALE["errors"]["user_is_not_on_voice_chat"].description)
@@ -28,7 +28,7 @@ module.exports = {
                 if(client.playingWITM.get(message.guild.id).isOpen){
                     if (args[0] == "-leave") {
                         client.playingWITM.get(message.guild.id).EventEmitter.emit("leave")
-                        return message.channel.send(LOCALE["messages"]["leaving"])
+                        return message.send_(LOCALE["messages"]["leaving"])
                     }
                     if (args[0] == "-skip") {
                         return client.playingWITM.get(message.guild.id).EventEmitter.emit("round", {
@@ -39,7 +39,7 @@ module.exports = {
                 }
 
                 if (!client.playingWITM.get(message.guild.id).isOpen) {
-                    return message.channel.send(LOCALE["messages"]["there_is_a_game"])
+                    return message.send_(LOCALE["messages"]["there_is_a_game"])
                 };
 
                 var m_result = client.playingWITM.get(message.guild.id).musicMatch(args.join(" "))
@@ -47,7 +47,7 @@ module.exports = {
                     client.playingWITM.get(message.guild.id).playerGRAnswer(message.author.id)
                     return;
                 } else {
-                    message.channel.send(LOCALE["messages"]["accuracy"].interpolate({
+                    message.send_(LOCALE["messages"]["accuracy"].interpolate({
                         accuracy: (m_result[1] * 100).toFixed(0),
                         author: message.author
                     }))
@@ -80,7 +80,7 @@ module.exports = {
                 game_info.rounds = args[1]
             }
 
-            message.channel.sendTyping();
+            message.send_Typing();
             
 
             var msgs = {
@@ -100,7 +100,7 @@ module.exports = {
             var start_embed = new Discord.MessageEmbed()
                 .setTitle(msgs.title)
                 .setDescription(msgs.messages.start.description)
-            var start_msg = await message.channel.send(start_embed)
+            var start_msg = await message.send_(start_embed)
             
             Utils.Reactions.getConfirmation(start_msg, message.author.id)
                 .then(async (code) => {
@@ -111,16 +111,16 @@ module.exports = {
                         var embed = new Discord.MessageEmbed()
                             .setTitle(LOCALE["messages"]["refused"].title)
                             .setDescription(LOCALE["messages"]["refused"].description)
-                        return resolve(await message.channel.send(embed))
+                        return resolve(await message.send_(embed))
                     }
                     if (client.playingWITM.get(message.guild.id)) {
-                        return message.channel.send(LOCALE["messages"]["there_is_a_game"])
+                        return message.send_(LOCALE["messages"]["there_is_a_game"])
                     };
 
                     client.playingWITM.set(message.guild.id,  new WhatIsTheMusic(client,message, LOCALE))
 
                     client.playingWITM.get(message.guild.id).state = true;
-                    await message.channel.send(
+                    await message.send_(
                         new Discord.MessageEmbed()
                         .setTitle(
                             LOCALE["messages"]["about_the_game"].title
@@ -143,7 +143,7 @@ module.exports = {
                     var embed = new Discord.MessageEmbed()
                         .setTitle(msgs.errors.something_went_wrong.title)
                         .setDescription(msgs.errors.something_went_wrong.description)
-                    await message.channel.send(embed)
+                    await message.send_(embed)
                     return resolve();
                 })
         })

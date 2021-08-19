@@ -24,7 +24,7 @@ module.exports = {
                     .setDescription(LOCALE.errors.user_is_not_premium.description.interpolate({
                         prefix: process.env.COMMAND_PREFIX
                     }))
-                return resolve(message.channel.send(notPremiumEmbed))
+                return resolve(message.send_(notPremiumEmbed))
             }
             const tagged_user = message.mentions.users.entries().next()
             var user = message.author
@@ -49,7 +49,7 @@ module.exports = {
                 .setTitle(LOCALE.messages.loading.title)
                 .setDescription(LOCALE.messages.loading.description)
 
-            var loading_msg = await message.channel.send(embed)
+            var loading_msg = await message.send_(embed)
 
             axios.get(`${process.env.KARINNA_API_PATH}/v1/video/rick`,{
                 headers:{
@@ -66,7 +66,7 @@ module.exports = {
             }).catch(async (err)=>{
                 loading_msg.delete()
                 console.log(err);
-                return resolve(message.channel.send(new Discord.MessageEmbed()
+                return resolve(message.send_(new Discord.MessageEmbed()
                     .setTitle(LOCALE.errors.cmd_run_error.title)
                     .setDescription(LOCALE.errors.cmd_run_error.description)));
             })

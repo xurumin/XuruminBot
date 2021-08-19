@@ -20,12 +20,12 @@ module.exports = {
 			}
 	
 			if(text == ""){
-				return message.channel.send(
+				return message.send_(
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}monarktweet <frase que você quiser>** ou somente **${process.env.COMMAND_PREFIX}monarktweet** que eu pego a ultima mensagem mandada! 🤗`)
 				);
 			}
 	
-			message.channel.sendTyping();
+			message.send_Typing();
 			
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;

@@ -50,7 +50,7 @@ module.exports = {
                     title: LOCALE.errors["need_more_users"].title,
                     description: LOCALE.errors["need_more_users"].description
                 }
-                return resolve(message.channel.send(
+                return resolve(message.send_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
@@ -64,14 +64,14 @@ module.exports = {
                         title: LOCALE.errors.user_do_not_have_pic.title,
                         description: LOCALE.errors.user_do_not_have_pic.description
                     }
-                    return resolve(message.channel.send(
+                    return resolve(message.send_(
                         Utils.createSimpleEmbed(msg.title, msg.description)
                     ));
                 }
                 userImages.push(user_pic)
             }
 
-			message.channel.sendTyping();
+			message.send_Typing();
 			
 
 			ImageProcessor(userImages[0], userImages[1])
@@ -83,7 +83,7 @@ module.exports = {
 				.setImage("attachment://image.png")
 
 				
-				return resolve(message.channel.send(embed))
+				return resolve(message.send_(embed))
 			})
 			.catch((err)=>{
 				

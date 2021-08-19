@@ -57,22 +57,22 @@ module.exports = {
                                     id: message.author.id,
                                     car: car_color
                                 })
-                                return message.channel.send(LOCALE["messages"].bet_accepted.interpolate({
+                                return message.send_(LOCALE["messages"].bet_accepted.interpolate({
                                     user: message.author
                                 }))
                             }).catch(async (err) => {
-                                return resolve(await message.channel.send(LOCALE["messages"]["user_do_not_have_funds"].interpolate({
+                                return resolve(await message.send_(LOCALE["messages"]["user_do_not_have_funds"].interpolate({
                                     user: message.author,
                                     prefix: process.env.COMMAND_PREFIX
                                 })))
                             })
                     }
                 }
-                return message.channel.send(LOCALE["messages"].bet_not_accepted.interpolate({
+                return message.send_(LOCALE["messages"].bet_not_accepted.interpolate({
                     user: message.author
                 }))
             }
-            message.channel.sendTyping();
+            message.send_Typing();
             
 
             var main_embed = new Discord.MessageEmbed()
@@ -82,7 +82,7 @@ module.exports = {
                 price: `${config.prices.games.racing}`
             }))
 
-            var msg = await message.channel.send(main_embed)
+            var msg = await message.send_(main_embed)
             
 
             racingGame.set(message.guild.id, {
@@ -93,7 +93,7 @@ module.exports = {
                 .then(async (status) => {
                     if (!status) {
                         racingGame.delete(message.guild.id)
-                        return resolve(await message.channel.send(LOCALE["messages"].game_cancelled))
+                        return resolve(await message.send_(LOCALE["messages"].game_cancelled))
                     }
                     var race_pos = [ 
                         ["<:red_car:820020310996680774>"],
@@ -179,7 +179,7 @@ module.exports = {
                                 if (winners.bettors.length <= 0) {
                                     racingGame.delete(message.guild.id)
                                     main_embed.setDescription(LOCALE["messages"]["no_winner"])
-                                    return resolve(message.channel.send(main_embed))
+                                    return resolve(message.send_(main_embed))
                                 }
                                 var winnerList = LOCALE["messages"]["winners"].description.interpolate({
                                     total_prize: winners.total_prize
@@ -188,7 +188,7 @@ module.exports = {
                                     winnerList += `\n${index+1}: <@${element.id}> -> **X$${winners.prize}**`
                                 });
                                 racingGame.delete(message.guild.id)
-                                return resolve(message.channel.send(new Discord.MessageEmbed()
+                                return resolve(message.send_(new Discord.MessageEmbed()
                                 .setTitle(game_info.title+" - "+ LOCALE["messages"]["winners"].title)
                                 .setDescription(winnerList)))
                             }
@@ -199,7 +199,7 @@ module.exports = {
                 .catch(async (err) => {
                     //console.log(err);
                     racingGame.delete(message.guild.id)
-                    return await message.channel.send("oops");
+                    return await message.send_("oops");
                 })
         })
     },

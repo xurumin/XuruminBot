@@ -87,12 +87,12 @@ module.exports = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
-                return resolve(message.channel.send(
+                return resolve(message.send_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
 
-			message.channel.sendTyping();
+			message.send_Typing();
 
 			
 			//Utils.choice(LOCALE["noiaPhrases"])
@@ -107,7 +107,7 @@ module.exports = {
 				.setFooter("Phrases by Xurumin, @noiacoisas, pensador.com")
 
 				
-				return resolve(message.channel.send(embed))
+				return resolve(message.send_(embed))
 			})
 			.catch((err)=>{
 				

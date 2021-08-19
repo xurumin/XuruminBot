@@ -22,12 +22,12 @@ module.exports = {
 
             if (current_playing_song.length <= 0) {
                 if (!message.member.voice.channel) {
-                    return resolve(message.channel.send(
+                    return resolve(message.send_(
                         Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`)
                     ));
                 }
                 if (!player) {
-                    return resolve(message.channel.send(
+                    return resolve(message.send_(
                         Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`)
                     ));
                 }
@@ -37,7 +37,7 @@ module.exports = {
                 current_playing_song = current_playing_song["name"] + " " + current_playing_song["author"]
             }
 
-            message.channel.sendTyping();
+            message.send_Typing();
 
             try {
                 lyric = await Music.getLyricByMusicName(current_playing_song)
@@ -49,7 +49,7 @@ module.exports = {
                     .setAuthor(client.user.username)
                 
                 
-                return resolve(message.channel.send(embed));
+                return resolve(message.send_(embed));
             }
 
             if (!lyric || lyric == undefined) {
@@ -59,7 +59,7 @@ module.exports = {
                     .setAuthor(client.user.username)
                 
                 
-                return resolve(message.channel.send(embed));
+                return resolve(message.send_(embed));
             }
 
             if (lyric.length < 3000 && lyric.length > 1999) {
@@ -69,14 +69,14 @@ module.exports = {
                     .setTitle(`Music Lyrics for ${current_playing_song}`)
                     .setAuthor(client.user.username)
                     .setDescription(txt)
-                await message.channel.send(embed);
+                await message.send_(embed);
 
                 const embed2 = new Discord.MessageEmbed()
                     .setColor('#9d65c9')
                     .setDescription(lyric.slice(1500, lyric.length))
 
                 
-                return resolve(message.channel.send(embed2));
+                return resolve(message.send_(embed2));
             } else {
                 const embed = new Discord.MessageEmbed()
                     .setColor('#9d65c9')
@@ -84,7 +84,7 @@ module.exports = {
                     .setAuthor(client.user.username)
                     .setDescription(lyric)
                 
-                return resolve(message.channel.send(embed));
+                return resolve(message.send_(embed));
             }
         })
 

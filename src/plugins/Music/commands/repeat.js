@@ -16,14 +16,14 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         var player = client.players.get(message.guild.id)
         if (!player) {
-            return message.channel.send(LOCALE.errors.not_playing.interpolate({
+            return message.send_(LOCALE.errors.not_playing.interpolate({
                 prefix: process.env.COMMAND_PREFIX
             }))
         }
 
         player.unshiftPlaylist([player.getPlaylist()[0]])
 
-        return await message.channel.send(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
+        return await message.send_(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
             prefix: process.env.COMMAND_PREFIX
         })))
     },

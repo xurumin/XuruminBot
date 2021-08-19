@@ -21,7 +21,7 @@ module.exports = {
      */
     run: (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject) => {
-            message.channel.sendTyping();
+            message.send_Typing();
             
 
             const action = args[0]
@@ -33,14 +33,14 @@ module.exports = {
 
             if(!action || !avaliableActions.includes(action)){
                 
-                return resolve(message.channel.send(new Discord.MessageEmbed()
+                return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["setup"].description.interpolate({
                     prefix: process.env.COMMAND_PREFIX
                 }))))
             }
             if(!message.guild.members.cache.find((user)=>user.id==message.author.id).hasPermission('ADMINISTRATOR')){
-                return resolve(message.channel.send(new Discord.MessageEmbed()
+                return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["errors"].no_permission.interpolate({
                     user: message.author
@@ -48,14 +48,14 @@ module.exports = {
             }
             if(action=="remove"){
                 await Utils.GameOffers.removeChannel(message.channel.id)
-                return resolve(message.channel.send(new Discord.MessageEmbed()
+                return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["channel_removed"].interpolate({
                     channel_name: message.channel.name
                 }))))
             }
             await Utils.GameOffers.setChannel(message.channel.id)
-            return resolve(message.channel.send(new Discord.MessageEmbed()
+            return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["channel_added"].interpolate({
                     channel_name: message.channel.name

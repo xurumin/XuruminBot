@@ -22,7 +22,7 @@ module.exports = {
 				description: LOCALE.errors.user_not_tagged.description
 			}
 
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed(msg.title, msg.description)
 			)
 
@@ -36,7 +36,7 @@ module.exports = {
 				description: LOCALE.errors.auto_check.description
 			}
 
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed(msg.title, msg.description)
 			)
 		}
@@ -47,7 +47,7 @@ module.exports = {
 				description: LOCALE.errors["tag_bot"].description
 			}
 
-			return message.channel.send(
+			return message.send_(
 				Utils.createSimpleEmbed(msg.title, msg.description)
 			)
 		}
@@ -57,7 +57,7 @@ module.exports = {
 			description: LOCALE.messages["loading"].description
 		}
 
-		var loading_msg = await message.channel.send(
+		var loading_msg = await message.send_(
 			new Discord.MessageEmbed()
 			.setTitle(loading_msg_locale.title)
 			.setDescription(loading_msg_locale.description)

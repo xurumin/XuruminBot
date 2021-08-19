@@ -15,18 +15,18 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject)=>{
             if(!config.specialusers.includes(message.author.id)){
-                return message.channel.send("Sorry you can not send this command.")
+                return message.send_("Sorry you can not send this command.")
             }
 
             var player = client.players.get(message.guild.id)
 
             if (!player) {
-                return message.channel.send("ta tocando nada nao")
+                return message.send_("ta tocando nada nao")
             } else {
                 var newBitrate = Number.parseInt(args[0])
                 if(!newBitrate) return;
                 player.setBitrate(Number.parseInt(args[0]))
-                return message.channel.send("bitrate alterado")
+                return message.send_("bitrate alterado")
             }
 
         })
