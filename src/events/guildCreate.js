@@ -28,7 +28,9 @@ module.exports = {
 				prefix: process.env.COMMAND_PREFIX,
 				server_name: guild.name
 			})
-			log.entries.first().executor.send(msg).catch(e => console.error(e)); // Sending the message to the executor.
+			log.entries.first().executor.send({
+				content: msg
+			}).catch(e => console.error(e)); // Sending the message to the executor.
 		});
 
 

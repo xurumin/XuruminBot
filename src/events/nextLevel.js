@@ -23,12 +23,14 @@ module.exports = {
 		}
 		const prize = Utils.random(50,150);
 		var user = client.users.cache.find(user=>user.id==userInfo.userId)
-		user.send(LOCALE["events"]["nextLevel"].message.interpolate({
-			user: user,
-			new_level: userInfo.newLevel,
-			prize: prize,
-			prefix: process.env.COMMAND_PREFIX
-		}))
+		user.send({
+			content: LOCALE["events"]["nextLevel"].message.interpolate({
+				user: user,
+				new_level: userInfo.newLevel,
+				prize: prize,
+				prefix: process.env.COMMAND_PREFIX
+			})
+		})
 		return await Payment.fastPayXurumin(userInfo.userId, prize)
 
 	},
