@@ -1,6 +1,6 @@
 {
   "name": "xurumin",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "A simple discord bot that plays music, playlists, radio, podcasts and memes!",
   "main": "./src/bot.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "nodemon": "^2.0.12",
     "opusscript": "^0.0.8",
     "pidusage": "^2.0.21",
+    "prism-media": "^1.3.2",
     "solenolyrics": "^5.0.0",
     "spotify-web-api-node": "^5.0.2",
     "twitch-m3u8": "^1.1.4",
