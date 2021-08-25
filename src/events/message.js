@@ -25,37 +25,37 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, locale_list) => {
-		message.inlineReply = (msg)=>{
+		message.inlineReply = async (msg)=>{
 			if(msg instanceof Discord.MessageAttachment){
-				return message.channel.send({
+				return await message.channel.send({
 					files: [msg],
 					reply: { messageReference: message.id }
 				})
 			}
 			else if(msg instanceof Discord.MessageEmbed){
-				return message.channel.send({
+				return await message.channel.send({
 					embeds: [msg],
 					reply: { messageReference: message.id }
 				})
 			}else{
-				return message.channel.send({
+				return await message.channel.send({
 					content: msg,
 					reply: { messageReference: message.id }
 				})
 			}
 		}
-		message.send_ = (msg)=>{
+		message.send_ = async (msg)=>{
 			if(msg instanceof Discord.MessageAttachment){
-				return message.channel.send({
+				return await message.channel.send({
 					files: [msg]
 				})
 			}
 			else if(msg instanceof Discord.MessageEmbed){
-				return message.channel.send({
+				return await message.channel.send({
 					embeds: [msg]
 				})
 			}else{
-				return message.channel.send({
+				return await message.channel.send({
 					content: msg,
 					reply: { messageReference: message.id }
 				})

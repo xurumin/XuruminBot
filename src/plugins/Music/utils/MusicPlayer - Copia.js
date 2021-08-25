@@ -5,13 +5,13 @@ const urlQ = require("url")
 const ytdl = require("ytdl-core")
 const path = require("path")
 const {
-    AudioPlayerStatus,
-    StreamType,
-    createAudioPlayer,
-    createAudioResource,
-    joinVoiceChannel,
+	AudioPlayerStatus,
+	StreamType,
+	createAudioPlayer,
+	createAudioResource,
+	joinVoiceChannel,
 } = require('@discordjs/voice');
-const prism = require('prism-media');
+// const prism = require('prism-media');
 // const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
@@ -20,7 +20,7 @@ class MusicPlayer {
      * @param  {Discord.Message} message
      * @param  {String} guild_id
      */
-    constructor(guild_id, client, message, type = "music", audioquality = "lowestaudio") {
+    constructor(guild_id, client, message, type="music", audioquality="lowestaudio") {
         this.guild_id = guild_id;
         this.client = client;
         this.message = message;
@@ -32,7 +32,7 @@ class MusicPlayer {
         this.t247 = false;
         this.bitrate = 64
     }
-    setAudioQuality(audioquality) {
+    setAudioQuality(audioquality){
         this.audioquality = audioquality
     }
     getPlaylist() {
@@ -49,14 +49,14 @@ class MusicPlayer {
      * @param  {Array} playlist
      */
     appendPlaylist(playlist) {
-        this.client.playlist.set(this.guild_id, this.getPlaylist().concat(playlist).slice(0, this.maxPlaylist))
+        this.client.playlist.set(this.guild_id, this.getPlaylist().concat(playlist).slice(0,this.maxPlaylist))
     }
 
     /**
      * @param  {Array} playlist
      */
-    unshiftPlaylist(playlist) {
-        this.client.playlist.set(this.guild_id, playlist.concat(this.getPlaylist()).slice(0, this.maxPlaylist))
+     unshiftPlaylist(playlist) {
+        this.client.playlist.set(this.guild_id, playlist.concat(this.getPlaylist()).slice(0,this.maxPlaylist))
     }
 
     removePlaylistMusic(index) {
@@ -71,7 +71,7 @@ class MusicPlayer {
 
         for (let index = 0; index < musics.length; index++) {
             const element = musics[index];
-            plt = plt.filter(elm => elm != element)
+            plt = plt.filter(elm=> elm != element)
         }
         this.setPlaylist(plt)
     }
@@ -112,41 +112,42 @@ class MusicPlayer {
         this.deletePlaylist();
     }
     //voltar
-    changeTime(secs) {
+    changeTime(secs){
         var current_playlist = this.getPlaylist()
         current_playlist[0].time = secs
 
         this.time = secs * 1000
 
         this.setPlaylist(current_playlist)
-        if (this.type == "mp3") {
+        if(this.type == "mp3"){
             this.playMp3()
-        } else {
+        }else{
             this.play()
         }
     }
-    setBitrate(value) {
+    setBitrate(value){
         this.bitrate = value
-        // if(this.dispatcher) this.dispatcher.setBitrate(this.bitrate)
+        if(this.dispatcher) this.dispatcher.setBitrate(this.bitrate)
     }
-    getStreamTime() {
-        return Date.now() - this.creationTime;
+    getStreamTime(){
+        if(!this.dispatcher) return 0;
+        return this.dispatcher.streamTime;
     }
-    getPlayingTime() {
+    getPlayingTime(){
         return this.getStreamTime() + this.time
     }
-    getTotalTime() {
-        return Utils.hmsToSeconds(this.getPlaylist()[0].duration) * 1000 || 0
+    getTotalTime(){
+        return Utils.hmsToSeconds(this.getPlaylist()[0].duration)*1000 || 0
     }
 
-    aliveConCooldown() {
-        if (this.t247 == true) return;
+    aliveConCooldown(){
+        if(this.t247 == true) return;
         var intv = setInterval(() => {
             try {
-                if (!this.connection) {
+                if(!this.connection){
                     return clearInterval(intv);
                 }
-                if (this.voiceChat.members.size <= 1) {
+                if(this.voiceChat.members.size <= 1){
                     this.connection.destroy()
                     this.deletePlayer();
                     this.deletePlaylist();
@@ -155,7 +156,7 @@ class MusicPlayer {
             } catch (error) {
                 return clearInterval(intv);
             }
-        }, 10000);
+        }, 10000); 
     }
 
 
@@ -174,13 +175,13 @@ class MusicPlayer {
                 this.connection.subscribe(this.player);
 
                 this.onEventConnections()
-                this.aliveConCooldown()
+                this.aliveConCooldown() 
                 resolve()
             } catch (error) {
                 this.message.send_(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
                 return reject(error)
             }
-
+            
         })
     }
 
@@ -188,10 +189,10 @@ class MusicPlayer {
         this.connection.on('destroyed', () => {
             this.deletePlayer();
             this.deletePlaylist();
-            if (this.isPlaying == true) {
+            if (this.isPlaying == true){
                 this.isPlaying = false;
                 return this.message.send_(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
-            } else {
+            }else{
                 return;
             }
         })
@@ -199,16 +200,15 @@ class MusicPlayer {
             console.log(err)
             this.deletePlayer();
             this.deletePlaylist();
-            if (this.isPlaying == true) {
+            if (this.isPlaying == true){
                 this.isPlaying = false;
                 return this.message.send_(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
-            } else {
+            }else{
                 return;
             }
         })
 
         this.connection.on('play', async () => {
-            this.creationTime = Date.now()
             this.isPlaying == true
             var current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
@@ -216,9 +216,9 @@ class MusicPlayer {
             let music_url;
 
             try {
-                if (current_playlist[0]["url"]) {
+                if(current_playlist[0]["url"]){
                     music_url = current_playlist[0]["url"]
-                } else {
+                }else{
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
 
@@ -227,24 +227,7 @@ class MusicPlayer {
                     quality: this.audioquality
                 });
 
-                let streamtimes = current_playlist[0].time || 0
-
-                const transcoder = new prism.FFmpeg({
-                    args: [
-                        '-analyzeduration', '0',
-                        '-loglevel', '0',
-                        '-ar', '48000',
-                        '-acodec', 'libopus',
-                        '-f', 'opus',
-                        "-ss", String(streamtimes).toString()
-                    ],
-                });
-
-                const output = stream.pipe(transcoder);
-
-                const resource = createAudioResource(output, {
-                    inputType: StreamType.OggOpus
-                });
+                const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
 
                 this.player.play(resource);
 
@@ -255,49 +238,35 @@ class MusicPlayer {
                     console.log(error);
                 });
                 this.player.on('error', error => {
-                    console.error(`Error: ${error.message}`);
+                    console.error(`Error: ${error.message} with resource ${error.resource.metadata.title}`);
                 });
 
                 this.aliveConCooldown()
                 this.onEventDispatcher()
             } catch (error) {
-                console.log("[MusicPlayer][play]", error);
+                console.log("[MusicPlayer][play]",error);
                 return this.connection.emit("skip")
             }
-
+            
         });
         this.connection.on('playMp3', async () => {
-            this.creationTime = Date.now()
             var current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
             let music_url;
 
             try {
-                if (current_playlist[0]["url"]) {
+                if(current_playlist[0]["url"]){
                     music_url = current_playlist[0]["url"]
-                } else {
+                }else{
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
-                let streamtimes = current_playlist[0].time || 0
 
-                const transcoder = new prism.FFmpeg({
-                    args: [
-                        '-analyzeduration', '0',
-                        '-loglevel', '0',
-                        '-ar', '48000',
-                        '-acodec', 'libopus',
-                        '-f', 'opus',
-                        "-ss", String(streamtimes).toString(),
-                        "-i", music_url,
-                    ],
-                });
-
-                const resource = createAudioResource(music_url, {
-                    inputType: StreamType.Arbitrary
-                });
+                
+                const resource = createAudioResource(music_url, { inputType: StreamType.Arbitrary});
+                console.log("a");
                 const player = createAudioPlayer();
-                player.on("error", error => {
+                player.on("error", error=>{
                     console.log(error);
                 })
                 player.play(resource)
@@ -316,7 +285,7 @@ class MusicPlayer {
                 console.log("[MusicPlayer][playMp3]", error);
                 return this.connection.emit("skip")
             }
-
+            
         });
         this.connection.on('shuffle', async () => {
             this.shufflePlaylist()
@@ -346,20 +315,14 @@ class MusicPlayer {
     }
     onEventDispatcher() {
         this.player.on(AudioPlayerStatus.Idle, (msg) => {
-            if (!this.connection) return;
             var playlist = this.getPlaylist()
-            if (!playlist || playlist == []) {
-                this.deletePlayer();
-                this.deletePlaylist();
-                return;
-            };
             this.time = 0
             if ((this.voiceChat.members.size <= 1 && this.t247 == false) || (playlist && playlist.length <= 1)) {
                 this.connection.destroy()
                 this.deletePlayer();
                 this.deletePlaylist();
                 return;
-            } else {
+            }else {
                 var x = playlist
                 x.splice(0, 1)
                 this.setPlaylist(x)

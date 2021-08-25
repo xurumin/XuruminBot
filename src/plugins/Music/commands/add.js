@@ -180,7 +180,10 @@ function searchTerm(client, message, args, LOCALE) {
             //txt +=  LOCALE["youtube_search"].footer
             txt.setFooter(LOCALE["youtube_search"].footer)
 
-            var msg = await message.send_(txt)
+            var msg = await message.channel.send({
+                content: "a"
+            })
+            console.log(msg);
 
             var reactIndex = await Music.getReact(msg, message.author)
 

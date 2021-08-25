@@ -281,6 +281,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             this.__sendRects(message)
             const filter = (reaction, user) => {
+                console.log("aaa");
                 return ( !(message.author==user) && (originalAuthor == user));
             };
             message.awaitReactions(filter, {
