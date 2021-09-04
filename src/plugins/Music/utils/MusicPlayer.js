@@ -12,6 +12,16 @@ const {
     joinVoiceChannel,
 } = require('@discordjs/voice');
 const prism = require('prism-media');
+
+var FfmpegCommand = require('fluent-ffmpeg');
+
+const ffprobestatic = require("ffprobe-static")
+const ffmpegstatic = require("ffmpeg-static");
+const { default: axios } = require('axios');
+
+FfmpegCommand.setFfmpegPath(ffmpegstatic)
+FfmpegCommand.setFfprobePath(ffprobestatic.path)
+
 // const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
@@ -31,12 +41,35 @@ class MusicPlayer {
         this.maxPlaylist = 100
         this.t247 = false;
         this.bitrate = 64
+        this.soundEffects = []
+        this.soundEffectsList = {
+            bassboost: 'bass=g=20,dynaudnorm=f=200',
+            "8D": 'apulsator=hz=0.08',
+            vaporwave: 'aresample=48000,asetrate=48000*0.8',
+            nightcore: 'aresample=48000,asetrate=48000*1.25',
+            phaser: 'aphaser=in_gain=0.4',
+            tremolo: 'tremolo',
+            vibrato: 'vibrato=f=6.5',
+            surrounding: 'surround',
+            pulsator: 'apulsator=hz=1',
+            subboost:'asubboost',
+            chorus:'chorus=0.5:0.9:50|60|40:0.4|0.32|0.3:0.25|0.4|0.3:2|2.3|1.3',
+            karaoke:'stereotools=mlev=0.015625',
+            sofa:'sofalizer=sofa=/path/to/ClubFritz12.sofa:type=freq:radius=2:rotation=5',
+            desilencer:'silenceremove=window=0:detection=peak:stop_mode=all:start_mode=all:stop_periods=-1:stop_threshold=0',
+            reverb: "aecho=1.0:0.7:20:0.5",
+            lofi: "highpass=f=200, lowpass=f=3000, aecho=1.0:0.7:20:0.5"
+        }
     }
     setAudioQuality(audioquality) {
         this.audioquality = audioquality
     }
     getPlaylist() {
         return this.client.playlist.get(this.guild_id)
+    }
+
+    addSoundEffects(effect){
+        return this.soundEffects.push("-af", effect)
     }
 
     /**
@@ -228,6 +261,12 @@ class MusicPlayer {
                 });
 
                 let streamtimes = current_playlist[0].time || 0
+                streamtimes = Utils.toHHMMSS(streamtimes)
+
+                // this.addSoundEffects(this.soundEffectsList.bassboost)
+                // this.addSoundEffects(this.soundEffectsList.reverb)
+                // this.addSoundEffects(this.soundEffectsList.lofi)
+                
 
                 const transcoder = new prism.FFmpeg({
                     args: [
@@ -236,7 +275,8 @@ class MusicPlayer {
                         '-ar', '48000',
                         '-acodec', 'libopus',
                         '-f', 'opus',
-                        "-ss", String(streamtimes).toString()
+                        "-ss", streamtimes,
+                        ...this.soundEffects
                     ],
                 });
 
@@ -255,7 +295,7 @@ class MusicPlayer {
                     console.log(error);
                 });
                 this.player.on('error', error => {
-                    console.error(`Error: ${error.message}`);
+                    console.error(`Player Error: ${error.message}`);
                 });
 
                 this.aliveConCooldown()
@@ -280,6 +320,7 @@ class MusicPlayer {
                     music_url = await Music.getVideoLinkBySearch(current_playlist[0]["name"] + " " + current_playlist[0]["author"])
                 }
                 let streamtimes = current_playlist[0].time || 0
+                streamtimes = Utils.toHHMMSS(streamtimes)
 
                 const transcoder = new prism.FFmpeg({
                     args: [
@@ -287,21 +328,45 @@ class MusicPlayer {
                         '-loglevel', '0',
                         '-ar', '48000',
                         '-acodec', 'libopus',
-                        '-f', 'opus',
-                        "-ss", String(streamtimes).toString(),
-                        "-i", music_url,
+                        "-ss", streamtimes,
+                        '-f', 'opus'
                     ],
                 });
 
-                const resource = createAudioResource(music_url, {
-                    inputType: StreamType.Arbitrary
-                });
-                const player = createAudioPlayer();
-                player.on("error", error => {
-                    console.log(error);
+                axios(
+                    {
+                        method: 'get',
+                        url: music_url,
+                        responseType: 'stream'
+                      }
+                ).then(res=>{
+                    var output = res.data.pipe(transcoder)
+                    const resource = createAudioResource(output, {
+                        inputType: StreamType.Arbitrary
+                    });
+                    const player = createAudioPlayer();
+                    player.on("error", error => {
+                        console.log(error);
+                    })
+                    player.play(resource)
+                    this.connection.subscribe(player)
                 })
-                player.play(resource)
-                this.connection.subscribe(player)
+                
+
+                // var command = FfmpegCommand()
+                //     .input(music_url)
+                    // .seekInput(streamtimes)
+
+                // command.on("error", (err)=>{
+                //     console.log("FFMPEG CMD ERROR:", err);
+                // })
+
+                //String(streamtimes).toString()
+
+
+                
+
+                
 
                 // this.dispatcher = this.connection.play(music_url,
                 //     {
