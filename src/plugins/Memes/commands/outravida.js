@@ -62,23 +62,8 @@ module.exports = {
             
 
             ImageGenerator(user_pic, utils.choice(ImageList))
-                .then((image) => {
-                    var msg = {
-                        title: LOCALE.message.title,
-                        description: LOCALE.message.description.interpolate({
-                            author: message.author,
-                            user: user
-                        })
-                    }
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('#9d65c9')
-                        .setTitle(msg.title)
-                        .setDescription(msg.description)
-                        .attachFiles(image)
-                        .setImage("attachment://image.png")
-                    
-                    return resolve(message.send_(embed))
-
+                .then(async(image) => {
+                    return resolve(await message.inlineReply(image))
                 })
                 .catch((err) => {
                     

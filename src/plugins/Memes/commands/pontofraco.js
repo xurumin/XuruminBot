@@ -42,7 +42,7 @@ module.exports = {
 	 */
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
-			const tagged_users = message.mentions.users.array()
+			const tagged_users = message.mentions.members.toJSON()
             var userImages = []
 
             if(tagged_users.length <2){
@@ -55,6 +55,7 @@ module.exports = {
                 ));
             }
             for(var user of tagged_users.slice(0,3)){
+                user = user.user
                 var user_pic = user.avatarURL({
                     format: "png",
                     size: 256
@@ -76,14 +77,7 @@ module.exports = {
 
 			ImageProcessor(userImages[0], userImages[1])
 			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setTitle(LOCALE.title)
-				.setDescription(`${message.author}`)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-
-				
-				return resolve(message.send_(embed))
+				return resolve(message.inlineReply(image))
 			})
 			.catch((err)=>{
 				

@@ -18,7 +18,7 @@ function ImageGenerator(user_pic) {
         ctx.drawImage(await loadImage(user_pic), 182,36,100,100);
         ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/mucagas/base.png`)), 0, 0, 400,400);
 
-        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))
+        resolve(canvas.toBuffer('image/jpeg', { quality: 0.8 }))
     })
 
 }
@@ -58,21 +58,7 @@ module.exports = {
 
             ImageGenerator(user_pic)
                 .then(async (image) => {
-                    var msg = {
-                        title: LOCALE.message.title,
-                        description: LOCALE.message.description.interpolate({
-                            author: message.author
-                        })
-                    }
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('#9d65c9')
-                        .setTitle(msg.title)
-                        .setDescription(msg.description)
-                        .attachFiles(image)
-                        .setImage("attachment://image.png")
-                        
-
-                    return resolve(await message.send_(embed))
+                    return resolve(await message.inlineReply(new Discord.MessageAttachment(image)))
                 })
                 .catch((err) => {
                     

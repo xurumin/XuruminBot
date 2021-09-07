@@ -16,7 +16,9 @@ module.exports = {
 	
 			message.channel.sendTyping();
 			
-			const member = message.guild.member(message.author);
+			const member = message.guild.members.cache.get(message.author.id)
+
+
 			const user_roles = member.roles.cache.sort((a, b) => a.position - b.position || a.id - b.id).map(r=>{ return r.name.replace(/[^a-z0-9 ,.?!]/ig, "")}).reverse().slice(0,3)			
 			const carteirinha_list = LOCALE.word_list
 			const tag = carteirinha_list[Math.floor(Math.random() * carteirinha_list.length)]

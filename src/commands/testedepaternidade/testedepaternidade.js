@@ -27,8 +27,8 @@ module.exports = {
 			)
 
 		}
-		let metioned_user = message.mentions.users.array()[0]
-		let metioned_user_2 = message.mentions.users.array()[1]
+		let metioned_user = message.mentions.members.toJSON()[0].user
+		let metioned_user_2 = message.mentions.members.toJSON()[1].user
 
 		if(message.author == metioned_user){
 			var msg = {

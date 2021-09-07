@@ -20,21 +20,8 @@ module.exports = {
             let current_playing_song = args.join(" ")
             let lyric;
 
-            if (current_playing_song.length <= 0) {
-                if (!message.member.voice.channel) {
-                    return resolve(message.send_(
-                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`)
-                    ));
-                }
-                if (!player) {
-                    return resolve(message.send_(
-                        Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`)
-                    ));
-                }
-
-                var player = client.players.get(message.guild.id)
-                current_playing_song = player.getPlaylist()[0]
-                current_playing_song = current_playing_song["name"] + " " + current_playing_song["author"]
+            if(!current_playing_song){
+                return message.inlineReply("Digite o nome da música :3")
             }
 
             message.channel.sendTyping();

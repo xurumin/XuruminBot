@@ -74,30 +74,10 @@ module.exports = {
             message.channel.sendTyping();
                
 
-            var name = message.guild.member(user).nickname
-            if(!name){
-                name = user.username.slice(0,14)
-            }else{
-                name = name.slice(0,14)
-            }
-
+            var name = user.username.slice(0,14)
             ImageGenerator(user_pic, name)
                 .then(async (image) => {
-                    var msg = {
-                        title: LOCALE.message.title,
-                        description: LOCALE.message.description.interpolate({
-                            author: message.author
-                        })
-                    }
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('#9d65c9')
-                        .setTitle(msg.title)
-                        .setDescription(msg.description)
-                        .attachFiles(image)
-                        .setImage("attachment://image.png")
-                        
-
-                    return resolve(await message.send_(embed))
+                    return resolve(await message.inlineReply(image))
                 })
                 .catch((err) => {
                     

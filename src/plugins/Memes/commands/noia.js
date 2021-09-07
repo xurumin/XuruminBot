@@ -99,18 +99,9 @@ module.exports = {
 			//LOCALE["noiaPhrases"][LOCALE["noiaPhrases"].length-1]
 			ImageProcessor(user_pic, Utils.choice(LOCALE["noiaPhrases"]))
 			.then((image)=>{
-				const embed = new Discord.MessageEmbed()
-				.setTitle(LOCALE.title)
-				.setDescription(`${message.author}`)
-				.attachFiles(image)
-				.setImage("attachment://image.png")
-				.setFooter("Phrases by Xurumin, @noiacoisas, pensador.com")
-
-				
-				return resolve(message.send_(embed))
+				return resolve(message.inlineReply(image))
 			})
 			.catch((err)=>{
-				
 				reject(err)
 			})
 		})

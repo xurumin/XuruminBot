@@ -41,7 +41,7 @@ function ImageGenerator(usersPic) {
 
         ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/daqueeutedououtra/base.png`)), 0, 0, 640,300);
 
-        resolve(new Discord.MessageAttachment(canvas.toBuffer('image/jpeg', { quality: 0.8 }), 'image.png'))
+        resolve(canvas.toBuffer('image/jpeg', { quality: 0.8 }))
     })
 
 }
@@ -57,7 +57,7 @@ module.exports = {
      */
     run: async (client, message, args, LOCALE) => {
         return new Promise((resolve, reject) => {
-            const tagged_users = message.mentions.users.array()
+            const tagged_users = message.mentions.members.toJSON()
             var userImages = []
 
             if(tagged_users.length <2){
@@ -70,6 +70,7 @@ module.exports = {
                 ));
             }
             for(var user of tagged_users.slice(0,3)){
+                user = user.user
                 var user_pic = user.avatarURL({
                     format: "png",
                     size: 256
@@ -105,15 +106,7 @@ module.exports = {
                             author: message.author
                         })
                     }
-                    const embed = new Discord.MessageEmbed()
-                        .setColor('#9d65c9')
-                        .setTitle(msg.title)
-                        .setDescription(msg.description)
-                        .attachFiles(image)
-                        .setImage("attachment://image.png")
-                        
-
-                    return resolve(await message.send_(embed))
+                    return resolve(await message.inlineReply(new Discord.MessageAttachment(image)))
                 })
                 .catch((err) => {
                     
