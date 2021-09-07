@@ -7,15 +7,18 @@ require('dotenv/config');
 var pidusage = require('pidusage')
 
 const getVoiceConnectionsCount = async (client) => {
-    const req = await client.shard.fetchClientValues('voice.connections.size');
+    const req = await client.shard.fetchClientValues('voice.adapters.size');
     return req.reduce((p, n) => p + n, 0);
 }
-
-const getUsersVoiceConnection= async (client) => {
-    const req = await client.shard.fetchClientValues('voice.connections');
-    console.log(req);
+const getPlayers = async (client) => {
+    const req = await client.shard.fetchClientValues('players.size');
     return req.reduce((p, n) => p + n, 0);
 }
+const getPlaylists = async (client) => {
+    const req = await client.shard.fetchClientValues('playlist.size');
+    return req.reduce((p, n) => p + n, 0);
+}
+  
   
 const getServerCount = async (client) => {
     const req = await client.shard.fetchClientValues('guilds.cache.size');
@@ -46,28 +49,15 @@ module.exports = {
             var usg = (await pidusage(process.pid))
 
             var txt = "";
+
             txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
+            txt += `Players: ${await getPlayers(client)}\n`
+            txt += `Playlists: ${await getPlaylists(client)}\n`
             txt+= `Server count: ${await getServerCount(client)}\n`
-            txt+= `Member count: ${await getMemberCount(client)}\n`
-            // txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
             txt+= `Process memory ${formatMemoryUsage(usg.memory)}\n`
             txt+= `CPU usage: ${usg.cpu.toFixed(2)}%`
 
-            // setInterval(async () => {
-            //     var usg = (await pidusage(process.pid))
-
-            //     var txt = "";
-            //     txt += `Voice connections: ${await getVoiceConnectionsCount(client)}\n`
-            //     txt+= `Server count: ${await getServerCount(client)}\n`
-            //     txt+= `Member count: ${await getMemberCount(client)}\n`
-            //     // txt+= `Memory: ${formatMemoryUsage(process.memoryUsage().heapUsed)}/${formatMemoryUsage(process.memoryUsage().heapTotal)}\n`
-            //     txt+= `Process memory ${formatMemoryUsage(usg.memory)}\n`
-            //     txt+= `CPU usage: ${usg.cpu.toFixed(2)}%`
-            //     console.log(txt);
-            // }, 1000);
-
             return message.send_(txt)
-
         })
     },
     get command() {
