@@ -316,6 +316,7 @@ class MusicPlayer {
     onEventDispatcher() {
         this.player.on(AudioPlayerStatus.Idle, (msg) => {
             var playlist = this.getPlaylist()
+            console.log(playlist);
             this.time = 0
             if ((this.voiceChat.members.size <= 1 && this.t247 == false) || (playlist && playlist.length <= 1)) {
                 this.connection.destroy()

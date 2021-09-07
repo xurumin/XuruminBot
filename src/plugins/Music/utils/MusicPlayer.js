@@ -58,8 +58,9 @@ class MusicPlayer {
             sofa:'sofalizer=sofa=/path/to/ClubFritz12.sofa:type=freq:radius=2:rotation=5',
             desilencer:'silenceremove=window=0:detection=peak:stop_mode=all:start_mode=all:stop_periods=-1:stop_threshold=0',
             reverb: "aecho=1.0:0.7:20:0.5",
-            lofi: "highpass=f=200, lowpass=f=3000, aecho=1.0:0.7:20:0.5"
+            lofi: "highpass=f=200, lowpass=f=3000, aecho=1.0:0.7:20:0.5, bass=g=10,dynaudnorm=f=200"
         }
+        this.isIdle = false;
     }
     setAudioQuality(audioquality) {
         this.audioquality = audioquality
@@ -263,11 +264,6 @@ class MusicPlayer {
                 let streamtimes = current_playlist[0].time || 0
                 streamtimes = Utils.toHHMMSS(streamtimes)
 
-                // this.addSoundEffects(this.soundEffectsList.bassboost)
-                // this.addSoundEffects(this.soundEffectsList.reverb)
-                // this.addSoundEffects(this.soundEffectsList.lofi)
-                
-
                 const transcoder = new prism.FFmpeg({
                     args: [
                         '-analyzeduration', '0',
@@ -344,39 +340,18 @@ class MusicPlayer {
                     const resource = createAudioResource(output, {
                         inputType: StreamType.Arbitrary
                     });
+
                     const player = createAudioPlayer();
+                    player.setMaxListeners(1)
                     player.on("error", error => {
                         console.log(error);
                     })
                     player.play(resource)
                     this.connection.subscribe(player)
                 })
-                
 
-                // var command = FfmpegCommand()
-                //     .input(music_url)
-                    // .seekInput(streamtimes)
-
-                // command.on("error", (err)=>{
-                //     console.log("FFMPEG CMD ERROR:", err);
-                // })
-
-                //String(streamtimes).toString()
-
-
-                
-
-                
-
-                // this.dispatcher = this.connection.play(music_url,
-                //     {
-                //         seek: current_playlist[0].time || 0,
-                //         bitrate: this.bitrate,
-                //         volume: false
-                //     }
-                // )
-                // this.aliveConCooldown()
-                // this.onEventDispatcher()
+                this.aliveConCooldown()
+                this.onEventDispatcher()
             } catch (error) {
                 console.log("[MusicPlayer][playMp3]", error);
                 return this.connection.emit("skip")
@@ -412,7 +387,15 @@ class MusicPlayer {
     onEventDispatcher() {
         this.player.on(AudioPlayerStatus.Idle, (msg) => {
             if (!this.connection) return;
+            if(this.isIdle == true) return;
+            this.isIdle = true;
+            setTimeout(() => {
+                this.isIdle = false
+            }, 1000);
+
+
             var playlist = this.getPlaylist()
+
             if (!playlist || playlist == []) {
                 this.deletePlayer();
                 this.deletePlaylist();

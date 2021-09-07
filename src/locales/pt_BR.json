@@ -797,6 +797,14 @@
                 "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
             }
         },
+        "lofier": {
+            "title": ":musical_note: LO-FI",
+            "success": "🔊 Tocando a música em versão LO-FI ~~ou quase isso~~",
+            "errors": {
+                "ops_title": "❌ Ops!",
+                "not_playing": "O bot não está tocando nada no momento"
+            }
+        },
         "twitch": {
             "title": "<:twitch:857426597736087613> Twitch",
             "stream_added": "A stream pode demorar um pouco para tocar. Culpa da Twitch 😞",
