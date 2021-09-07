@@ -80,7 +80,7 @@ module.exports = {
                 game_info.rounds = args[1]
             }
 
-            message.send_Typing();
+            message.channel.sendTyping();
             
 
             var msgs = {

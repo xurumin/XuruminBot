@@ -94,7 +94,7 @@ module.exports = {
                 userImages.push(user_pic)
             }
             
-            message.send_Typing();
+            message.channel.sendTyping();
             
 
             ImageGenerator(userImages)

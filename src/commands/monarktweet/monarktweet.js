@@ -18,7 +18,7 @@ module.exports = {
 				text = "Wow"
 			}
 	
-			message.send_Typing();
+			message.channel.sendTyping();
 
 			
 			

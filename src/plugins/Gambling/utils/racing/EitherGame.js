@@ -70,7 +70,8 @@ var game = {
                     }
                     return true;
                 };
-                message.awaitReactions(filter, {
+                message.awaitReactions({
+                        filter,
                         time: 300000,
                         max: 50
                     })

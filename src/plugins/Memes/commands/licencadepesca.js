@@ -71,7 +71,7 @@ module.exports = {
                 ));
             }
             
-            message.send_Typing();
+            message.channel.sendTyping();
                
 
             var name = message.guild.member(user).nickname

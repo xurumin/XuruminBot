@@ -14,7 +14,7 @@ module.exports = {
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 	
-			message.send_Typing();
+			message.channel.sendTyping();
 			
 			const member = message.guild.member(message.author);
 			const user_roles = member.roles.cache.sort((a, b) => a.position - b.position || a.id - b.id).map(r=>{ return r.name.replace(/[^a-z0-9 ,.?!]/ig, "")}).reverse().slice(0,3)			

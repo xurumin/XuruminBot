@@ -58,7 +58,8 @@ module.exports = {
             const filter = (reaction, user) => {
                 return !["754756207507669128", "753723888671785042", "757333853529702461"].includes(user.id);
             };
-            message.awaitReactions(filter, {
+            message.awaitReactions({
+                    filter,
                     max: 1,
                     time: 100000,
                     errors: ['time']
@@ -107,7 +108,8 @@ module.exports = {
             const filter = (reaction, user) => {
                 return !["754756207507669128", "753723888671785042", "757333853529702461", "760496747625185330"].includes(user.id);
             };
-            message.awaitReactions(filter, {
+            message.awaitReactions({
+                    filter,
                     max: 1,
                     time: 100000,
                     errors: ['time']

@@ -37,7 +37,7 @@ module.exports = {
                 current_playing_song = current_playing_song["name"] + " " + current_playing_song["author"]
             }
 
-            message.send_Typing();
+            message.channel.sendTyping();
 
             try {
                 lyric = await Music.getLyricByMusicName(current_playing_song)

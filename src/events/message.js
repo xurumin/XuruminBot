@@ -61,6 +61,22 @@ module.exports = {
 				})
 			}
 		}
+		message.edit_ = async (msg)=>{
+			if(msg instanceof Discord.MessageAttachment){
+				return await message.edit({
+					files: [msg]
+				})
+			}
+			else if(msg instanceof Discord.MessageEmbed){
+				return await message.edit({
+					embeds: [msg]
+				})
+			}else{
+				return await message.edit({
+					content: msg
+				})
+			}
+		}
 
 		// if(!antiFloodCooldown.has(message.author.id)){
 		// 	if(client.cachedPoints.has(message.author.id)){

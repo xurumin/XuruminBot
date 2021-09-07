@@ -78,7 +78,7 @@ module.exports = {
 				loaded_msg.description
 			)
 			.setThumbnail("https://i.imgur.com/8wzMv0f.png")
-			loading_msg.edit(loaded_msg_embed)
+			loading_msg.edit_(loaded_msg_embed)
 		}, 2000)
 
 	},

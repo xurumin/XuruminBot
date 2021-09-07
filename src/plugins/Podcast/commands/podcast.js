@@ -31,20 +31,20 @@ async function showLastsEps(podcastUrl, podcastName, podcastAuthor, client, mess
         }
     });
 
-    let sMsg = await message.edit(messageBody)
+    let sMsg = await message.edit_(messageBody)
 
     PodcastUtil.getReact(sMsg)
         .then(async (i) => {
             if (i == 5) {
-                if (index == 0) return message.edit(new Discord.MessageEmbed().setTitle("Desculpe, mas só achei esses epsódios 😥"));
+                if (index == 0) return message.edit_(new Discord.MessageEmbed().setTitle("Desculpe, mas só achei esses epsódios 😥"));
                 return showLastsEps(podcastUrl, podcastName, podcastAuthor, client, message, index - 5)
             } else if (i == 6) {
                 return showLastsEps(podcastUrl, podcastName, podcastAuthor, client, message, index + 5)
             } else if (i > 6) {
-                return message.edit(new Discord.MessageEmbed().setTitle("Desculpe, mas só achei esses epsódios 😥"));
+                return message.edit_(new Discord.MessageEmbed().setTitle("Desculpe, mas só achei esses epsódios 😥"));
             } else {
                 if (!userMsg.member.voice.channel) {
-                    return message.edit(new Discord.MessageEmbed().setTitle("Você precisa estar em um chat de voz para executar o comando 😥"));
+                    return message.edit_(new Discord.MessageEmbed().setTitle("Você precisa estar em um chat de voz para executar o comando 😥"));
                 }
 
                 let player = await new MusicPlayer(userMsg.guild.id, client, userMsg, "mp3")
@@ -59,7 +59,7 @@ async function showLastsEps(podcastUrl, podcastName, podcastAuthor, client, mess
                 }
                 player.setPlaylist([podcastInfo])
                 player.playMp3()
-                return message.edit(Utils.createSimpleEmbed(`🔊 Tocando ${podcastInfo.name} - ⌛️ ${podcastInfo.duration}`));
+                return message.edit_(Utils.createSimpleEmbed(`🔊 Tocando ${podcastInfo.name} - ⌛️ ${podcastInfo.duration}`));
             }
         })
 
@@ -166,13 +166,13 @@ module.exports = {
         PodcastUtil.getReactLight(sMsg)
             .then(index => {
                 if (index > 5 || index > searchlist.length - 1) {
-                    return sMsg.edit("Desculpe, mas só achei esses epsódios 😥");
+                    return sMsg.edit_("Desculpe, mas só achei esses epsódios 😥");
                 }
                 return showLastsEps(searchlist[index].url, searchlist[index].name, searchlist[index].author, client, sMsg, 0)
             }).catch(err => {
                 if (err["message"]) {
                     //err["message"].reactions.removeAll()
-                    return err["message"].edit("Desculpe, mas só achei esses epsódios 😥");
+                    return err["message"].edit_("Desculpe, mas só achei esses epsódios 😥");
                 } else {
                     return err;
                 }

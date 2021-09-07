@@ -52,7 +52,7 @@ var game = {
                     if(!message.embeds[0].fields[0] || !message){
                         return resolve()
                     }
-                    if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != playerId) {
+                    if (user.id != playerId) {
                         return false
                     }
                     switch (reaction.emoji.name) {
@@ -70,7 +70,8 @@ var game = {
                     }
                     return true;
                 };
-                message.awaitReactions(filter, {
+                message.awaitReactions({
+                        filter,
                         time: 300000,
                         max: 50
                     })

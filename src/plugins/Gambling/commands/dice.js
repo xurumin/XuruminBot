@@ -48,7 +48,7 @@ module.exports = {
                         .then(async (pmtResponse) => {
                             embed.setTitle(LOCALE["loading"].title)
                             embed.setDescription(LOCALE["loading"].description)
-                            confirmation.edit(embed)
+                            confirmation.edit_(embed)
                             await Utils.wait(3000)
 
                             embed.setTitle(game_info.title)
@@ -56,18 +56,18 @@ module.exports = {
                             var random = Utils.random(1,6)
 
                             if(random == game_info.play.face){
-                                var prize = game_info.play.value * Utils.randomFloat(1.01, 1.5).toFixed(1)
+                                var prize = (game_info.play.value * Utils.randomFloat(1.01, 1.5)).toFixed(1)
                                 embed.setDescription(LOCALE["player_won"].interpolate({
                                     prize: prize
                                 }))
                                 await Payment.fastPayXurumin(message.author.id, prize)
-                                return resolve(confirmation.edit(embed))
+                                return resolve(confirmation.edit_(embed))
                             }else{
                                 embed.setDescription(Utils.choice(LOCALE["player_lost"]).interpolate({
                                     prize: prize,
                                     face: random
                                 }))
-                                return resolve(confirmation.edit(embed))
+                                return resolve(confirmation.edit_(embed))
                             }
 
                         }).catch(async (err) => {
@@ -76,7 +76,7 @@ module.exports = {
                                 user: message.author,
                                 prefix: process.env.COMMAND_PREFIX
                             }))
-                            return resolve(await confirmation.edit(embed))
+                            return resolve(await confirmation.edit_(embed))
                         })
                 })
                 .catch(async (err) => {

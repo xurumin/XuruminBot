@@ -40,7 +40,7 @@ module.exports = {
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
                 globalCooldown.shift()
-                return resolve(loading_msg.edit(
+                return resolve(loading_msg.edit_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }

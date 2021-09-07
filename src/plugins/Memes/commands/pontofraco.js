@@ -71,7 +71,7 @@ module.exports = {
                 userImages.push(user_pic)
             }
 
-			message.send_Typing();
+			message.channel.sendTyping();
 			
 
 			ImageProcessor(userImages[0], userImages[1])

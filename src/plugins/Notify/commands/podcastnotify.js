@@ -31,7 +31,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             const userMsg = args[1] || ""
 
-            message.send_Typing();
+            message.channel.sendTyping();
             
 
             const action = args[0]

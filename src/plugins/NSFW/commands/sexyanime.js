@@ -67,7 +67,7 @@ module.exports = {
                 ));
             }
 
-            message.send_Typing();
+            message.channel.sendTyping();
             
 
             ImageGenerator(user_pic, utils.choice(ImageList))

@@ -26,7 +26,7 @@ module.exports = {
 				);
 			}
 	
-			message.send_Typing();
+			message.channel.sendTyping();
 			
 			var img_code = 3;
 			if(text.length <= 74) img_code=1;

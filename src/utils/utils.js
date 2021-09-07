@@ -356,7 +356,8 @@ var exp = {
           if (["754756207507669128", "753723888671785042", "757333853529702461", message.author.id].includes(user.id) || user.id != userId) return false;
           return true;
         };
-        message.awaitReactions(filter, {
+        message.awaitReactions({
+            filter,
             max: 1,
             time: time,
             errors: ['time']

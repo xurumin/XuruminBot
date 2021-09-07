@@ -22,7 +22,7 @@ module.exports = {
 
             var isDeleted = false;
 
-            message.send_Typing();
+            message.channel.sendTyping();
             
 
             var msg = {
@@ -36,9 +36,8 @@ module.exports = {
             main_embed.setThumbnail("https://i.imgur.com/J9Cz6fC.png")
             main_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
             main_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
-            var main_msg = await message.send_(main_embed)
-            
 
+            var main_msg = await message.send_(main_embed)
 
             EitherGame.Reactions.reactEmbed(main_msg, message.author.id, async (reaction) => {
                     /** 
@@ -85,7 +84,10 @@ module.exports = {
                     main_embed.fields[1].name = `🟥 ${red_percentage}%`
 
                     main_embed.setFooter(msg.loading)
-                    await main_msg.edit(main_embed)
+                    
+                    await main_msg.edit({
+                        embeds: [main_embed]
+                    })
 
                     setTimeout(async ()=>{
                         if(isDeleted){
@@ -98,8 +100,9 @@ module.exports = {
                         new_embed.addField(`🟦 ${question.blue_choice.question}`, "⠀", false)
                         new_embed.addField(`🟥 ${question.red_choice.question}`, "⠀", false)
 
-                        main_msg.edit(new_embed)
-
+                        main_msg.edit({
+                            embeds: [new_embed]
+                        })
                     }, 5000)
                     question = await EitherGame.getQuestion(Utils.random(0, 5000), language)
                 })
