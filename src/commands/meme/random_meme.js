@@ -31,7 +31,7 @@ function getTwitterRandomMeme(){
         };
         client.get('statuses/user_timeline', params, async function(error, tweets, response) {
             if (error) {
-                reject(error)
+                return reject(error)
             }
             tweets = utils.shuffle(tweets)
             
