@@ -205,10 +205,12 @@ module.exports = {
     },
     searchYoutubeVideos(term, limit=5) {
         return new Promise((resolve, reject)=>{
-            ytsr(term, {
-                limit: limit+3
+            let filter = await ytsr.getFilters(term);
+            filter = filter.get('Type').get('Video')
+            ytsr(filter, {
+                limit: limit
             }).then(data => {
-                resolve(data["items"].filter((element) => element["type"] == "video").slice(0,limit))
+                resolve(data["items"])
             }).catch(err => {
                 reject(err)
             });
