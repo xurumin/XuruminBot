@@ -38,17 +38,17 @@
     "prism-media": "^1.3.2",
     "solenolyrics": "^5.0.0",
     "spotify-web-api-node": "^5.0.2",
+    "tar": ">=6.1.11",
     "twitch-m3u8": "^1.1.4",
     "twitter": "^1.7.1",
     "xml2js": "^0.4.23",
     "ytdl-core": "^4.9.1",
     "ytpl": "^2.2.3",
-    "ytsr": "^3.5.3",
-    "tar": ">=6.1.9"
+    "ytsr": "^3.5.3"
   },
   "devDependencies": {
     "css-what": ">=5.0.1",
-    "normalize-url": ">=7.0.1",
-    "ws": ">=8.2.1"
+    "normalize-url": ">=7.0.2",
+    "ws": ">=8.2.2"
   }
 }
