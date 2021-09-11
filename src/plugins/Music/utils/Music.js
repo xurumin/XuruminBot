@@ -207,7 +207,7 @@ module.exports = {
         return new Promise(async (resolve, reject)=>{
             let filter = await ytsr.getFilters(term);
             filter = filter.get('Type').get('Video')
-            ytsr(filter, {
+            ytsr(filter.url, {
                 limit: limit
             }).then(data => {
                 resolve(data["items"])
