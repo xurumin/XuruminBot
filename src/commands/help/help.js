@@ -15,7 +15,7 @@ module.exports = {
 	 */
 	run: async (client, message, args, LOCALE) => {
 
-		return message.send_(
+		return message.inlineReply(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
 			.setTitle(LOCALE.message.title)

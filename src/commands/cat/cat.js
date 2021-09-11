@@ -19,7 +19,7 @@ module.exports = {
 	 */
 	run: async (client, message, args, LOCALE) => {
 		var image = await axios.get(`https://unsplash.com/napi/search/photos?query=cat&xp=&per_page=1&page=${Utils.random(0,100)}`)
-		return message.send_(
+		return message.inlineReply(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
 			.setTitle(LOCALE.message.title)

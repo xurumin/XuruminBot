@@ -18,13 +18,8 @@ module.exports = {
 		let pedro = fs.readdirSync(__dirname+"/files")
 		pedro = pedro[Math.floor(Math.random() * pedro.length)]
 		
-		return message.send_(
-			new Discord.MessageEmbed()
-			.setColor('#9d65c9')
-			.setTitle("Pedro")
-			.setAuthor(client.user.username)
-			.attachFiles(new Discord.MessageAttachment(`${__dirname}/files/${pedro}`, 'image.png'))
-			.setImage("attachment://image.png")
+		return message.inlineReply(
+			new Discord.MessageAttachment(`${__dirname}/files/${pedro}`, 'image.png')
 		)
 	},
 	get command() {
