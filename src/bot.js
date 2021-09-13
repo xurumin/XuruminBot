@@ -254,12 +254,13 @@ const init = async () => {
 							await Utils.GameOffers.removeChannel(channelId)
 							continue;
 						}
-						await channel.send(new Discord.MessageEmbed()
+						await channel.send({
+							embeds: [new Discord.MessageEmbed()
 							.setAuthor("🎮 New game")
 							.setTitle(`${newGames.title}`)
 							.setDescription(`**[${newGames.store.name} - ${newGames.price} (${newGames.price_cut}% OFF)](${newGames.store.href})**`)
-							.setFooter("Please, check the website before buying.")
-						)
+							.setFooter("Please, check the website before buying.")]
+						})
 					} catch (error) {
 						console.log(error);
 					}
@@ -296,7 +297,11 @@ const init = async () => {
 					const prize = Utils.random(450, 550);
 					var fetchUser = await client.users.fetch(lastVotes[0].id)
 					if (!fetchUser) return;
-					fetchUser.send(new Discord.MessageEmbed().setTitle(`:star2: Obrigado por votar no Xurumin! :star2:`).setDescription(`\nComo recompensa, você ganhou **X$${prize}**!\n(você pode usar \`x!profile\` em um servidor para ver quantos X$ você tem)\n\nContinue votando para ganhar mais!`).setColor("#9d65c9"))
+					fetchUser.send({
+						embeds: [
+							new Discord.MessageEmbed().setTitle(`:star2: Obrigado por votar no Xurumin! :star2:`).setDescription(`\nComo recompensa, você ganhou **X$${prize}**!\n(você pode usar \`x!profile\` em um servidor para ver quantos X$ você tem)\n\nContinue votando para ganhar mais!`).setColor("#9d65c9")
+						]
+					})
 					await Payment.fastPayXurumin(lastVotes[0].id, prize)
 				} catch (error) {
 					console.log(error);
@@ -328,7 +333,9 @@ const init = async () => {
 						await Utils.PodcastNotify.removeChannel(Utils.PodcastNotify.getPodcastFeedHash(newEps["feedUrl"]), channelId)
 						continue;
 					}
-					channel.send(embed)
+					channel.send({
+						embeds: [embed]
+					})
 				}
 			}
 		})
