@@ -24,7 +24,7 @@ module.exports = {
 			
 
 			Utils.KarinnaAPI.get("/v1/image/filosofo", {
-                text: text
+                text: text || ""
             }).then(async res=>{
 				resolve(message.inlineReply(new Discord.MessageAttachment(res, "filosofo.jpeg")))
             })
