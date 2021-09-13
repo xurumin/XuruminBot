@@ -302,6 +302,14 @@ class MusicPlayer {
             }
 
         });
+        this.connection.on("disconnect",()=>{
+            console.log("a");
+        })
+        this.connection.on("stateChange",(state)=>{
+            if(state.status == "disconnected"){
+                this.leave();
+            }
+        })
         this.connection.on('playMp3', async () => {
             this.creationTime = Date.now()
             var current_playlist = this.getPlaylist()

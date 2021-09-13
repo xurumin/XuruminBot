@@ -208,6 +208,8 @@ class MusicPlayer {
             }
         })
 
+        
+
         this.connection.on('play', async () => {
             this.isPlaying == true
             var current_playlist = this.getPlaylist()
