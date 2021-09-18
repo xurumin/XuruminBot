@@ -1,6 +1,6 @@
 {
   "name": "xurumin",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "A simple discord bot that plays music, playlists, radio, podcasts and memes!",
   "main": "./src/bot.js",
   "scripts": {
@@ -14,6 +14,8 @@
   "dependencies": {
     "@discordjs/opus": "^0.6.0",
     "@discordjs/voice": "^0.6.0",
+    "@sentry/node": "^6.12.0",
+    "@sentry/tracing": "^6.12.0",
     "@top-gg/sdk": "^3.1.2",
     "axios": "^0.21.4",
     "canvas": "^2.8.0",
@@ -31,7 +33,7 @@
     "libsodium-wrappers": "^0.7.9",
     "memory-cache": "^0.2.0",
     "ms": "^2.1.3",
-    "node": "16.6.1",
+    "node": "16.9.1",
     "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12",
     "opusscript": "^0.0.8",

@@ -6,6 +6,13 @@ const MessageLog = require('./../utils/MessageLog');
 const config = require("./../config");
 require('dotenv/config');
 
+
+const Sentry = require("@sentry/node");
+
+Sentry.init({
+	dsn: process.env.SENTRY_DNS
+});
+
 const talkedRecently = new Discord.Collection();
 const antiFloodCooldown = new Discord.Collection();
 
@@ -259,8 +266,12 @@ module.exports = {
 				return MessageLog.log("NOT FOUND", message);
 			}
 		} catch (error) {
+			if(process.env.NODE_ENV != "development"){
+				Sentry.captureException(error)
+			}else{
+				console.log("[MESSAGE_EVENT]", error)
+			}
 			
-			console.log("[MESSAGE_EVENT]", error)
 			return message.send_(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
 		}
 	},

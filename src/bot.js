@@ -178,7 +178,7 @@ const init = async () => {
 	setInterval(async () => {
 		const t1 = (new Date()).getTime()
 
-		if (process.env.NODE_ENV != "development" || true) {
+		if (process.env.NODE_ENV != "development") {
 			for (const user of client.cachedPoints) {
 				try {
 					var userInfo = {

@@ -22,12 +22,9 @@ module.exports = {
 			}
 			message.channel.sendTyping();
 
-			
-
 			Utils.KarinnaAPI.get("/v1/image/indoatras", {
                 text: text
             }).then(async res=>{
-				
 				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
             })
             .catch(async err=>{

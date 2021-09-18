@@ -22,6 +22,12 @@ const { default: axios } = require('axios');
 FfmpegCommand.setFfmpegPath(ffmpegstatic)
 FfmpegCommand.setFfprobePath(ffprobestatic.path)
 
+const Sentry = require("@sentry/node");
+
+Sentry.init({
+	dsn: process.env.SENTRY_DNS
+});
+
 // const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
 class MusicPlayer {
@@ -94,14 +100,14 @@ class MusicPlayer {
     }
 
     removePlaylistMusic(index) {
-        var plt = this.getPlaylist()
+        let plt = this.getPlaylist()
         this.setPlaylist(plt.splice(index, 1))
     }
     /**
      * @param  {Array} musics
      */
     filterPlaylist(musics) {
-        var plt = this.getPlaylist()
+        let plt = this.getPlaylist()
 
         for (let index = 0; index < musics.length; index++) {
             const element = musics[index];
@@ -111,8 +117,8 @@ class MusicPlayer {
     }
 
     shufflePlaylist() {
-        var current_playlist = this.getPlaylist()
-        var new_playlist = [current_playlist[0]]
+        let current_playlist = this.getPlaylist()
+        let new_playlist = [current_playlist[0]]
         current_playlist.shift();
         new_playlist = new_playlist.concat(Utils.shuffle(current_playlist))
         this.client.playlist.set(this.guild_id, new_playlist)
@@ -147,7 +153,7 @@ class MusicPlayer {
     }
     //voltar
     changeTime(secs) {
-        var current_playlist = this.getPlaylist()
+        let current_playlist = this.getPlaylist()
         current_playlist[0].time = secs
 
         this.time = secs * 1000
@@ -175,7 +181,7 @@ class MusicPlayer {
 
     aliveConCooldown() {
         if (this.t247 == true) return;
-        var intv = setInterval(() => {
+        let intv = setInterval(() => {
             try {
                 if (!this.connection) {
                     return clearInterval(intv);
@@ -244,7 +250,7 @@ class MusicPlayer {
         this.connection.on('play', async () => {
             this.creationTime = Date.now()
             this.isPlaying == true
-            var current_playlist = this.getPlaylist()
+            let current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
             let music_url;
@@ -285,10 +291,26 @@ class MusicPlayer {
                 this.player.play(resource);
 
                 stream.on('error', error => {
-                    console.log(error);
+                    if(process.env.NODE_ENV != "development"){
+                        Sentry.captureException(error, {
+                            tags: {
+                                section: "Player Stream"
+                            }
+                        })
+                    }else{
+                        console.log("[PLAYER STREAM]",error);
+                    }
                 });
                 this.connection.on('error', error => {
-                    console.log(error);
+                    if(process.env.NODE_ENV != "development"){
+                        Sentry.captureException(error, {
+                            tags: {
+                                section: "Player Connection"
+                            }
+                        })
+                    }else{
+                        console.log("[PLAYER CONNECTION]",error);
+                    }
                 });
                 this.player.on('error', error => {
                     console.error(`Player Error: ${error.message}`);
@@ -312,7 +334,7 @@ class MusicPlayer {
         })
         this.connection.on('playMp3', async () => {
             this.creationTime = Date.now()
-            var current_playlist = this.getPlaylist()
+            let current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
             let music_url;
@@ -344,18 +366,18 @@ class MusicPlayer {
                         responseType: 'stream'
                       }
                 ).then(res=>{
-                    var output = res.data.pipe(transcoder)
+                    let output = res.data.pipe(transcoder)
                     const resource = createAudioResource(output, {
                         inputType: StreamType.Arbitrary
                     });
 
-                    const player = createAudioPlayer();
-                    player.setMaxListeners(1)
-                    player.on("error", error => {
-                        console.log(error);
+                    this.player = createAudioPlayer();
+                    this.player.setMaxListeners(1)
+                    this.player.on("error", error => {
+                        console.log("[MP3 PLAYER]", error);
                     })
-                    player.play(resource)
-                    this.connection.subscribe(player)
+                    this.player.play(resource)
+                    this.connection.subscribe(this.player)
                 })
 
                 this.aliveConCooldown()
@@ -370,7 +392,7 @@ class MusicPlayer {
             this.shufflePlaylist()
         });
         this.connection.on('skip', () => {
-            var current_playlist = this.getPlaylist()
+            let current_playlist = this.getPlaylist()
 
             this.time = 0
 
@@ -402,7 +424,7 @@ class MusicPlayer {
             }, 1000);
 
 
-            var playlist = this.getPlaylist()
+            let playlist = this.getPlaylist()
 
             if (!playlist || playlist == []) {
                 this.deletePlayer();
@@ -416,7 +438,7 @@ class MusicPlayer {
                 this.deletePlaylist();
                 return;
             } else {
-                var x = playlist
+                let x = playlist
                 x.splice(0, 1)
                 this.setPlaylist(x)
                 this.play()
