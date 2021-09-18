@@ -353,7 +353,7 @@ module.exports = {
 
         // const isPremium = await Utils.Profile.isPremium({}, message.author.id)
         const isPremium = config.specialusers.includes(message.author.id)
-        message.audioquality = "highestaudio"
+        message.audioquality = "lowestaudio"
         // message.audioquality = "lowestaudio"
         // if (isPremium) {
         //     message.audioquality = "highestaudio"
