@@ -211,6 +211,8 @@ class MusicPlayer {
                 this.voiceChat = this.message.member.voice.channel
 
                 this.player = createAudioPlayer();
+                this.player.setMaxListeners(1)
+
                 this.connection.subscribe(this.player);
 
                 this.onEventConnections()
@@ -312,21 +314,12 @@ class MusicPlayer {
                         console.log("[PLAYER CONNECTION]",error);
                     }
                 });
-                this.player.on('error', error => {
-                    console.error(`Player Error: ${error.message}`);
-                });
-
-                this.aliveConCooldown()
-                this.onEventDispatcher()
             } catch (error) {
                 console.log("[MusicPlayer][play]", error);
                 return this.connection.emit("skip")
             }
 
         });
-        this.connection.on("disconnect",()=>{
-            console.log("a");
-        })
         this.connection.on("stateChange",(state)=>{
             if(state.status == "disconnected"){
                 this.leave();
@@ -371,17 +364,8 @@ class MusicPlayer {
                         inputType: StreamType.Arbitrary
                     });
 
-                    this.player = createAudioPlayer();
-                    this.player.setMaxListeners(1)
-                    this.player.on("error", error => {
-                        console.log("[MP3 PLAYER]", error);
-                    })
-                    this.player.play(resource)
-                    this.connection.subscribe(this.player)
+                    this.player.play(resource);
                 })
-
-                this.aliveConCooldown()
-                this.onEventDispatcher()
             } catch (error) {
                 console.log("[MusicPlayer][playMp3]", error);
                 return this.connection.emit("skip")
@@ -446,7 +430,7 @@ class MusicPlayer {
             }
         });
         this.player.on('error', (err) => {
-            console.log("[MusicPlayer][dispatcher]", err);
+            console.log("[MusicPlayer][player]", err);
             return this.connection.emit("skip")
         });
     }
