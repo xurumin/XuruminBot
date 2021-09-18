@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "engines": {
-    "node": "15.x"
+    "node": "16.6.0"
   },
   "author": "jônatas araujo <jonatasaraujofx@gmail.com>",
   "license": "ISC",
