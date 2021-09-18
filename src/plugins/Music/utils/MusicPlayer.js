@@ -212,11 +212,11 @@ class MusicPlayer {
 
                 this.player = createAudioPlayer();
                 this.player.setMaxListeners(1)
-
                 this.connection.subscribe(this.player);
 
-                this.onEventConnections()
-                this.aliveConCooldown()
+                this.onEventDispatcher();
+                this.onEventConnections();
+                this.aliveConCooldown();
                 resolve()
             } catch (error) {
                 this.message.send_(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `O bot não possui as permissões para executar o comando 😞`, this.client.user.username, this.client.user.avatarURL()));
@@ -289,10 +289,13 @@ class MusicPlayer {
                 const resource = createAudioResource(output, {
                     inputType: StreamType.OggOpus
                 });
-
+                
                 this.player.play(resource);
+                // this.connection.subscribe(this.player);
+                // this.onEventDispatcher()
 
                 stream.on('error', error => {
+                    this.skip()
                     if(process.env.NODE_ENV != "development"){
                         Sentry.captureException(error, {
                             tags: {
@@ -400,13 +403,13 @@ class MusicPlayer {
     }
     onEventDispatcher() {
         this.player.on(AudioPlayerStatus.Idle, (msg) => {
+
             if (!this.connection) return;
             if(this.isIdle == true) return;
             this.isIdle = true;
             setTimeout(() => {
                 this.isIdle = false
             }, 1000);
-
 
             let playlist = this.getPlaylist()
 
