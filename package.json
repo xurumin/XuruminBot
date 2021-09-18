@@ -9,6 +9,9 @@
     "heroku-postbuild": "npm install && npm run build",
     "test": "jest"
   },
+  "engines": {
+    "node": "15.x"
+  },
   "author": "jônatas araujo <jonatasaraujofx@gmail.com>",
   "license": "ISC",
   "dependencies": {
