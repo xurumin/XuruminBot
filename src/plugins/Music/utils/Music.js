@@ -184,7 +184,10 @@ module.exports = {
     },
     getVideoLinkBySearch(name) {
         return new Promise((resolve, reject)=>{
-            ytsr(name, {
+            let filter = await ytsr.getFilters(term);
+            filter = filter.get('Type').get('Video')
+
+            ytsr(filter.url, {
                 limit: 1
             })
             .then((data)=>{
@@ -193,14 +196,6 @@ module.exports = {
             .catch((err)=>{
                 reject(err)
             })
-            // temoytsearch(name)
-            // .then((data)=>{
-            //     var url = `https://www.youtube.com/watch?v=${data[0]["id"]}`
-            //     resolve(url)
-            // })
-            // .catch((err)=>{
-            //     reject(err)
-            // })
         })
     },
     searchYoutubeVideos(term, limit=5) {
