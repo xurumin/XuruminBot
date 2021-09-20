@@ -40,7 +40,7 @@ class MusicPlayer {
         this.guild_id = guild_id;
         this.client = client;
         this.message = message;
-        this.isPlaying = false;
+        this.isPlaying = true;
         this.audioquality = audioquality
         this.type = type
         this.time = 0
@@ -187,14 +187,17 @@ class MusicPlayer {
     aliveConCooldown() {
         if (this.t247 == true) return;
         let intv = setInterval(() => {
+            console.log(this.voiceChat.members.size);
             try {
                 if (!this.connection) {
                     return clearInterval(intv);
                 }
                 if (this.voiceChat.members.size <= 1) {
-                    this.connection.destroy()
-                    this.deletePlayer();
-                    this.deletePlaylist();
+                    this.leave()
+                    console.log("a");
+                    // this.connection.destroy()
+                    // this.deletePlayer();
+                    // this.deletePlaylist();
                     return clearInterval(intv);
                 }
             } catch (error) {
@@ -255,8 +258,8 @@ class MusicPlayer {
         })
 
         this.connection.on('play', async () => {
-            this.creationTime = Date.now()
-            this.isPlaying == true
+            this.creationTime = Date.now();
+            this.isPlaying = true;
             let current_playlist = this.getPlaylist()
             if (!current_playlist) return this.message.send_(Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `➡️ Use  **${process.env.COMMAND_PREFIX}play <link do youtube>** para tocar alguma coisa! 🤗`, this.client.user.username, this.client.user.avatarURL()));
 
@@ -300,6 +303,7 @@ class MusicPlayer {
                 // this.onEventDispatcher()
 
                 stream.on('error', error => {
+                    console.log("[PLAYER STREAM]",error);
                     this.skip()
                     if(process.env.NODE_ENV != "development"){
                         // Sentry.captureException(error, {
@@ -308,9 +312,10 @@ class MusicPlayer {
                         //     }
                         // })
                     }
-                    console.log("[PLAYER STREAM]",error);
                 });
                 this.connection.on('error', error => {
+                    console.log("[Connection STREAM]",error);
+
                     if(process.env.NODE_ENV != "development"){
                         Sentry.captureException(error, {
                             tags: {
@@ -318,7 +323,6 @@ class MusicPlayer {
                             }
                         })
                     }
-                    console.log("[Connection STREAM]",error);
                 });
             } catch (error) {
                 console.log("[MusicPlayer][play]", error);
@@ -407,7 +411,6 @@ class MusicPlayer {
     }
     onEventDispatcher() {
         this.player.on(AudioPlayerStatus.Idle, (msg) => {
-
             if (!this.connection) return;
             if(this.isIdle == true) return;
             this.isIdle = true;
@@ -424,10 +427,10 @@ class MusicPlayer {
             };
             this.time = 0
             if ((this.voiceChat.members.size <= 1 && this.t247 == false) || (playlist && playlist.length <= 1)) {
-                this.connection.destroy()
-                this.deletePlayer();
-                this.deletePlaylist();
-                return;
+                // this.connection.destroy()
+                // this.deletePlayer();
+                // this.deletePlaylist();
+                return this.leave();
             } else {
                 let x = playlist
                 x.splice(0, 1)

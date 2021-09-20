@@ -369,7 +369,7 @@ module.exports = {
         if (!url_) {
             return searchTerm(client, message, args, LOCALE)
         }
-        if ((userMsg.includes("youtube.com/watch") && url_.includes("youtube.com")) || userMsg.includes("https:/youtu.be")) {
+        if ((userMsg.includes("youtube.com/watch") && url_.includes("youtube.com")) || userMsg.startsWith("https://youtu.be/")) {
             return youtubeLink(client, message, userMsg, LOCALE)
         }
         if (userMsg.includes("open.spotify.com/track/")) {
