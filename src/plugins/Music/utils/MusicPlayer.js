@@ -22,11 +22,14 @@ const { default: axios } = require('axios');
 FfmpegCommand.setFfmpegPath(ffmpegstatic)
 FfmpegCommand.setFfprobePath(ffprobestatic.path)
 
-const Sentry = require("@sentry/node");
+var Sentry;
+if(process.env.NODE_ENV != "development"){
+    Sentry = require("@sentry/node");
 
-Sentry.init({
-	dsn: process.env.SENTRY_DNS
-});
+    Sentry.init({
+        dsn: process.env.SENTRY_DNS
+    });
+}
 
 // const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
 
@@ -243,17 +246,6 @@ class MusicPlayer {
                 return;
             }
         })
-        this.connection.on("error", (err) => {
-            console.log(err)
-            this.deletePlayer();
-            this.deletePlaylist();
-            if (this.isPlaying == true) {
-                this.isPlaying = false;
-                return this.message.send_(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
-            } else {
-                return;
-            }
-        })
 
         this.connection.on('play', async () => {
             this.creationTime = Date.now();
@@ -297,36 +289,36 @@ class MusicPlayer {
                 });
                 
                 this.player.play(resource);
-                // this.connection.subscribe(this.player);
-                // this.onEventDispatcher()
 
                 stream.on('error', error => {
                     console.log("[PLAYER STREAM]",error);
                     this.skip()
-                    if(process.env.NODE_ENV != "development"){
-                        // Sentry.captureException(error, {
-                        //     tags: {
-                        //         section: "Player Stream"
-                        //     }
-                        // })
-                    }
-                });
-                this.connection.on('error', error => {
-                    console.log("[Connection STREAM]",error);
-
-                    if(process.env.NODE_ENV != "development"){
-                        Sentry.captureException(error, {
-                            tags: {
-                                section: "Player Connection"
-                            }
-                        })
-                    }
                 });
             } catch (error) {
                 console.log("[MusicPlayer][play]", error);
                 return this.connection.emit("skip")
             }
 
+        });
+        this.connection.on('error', error => {
+            console.log("[Connection STREAM]",error);
+
+            if(process.env.NODE_ENV != "development"){
+                Sentry.captureException(error, {
+                    tags: {
+                        section: "Player Connection"
+                    }
+                })
+            }
+
+            this.deletePlayer();
+            this.deletePlaylist();
+            if (this.isPlaying == true) {
+                this.isPlaying = false;
+                return this.message.send_(Utils.createSimpleEmbed("Saindo... Até mais! 😁"));
+            } else {
+                return;
+            }
         });
         this.connection.on("stateChange",(state)=>{
             if(state.status == "disconnected"){

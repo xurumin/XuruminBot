@@ -265,7 +265,7 @@ const init = async () => {
 			}, 12 * 60 * 60 * 1000)
 			console.log(" [NOTIFY] ".bgMagenta.black.bold, "GameSales loaded".cyan);
 
-			GameSale.run(30 * 60 * 1000)
+			GameSale.run(12 * 60 * 60 * 1000)
 
 			GameSale.EventEmitter.on("newGames", async (newGames) => {
 				console.log("New games!".green);
@@ -356,9 +356,13 @@ const init = async () => {
 						await Utils.PodcastNotify.removeChannel(Utils.PodcastNotify.getPodcastFeedHash(newEps["feedUrl"]), channelId)
 						continue;
 					}
-					channel.send({
-						embeds: [embed]
-					})
+					try {
+						channel.send({
+							embeds: [embed]
+						})
+					} catch (error) {
+						continue;
+					}
 				}
 			}
 		})

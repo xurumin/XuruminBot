@@ -6,12 +6,14 @@ const MessageLog = require('./../utils/MessageLog');
 const config = require("./../config");
 require('dotenv/config');
 
+var Sentry;
+if(process.env.NODE_ENV != "development"){
+	Sentry = require("@sentry/node");
 
-const Sentry = require("@sentry/node");
-
-Sentry.init({
-	dsn: process.env.SENTRY_DNS
-});
+	Sentry.init({
+		dsn: process.env.SENTRY_DNS
+	});
+}
 
 const talkedRecently = new Discord.Collection();
 const antiFloodCooldown = new Discord.Collection();

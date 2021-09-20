@@ -89,11 +89,6 @@ module.exports = {
                 
                 return resolve(
                     message.reply({
-                        // embeds: [
-                        //     new Discord.MessageEmbed()
-                        //     .setTitle(LOCALE.title)
-                        //     .setDescription(LOCALE["remove"])
-                        // ],
                         content: LOCALE["remove"],
                         components: [row]
                     })

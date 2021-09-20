@@ -39,7 +39,7 @@ module.exports = {
                     prefix: process.env.COMMAND_PREFIX
                 }))))
             }
-            if(!message.guild.members.cache.find((user)=>user.id==message.author.id).hasPermission('ADMINISTRATOR')){
+            if(!message.member.permissions.has("ADMINISTRATOR")){
                 return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["errors"].no_permission.interpolate({
