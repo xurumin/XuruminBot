@@ -20,7 +20,6 @@ module.exports = {
 
 			message.channel.sendTyping();
 			
-			
 			Utils.KarinnaAPI.get("/v1/image/espelhoespelhomeu", {
 				img_url: user.avatarURL({format:"jpg", size:512})
             }).then(async res=>{

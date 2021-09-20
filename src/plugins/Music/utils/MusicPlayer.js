@@ -188,9 +188,6 @@ class MusicPlayer {
     }
 
     aliveConCooldown() {
-        // setInterval(() => {
-        //     console.log(this.connection.state.status);
-        // }, 1000)
         if (this.t247 == true) return;
         let intv = setInterval(() => {
             try {
@@ -203,8 +200,6 @@ class MusicPlayer {
                     // this.deletePlayer();
                     // this.deletePlaylist();
                     return clearInterval(intv);
-                }else{
-                    // console.log(this.connection.state);
                 }
             } catch (error) {
                 return clearInterval(intv);
@@ -271,6 +266,8 @@ class MusicPlayer {
                     filter: 'audioonly',
                     quality: this.audioquality
                 });
+
+                console.log(music_url);
 
                 let streamtimes = current_playlist[0].time || 0
                 streamtimes = Utils.toHHMMSS(streamtimes)
