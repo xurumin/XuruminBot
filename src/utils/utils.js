@@ -28,7 +28,7 @@ var serviceAccount = JSON.parse(process.env.GOOGLE_FIREBASE_CREDENTIALS);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://kkkklink.firebaseio.com"
+  databaseURL: process.env.FIREBASE_DATABASE_URL
 });
 var db = admin.database()
 var profilesRef = db.ref("profiles");

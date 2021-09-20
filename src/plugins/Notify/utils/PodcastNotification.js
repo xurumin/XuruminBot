@@ -3,11 +3,10 @@ const Utils = require("./../../../utils/utils")
 const {
     default: axios
 } = require("axios");
-const cheerio = require('cheerio');
-const fs = require("fs")
-const url = require("url")
-const crypto = require("crypto")
 var parseStringPromise = require('xml2js').parseStringPromise;
+
+const podcastDatabase = require("./../../../database/PodcastDB")
+const podcastDB = new podcastDatabase();
 
 class PodcastNotify {
     constructor() {
@@ -60,19 +59,33 @@ class PodcastNotify {
         }
     }
 
+    async getPodcastInfo(feedUrl){
+        let feedData;
+        try {
+            feedData = (await parseStringPromise((await axios.get(feedUrl)).data))
+        } catch (error) {
+            return {};
+        }
+        return {
+            title: feedData["rss"]["channel"][0]["title"][0]
+        }
+
+    }
+
     async __updatePodcastList(){
         var pods = [];
-        const allPods = await Utils.PodcastNotify.getAllPodcasts()
-        for (const key in allPods) {
-            var lastEpUrl = allPods[key]["lastEpUrl"]
+        const allPods = await podcastDB.getAllPodcasts()
+
+        for (const podcast of allPods) {
+            var lastEpUrl = podcast.lastEpUrl
             if(!lastEpUrl){
-                lastEpUrl = (await this.__getLastPodcastEp(allPods[key]["feedUrl"]))["url"]
-                Utils.PodcastNotify.setLastEp(Utils.PodcastNotify.getPodcastFeedHash(allPods[key]["feedUrl"]), lastEpUrl)
+                lastEpUrl = (await this.__getLastPodcastEp(podcast["feedUrl"]))["url"]
+                await podcastDB.setLastEp(podcastDB.getPodcastFeedHash(podcast["feedUrl"]), lastEpUrl)
             }
             pods.push({
-                feedUrl: allPods[key]["feedUrl"],
+                feedUrl: podcast["feedUrl"],
                 lastEpUrl: lastEpUrl,
-                ...allPods[key]
+                ...podcast
             })
         }
         this.__podcasts = pods
@@ -81,17 +94,17 @@ class PodcastNotify {
     async addFeedUrl(feedUrl, channelId){
         const podcastFeedUrl = feedUrl
 
-        const podcastFeedHash = Utils.PodcastNotify.getPodcastFeedHash(podcastFeedUrl)
+        const podcastFeedHash = podcastDB.getPodcastFeedHash(podcastFeedUrl)
 
-        const doesPodcastExists = await Utils.PodcastNotify.doesPodcastExists(podcastFeedHash)
+        const doesPodcastExists = await podcastDB.doesPodcastExists(podcastFeedHash)
 
         if(doesPodcastExists){
-            await Utils.PodcastNotify.addChannelToPodcast(podcastFeedHash, channelId)
+            await podcastDB.addChannelToPodcast(podcastFeedHash, channelId)
         }else{
-            await Utils.PodcastNotify.setPodcast(podcastFeedHash, podcastFeedUrl)
-            await Utils.PodcastNotify.addChannelToPodcast(podcastFeedHash, channelId)
+            await podcastDB.setPodcast(podcastFeedHash, podcastFeedUrl)
+            await podcastDB.addChannelToPodcast(podcastFeedHash, channelId)
 
-            await Utils.PodcastNotify.setLastEp(podcastFeedHash, (await this.__getLastPodcastEp(podcastFeedUrl))["url"])
+            await podcastDB.setLastEp(podcastFeedHash, (await this.__getLastPodcastEp(podcastFeedUrl))["url"])
         }
     }
 
@@ -101,8 +114,8 @@ class PodcastNotify {
             var lastEps = await this.__getLastEps(podcast["feedUrl"], podcast["lastEpUrl"])
 
             if(lastEps.length > 0){
-                const podcastFeedHash = Utils.PodcastNotify.getPodcastFeedHash(podcast["feedUrl"])
-                await Utils.PodcastNotify.setLastEp(podcastFeedHash, lastEp["url"])
+                const podcastFeedHash = podcastDB.getPodcastFeedHash(podcast["feedUrl"])
+                await podcastDB.setLastEp(podcastFeedHash, lastEp["url"])
                 this.EventEmitter.emit("newEps", {
                     channels: Object.keys(podcast["channels"]),
                     feedUrl: podcast["feedUrl"],

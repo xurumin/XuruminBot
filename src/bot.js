@@ -6,14 +6,19 @@ const fs = require('fs-extra');
 const colors = require('colors');
 
 const Discord = require('discord.js');
-const { Client, Intents } = require('discord.js');
+const {
+	Client,
+	Intents
+} = require('discord.js');
 // require("./utils/ExtendedMessage");
 const Utils = require('./utils/utils');
 const {
 	default: axios
 } = require('axios');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES] });
+const client = new Client({
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES]
+});
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -106,7 +111,7 @@ const init = async () => {
 			console.log(`[event-loader] ${props.event.eventName.green} loaded.`)
 
 			client.on(props.event.eventName, (data) => {
-				if(data.channel){
+				if (data.channel) {
 					data.channel.send_ = data.channel.send
 				}
 				props.run(client, data, LOCALES)
@@ -152,7 +157,7 @@ const init = async () => {
 	}
 	pluginsFiles = []
 
-	client.aliases_array =  Array.from(client.aliases.entries())
+	client.aliases_array = Array.from(client.aliases.entries())
 
 
 	const GameSaleClass = require("./plugins/Notify/utils/GameSale")
@@ -233,6 +238,23 @@ const init = async () => {
 		})
 	}
 
+	const podcastDatabase = require("./database/PodcastDB")
+	const podcastDB = new podcastDatabase();
+
+
+	client.on('interactionCreate', async (interaction) => {
+		// REMOVER PODCASTS
+		if (interaction.isSelectMenu() && interaction.customId == "removepodcast") {
+			let userData = interaction.values[0].split("=/=")
+			let podcastFeedUrl = userData[0]
+			let feedHash = podcastDB.getPodcastFeedHash(podcastFeedUrl)
+			await podcastDB.removeChannel(feedHash, interaction.channelId)
+			await interaction.update({
+				content: `**${userData[1]}** removed!`,
+				components: []
+			})
+		}
+	});
 
 	client.on("ready", async () => {
 		async function init_GameOffers() {
@@ -256,10 +278,11 @@ const init = async () => {
 						}
 						await channel.send({
 							embeds: [new Discord.MessageEmbed()
-							.setAuthor("🎮 New game")
-							.setTitle(`${newGames.title}`)
-							.setDescription(`**[${newGames.store.name} - ${newGames.price} (${newGames.price_cut}% OFF)](${newGames.store.href})**`)
-							.setFooter("Please, check the website before buying.")]
+								.setAuthor("🎮 New game")
+								.setTitle(`${newGames.title}`)
+								.setDescription(`**[${newGames.store.name} - ${newGames.price} (${newGames.price_cut}% OFF)](${newGames.store.href})**`)
+								.setFooter("Please, check the website before buying.")
+							]
 						})
 					} catch (error) {
 						console.log(error);

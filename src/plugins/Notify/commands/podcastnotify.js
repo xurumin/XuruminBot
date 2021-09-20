@@ -12,6 +12,9 @@ const PodcastUtil = require('./../../../plugins/Podcast/utils/PodcastUtil');
 const Music = require("./../../../plugins/Music/utils/Music")
 var url = require('url');
 
+const podcastDatabase = require("./../../../database/PodcastDB")
+const podcastDB = new podcastDatabase();
+
 require('dotenv/config');
 
 module.exports = {
@@ -49,7 +52,7 @@ module.exports = {
                     prefix: process.env.COMMAND_PREFIX
                 }))))
             }
-            if(!message.guild.members.cache.find((user)=>user.id==message.author.id).hasPermission('ADMINISTRATOR')){
+            if(!message.member.permissions.has("ADMINISTRATOR")){
                 return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
                 .setDescription(LOCALE["errors"].no_permission.interpolate({
@@ -57,15 +60,49 @@ module.exports = {
                 }))))
             }
             if(action=="remove"){
-                await Utils.PodcastNotify.removeChannel(message.channel.id)
-                return resolve(message.send_(new Discord.MessageEmbed()
-                .setTitle(LOCALE.title)
-                .setDescription(LOCALE["channel_removed"].interpolate({
-                    channel_name: message.channel.name
-                }))))
+
+                var channelPodcasts = await podcastDB.getAllPodcastsByChannel(message.channel.id);
+                if(channelPodcasts.length <= 0){
+                    return message.reply({
+                        content: LOCALE["noPodcasts"]
+                    })
+                }
+                for (let index = 0; index < channelPodcasts.length; index++) {
+                    const element = channelPodcasts[index];
+                    let podcastName = (await PodcastNotify.getPodcastInfo(element.feedUrl)).title
+                    channelPodcasts[index].podcastName = podcastName
+                }
+
+                const row = new Discord.MessageActionRow()
+                .addComponents(
+                    new Discord.MessageSelectMenu()
+                        .setCustomId('removepodcast')
+                        .setPlaceholder(LOCALE["yourpodcasts"])
+                        .addOptions(
+                            channelPodcasts.slice(0,10).map((elm)=>{
+                                return {
+                                    label: elm.podcastName,
+                                    value: `${elm.feedUrl}=/=${elm.podcastName}`,
+                                }
+                            })),
+                );
+                
+                return resolve(
+                    message.reply({
+                        // embeds: [
+                        //     new Discord.MessageEmbed()
+                        //     .setTitle(LOCALE.title)
+                        //     .setDescription(LOCALE["remove"])
+                        // ],
+                        content: LOCALE["remove"],
+                        components: [row]
+                    })
+                )
             }
 
             const url_ = url.parse(userMsg).host
+            let podcastName = ""
+            let podcastImage = ""
             if (userMsg.includes("open.spotify.com/show/") && url_.includes("open.spotify.com")) {
                 var podcastShow;
                 var podcast;
@@ -79,6 +116,9 @@ module.exports = {
                     ))
                 }
                 try {
+                    podcastName = podcastShow["name"]
+                    podcastImage = podcastShow["images"][0]["url"]
+                    
                     podcast = podcast.find(ep => {
                         return ep.kind == "podcast" && ep.artistName == podcastShow["publisher"] && ep.trackName == podcastShow["name"]
                     })
@@ -96,8 +136,10 @@ module.exports = {
 
             return resolve(message.send_(new Discord.MessageEmbed()
                 .setTitle(LOCALE.title)
+                .setThumbnail(podcastImage)
                 .setDescription(LOCALE["channel_added"].interpolate({
-                    channel_name: message.channel.name
+                    channel_name: message.channel.name,
+                    podcast_name: podcastName
             }))))
         })
     },

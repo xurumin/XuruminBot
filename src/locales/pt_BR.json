@@ -740,7 +740,10 @@
             "setup": {
                 "description": "❔ **Como funciona?**\n Utilize o comando `{{prefix}}podcastnotify set` no canal que você deseja receber ofertas de jogos.\nPara remover o canal, utilize `{{prefix}}podcastnotify remove`.\n\n**:exclamation: Importante**\nVocê precisa ter a **permissão de administrador** para utilizar os comandos."
             },
-            "channel_added": "O canal ``{{channel_name}}`` foi **adicionado** com sucesso!",
+            "noPodcasts": "Não tem nenhum podcast sendo notificado neste canal.",
+            "yourpodcasts": "Podcasts notificados neste canal",
+            "remove": "Clique no podcast para removê-lo do canal!",
+            "channel_added": "O podcast ``{{podcast_name}}`` foi **adicionado** com sucesso ao canal ``{{channel_name}}``!",
             "channel_removed": "O canal ``{{channel_name}}`` foi **removido** com sucesso!",
             "errors": {
                 "no_permission": "{{user}} Você precisa ter a **permissão de administrador** para utilizar os comandos.",
