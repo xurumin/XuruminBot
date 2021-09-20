@@ -149,15 +149,15 @@ class MusicPlayer {
         return this.connection.emit("resume")
     }
     leave() {
-        if(this.isPlaying === false) return;
         this.isPlaying = false;
         try {
-            this.connection.disconnect()
             this.deletePlayer();
             this.deletePlaylist();
+            this.connection.destroy()
         } catch (error) {
             return;
         }
+        return;
     }
     //voltar
     changeTime(secs) {
@@ -188,6 +188,9 @@ class MusicPlayer {
     }
 
     aliveConCooldown() {
+        setInterval(() => {
+            console.log(this.connection.state.status);
+        }, 1000)
         if (this.t247 == true) return;
         let intv = setInterval(() => {
             try {
@@ -200,11 +203,13 @@ class MusicPlayer {
                     // this.deletePlayer();
                     // this.deletePlaylist();
                     return clearInterval(intv);
+                }else{
+                    // console.log(this.connection.state);
                 }
             } catch (error) {
                 return clearInterval(intv);
             }
-        }, 10000);
+        }, 5000);
     }
 
 
@@ -392,10 +397,10 @@ class MusicPlayer {
             }
         });
         this.connection.on('pause', () => {
-            if (this.dispatcher) this.dispatcher.pause();
+            if (this.player) this.player.pause();
         });
         this.connection.on('resume', () => {
-            if (this.dispatcher) this.dispatcher.resume();
+            if (this.player) this.player.unpause();
         });
 
     }
