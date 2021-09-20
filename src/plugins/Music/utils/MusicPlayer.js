@@ -267,8 +267,6 @@ class MusicPlayer {
                     quality: this.audioquality
                 });
 
-                console.log(music_url);
-
                 let streamtimes = current_playlist[0].time || 0
                 streamtimes = Utils.toHHMMSS(streamtimes)
 

@@ -182,42 +182,22 @@ function searchTerm(client, message, args, LOCALE) {
                 }))
                 return element
             })
-            //txt +=  LOCALE["youtube_search"].footer
             txt.setFooter(LOCALE["youtube_search"].footer)
-
-            // var msg2 = await message.channel.send({
-            //     content: txt
-            // })
-
-            // var msg = await message.inlineReply(txt)
 
             var msg = await message.channel.send({
                 embeds: [txt],
                 reply: { messageReference: message.id }
             })
 
-            // var filter = (reaction, user)=>{
-            //     console.log(1);
-            //     return true;
-            //     // return ( !(msg.author==user) && (message.author == user));
-            // }
-
-            // msg.awaitReactions({ filter, max: 1, time: 10000, errors: ['time'] })
-            // .then(collected => console.log("a"))
-            // .catch(collected => {
-            //     console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
-            // });
-
-            // return;
-
             var reactIndex = await Music.getReact(msg, message.author)
 
             if (reactIndex == -1) return;
-
+            
             const video_info = {
                 name: searchlist[reactIndex]["title"],
                 author: searchlist[reactIndex]["author"],
-                duration: searchlist[reactIndex]["duration"]
+                duration: searchlist[reactIndex]["duration"],
+                url: searchlist[reactIndex]["url"]
             }
 
             var player = client.players.get(message.guild.id)
