@@ -187,14 +187,12 @@ class MusicPlayer {
     aliveConCooldown() {
         if (this.t247 == true) return;
         let intv = setInterval(() => {
-            console.log(this.voiceChat.members.size);
             try {
                 if (!this.connection) {
                     return clearInterval(intv);
                 }
                 if (this.voiceChat.members.size <= 1) {
                     this.leave()
-                    console.log("a");
                     // this.connection.destroy()
                     // this.deletePlayer();
                     // this.deletePlaylist();
