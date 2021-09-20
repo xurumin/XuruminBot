@@ -381,7 +381,7 @@ class MusicPlayer {
             this.shufflePlaylist()
         });
         this.connection.on('skip', () => {
-            let current_playlist = this.getPlaylist()
+            let current_playlist = this.getPlaylist() ?? []
 
             this.time = 0
 
