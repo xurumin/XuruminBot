@@ -188,9 +188,9 @@ class MusicPlayer {
     }
 
     aliveConCooldown() {
-        setInterval(() => {
-            console.log(this.connection.state.status);
-        }, 1000)
+        // setInterval(() => {
+        //     console.log(this.connection.state.status);
+        // }, 1000)
         if (this.t247 == true) return;
         let intv = setInterval(() => {
             try {
