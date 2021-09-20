@@ -146,6 +146,7 @@ class MusicPlayer {
         return this.connection.emit("resume")
     }
     leave() {
+        if(this.isPlaying === false) return;
         this.isPlaying = false;
         try {
             this.connection.disconnect()
@@ -386,9 +387,10 @@ class MusicPlayer {
             this.time = 0
 
             if (current_playlist.length <= 1) {
-                this.connection.destroy()
-                this.deletePlayer();
-                this.deletePlaylist();
+                this.leave()
+                // this.connection.destroy()
+                // this.deletePlayer();
+                // this.deletePlaylist();
             } else {
                 current_playlist.splice(0, 1)
                 this.setPlaylist(current_playlist)
