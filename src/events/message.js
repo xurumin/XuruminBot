@@ -268,9 +268,8 @@ module.exports = {
 		} catch (error) {
 			if(process.env.NODE_ENV != "development"){
 				Sentry.captureException(error)
-			}else{
-				console.log("[MESSAGE_EVENT]", error)
 			}
+			console.log("[MESSAGE_EVENT]", error)
 			
 			return message.send_(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
 		}

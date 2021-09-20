@@ -147,9 +147,13 @@ class MusicPlayer {
     }
     leave() {
         this.isPlaying = false;
-        this.connection.disconnect()
-        this.deletePlayer();
-        this.deletePlaylist();
+        try {
+            this.connection.disconnect()
+            this.deletePlayer();
+            this.deletePlaylist();
+        } catch (error) {
+            return;
+        }
     }
     //voltar
     changeTime(secs) {
@@ -297,14 +301,13 @@ class MusicPlayer {
                 stream.on('error', error => {
                     this.skip()
                     if(process.env.NODE_ENV != "development"){
-                        Sentry.captureException(error, {
-                            tags: {
-                                section: "Player Stream"
-                            }
-                        })
-                    }else{
-                        console.log("[PLAYER STREAM]",error);
+                        // Sentry.captureException(error, {
+                        //     tags: {
+                        //         section: "Player Stream"
+                        //     }
+                        // })
                     }
+                    console.log("[PLAYER STREAM]",error);
                 });
                 this.connection.on('error', error => {
                     if(process.env.NODE_ENV != "development"){
@@ -313,9 +316,8 @@ class MusicPlayer {
                                 section: "Player Connection"
                             }
                         })
-                    }else{
-                        console.log("[PLAYER CONNECTION]",error);
                     }
+                    console.log("[Connection STREAM]",error);
                 });
             } catch (error) {
                 console.log("[MusicPlayer][play]", error);

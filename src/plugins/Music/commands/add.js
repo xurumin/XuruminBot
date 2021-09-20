@@ -369,7 +369,7 @@ module.exports = {
         if (!url_) {
             return searchTerm(client, message, args, LOCALE)
         }
-        if (userMsg.includes("youtube.com/watch") && url_.includes("youtube.com")) {
+        if ((userMsg.includes("youtube.com/watch") && url_.includes("youtube.com")) || userMsg.includes("https:/youtu.be")) {
             return youtubeLink(client, message, userMsg, LOCALE)
         }
         if (userMsg.includes("open.spotify.com/track/")) {
@@ -386,9 +386,9 @@ module.exports = {
         if (userMsg.endsWith(".mp3")) {
             return playMp3(client, message, userMsg, LOCALE);
         }
+        return searchTerm(client, message, args, LOCALE)
 
-
-        return message.send_(LOCALE["errors"].not_found)
+        // return message.send_(LOCALE["errors"].not_found)
 
     },
     get command() {

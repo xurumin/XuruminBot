@@ -183,7 +183,7 @@ module.exports = {
         })
     },
     getVideoLinkBySearch(name) {
-        return new Promise((resolve, reject)=>{
+        return new Promise(async (resolve, reject)=>{
             let filter = await ytsr.getFilters(term);
             filter = filter.get('Type').get('Video')
 
