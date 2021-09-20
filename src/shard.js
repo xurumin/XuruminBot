@@ -33,14 +33,14 @@ shard.spawn(Number(process.env.SHARDS))
           api.postStats({
             serverCount: await getServerCount()
           })
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       }
-      postDBL()
-      setInterval(async () => {
+      try {
         postDBL()
-      }, 1800000);
+        setInterval(async () => {
+          postDBL()
+        }, 1800000);
+      } catch (error) {}
     }
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`)
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`)

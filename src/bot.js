@@ -22,8 +22,6 @@ const client = new Client({
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.playlist = new Discord.Collection();
-client.players = new Discord.Collection();
 client.profiles = new Discord.Collection();
 client.commandsSent = 0;
 client.cachedPoints = new Discord.Collection();
@@ -31,6 +29,9 @@ client.playingWITM = new Discord.Collection();
 client.userBanList = new Discord.Collection();
 client.aliases_array = []
 const LOCALES = new Discord.Collection();
+
+client.playlist = new Discord.Collection();
+client.players = new Discord.Collection();
 
 const init = async () => {
 
