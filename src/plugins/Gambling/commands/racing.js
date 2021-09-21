@@ -72,7 +72,7 @@ module.exports = {
                     user: message.author
                 }))
             }
-            message.channel.sendTyping();
+            
             
 
             var main_embed = new Discord.MessageEmbed()

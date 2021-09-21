@@ -20,7 +20,7 @@ module.exports = {
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}indoatras <frase que você quiser>** para ir daquele que fez alquilo! 🤗`)
 				);
 			}
-			message.channel.sendTyping();
+			
 
 			Utils.KarinnaAPI.get("/v1/image/indoatras", {
                 text: text

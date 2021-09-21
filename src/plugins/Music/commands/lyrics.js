@@ -24,7 +24,7 @@ module.exports = {
                 return message.inlineReply("Digite o nome da música :3")
             }
 
-            message.channel.sendTyping();
+            
 
             try {
                 lyric = await Music.getLyricByMusicName(current_playing_song)

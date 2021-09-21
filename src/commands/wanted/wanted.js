@@ -17,7 +17,7 @@ module.exports = {
 
 			let user = message.author
 			if(metioned_user.value) user=metioned_user.value[1];
-			message.channel.sendTyping();
+			
 
 			Utils.KarinnaAPI.get("/v1/image/wanted", {
                 username: user.username,

@@ -92,7 +92,7 @@ module.exports = {
                 ));
             }
 
-			message.channel.sendTyping();
+			
 
 			
 			//Utils.choice(LOCALE["noiaPhrases"])

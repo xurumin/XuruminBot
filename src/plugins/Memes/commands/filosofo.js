@@ -19,7 +19,7 @@ module.exports = {
 				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
 			}
 			
-			message.channel.sendTyping();
+			
 
 			
 

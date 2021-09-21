@@ -22,7 +22,7 @@ module.exports = {
 
             var isDeleted = false;
 
-            message.channel.sendTyping();
+            
             
 
             var msg = {

@@ -25,7 +25,7 @@ module.exports = {
 				);
 			}
 	
-			message.channel.sendTyping();
+			
 
 			
 

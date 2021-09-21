@@ -12,7 +12,7 @@ module.exports = {
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
 			if (message.mentions.users.size > 0) {
-				message.channel.sendTyping();
+				
 
 				
 

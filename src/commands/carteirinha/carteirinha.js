@@ -14,7 +14,7 @@ module.exports = {
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
 	
-			message.channel.sendTyping();
+			
 			
 			const member = message.guild.members.cache.get(message.author.id)
 

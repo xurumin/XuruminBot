@@ -71,7 +71,7 @@ module.exports = {
                 ));
             }
             
-            message.channel.sendTyping();
+            
                
 
             var name = user.username.slice(0,14)

@@ -201,6 +201,9 @@ module.exports = {
 			}
 
 			if ((cmd || aliase) && (config.blockedcommands.includes(command)) || config.blockedcommands.includes(aliase) ) return message.send_(LOCALE.events.message.errors.blocked_command)
+
+			message.channel.sendTyping();
+			
 			if (cmd) {
 				//Register +1 cmd to log
 				client.commandsSent++;
