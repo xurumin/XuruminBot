@@ -194,11 +194,8 @@ class MusicPlayer {
                 if (!this.connection) {
                     return clearInterval(intv);
                 }
-                if (this.voiceChat.members.size <= 1) {
+                if (this.voiceChat.members.size <= 1 || !this.voiceChat.members.has(this.client.user.id)) {
                     this.leave()
-                    // this.connection.destroy()
-                    // this.deletePlayer();
-                    // this.deletePlaylist();
                     return clearInterval(intv);
                 }
             } catch (error) {
@@ -416,10 +413,7 @@ class MusicPlayer {
                 return;
             };
             this.time = 0
-            if ((this.voiceChat.members.size <= 1 && this.t247 == false) || (playlist && playlist.length <= 1)) {
-                // this.connection.destroy()
-                // this.deletePlayer();
-                // this.deletePlaylist();
+            if ((this.voiceChat.members.size <= 1 && this.t247 == false) || (playlist && playlist.length <= 1) || !this.voiceChat.members.has(this.client.user.id)) {
                 return this.leave();
             } else {
                 let x = playlist
