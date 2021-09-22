@@ -307,11 +307,11 @@ const init = async () => {
 				console.log(`${listeners.length} channels notified`);
 			})
 		}
-		try {
-			if (process.env.NODE_ENV != "development") init_GameOffers()
-		} catch (error) {
-			console.log("[GameOffers]", error);
-		}
+		// try {
+		// 	if (process.env.NODE_ENV != "development") init_GameOffers()
+		// } catch (error) {
+		// 	console.log("[GameOffers]", error);
+		// }
 
 		setActv()
 		setInterval(async () => {
