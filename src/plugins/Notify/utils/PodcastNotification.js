@@ -117,7 +117,7 @@ class PodcastNotify {
                 const podcastFeedHash = podcastDB.getPodcastFeedHash(podcast["feedUrl"])
                 await podcastDB.setLastEp(podcastFeedHash, lastEp["url"])
                 this.EventEmitter.emit("newEps", {
-                    channels: Object.keys(podcast["channels"]),
+                    channels: podcast["channels"],
                     feedUrl: podcast["feedUrl"],
                     eps:lastEps
                 })
