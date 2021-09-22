@@ -34,6 +34,21 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, locale_list) => {
+
+		// if(!antiFloodCooldown.has(message.author.id)){
+		// 	if(client.cachedPoints.has(message.author.id)){
+		// 		client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
+		// 	}else{
+		// 		client.cachedPoints.set(message.author.id,1)
+		// 	}
+		// 	antiFloodCooldown.set(message.author.id);
+		// 	setTimeout(() => {
+		// 		antiFloodCooldown.delete(message.author.id);
+		// 	}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
+		// }
+
+		if ((!message.content.toLocaleLowerCase().startsWith(process.env.COMMAND_PREFIX)) && !(message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`))) return;
+
 		message.inlineReply = async (msg)=>{
 			if(msg instanceof Discord.MessageAttachment){
 				return await message.channel.send({
@@ -86,20 +101,6 @@ module.exports = {
 				})
 			}
 		}
-
-		// if(!antiFloodCooldown.has(message.author.id)){
-		// 	if(client.cachedPoints.has(message.author.id)){
-		// 		client.cachedPoints.set(message.author.id, client.cachedPoints.get(message.author.id) + 1)
-		// 	}else{
-		// 		client.cachedPoints.set(message.author.id,1)
-		// 	}
-		// 	antiFloodCooldown.set(message.author.id);
-		// 	setTimeout(() => {
-		// 		antiFloodCooldown.delete(message.author.id);
-		// 	}, process.env.ANTI_FLOOD_MESSAGE_COOLDOWN);
-		// }
-
-		if ((!message.content.toLocaleLowerCase().startsWith(process.env.COMMAND_PREFIX)) && !(message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`))) return;
 
 		//get guild language
 		const LANGUAGE = message.guild ? message.guild.preferredLocale.replace("-", "_") : "pt_BR"
@@ -200,7 +201,7 @@ module.exports = {
 				}, totalCooldown);
 			}
 
-			if ((cmd || aliase) && (config.blockedcommands.includes(command)) || config.blockedcommands.includes(aliase) ) return message.send_(LOCALE.events.message.errors.blocked_command)
+			if ((cmd || aliase) && (config.blockedcommands.includes(command)) || config.blockedcommands.includes(aliase) ) return message.send_(LOCALE.events.message.errors.blocked_command);
 
 			message.channel.sendTyping();
 			
@@ -258,16 +259,35 @@ module.exports = {
 				.addField(LOCALE.events.message.errors.command_not_found.fields[2][0], LOCALE.events.message.errors.command_not_found.fields[2][1])
 				.setAuthor(client.user.username)
 
+				var cmdButton;
 				if(similar_cmd){
+					cmdButton = new Discord.MessageActionRow()
+						.addComponents(
+							new Discord.MessageButton()
+								.setCustomId(`cmd_similar`)
+								.setLabel(`Run ${process.env.COMMAND_PREFIX}${similar_cmd}`)
+								.setStyle('SECONDARY'),
+						);
+
 					embed.setDescription(LOCALE.events.message.errors.command_not_found.description_similar.interpolate({
 						prefix: process.env.COMMAND_PREFIX,
 						cmd: similar_cmd
 					}))
+
+					message.ncontent = message.content.replace(`${command}`, similar_cmd)
+
+					client.similarCmdUserMsg.set(message.author.id, message)
+					
+					setTimeout(()=>{
+						client.similarCmdUserMsg.delete(message.author.id)
+					}, 30000)
+					cmdButton = [cmdButton]
 				}
 
-				message.send_(
-					embed
-				)
+				message.reply({
+					embeds: [embed],
+					components: cmdButton ?? []
+				})
 				return MessageLog.log("NOT FOUND", message);
 			}
 		} catch (error) {

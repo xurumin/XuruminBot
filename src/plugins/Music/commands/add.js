@@ -183,7 +183,7 @@ function searchTerm(client, message, args, LOCALE) {
                 return element
             })
             txt.setFooter(LOCALE["youtube_search"].footer)
-
+            
             var msg = await message.channel.send({
                 embeds: [txt],
                 reply: { messageReference: message.id }

@@ -31,8 +31,6 @@ if(process.env.NODE_ENV != "development"){
     });
 }
 
-// const ytdl = require(path.join(__dirname, "./../../../libs/yttest/lib/index.js"))
-
 class MusicPlayer {
     /**
      * @param  {Discord.Client} client
@@ -428,10 +426,5 @@ class MusicPlayer {
             return this.connection.emit("skip")
         });
     }
-
-
-
 }
-
-
 module.exports = MusicPlayer

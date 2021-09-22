@@ -33,6 +33,8 @@ const LOCALES = new Discord.Collection();
 client.playlist = new Discord.Collection();
 client.players = new Discord.Collection();
 
+client.similarCmdUserMsg = new Discord.Collection();
+
 const init = async () => {
 
 	if (process.env.ONLY_PLUGINS_MODE == "true") console.log("[LOG] ONLY PLUGINS MODE ON")
@@ -250,8 +252,21 @@ const init = async () => {
 			let podcastFeedUrl = userData[0]
 			let feedHash = podcastDB.getPodcastFeedHash(podcastFeedUrl)
 			await podcastDB.removeChannel(feedHash, interaction.channelId)
-			await interaction.update({
+			return await interaction.update({
 				content: `**${userData[1]}** removed!`,
+				components: []
+			})
+		}
+		if (interaction.isButton() && interaction.customId == "cmd_similar") {
+			const similarCmdMsg =  client.similarCmdUserMsg.get(interaction.user.id)
+			if(!similarCmdMsg) return;
+
+			similarCmdMsg.content = similarCmdMsg.ncontent
+
+			client.emit("messageCreate", similarCmdMsg)
+			client.similarCmdUserMsg.delete(interaction.user.id)
+
+			return await interaction.update({
 				components: []
 			})
 		}
@@ -334,7 +349,6 @@ const init = async () => {
 		}, 5000);
 
 		// NOTIFIERS
-
 		const PodcastNotify = require("./plugins/Notify/utils/PodcastNotification")
 		PodcastNotify.run(60 * 60 * 1000)
 		PodcastNotify.EventEmitter.on("newEps", async (newEps) => {
