@@ -6,14 +6,10 @@ var parseString = require('xml2js').parseString;
 
 require('dotenv/config');
 
-async function sendRects(message) {
-    await message.react("1️⃣")
-    await message.react("2️⃣")
-    await message.react("3️⃣")
-    await message.react("4️⃣")
-    await message.react("5️⃣")
-    await message.react("⏪")
-    await message.react("⏩")
+async function sendRects(message, reactions) {
+    for (var i = 0; i < reactions.length; i++) {
+        await message.react(reactions[i])
+    }
 }
 async function sendRectsLight(message) {
     await message.react("1️⃣")
@@ -56,7 +52,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             sendRectsLight(message)
             const filter = (reaction, user) => {
-                return !["754756207507669128", "753723888671785042", "757333853529702461"].includes(user.id);
+                return !["754756207507669128", "753723888671785042", "757333853529702461", "760496747625185330"].includes(user.id);
             };
             message.awaitReactions({
                     filter,
@@ -102,9 +98,9 @@ module.exports = {
 
         })
     },
-    getReact(message) {
+    getReact(message, reactions=["1️⃣", "2️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "⏪", "⏩"]) {
         return new Promise(async (resolve, reject) => {
-            sendRects(message)
+            sendRects(message, reactions)
             const filter = (reaction, user) => {
                 return !["754756207507669128", "753723888671785042", "757333853529702461", "760496747625185330"].includes(user.id);
             };

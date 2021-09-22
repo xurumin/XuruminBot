@@ -353,14 +353,12 @@ const init = async () => {
 		PodcastNotify.run(60 * 60 * 1000)
 
 		PodcastNotify.EventEmitter.on("newEps", async (newEps) => {
-			console.log("new");
 			let episodes = newEps["eps"]
 
 			let embed = new Discord.MessageEmbed()
 			embed.setTitle(`New Podcast from ${episodes[0]["show"]} - ${episodes[0]["author"]}`)
 
 			for (const ep of episodes) {
-
 				embed.setDescription(`**EP:**  \`${ep["title"]}\`\n**SHOW:**  \`${ep["show"]}\`\n**AUTHOR:**  \`${ep["author"]}\`\n\nUse  \`${process.env.COMMAND_PREFIX}add ${ep["url"]}\``)
 
 				if (ep["pic"] && ep["pic"] != "") {
