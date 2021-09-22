@@ -124,15 +124,20 @@ module.exports = {
                 } catch (error) {
                     return reject(error)
                 }
+                return resolve(message.send_(new Discord.MessageEmbed()
+                    .setTitle(LOCALE.title)
+                    .setThumbnail(podcastImage)
+                    .setDescription(LOCALE["channel_added"].interpolate({
+                        channel_name: message.channel.name,
+                        podcast_name: podcastName
+                }))))
             }
-
             return resolve(message.send_(new Discord.MessageEmbed()
-                .setTitle(LOCALE.title)
-                .setThumbnail(podcastImage)
-                .setDescription(LOCALE["channel_added"].interpolate({
+                .setDescription(LOCALE["errors"]["podcast_not_found"].interpolate({
                     channel_name: message.channel.name,
                     podcast_name: podcastName
             }))))
+            
         })
     },
     get command() {

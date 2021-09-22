@@ -757,7 +757,7 @@
                     "title": "❌ Erro ao executar comando:",
                     "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
                 },
-                "podcast_not_found": "Oops! Não achei nenhum podcast com esse nome.\nTente procurar o **nome** do podcast :)",
+                "podcast_not_found": "Oops! Não achei esse podcast.\nVerifique se você escreveu o link corretamente :)",
                 "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
             }
         },
