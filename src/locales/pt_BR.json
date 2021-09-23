@@ -797,7 +797,7 @@
                     "title": "❌ Erro ao executar comando:",
                     "description": "Este comando está **TEMPORARIAMENTE** indisponível 😞\nNossos gatinhos programadores estão fazendo o possível para resolver isso 🤗"
                 },
-                "not_found": "Acho que ainda não implementei o que tu buscas, oh caro viajante."
+                "not_found": "Acho que ainda não implementei o que você procura. :(\nTenta usar **{{prefix}}add** para saber como usar o comando :)"
             }
         },
         "lofier": {

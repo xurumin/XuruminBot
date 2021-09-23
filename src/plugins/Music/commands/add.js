@@ -366,9 +366,11 @@ module.exports = {
         if (userMsg.endsWith(".mp3")) {
             return playMp3(client, message, userMsg, LOCALE);
         }
-        return searchTerm(client, message, args, LOCALE)
+        // return searchTerm(client, message, args, LOCALE)
 
-        // return message.send_(LOCALE["errors"].not_found)
+        return message.send_(LOCALE["errors"].not_found.interpolate({
+            prefix: process.env.COMMAND_PREFIX
+        }))
 
     },
     get command() {
