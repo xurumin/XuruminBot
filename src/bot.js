@@ -248,12 +248,12 @@ const init = async () => {
 	client.on('interactionCreate', async (interaction) => {
 		// REMOVER PODCASTS
 		if (interaction.isSelectMenu() && interaction.customId == "removepodcast") {
-			let userData = interaction.values[0].split("=/=")
-			let podcastFeedUrl = userData[0]
-			let feedHash = podcastDB.getPodcastFeedHash(podcastFeedUrl)
-			await podcastDB.removeChannel(feedHash, interaction.channelId)
+			let userData = interaction.values[0];
+			let podcastName = interaction.component.options.find(elm=>elm.value==userData).label;
+
+			await podcastDB.removeChannel(userData, interaction.channelId)
 			return await interaction.update({
-				content: `**${userData[1]}** removed!`,
+				content: `**${podcastName}** removido!`,
 				components: []
 			})
 		}

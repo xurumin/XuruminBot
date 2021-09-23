@@ -79,11 +79,10 @@ module.exports = {
                             channelPodcasts.slice(0,10).map((elm)=>{
                                 return {
                                     label: elm.podcastName,
-                                    value: `${elm.feedUrl}=/=${elm.podcastName}`,
+                                    value: `${podcastDB.getPodcastFeedHash(elm.feedUrl)}`,
                                 }
                             })),
                 );
-                
                 return resolve(
                     message.reply({
                         content: LOCALE["remove"],
