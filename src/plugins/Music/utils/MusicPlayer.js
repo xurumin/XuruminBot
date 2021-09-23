@@ -19,6 +19,8 @@ const ffprobestatic = require("ffprobe-static")
 const ffmpegstatic = require("ffmpeg-static");
 const { default: axios } = require('axios');
 
+const m3u8stream = require('m3u8stream')
+
 FfmpegCommand.setFfmpegPath(ffmpegstatic)
 FfmpegCommand.setFfprobePath(ffprobestatic.path)
 
@@ -347,12 +349,27 @@ class MusicPlayer {
                     ],
                 });
 
-                axios(
-                    {
+                if(music_url.endsWith(".m3u8")){
+                    const twitchStream = m3u8stream(music_url, {
+                        requestOptions: {
+                            timeout: 60000,
+                            maxReconnects: 5
+                        }
+                    })
+
+                    let output = twitchStream.pipe(transcoder)
+
+                    const resource = createAudioResource(music_url, {
+                        inputType: StreamType.OggOpus
+                    });
+                    
+                    return this.player.play(resource);;
+                }
+
+                axios({
                         method: 'get',
                         url: music_url,
-                        responseType: 'stream'
-                      }
+                        responseType: 'stream'}
                 ).then(res=>{
                     let output = res.data.pipe(transcoder)
                     const resource = createAudioResource(output, {
