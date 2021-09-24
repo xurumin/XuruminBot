@@ -27,7 +27,7 @@ module.exports = {
                 return resolve(message.send_(notPremiumEmbed))
             }
             if (!message.channel.nsfw) {
-                var msg = {
+                let msg = {
                     title: LOCALE.errors.nsfw_channel.title,
                     description: LOCALE.errors.nsfw_channel.description
                 }
@@ -44,11 +44,10 @@ module.exports = {
             })
             if (!user_pic) {
                 loading_msg = await loading_msg
-                var msg = {
+                let msg = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
-                globalCooldown.shift()
                 return resolve(loading_msg.edit_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));

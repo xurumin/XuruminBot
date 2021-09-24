@@ -1,9 +1,6 @@
-const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
 const Music = require("./../utils/Music")
-const urlQ = require("url")
 const ytdl = require("ytdl-core")
-const path = require("path")
 const {
     AudioPlayerStatus,
     StreamType,
@@ -19,7 +16,7 @@ const ffprobestatic = require("ffprobe-static")
 const ffmpegstatic = require("ffmpeg-static");
 const { default: axios } = require('axios');
 
-const m3u8stream = require('m3u8stream')
+// const m3u8stream = require('m3u8stream')
 
 FfmpegCommand.setFfmpegPath(ffmpegstatic)
 FfmpegCommand.setFfprobePath(ffprobestatic.path)
@@ -206,7 +203,7 @@ class MusicPlayer {
 
 
     async __connectVoice() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             try {
                 this.connection = joinVoiceChannel({
                     channelId: this.message.member.voice.channel.id,
@@ -350,20 +347,20 @@ class MusicPlayer {
                 });
 
                 if(music_url.endsWith(".m3u8")){
-                    const twitchStream = m3u8stream(music_url, {
-                        requestOptions: {
-                            timeout: 60000,
-                            maxReconnects: 5
-                        }
-                    })
+                    // const twitchStream = m3u8stream(music_url, {
+                    //     requestOptions: {
+                    //         timeout: 60000,
+                    //         maxReconnects: 5
+                    //     }
+                    // })
 
-                    let output = twitchStream.pipe(transcoder)
+                    // let output = twitchStream.pipe(transcoder)
 
                     const resource = createAudioResource(music_url, {
                         inputType: StreamType.OggOpus
                     });
                     
-                    return this.player.play(resource);;
+                    return this.player.play(resource);
                 }
 
                 axios({
@@ -412,7 +409,7 @@ class MusicPlayer {
 
     }
     onEventDispatcher() {
-        this.player.on(AudioPlayerStatus.Idle, (msg) => {
+        this.player.on(AudioPlayerStatus.Idle, () => {
             if (!this.connection) return;
             if(this.isIdle == true) return;
             this.isIdle = true;
@@ -426,7 +423,7 @@ class MusicPlayer {
                 this.deletePlayer();
                 this.deletePlaylist();
                 return;
-            };
+            }
             this.time = 0
             if ((this.voiceChat.members.size <= 1 && this.t247 == false) || (playlist && playlist.length <= 1) || !this.voiceChat.members.has(this.client.user.id)) {
                 return this.leave();

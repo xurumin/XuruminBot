@@ -54,14 +54,14 @@ module.exports = {
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
-            for(var user of tagged_users.slice(0,3)){
+            for(let user of tagged_users.slice(0,3)){
                 user = user.user
-                var user_pic = user.avatarURL({
+                let user_pic = user.avatarURL({
                     format: "png",
                     size: 256
                 })
                 if (!user_pic) {
-                    var msg = {
+                    msg = {
                         title: LOCALE.errors.user_do_not_have_pic.title,
                         description: LOCALE.errors.user_do_not_have_pic.description
                     }

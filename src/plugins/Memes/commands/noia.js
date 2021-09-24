@@ -39,7 +39,7 @@ function ImageProcessor(user_pic, phrase) {
         var y = height-(line_height*text_lines_bottom.length)+20;     
         
         //draw bottom
-        for(var line of text_lines_bottom){
+        for(let line of text_lines_bottom){
             ctx.lineWidth = 10
             ctx.strokeStyle = "black";
             ctx.strokeText(line, x, y);
@@ -49,7 +49,7 @@ function ImageProcessor(user_pic, phrase) {
         }
         //draw top
         y=line_height+10
-        for(var line of text_lines_top){
+        for(let line of text_lines_top){
             ctx.lineWidth = 10
             ctx.strokeStyle = "black";
             ctx.strokeText(line, x, y);
@@ -92,11 +92,6 @@ module.exports = {
                 ));
             }
 
-			
-
-			
-			//Utils.choice(LOCALE["noiaPhrases"])
-			//LOCALE["noiaPhrases"][LOCALE["noiaPhrases"].length-1]
 			ImageProcessor(user_pic, Utils.choice(LOCALE["noiaPhrases"]))
 			.then((image)=>{
 				return resolve(message.inlineReply(image))

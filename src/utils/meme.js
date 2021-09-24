@@ -28,7 +28,7 @@ function getTwitterRandomMeme(){
             include_rts: false,
             exclude_replies: true
         };
-        client.get('statuses/user_timeline', params, async function(error, tweets, response) {
+        client.get('statuses/user_timeline', params, async function(error, tweets) {
             if (error) {
                 reject(error)
             }

@@ -66,7 +66,7 @@ module.exports = {
         let spttrack = urlQ.parse(track_url).path.split("/").pop()
         return new Promise((resolve, reject)=>{
             if(!process.env.SPOTIFY_TOKEN){
-                authorizeSpotify();
+                this.authorizeSpotify();
                 this.setSpotifyToken();
             }
             spotifyApi.getTrack(spttrack)
@@ -88,7 +88,7 @@ module.exports = {
         let spttrack = urlQ.parse(track_url).path.split("/").pop()
         return new Promise((resolve, reject)=>{
             if(!process.env.SPOTIFY_TOKEN){
-                authorizeSpotify();
+                this.authorizeSpotify();
                 this.setSpotifyToken();
             }
             spotifyApi.getEpisode(spttrack,{
@@ -119,7 +119,7 @@ module.exports = {
         let spttrack = urlQ.parse(track_url).path.split("/").pop()
         return new Promise((resolve, reject)=>{
             if(!process.env.SPOTIFY_TOKEN){
-                authorizeSpotify();
+                this.authorizeSpotify();
                 this.setSpotifyToken();
             }
             spotifyApi.getShow(spttrack,{
@@ -313,7 +313,6 @@ module.exports = {
                             break;
                         default:
                             return resolve(-1)
-                            break;
                     }
                     return resolve(index)
                 })

@@ -35,8 +35,8 @@ function run_gen(client, message, args,loading_msg, LOCALE) {
 			await message.send_(image[0])
             var fi = image[1]
             await fs.unlinkSync(fi.video);
-            for(var image of fi.images){
-                await fs.unlinkSync(image); 
+            for(let imagee of fi.images){
+                await fs.unlinkSync(imagee); 
             }
             resolve()
 			loading_msg.delete()

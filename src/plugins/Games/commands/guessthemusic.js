@@ -40,7 +40,7 @@ module.exports = {
 
                 if (!client.playingWITM.get(message.guild.id).isOpen) {
                     return message.send_(LOCALE["messages"]["there_is_a_game"])
-                };
+                }
 
                 var m_result = client.playingWITM.get(message.guild.id).musicMatch(args.join(" "))
                 if (m_result[0] == true) {
@@ -115,7 +115,7 @@ module.exports = {
                     }
                     if (client.playingWITM.get(message.guild.id)) {
                         return message.send_(LOCALE["messages"]["there_is_a_game"])
-                    };
+                    }
 
                     client.playingWITM.set(message.guild.id,  new WhatIsTheMusic(client,message, LOCALE))
 

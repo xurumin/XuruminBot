@@ -1,12 +1,7 @@
-const Discord = require('discord.js');
 const Utils = require("./../../../utils/utils")
-const Music = require("./../utils/Music")
 const MusicPlayer = require("./../utils/MusicPlayer")
-const PodcastUtil = require('./../../../plugins/Podcast/utils/PodcastUtil');
 require('dotenv/config');
 var url = require('url');
-
-const config = require("./../../../config");
 
 const twitch = require("twitch-m3u8");
 
@@ -34,9 +29,6 @@ async function playTwitch(client, message, track_url, LOCALE) {
 }
 
 module.exports = {
-    validate(client, message) {
-        return true;
-    },
     /**
      * @param  {Discord.Client} client
      * @param  {Discord.Message} message
@@ -52,7 +44,7 @@ module.exports = {
             if (!args.join("") || (url_.host != "twitch.tv" && url_.host != "www.twitch.tv")) {
                 return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
             }
-            var twitch_user = url_.path.split("/")[1]
+            // var twitch_user = url_.path.split("/")[1]
         }
         twitch.getStream(twitch_user)
             .then(async data => {
@@ -74,11 +66,11 @@ module.exports = {
                         var audio = data.find(elm => elm.quality = "audio_only")["url"]
                         return playTwitch(client, message, audio, LOCALE);
                     })
-                    .catch(async (err) => {
-                        return await message.send_(Utils.createSimpleEmbed(LOCALE["decline"], ""))
+                    .catch(async () => {
+                        return message.send_(Utils.createSimpleEmbed(LOCALE["decline"], ""))
                     })
             })
-            .catch((err) => {
+            .catch(() => {
                 return message.send_(Utils.createSimpleEmbed(LOCALE["errors"]["not_found"]));
             })
 

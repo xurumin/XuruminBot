@@ -139,7 +139,7 @@ module.exports = {
                         const car_choice = Utils.random(0,3)
                         race_pos[car_choice].unshift(":white_small_square:")
 
-                        var txt = ""
+                        txt = ""
                         for (let i = 0; i < race_pos.length; i++) {
                             const element = race_pos[i];
                             for (let i2 = 0; i2 < element.length; i2++) {

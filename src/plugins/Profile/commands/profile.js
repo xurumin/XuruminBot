@@ -33,7 +33,7 @@ module.exports = {
 	 */
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
-			;
+			
 			
 
 			let user;

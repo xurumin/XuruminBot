@@ -6,16 +6,13 @@ const Utils = require("./../../../utils/utils")
 require('dotenv/config');
 
 module.exports = {
-    validate(client, message) {
-        return true;
-    },
     /**
      * @param  {Discord.Client} client
      * @param  {Discord.Message} message
      * @param  {} args
      */
     run: (client, message, args, LOCALE) => {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             const isPremium = await Utils.Profile.isPremium(client, message.author.id)
             if (!isPremium) {
                 const notPremiumEmbed = new Discord.MessageEmbed()
@@ -39,7 +36,6 @@ module.exports = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
-                globalCooldown.shift()
                 return resolve(loading_msg.edit_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));
@@ -63,7 +59,7 @@ module.exports = {
             }).then(async (res)=>{
                 loading_msg.delete()
                 return await resolve(message.send_(new Discord.MessageAttachment(res.data, 'video.mp4')))
-            }).catch(async (err)=>{
+            }).catch(()=>{
                 loading_msg.delete()
                 return resolve(message.send_(new Discord.MessageEmbed()
                     .setTitle(LOCALE.errors.cmd_run_error.title)

@@ -1,16 +1,12 @@
 "use strict";
-
-const cache = require('memory-cache');
 require('dotenv/config');
 const fs = require('fs-extra');
-const colors = require('colors');
 
 const Discord = require('discord.js');
 const {
 	Client,
 	Intents
 } = require('discord.js');
-// require("./utils/ExtendedMessage");
 const Utils = require('./utils/utils');
 const {
 	default: axios
@@ -19,6 +15,8 @@ const {
 const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES]
 });
+
+require('colors');
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -211,7 +209,7 @@ const init = async () => {
 				} catch (error) {
 					console.log(error)
 				}
-			};
+			}
 
 			const t2 = (new Date()).getTime()
 			console.log(`It took ${((t2-t1)/1000).toFixed(2)} secs`)

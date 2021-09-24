@@ -34,7 +34,7 @@ async function showLastsEps(podcastUrl, podcastName, podcastAuthor, client, mess
         embeds: [messageBody]
     })
 
-    PodcastUtil.getReact(sMsg, reactions=["⏪", "⏩"])
+    PodcastUtil.getReact(sMsg, ["⏪", "⏩"])
         .then(async (i) => {
             if (i == 5) {
                 if (index == 0) return message.edit({
@@ -79,9 +79,6 @@ async function showLastsEps(podcastUrl, podcastName, podcastAuthor, client, mess
 }
 
 module.exports = {
-    validate(client, message) {
-        return true;
-    },
     /**
      * @param  {Discord.Client} client
      * @param  {Discord.Message} message

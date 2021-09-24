@@ -39,7 +39,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise((resolve, reject) => {
             if (!message.channel.nsfw) {
-                var msg = {
+                let msg = {
                     title: LOCALE.errors.nsfw_channel.title,
                     description: LOCALE.errors.nsfw_channel.description
                 }
@@ -58,7 +58,7 @@ module.exports = {
             });
 
             if (!user_pic) {
-                var msg = {
+                let msg = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }

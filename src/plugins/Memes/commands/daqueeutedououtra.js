@@ -76,7 +76,7 @@ module.exports = {
                     size: 256
                 })
                 if (!user_pic) {
-                    var msg = {
+                    msg = {
                         title: LOCALE.errors.user_do_not_have_pic.title,
                         description: LOCALE.errors.user_do_not_have_pic.description
                     }
@@ -88,7 +88,7 @@ module.exports = {
             }
 
             if (tagged_users.length==2){
-                var user_pic = client.user.avatarURL({
+                user_pic = client.user.avatarURL({
                     format: "png",
                     size: 256
                 })

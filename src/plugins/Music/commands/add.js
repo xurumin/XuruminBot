@@ -4,10 +4,7 @@ const Music = require("./../utils/Music")
 const MusicPlayer = require("./../utils/MusicPlayer")
 const PodcastUtil = require('./../../../plugins/Podcast/utils/PodcastUtil');
 require('dotenv/config');
-var url = require('url');
-
-const config = require("./../../../config");
-
+const url = require('url');
 
 /**
  * playlist format
@@ -128,10 +125,11 @@ async function youtubePlaylist(client, message, playlist_url, LOCALE) {
     }
 }
 async function youtubeLink(client, message, video_url, LOCALE) {
+    var video_info;
     try {
-        var video_info = await Music.getVideoInfoByUrl(video_url)
+        video_info = await Music.getVideoInfoByUrl(video_url)
     } catch (error) {
-        var video_info = {
+        video_info = {
             name: "#",
             author: "Youtube",
             url: video_url,
@@ -172,7 +170,7 @@ function searchTerm(client, message, args, LOCALE) {
             var searchlist = []
             // var txt = LOCALE["youtube_search"].title
             var txt = new Discord.MessageEmbed().setTitle(LOCALE["youtube_search"].title)
-            var searchlist = res.map((element, i) => {
+            searchlist = res.map((element, i) => {
                 var title = element["title"]
                 var author = element["author"] ? element["author"]["name"] : "Youtube"
                 txt.addField("\u200b", LOCALE["youtube_search"].txt_format.interpolate({
@@ -305,9 +303,6 @@ async function playMp3(client, message, track_url, LOCALE) {
 }
 
 module.exports = {
-    validate(client, message) {
-        return true;
-    },
     /**
      * @param  {Discord.Client} client
      * @param  {Discord.Message} message
@@ -332,7 +327,7 @@ module.exports = {
         }
 
         // const isPremium = await Utils.Profile.isPremium({}, message.author.id)
-        const isPremium = config.specialusers.includes(message.author.id)
+        // const isPremium = config.specialusers.includes(message.author.id)
         message.audioquality = "lowestaudio"
         // message.audioquality = "lowestaudio"
         // if (isPremium) {

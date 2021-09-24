@@ -31,7 +31,7 @@ module.exports = {
 		let metioned_user_2 = message.mentions.members.toJSON()[1].user
 
 		if(message.author == metioned_user){
-			var msg = {
+			let msg = {
 				title: LOCALE.errors.auto_check.title,
 				description: LOCALE.errors.auto_check.description
 			}
@@ -42,7 +42,7 @@ module.exports = {
 		}
 
 		if(metioned_user == client.user){
-			var msg = {
+			let msg = {
 				title: LOCALE.errors["tag_bot"].title,
 				description: LOCALE.errors["tag_bot"].description
 			}
@@ -52,19 +52,19 @@ module.exports = {
 			)
 		}
 
-		var loading_msg_locale = {
+		let loading_msg_locale = {
 			title: LOCALE.messages["loading"].title,
 			description: LOCALE.messages["loading"].description
 		}
 
-		var loading_msg = await message.send_(
+		let loading_msg = await message.send_(
 			new Discord.MessageEmbed()
 			.setTitle(loading_msg_locale.title)
 			.setDescription(loading_msg_locale.description)
 		)
 
 		setTimeout(()=>{
-			var loaded_msg = {
+			let loaded_msg = {
 				title: LOCALE.messages["loaded"].title,
 				description: LOCALE.messages["loaded"].description.interpolate({
 					tagged_user: metioned_user_2?metioned_user_2:metioned_user,
@@ -72,7 +72,7 @@ module.exports = {
 					result: utils.choice(LOCALE.results)
 				})
 			}
-			var loaded_msg_embed = new Discord.MessageEmbed()
+			let loaded_msg_embed = new Discord.MessageEmbed()
 			.setTitle(loaded_msg.title)
 			.setDescription(
 				loaded_msg.description

@@ -12,7 +12,7 @@ String.prototype.interpolate = function (params) {
 
 function stringTemplateParser(expression, valueObj) {
   const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
-  let text = expression.replace(templateMatcher, (substring, value, index) => {
+  let text = expression.replace(templateMatcher, (substring, value) => {
     value = valueObj[value];
     return value;
   });
@@ -35,9 +35,6 @@ var profilesRef = db.ref("profiles");
 var botInfoRef = db.ref("bot");
 var gameOffersRef = db.ref("gameOffers");
 var banRef = db.ref("ban");
-var podcastNotifyRef = db.ref("podcastNotify");
-
-var $;
 
 var exp = {
   angleToRadians(angle) {
@@ -100,7 +97,7 @@ var exp = {
     return msT || hmsT || null
   },
   wait(ms) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve();
       }, ms)
@@ -209,7 +206,6 @@ var exp = {
     } catch (error) {
       //console.log(error);
       return message;
-      return this.translate(from, to, message)
     }
   },
   GameOffers: {
@@ -234,48 +230,11 @@ var exp = {
       return await (await child.get("hash")).val().hash
     }
   },
-  PodcastNotify: {
-    async addChannelToPodcast(podcastFeedHash, channelId) {
-      var child = await podcastNotifyRef.child("podcasts")
-      return await child.child(podcastFeedHash).child("channels").child(channelId).set(new Date().getTime())
-    },
-    async removeChannel(channelId) {
-      var child = await podcastNotifyRef.child("podcasts")
-
-      child.orderByChild('name').equalTo('John Doe').on("value", function (snapshot) {
-        console.log(snapshot.val());
-        snapshot.forEach(function (data) {
-          console.log(data.key);
-        });
-      });
-      return await child.child(podcastFeedHash).child("channels").child(channelId).remove()
-    },
-    async setPodcast(podcastFeedHash, feedUrl) {
-      var child = await podcastNotifyRef.child("podcasts")
-      return await child.child(podcastFeedHash).child("feedUrl").set(feedUrl)
-    },
-    async setLastEp(podcastFeedHash, lastEpUrl) {
-      var child = await podcastNotifyRef.child("podcasts")
-      return await child.child(podcastFeedHash).child("lastEpUrl").set(lastEpUrl)
-    },
-    async doesPodcastExists(podcastFeedHash) {
-      var child = await podcastNotifyRef.child("podcasts")
-      return (await child.child(podcastFeedHash).get()).exists()
-    },
-    async getAllPodcasts() {
-      var child = await podcastNotifyRef.child("podcasts")
-      return await (await child.once("value")).val()
-    },
-    getPodcastFeedHash(feedUrl) {
-      return crypto.createHash("sha256").update(feedUrl).digest("hex")
-    }
-  },
-
   Updaters: {
     getPremiumUsers: () => {
-      return new Promise(async (resolve, reject) => {
-        const premiumUsers = this
-      })
+      // return new Promise(async (resolve, reject) => {
+      //   const premiumUsers = this
+      // })
     }
   },
   BotDB: {
@@ -424,9 +383,9 @@ var exp = {
           params: params,
           timeout: timeout,
           responseType: "arraybuffer"
-        }).then(async (res) => {
+        }).then((res) => {
           return resolve(res.data)
-        }).catch(async (err) => {
+        }).catch((err) => {
           return reject(err)
         })
       })

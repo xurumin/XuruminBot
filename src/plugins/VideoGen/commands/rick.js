@@ -6,9 +6,6 @@ const Utils = require("./../../../utils/utils")
 require('dotenv/config');
 
 module.exports = {
-    validate(client, message) {
-        return true;
-    },
     /**
      * @param  {Discord.Client} client
      * @param  {Discord.Message} message
@@ -39,7 +36,7 @@ module.exports = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 }
-                globalCooldown.shift()
+                // globalCooldown.shift()
                 return resolve(loading_msg.edit_(
                     Utils.createSimpleEmbed(msg.title, msg.description)
                 ));

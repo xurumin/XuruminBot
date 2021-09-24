@@ -148,7 +148,7 @@ module.exports = {
 				.addField(LOCALE.events.message.bot_tagged.fields[4][0], LOCALE.events.message.bot_tagged.fields[4][1])
 				.setThumbnail(client.user.avatarURL())
 				.setColor('#8146DC')
-				.setFooter(`All rights reserved @ ${client.user.username} - ${new Date().getFullYear()}`, client.user.avatarURL());;
+				.setFooter(`All rights reserved @ ${client.user.username} - ${new Date().getFullYear()}`, client.user.avatarURL());
 			return message.send_(embed);
 		}
 

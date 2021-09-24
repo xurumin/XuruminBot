@@ -1,5 +1,4 @@
 const { default: Axios } = require("axios");
-const Discord = require("discord.js")
 require('dotenv/config');
 
 
