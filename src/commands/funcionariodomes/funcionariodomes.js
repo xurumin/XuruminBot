@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
+const Utils = require("./../../utils/utils");
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -20,19 +20,19 @@ module.exports = {
 					img_url: message.mentions.users.entries().next().value[1].avatarURL({format:"jpg", size:512})
 				}).then(async res=>{
 					
-					return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+					return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")));
 				})
 				.catch(async err=>{
 					
-					return reject(err)
-				})
+					return reject(err);
+				});
 	
 			} else {
 				return message.send_(
 					Utils.createSimpleEmbed("❌ Erro ao digitar comando:", `Use  **${process.env.COMMAND_PREFIX}funcionariodomes @usuario** para dar o título de **Funcionário do Mês** 🤗`)
 				);
 			}
-		})
+		});
 	},
 
 	get command() {

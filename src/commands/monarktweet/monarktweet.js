@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
-const fs = require("fs")
+const Utils = require("./../../utils/utils");
+const fs = require("fs");
 module.exports = {
 	validate(client, message) {
 		return true;
@@ -12,10 +12,10 @@ module.exports = {
 	 */
 	run: (client, message, args) => {
 		return new Promise(async(resolve, reject)=>{
-			let text = args.join(" ").slice(0,218)
-			text = text.replace(/\n/gi, ' ')
+			let text = args.join(" ").slice(0,218);
+			text = text.replace(/\n/gi, ' ');
 			if(args.length <= 0 ){
-				text = "Wow"
+				text = "Wow";
 			}
 	
 			
@@ -30,13 +30,13 @@ module.exports = {
                 text: text
             }).then(async res=>{
 				
-				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")))
+				return resolve(message.inlineReply(new Discord.MessageAttachment(res, "image.jpg")));
             })
             .catch(async err=>{
                 
-				return reject(err)
-            })
-		})
+				return reject(err);
+            });
+		});
 	},
 
 	get command() {

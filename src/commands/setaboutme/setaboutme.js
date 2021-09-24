@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
+const Utils = require("./../../utils/utils");
 const axios = require("axios").default;
 
 
@@ -20,13 +20,13 @@ module.exports = {
 		}
 		
 		if(await Utils.Profile.hasProfile(client, message.author.id)){
-			await Utils.Profile.setTag(client, message.author.id, "aboutme", args.join(" ").slice(0,250))
+			await Utils.Profile.setTag(client, message.author.id, "aboutme", args.join(" ").slice(0,250));
 			return message.send_(
                 Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
 		}else{
-			var standard_profile = Utils.Profile.getStandardProfile()
-			await Utils.Profile.setProfile(client, message.author.id,standard_profile.bg_url,args.join(" ").slice(0,250),standard_profile.level, standard_profile.points)
+			var standard_profile = Utils.Profile.getStandardProfile();
+			await Utils.Profile.setProfile(client, message.author.id,standard_profile.bg_url,args.join(" ").slice(0,250),standard_profile.level, standard_profile.points);
 			return message.send_(
                 Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({prefix: process.env.COMMAND_PREFIX}))
             );
@@ -42,6 +42,6 @@ module.exports = {
 				"sobremim",
 				"mudarsobremim"
 			]
-		}
+		};
 	},
 };

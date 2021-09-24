@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const Utils = require("./../../../utils/utils")
-const Music = require("./../utils/Music")
-const MusicPlayer = require("./../utils/MusicPlayer")
+const Utils = require("./../../../utils/utils");
+const Music = require("./../utils/Music");
+const MusicPlayer = require("./../utils/MusicPlayer");
 require('dotenv/config');
 
 module.exports = {
@@ -14,36 +14,36 @@ module.exports = {
      * @param  {} args
      */
     run: async (client, message, args, LOCALE) => {
-        var player = client.players.get(message.guild.id)
+        var player = client.players.get(message.guild.id);
         if (!player) {
             return message.send_(LOCALE.errors.not_playing.interpolate({
                 prefix: process.env.COMMAND_PREFIX
-            }))
+            }));
         }
-        const indexes = args.join("").split(",")
+        const indexes = args.join("").split(",");
 
         if(indexes.lenght <= 0){
             return message.send_(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
-            }))
+            }));
         }
 
-        var musicToRemove = []
+        var musicToRemove = [];
 
         for (let index = 0; index < indexes.length; index++) {
             const element = Number.parseInt(indexes[index]);
             if(!Number.isInteger(element)) return message.send_(LOCALE.errors.cmd_run_error.interpolate({
                 prefix: process.env.COMMAND_PREFIX
-            }))
+            }));
 
-            musicToRemove.push(player.getPlaylist()[element-1])
+            musicToRemove.push(player.getPlaylist()[element-1]);
         }
 
-        player.filterPlaylist(musicToRemove)
+        player.filterPlaylist(musicToRemove);
 
         return await message.send_(Utils.createSimpleEmbed(LOCALE.playlist_changed.title, LOCALE.playlist_changed.description.interpolate({
             prefix: process.env.COMMAND_PREFIX
-        })))
+        })));
     },
 
     get command() {
@@ -54,6 +54,6 @@ module.exports = {
                 "remove",
                 "rmv"
             ]
-        }
+        };
     },
 };

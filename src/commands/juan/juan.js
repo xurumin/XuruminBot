@@ -20,7 +20,7 @@ module.exports = {
 			.setTitle("Juan")
 			.setAuthor(client.user.username)
 			.setImage("https://i.imgur.com/kWFFM2w.png")
-		)
+		);
 	},
 	get command() {
 		return {

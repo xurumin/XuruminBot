@@ -8,7 +8,7 @@ function segParaHora(time) {
 	minutes = minutes < 10 ? '0' + minutes : minutes;
 	seconds = seconds < 10 ? '0' + seconds : seconds;
 
-	return `${hours} hora(s), ${minutes} minuto(s) e ${Math.round(seconds)} segundo(s)`
+	return `${hours} hora(s), ${minutes} minuto(s) e ${Math.round(seconds)} segundo(s)`;
 }
 
 
@@ -22,12 +22,12 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		return message.send_(`Oi! Estou online a ${segParaHora(client.uptime/1000)}`)
+		return message.send_(`Oi! Estou online a ${segParaHora(client.uptime/1000)}`);
 	},
 
 	get command() {
 		return {
 			name: 'uptime'
-		}
+		};
 	},
 };

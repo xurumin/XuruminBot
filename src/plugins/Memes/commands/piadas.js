@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 const utils = require('./../../../utils/utils');
 
-const JokeList = require("./../files/piadas/piadas.json").features
+const JokeList = require("./../files/piadas/piadas.json").features;
 
 module.exports = {
     validate(client, message) {
@@ -17,7 +17,7 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise((resolve, reject) => {
 
-            var joke = utils.choice(JokeList).properties
+            var joke = utils.choice(JokeList).properties;
 
             var msg = {
                 title: LOCALE["message"].title,
@@ -25,12 +25,12 @@ module.exports = {
                     question:joke.pergunta,
                     answer: joke.resposta
                 })
-            }
+            };
             return resolve(message.send_(
                 utils.createSimpleEmbed(msg.title, msg.description)
             ));
 
-        })
+        });
     },
     get command() {
         return {
@@ -39,6 +39,6 @@ module.exports = {
                 "jokes",
                 "piada"
             ]
-        }
+        };
     },
 };

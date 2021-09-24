@@ -8,7 +8,7 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message) => {
-		console.error('[#ERROR]', message)
+		console.error('[#ERROR]', message);
 	},
 
 	get event() {

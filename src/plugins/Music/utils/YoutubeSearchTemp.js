@@ -12,7 +12,7 @@ const scrapper = async params => {
     params: {
       q: params, page: 1
     }
-  })).data
+  })).data;
 
   const parser = data => {
     return {

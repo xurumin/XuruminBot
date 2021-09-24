@@ -23,7 +23,7 @@ module.exports = {
 			.addField(LOCALE.message.fields[1][0],LOCALE.message.fields[1][1])
 			.addField(LOCALE.message.fields[2][0],LOCALE.message.fields[2][1])
 			.setAuthor(client.user.username)
-		)
+		);
 		
 	},
 

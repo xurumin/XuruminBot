@@ -15,9 +15,9 @@ module.exports = {
 	 */
 	run: async (client, message, args, LOCALE) => {
 		// var lastUpdates = (await axios.get(process.env.UPDATES_GIST)).data
-		var embed = new Discord.MessageEmbed()
-		embed.setTitle(LOCALE["message"].title)
-		embed.setDescription(LOCALE["message"].description)
+		var embed = new Discord.MessageEmbed();
+		embed.setTitle(LOCALE["message"].title);
+		embed.setDescription(LOCALE["message"].description);
 		// embed.setDescription(lastUpdates)
 		// embed.setThumbnail(client.user.avatarURL())
         return message.send_(embed);

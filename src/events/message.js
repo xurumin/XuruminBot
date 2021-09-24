@@ -20,9 +20,9 @@ const antiFloodCooldown = new Discord.Collection();
 
 function addPoint(client, userId) {
 	if (client.cachedPoints.has(userId)) {
-		client.cachedPoints.set(userId, client.cachedPoints.get(userId) + 1)
+		client.cachedPoints.set(userId, client.cachedPoints.get(userId) + 1);
 	} else {
-		client.cachedPoints.set(userId, 1)
+		client.cachedPoints.set(userId, 1);
 	}
 }
 
@@ -54,80 +54,80 @@ module.exports = {
 				return await message.channel.send({
 					files: [msg],
 					reply: { messageReference: message.id }
-				})
+				});
 			}
 			else if(msg instanceof Discord.MessageEmbed){
 				return await message.channel.send({
 					embeds: [msg],
 					reply: { messageReference: message.id }
-				})
+				});
 			}else{
 				return await message.channel.send({
 					content: msg,
 					reply: { messageReference: message.id }
-				})
+				});
 			}
-		}
+		};
 		message.send_ = async (msg)=>{
 			if(msg instanceof Discord.MessageAttachment){
 				return await message.channel.send({
 					files: [msg]
-				})
+				});
 			}
 			else if(msg instanceof Discord.MessageEmbed){
 				return await message.channel.send({
 					embeds: [msg]
-				})
+				});
 			}else{
 				return await message.channel.send({
 					content: msg,
 					reply: { messageReference: message.id }
-				})
+				});
 			}
-		}
+		};
 		message.edit_ = async (msg)=>{
 			if(msg instanceof Discord.MessageAttachment){
 				return await message.edit({
 					files: [msg]
-				})
+				});
 			}
 			else if(msg instanceof Discord.MessageEmbed){
 				return await message.edit({
 					embeds: [msg]
-				})
+				});
 			}else{
 				return await message.edit({
 					content: msg
-				})
+				});
 			}
-		}
+		};
 
 		//get guild language
-		const LANGUAGE = message.guild ? message.guild.preferredLocale.replace("-", "_") : "pt_BR"
-		const DEFAULT_LANGUAGE = "pt_BR"
+		const LANGUAGE = message.guild ? message.guild.preferredLocale.replace("-", "_") : "pt_BR";
+		const DEFAULT_LANGUAGE = "pt_BR";
 		var LOCALE;
 
 		if (locale_list.has(LANGUAGE)) {
-			LOCALE = locale_list.get(LANGUAGE)
+			LOCALE = locale_list.get(LANGUAGE);
 		} else {
-			LOCALE = locale_list.get(DEFAULT_LANGUAGE)
+			LOCALE = locale_list.get(DEFAULT_LANGUAGE);
 		}
 
 		// Checks if user is banned.
-		if(client.userBanList[message.author.id]) return message.send_("Sorry. You are banned.")
+		if(client.userBanList[message.author.id]) return message.send_("Sorry. You are banned.");
 
 
 		if (talkedRecently.has(message.author.id)) {
-			const currentTime = (new Date()).getTime()
-			const cooldownInfo = talkedRecently.get(message.author.id)
-			const cooldown = ((cooldownInfo.total / 1000) - ((currentTime - cooldownInfo.time) / 1000)).toFixed(0)
+			const currentTime = (new Date()).getTime();
+			const cooldownInfo = talkedRecently.get(message.author.id);
+			const cooldown = ((cooldownInfo.total / 1000) - ((currentTime - cooldownInfo.time) / 1000)).toFixed(0);
 
 			const embed = new Discord.MessageEmbed()
 				.setTitle(LOCALE.events.message.cooldown.title)
 				.setDescription(utils.stringTemplateParser(LOCALE.events.message.cooldown.description, {
 					cooldown: cooldown
 				}))
-				.setColor('#8146DC')
+				.setColor('#8146DC');
 			return message.send_(embed);
 		}
 		/**
@@ -177,10 +177,10 @@ module.exports = {
 
 			// Checks if sender is a Special User (who do not have message cooldown)
 			if (!(config.noCooldownCommands.includes(command) || config.noCooldownCommands.includes(aliase))) {
-				addPoint(client, message.author.id)
+				addPoint(client, message.author.id);
 
 				if (!config.specialusers.includes(message.author.id)) {
-					const totalCooldown = process.env.MESSAGE_COOLDOWN
+					const totalCooldown = process.env.MESSAGE_COOLDOWN;
 
 					talkedRecently.set(message.author.id, {
 						time: (new Date()).getTime(),
@@ -191,7 +191,7 @@ module.exports = {
 					}, totalCooldown);
 				}
 			} else {
-				const totalCooldown = 500
+				const totalCooldown = 500;
 				talkedRecently.set(message.author.id, {
 					time: (new Date()).getTime(),
 					total: totalCooldown
@@ -209,17 +209,17 @@ module.exports = {
 				//Register +1 cmd to log
 				client.commandsSent++;
 
-				const t1 = (new Date()).getTime()
+				const t1 = (new Date()).getTime();
 
 				if(!LOCALE.commands[command]){
-					LOCALE = locale_list.get(DEFAULT_LANGUAGE)
+					LOCALE = locale_list.get(DEFAULT_LANGUAGE);
 				}
 
 				const response = await cmd.run(client, message, args, LOCALE.commands[command]);
 
 				if (process.env.NODE_ENV == "development") {
-					const t2 = (new Date()).getTime()
-					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
+					const t2 = (new Date()).getTime();
+					console.log(`it took ${((t2-t1)).toFixed(2)} ms`);
 				}
 
 				return MessageLog.log(command, message); // ADD MESSAGE TO MessageLog
@@ -227,28 +227,28 @@ module.exports = {
 				//Register +1 cmd to log
 				client.commandsSent++;
 
-				const t1 = (new Date()).getTime()
+				const t1 = (new Date()).getTime();
 
 				if(!LOCALE.commands[aliase]){
-					LOCALE = locale_list.get(DEFAULT_LANGUAGE)
+					LOCALE = locale_list.get(DEFAULT_LANGUAGE);
 				}
 
 				const response = await client.commands.get(aliase).run(client, message, args, LOCALE.commands[aliase]);
 
 				if (process.env.NODE_ENV == "development") {
-					const t2 = (new Date()).getTime()
-					console.log(`it took ${((t2-t1)).toFixed(2)} ms`)
+					const t2 = (new Date()).getTime();
+					console.log(`it took ${((t2-t1)).toFixed(2)} ms`);
 				}
 
 				return MessageLog.log(aliase, message); // ADD MESSAGE TO MessageLog
 			} else {
-				var similar_cmd = client.commands.find(elm => utils.similarity(elm.command.name, command) > 0.7)
-				if(similar_cmd) similar_cmd = similar_cmd.command.name
+				var similar_cmd = client.commands.find(elm => utils.similarity(elm.command.name, command) > 0.7);
+				if(similar_cmd) similar_cmd = similar_cmd.command.name;
 
-				var similar_aliase = client.aliases_array.find(elm => utils.similarity(elm[0], command) > 0.7)
-				if(similar_aliase) similar_aliase = similar_aliase[0]
+				var similar_aliase = client.aliases_array.find(elm => utils.similarity(elm[0], command) > 0.7);
+				if(similar_aliase) similar_aliase = similar_aliase[0];
 
-				if(!similar_cmd) similar_cmd = similar_aliase
+				if(!similar_cmd) similar_cmd = similar_aliase;
 
 				var embed = new Discord.MessageEmbed()
 				.setColor('#9d65c9')
@@ -257,7 +257,7 @@ module.exports = {
 				.addField(LOCALE.events.message.errors.command_not_found.fields[0][0], LOCALE.events.message.errors.command_not_found.fields[0][1])
 				.addField(LOCALE.events.message.errors.command_not_found.fields[1][0], LOCALE.events.message.errors.command_not_found.fields[1][1])
 				.addField(LOCALE.events.message.errors.command_not_found.fields[2][0], LOCALE.events.message.errors.command_not_found.fields[2][1])
-				.setAuthor(client.user.username)
+				.setAuthor(client.user.username);
 
 				var cmdButton;
 				if(similar_cmd){
@@ -272,29 +272,29 @@ module.exports = {
 					embed.setDescription(LOCALE.events.message.errors.command_not_found.description_similar.interpolate({
 						prefix: process.env.COMMAND_PREFIX,
 						cmd: similar_cmd
-					}))
+					}));
 
-					message.ncontent = message.content.replace(`${command}`, similar_cmd)
+					message.ncontent = message.content.replace(`${command}`, similar_cmd);
 
-					client.similarCmdUserMsg.set(message.author.id, message)
+					client.similarCmdUserMsg.set(message.author.id, message);
 					
 					setTimeout(()=>{
-						client.similarCmdUserMsg.delete(message.author.id)
-					}, 30000)
-					cmdButton = [cmdButton]
+						client.similarCmdUserMsg.delete(message.author.id);
+					}, 30000);
+					cmdButton = [cmdButton];
 				}
 
 				message.reply({
 					embeds: [embed],
 					components: cmdButton ?? []
-				})
+				});
 				return MessageLog.log("NOT FOUND", message);
 			}
 		} catch (error) {
 			if(process.env.NODE_ENV != "development"){
-				Sentry.captureException(error)
+				Sentry.captureException(error);
 			}
-			console.log("[MESSAGE_EVENT]", error)
+			console.log("[MESSAGE_EVENT]", error);
 			
 			return message.send_(utils.createSimpleEmbed(LOCALE.events.message.errors.cmd_run_error.title, LOCALE.events.message.errors.cmd_run_error.description));
 		}

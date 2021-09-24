@@ -10,6 +10,6 @@ module.exports = {
 	get commands() {
 		return {
 			path: "commands"
-		}
+		};
 	},
 };

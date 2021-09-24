@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const Utils = require("./../../../utils/utils")
-const Music = require("./../utils/Music")
-const MusicPlayer = require("./../utils/MusicPlayer")
+const Utils = require("./../../../utils/utils");
+const Music = require("./../utils/Music");
+const MusicPlayer = require("./../utils/MusicPlayer");
 require('dotenv/config');
 
 module.exports = {
@@ -19,15 +19,15 @@ module.exports = {
                 Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`)
             );
         }
-        var player = client.players.get(message.guild.id)
+        var player = client.players.get(message.guild.id);
         if (!player) {
-            player = await new MusicPlayer(message.guild.id, client, message)
+            player = await new MusicPlayer(message.guild.id, client, message);
             if(!player.getPlaylist()){
                 return message.send_(
                     Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`)
                 );
             }
-            player.shufflePlaylist()
+            player.shufflePlaylist();
             return message.send_(Utils.createSimpleEmbed("✅ Playlist randomizada!", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`));
         }else{
             if(!player.getPlaylist()){
@@ -35,7 +35,7 @@ module.exports = {
                     Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`)
                 );
             }
-            player.shufflePlaylist()
+            player.shufflePlaylist();
             return message.send_(Utils.createSimpleEmbed("✅ Playlist randomizada!", `Utilize **${process.env.COMMAND_PREFIX}queue** para ver sua nova playlist! 😉`));
         }
     },
@@ -43,6 +43,6 @@ module.exports = {
     get command() {
         return {
             name: 'shuffle'
-        }
+        };
     },
 };

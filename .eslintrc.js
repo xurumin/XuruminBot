@@ -10,6 +10,7 @@ module.exports = {
     },
     "rules": {
         "no-unused-vars": "off",
-        "no-async-promise-executor": "off",     
+        "no-async-promise-executor": "off",
+        "semi": ["error", "always"],
     }
 };

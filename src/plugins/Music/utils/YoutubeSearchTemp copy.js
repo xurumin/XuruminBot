@@ -54,4 +54,4 @@ module.exports = async function search(query) {
   const text = await res.text();
 
   return extractSearchResults(text);
-}
+};

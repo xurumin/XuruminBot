@@ -18,4 +18,4 @@ module.exports = {
             racing: 100
         }
     }
-}
+};

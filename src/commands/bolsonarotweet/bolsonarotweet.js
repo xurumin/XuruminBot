@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
-const fs = require("fs")
+const Utils = require("./../../utils/utils");
+const fs = require("fs");
 
 module.exports = {
 	validate(client, message) {
@@ -12,13 +12,13 @@ module.exports = {
 	 * @param  {Array} args
 	 */
 	run: async (client, message, args, LOCALE) => {
-		let text = args.join(" ").slice(0, 218)
-		text = text.replace(/\n/gi, ' ')
+		let text = args.join(" ").slice(0, 218);
+		text = text.replace(/\n/gi, ' ');
 
 		if (args.length <= 0) {
 			text = await (await message.channel.messages.fetch({
 				limit: 2
-			})).last()["content"]
+			})).last()["content"];
 		}
 
 		if (text == "") {
@@ -36,7 +36,7 @@ module.exports = {
 		try {
 			const res = await Utils.KarinnaAPI.get("/v1/image/bolsonarotweet", {
 				text: text
-			})
+			});
 			return message.inlineReply(new Discord.MessageAttachment(res, "tweet.jpg"));	
 		} catch (error) {
 			return Promise.reject("Não foi possível conectar na api da Karinna");

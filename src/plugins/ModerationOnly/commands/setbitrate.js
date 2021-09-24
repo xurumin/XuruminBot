@@ -1,6 +1,6 @@
 "use strict";
 const Discord = require('discord.js');
-const Utils = require("./../../../utils/utils")
+const Utils = require("./../../../utils/utils");
 const config = require("./../../../config");
 require('dotenv/config');
 module.exports = {
@@ -15,26 +15,26 @@ module.exports = {
     run: async (client, message, args, LOCALE) => {
         return new Promise(async (resolve, reject)=>{
             if(!config.specialusers.includes(message.author.id)){
-                return message.send_("Sorry you can not send this command.")
+                return message.send_("Sorry you can not send this command.");
             }
 
-            var player = client.players.get(message.guild.id)
+            var player = client.players.get(message.guild.id);
 
             if (!player) {
-                return message.send_("ta tocando nada nao")
+                return message.send_("ta tocando nada nao");
             } else {
-                var newBitrate = Number.parseInt(args[0])
+                var newBitrate = Number.parseInt(args[0]);
                 if(!newBitrate) return;
-                player.setBitrate(Number.parseInt(args[0]))
-                return message.send_("bitrate alterado")
+                player.setBitrate(Number.parseInt(args[0]));
+                return message.send_("bitrate alterado");
             }
 
-        })
+        });
     },
     get command() {
         return {
             name: "setbitrate",
             aliases: []
-        }
+        };
     },
 };

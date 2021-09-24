@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const Utils = require("./../../utils/utils")
-const fs = require("fs")
+const Utils = require("./../../utils/utils");
+const fs = require("fs");
 
 module.exports = {
 	validate(client, message) {
@@ -13,10 +13,10 @@ module.exports = {
 	 */
 	run: (client, message, args, LOCALE) => {
 		return new Promise(async(resolve, reject)=>{
-			let text = args.join(" ").slice(0,218)
-			text = text.replace(/\n/gi, ' ')
+			let text = args.join(" ").slice(0,218);
+			text = text.replace(/\n/gi, ' ');
 			if(args.length <= 0 ){
-				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"]
+				text = await (await message.channel.messages.fetch({ limit: 2 })).last()["content"];
 			}
 	
 			if(text == ""){
@@ -34,13 +34,13 @@ module.exports = {
 			Utils.KarinnaAPI.get("/v1/image/felipenetotweetfd", {
                 text: text
             }).then(async res=>{
-				resolve(message.inlineReply(new Discord.MessageAttachment(res, "tweet.jpg")))
+				resolve(message.inlineReply(new Discord.MessageAttachment(res, "tweet.jpg")));
             })
             .catch(async err=>{
                 
-				return reject(err)
-            })
-		})
+				return reject(err);
+            });
+		});
 	},
 
 	get command() {

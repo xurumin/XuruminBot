@@ -21,7 +21,7 @@ module.exports = {
 			.setDescription("🎶🎶 🥳🥳🥳")
 			.setAuthor(client.user.username)
 			.setImage("https://i.imgur.com/OmiPKRQ.gif")
-		)
+		);
 	},
 	get command() {
 		return {

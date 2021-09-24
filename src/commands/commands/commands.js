@@ -20,7 +20,7 @@ module.exports = {
 			.setColor('#9d65c9')
 			.setTitle(LOCALE.message.title)
 			.setDescription(LOCALE.message.description)
-		)
+		);
 		
 	},
 

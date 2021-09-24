@@ -13,7 +13,7 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		var meme = await axios.get(`https://xkcd.com/${Utils.random(0,2100)}/info.0.json`)
+		var meme = await axios.get(`https://xkcd.com/${Utils.random(0,2100)}/info.0.json`);
 		return message.send_(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
@@ -22,7 +22,7 @@ module.exports = {
 			.setAuthor(client.user.username)
 			.setImage(meme.data.img)
 			.setFooter(`Photo by XKCD on https://xkcd.com`)
-		)
+		);
 	},
 
 	get command() {

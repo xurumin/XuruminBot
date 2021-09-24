@@ -14,7 +14,7 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		var image = await axios.get(`https://unsplash.com/napi/search/photos?query=beetle+car&xp=&per_page=1&page=${Utils.random(0,100)}`)
+		var image = await axios.get(`https://unsplash.com/napi/search/photos?query=beetle+car&xp=&per_page=1&page=${Utils.random(0,100)}`);
 		return message.inlineReply(
 			new Discord.MessageEmbed()
 			.setColor('#9d65c9')
@@ -22,7 +22,7 @@ module.exports = {
 			.setAuthor(client.user.username)
 			.setImage(image.data["results"][0]["urls"]["small"])
 			.setFooter(`Photo by ${image.data["results"][0]["user"]["name"]} on Unsplash`)
-		)
+		);
 	},
 	get command() {
 		return {

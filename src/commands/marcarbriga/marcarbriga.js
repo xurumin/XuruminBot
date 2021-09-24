@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const database = require("./../../utils/database")
-const Utils = require("./../../utils/utils")
-const fs = require("fs")
+const database = require("./../../utils/database");
+const Utils = require("./../../utils/utils");
+const fs = require("fs");
 
 module.exports = {
 	validate(client, message) {
@@ -19,12 +19,12 @@ module.exports = {
             );
 
 		}
-		let metioned_user = message.mentions.users.entries().next().value[1]
+		let metioned_user = message.mentions.users.entries().next().value[1];
 
 		if(message.author == metioned_user){
 			return message.send_(
 				Utils.createSimpleEmbed("❌ Pera lá né amigo", `Você não pode brigar com você mesmo 😑`)
-			)
+			);
 		}
 
 		const places = [
@@ -35,7 +35,7 @@ module.exports = {
 			"No mine",
 			"Na vila do Chaves",
 			"Na aula online"
-		]
+		];
 		const schedules = [
 			"Próxima sexta",
 			"Quando acabar a EAD",
@@ -43,13 +43,13 @@ module.exports = {
 			"Às 4:21",
 			"Quando você quiser pai ta pronto",
 			"Quando tu largar de ser besta"
-		]
+		];
 		return message.send_(
 			new Discord.MessageEmbed()
 			.setTitle("😤 Chamado para a briga")
 			.setDescription(`**${message.author}** chamou **${metioned_user}** pra briga\n⌚️ **Horario**: ${schedules[Math.floor(Math.random() * schedules.length)]}\n🗺️ **Local**: ${places[Math.floor(Math.random() * places.length)]}\n**É bom aparecer seu troxão** 😡`)
 			.setThumbnail(message.author.avatarURL())
-		)
+		);
 
 	},
 

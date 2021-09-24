@@ -4,12 +4,12 @@ const fs = require('fs-extra');
 
 module.exports = {
 	validate(client, message) {
-		return true
+		return true;
     },
 
 	get commands() {
 		return {
 			path: "commands"
-		}
+		};
 	},
 };

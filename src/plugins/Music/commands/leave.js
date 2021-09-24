@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const Utils = require("./../../../utils/utils")
-const Music = require("./../utils/Music")
-const MusicPlayer = require("./../utils/MusicPlayer")
+const Utils = require("./../../../utils/utils");
+const Music = require("./../utils/Music");
+const MusicPlayer = require("./../utils/MusicPlayer");
 require('dotenv/config');
 
 module.exports = {
@@ -18,11 +18,11 @@ module.exports = {
             return message.send_(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar em um chat de voz para executar o comando 😉`));
         }
 
-        var player = client.players.get(message.guild.id)
+        var player = client.players.get(message.guild.id);
         if (!player) {
             return message.send_(Utils.createSimpleEmbed("❌ Erro ao executar comando:", `➡️ Você precisa estar tocando alguma coisa para executar o comando 😉`));
         }else{
-            player.leave()
+            player.leave();
         }
     },
 
@@ -33,6 +33,6 @@ module.exports = {
                 "sair",
                 "stop"
             ]
-        }
+        };
     },
 };

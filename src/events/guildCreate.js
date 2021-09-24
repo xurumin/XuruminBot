@@ -13,21 +13,21 @@ module.exports = {
 
 		//guild.region
 
-		const LANGUAGE = "pt_BR"
-		const DEFAULT_LANGUAGE = "pt_BR"
+		const LANGUAGE = "pt_BR";
+		const DEFAULT_LANGUAGE = "pt_BR";
 		var LOCALE;
 
 		if(locale_list.has(LANGUAGE)){
-			LOCALE = locale_list.get(LANGUAGE)
+			LOCALE = locale_list.get(LANGUAGE);
 		}else{
-			LOCALE = locale_list.get(DEFAULT_LANGUAGE)
+			LOCALE = locale_list.get(DEFAULT_LANGUAGE);
 		}
 
 		guild.fetchAuditLogs({type: "BOT_ADD", limit: 1}).then(log => { // Fetching 1 entry from the AuditLogs for BOT_ADD.
 			var msg = LOCALE["events"]["guildCreate"]["message"].interpolate({
 				prefix: process.env.COMMAND_PREFIX,
 				server_name: guild.name
-			})
+			});
 			log.entries.first().executor.send({
 				content: msg
 			}).catch(e => console.error(e)); // Sending the message to the executor.

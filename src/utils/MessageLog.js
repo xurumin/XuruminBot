@@ -2,13 +2,13 @@ const { default: Axios } = require("axios");
 require('dotenv/config');
 
 
-const WEBHOOK = process.env.DISCORD_CMD_NOTIFIER_WEBHOOK
+const WEBHOOK = process.env.DISCORD_CMD_NOTIFIER_WEBHOOK;
 
 /**
  * @param  {Discord.Message} msg
  */
 function genLogPattern(msg) {
-    if (!msg || !msg.guild.name) return {}
+    if (!msg || !msg.guild.name) return {};
     return {
         guild: {
             name: msg.guild.name,
@@ -27,7 +27,7 @@ function genLogPattern(msg) {
             content: msg.content,
             embed: msg.embeds[0]
         },
-    }
+    };
 }
 
 function sendWebhook(info) {
@@ -48,10 +48,10 @@ function sendWebhook(info) {
             name: "Sender Datetime",
             value: String(info.request.message.date)
         }
-    ]
+    ];
     var text = `**New command on guild \` ${info.request.guild.name} \`**\n`+items.map((elm)=>{
-        return `**${elm.name}**: \` ${elm.value} \``
-    }).join("\n")
+        return `**${elm.name}**: \` ${elm.value} \``;
+    }).join("\n");
     
     var options = {
         "headers": {
@@ -64,7 +64,7 @@ function sendWebhook(info) {
 
     return Axios.post(WEBHOOK, options.payload, {
         headers: options.headers
-    })
+    });
 }
 
 module.exports = {
@@ -80,10 +80,10 @@ module.exports = {
             command: command,
             request: genLogPattern(request_message)
             //response: genLogPattern(response_message)
-        }
+        };
         if (WEBHOOK) {
-            return await sendWebhook(info)
+            return await sendWebhook(info);
         }
         return;
     }
-}
+};

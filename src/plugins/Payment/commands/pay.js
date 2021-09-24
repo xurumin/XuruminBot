@@ -1,7 +1,7 @@
 "use strict";
 const Discord = require('discord.js');
-const Payment = require("./../../../libs/Payment")
-const Utils = require("./../../../utils/utils")
+const Payment = require("./../../../libs/Payment");
+const Utils = require("./../../../utils/utils");
 require('dotenv/config');
 
 function getUserFromMention(mention) {
@@ -36,7 +36,7 @@ module.exports = {
                     }), client.user.username)
                 );
             }
-            const taggedUser = client.users.cache.get(getUserFromMention(args[0]))
+            const taggedUser = client.users.cache.get(getUserFromMention(args[0]));
 
             if (!taggedUser) {
                 return message.send_(
@@ -49,7 +49,7 @@ module.exports = {
                 payerId: message.author.id,
                 payeeId: taggedUser.id,
                 value: parseFloat(args[1])
-            }
+            };
             if (!(await Payment.userHasFunds(paymentInfo.payerId, paymentInfo.value))) {
                 return message.send_(
                     Utils.createSimpleEmbed(LOCALE.errors.user_do_not_have_funds.title, LOCALE.errors.user_do_not_have_funds.description.interpolate({
@@ -62,17 +62,17 @@ module.exports = {
             var confirmation_msg = {
                 title: LOCALE["confirmation"][0].title,
                 description: LOCALE["confirmation"][0].description
-            }
+            };
             var operation_refused_msg = {
                 title: LOCALE["confirmation"][1].title
-            }
-            var msg = await message.send_(Utils.createSimpleEmbed(confirmation_msg.title,confirmation_msg.description))
+            };
+            var msg = await message.send_(Utils.createSimpleEmbed(confirmation_msg.title,confirmation_msg.description));
             Utils.Reactions.getConfirmation(
                 msg, message.author.id
             ).then(async (value)=>{
-                await msg.delete()
+                await msg.delete();
                 if(!value){
-                    return await message.send_(Utils.createSimpleEmbed(operation_refused_msg.title,""))
+                    return await message.send_(Utils.createSimpleEmbed(operation_refused_msg.title,""));
                 }
                 Payment.pay(paymentInfo.payerId, paymentInfo.payeeId, paymentInfo.value)
                 .then(pmtResponse => {
@@ -82,14 +82,14 @@ module.exports = {
                         payer: pmtResponse.payerId,
                         payee: pmtResponse.payeeId,
                         value: pmtResponse.value,
-                    }))
+                    }));
                     taggedUser.send(LOCALE.pv_message.interpolate({
                         transaction_id: pmtResponse.id,
                         creation_time: pmtResponse.create_time,
                         payer: pmtResponse.payerId,
                         payee: pmtResponse.payeeId,
                         value: pmtResponse.value,
-                    }))
+                    }));
                     return message.send_(
                         Utils.createSimpleEmbed(LOCALE.message.title, LOCALE.message.description.interpolate({
                             prefix: process.env.COMMAND_PREFIX
@@ -105,13 +105,13 @@ module.exports = {
                         );
                     }
                     return reject(error);
-                })
+                });
             })
             .catch(async (err)=>{
                 console.log(err);
-                return await message.send_(Utils.createSimpleEmbed(operation_refused_msg.title,""))
-            })
-        })
+                return await message.send_(Utils.createSimpleEmbed(operation_refused_msg.title,""));
+            });
+        });
     },
     get command() {
         return {
@@ -119,6 +119,6 @@ module.exports = {
             aliases: [
                 "pagar"
             ]
-        }
+        };
     },
 };

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const database = require("./../../utils/database")
-const Utils = require("./../../utils/utils")
-const fs = require("fs")
+const database = require("./../../utils/database");
+const Utils = require("./../../utils/utils");
+const fs = require("fs");
 
 module.exports = {
 	validate(client, message) {
@@ -19,18 +19,18 @@ module.exports = {
             );
 
 		}
-		let metioned_user = message.mentions.users.entries().next().value[1]
+		let metioned_user = message.mentions.users.entries().next().value[1];
 
 		if(message.author == metioned_user){
 			return message.send_(
 				Utils.createSimpleEmbed("❌ Pera lá né amigo", `Você não pode beijar com você mesmo... 😑\n Ou será que pode? 🤔`)
-			)
+			);
 		}
 
 		if(metioned_user == client.user){
 			return message.send_(
 				Utils.createSimpleEmbed("😬 Opa, então né...", `Agradeço e tals mas tô passando`)
-			)
+			);
 		}
 
 
@@ -43,7 +43,7 @@ module.exports = {
 			"Na vila do Chaves",
 			"Na aula online",
 			"No among"
-		]
+		];
 		const schedules = [
 			"Próxima sexta",
 			"Quando acabar a EAD",
@@ -51,13 +51,13 @@ module.exports = {
 			"Às 4:21",
 			"Quando você quiser pai ta pronto",
 			"Quando tu largar de ser besta"
-		]
+		];
 		return message.send_(
 			new Discord.MessageEmbed()
 			.setTitle("😘 Chamado para me beijar rs")
 			.setDescription(`**${message.author}** chamou **${metioned_user}** pro beijo 🥰\n⌚️ **Horario**: ${schedules[Math.floor(Math.random() * schedules.length)]}\n🗺️ **Local**: ${places[Math.floor(Math.random() * places.length)]}\n**É bom aparecer seu troxão** 😡`)
 			.setThumbnail(message.author.avatarURL())
-		)
+		);
 
 	},
 

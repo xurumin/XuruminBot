@@ -3,7 +3,7 @@
 const {
     createCanvas,
     loadImage
-} = require('canvas')
+} = require('canvas');
 const Discord = require('discord.js');
 const path = require("path");
 const utils = require('./../../../utils/utils');
@@ -16,33 +16,33 @@ function ImageGenerator(usersPic) {
             bolsonaro: {"x":184,"y":71,"width":120,"height":120,"angle":5},
             maria: {"x":459,"y":116,"width":60,"height":80,"angle":-8},
             randomWoman: {"x":401,"y":139,"width":50,"height":50,"angle":5}
-        }
-        const canvas = createCanvas(640,300)
-        const ctx = canvas.getContext('2d')
+        };
+        const canvas = createCanvas(640,300);
+        const ctx = canvas.getContext('2d');
 
 
-        ctx.save()
+        ctx.save();
         ctx.translate(pos.bolsonaro.x, pos.bolsonaro.y);
         ctx.rotate( utils.angleToRadians(pos.bolsonaro.angle) );
         ctx.drawImage(await loadImage(usersPic[0]),-pos.bolsonaro.width / 2, -pos.bolsonaro.height / 2, pos.bolsonaro.width,pos.bolsonaro.height);
-        ctx.restore()
+        ctx.restore();
 
-        ctx.save()
+        ctx.save();
         ctx.translate(pos.maria.x, pos.maria.y);
         ctx.rotate( utils.angleToRadians(pos.maria.angle) );
         ctx.drawImage(await loadImage(usersPic[1]),-pos.maria.width / 2, -pos.maria.height / 2, pos.maria.width,pos.maria.height);
-        ctx.restore()
+        ctx.restore();
 
-        ctx.save()
+        ctx.save();
         ctx.translate(pos.randomWoman.x, pos.randomWoman.y);
         ctx.rotate( utils.angleToRadians(pos.randomWoman.angle) );
         ctx.drawImage(await loadImage(usersPic[2]),-pos.randomWoman.width / 2, -pos.randomWoman.height / 2, pos.randomWoman.width,pos.randomWoman.height);
-        ctx.restore()
+        ctx.restore();
 
         ctx.drawImage(await loadImage(path.join(__dirname,"..",`/files/daqueeutedououtra/base.png`)), 0, 0, 640,300);
 
-        resolve(canvas.toBuffer('image/jpeg', { quality: 0.8 }))
-    })
+        resolve(canvas.toBuffer('image/jpeg', { quality: 0.8 }));
+    });
 
 }
 
@@ -57,42 +57,42 @@ module.exports = {
      */
     run: async (client, message, args, LOCALE) => {
         return new Promise((resolve, reject) => {
-            const tagged_users = message.mentions.members.toJSON()
-            var userImages = []
+            const tagged_users = message.mentions.members.toJSON();
+            var userImages = [];
 
             if(tagged_users.length <2){
                 var msg = {
                     title: LOCALE.errors["need_more_users"].title,
                     description: LOCALE.errors["need_more_users"].description
-                }
+                };
                 return resolve(message.send_(
                     utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
             for(var user of tagged_users.slice(0,3)){
-                user = user.user
+                user = user.user;
                 var user_pic = user.avatarURL({
                     format: "png",
                     size: 256
-                })
+                });
                 if (!user_pic) {
                     msg = {
                         title: LOCALE.errors.user_do_not_have_pic.title,
                         description: LOCALE.errors.user_do_not_have_pic.description
-                    }
+                    };
                     return resolve(message.send_(
                         utils.createSimpleEmbed(msg.title, msg.description)
                     ));
                 }
-                userImages.push(user_pic)
+                userImages.push(user_pic);
             }
 
             if (tagged_users.length==2){
                 user_pic = client.user.avatarURL({
                     format: "png",
                     size: 256
-                })
-                userImages.push(user_pic)
+                });
+                userImages.push(user_pic);
             }
             
             
@@ -105,14 +105,14 @@ module.exports = {
                         description: LOCALE.message.description.interpolate({
                             author: message.author
                         })
-                    }
-                    return resolve(await message.inlineReply(new Discord.MessageAttachment(image)))
+                    };
+                    return resolve(await message.inlineReply(new Discord.MessageAttachment(image)));
                 })
                 .catch((err) => {
                     
-                    return reject(err)
-                })
-        })
+                    return reject(err);
+                });
+        });
     },
     get command() {
         return {
@@ -120,6 +120,6 @@ module.exports = {
             aliases: [
                 "dqetdo"
             ]
-        }
+        };
     },
 };

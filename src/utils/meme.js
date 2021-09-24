@@ -1,5 +1,5 @@
 var Twitter = require('twitter');
-var utils = require("./../utils/utils")
+var utils = require("./../utils/utils");
  
 var client = new Twitter({
   consumer_key: 'DOj39W0eli7lKfMxjrOemCU7k',
@@ -18,7 +18,7 @@ const twitter_meme_list = [
     "Anuncioestranho",
     "SoutAmericMemes",
     "aliensben10puto"
-]
+];
 
 function getTwitterRandomMeme(){
     return new Promise(async (resolve, reject)=>{
@@ -30,18 +30,18 @@ function getTwitterRandomMeme(){
         };
         client.get('statuses/user_timeline', params, async function(error, tweets) {
             if (error) {
-                reject(error)
+                reject(error);
             }
-            tweets = utils.shuffle(tweets)
+            tweets = utils.shuffle(tweets);
             
-            const tweet = tweets.find(tweet=>tweet["entities"]["media"] && (!tweet["entities"]["media"][0]["expanded_url"].includes("/video/") ))
+            const tweet = tweets.find(tweet=>tweet["entities"]["media"] && (!tweet["entities"]["media"][0]["expanded_url"].includes("/video/") ));
             if(!tweet){
-                console.log("new meme")
+                console.log("new meme");
                 try {
-                   var res = await getTwitterRandomMeme()
-                    resolve(res)
+                   var res = await getTwitterRandomMeme();
+                    resolve(res);
                 } catch (error) {
-                    reject(error)
+                    reject(error);
                 }
                 return;
             }
@@ -53,22 +53,22 @@ function getTwitterRandomMeme(){
                 source: "twitter",
                 text: tweet["text"],
                 url: tweet["entities"]["media"][0]["media_url"]
-            }
-            resolve(postinfo)
-        })
-    })
+            };
+            resolve(postinfo);
+        });
+    });
 }
 
 module.exports = {
     getRandomMeme(){
         return new Promise(async (resolve, reject)=>{
             try {
-                var meme = await getTwitterRandomMeme()
-                resolve(meme)
+                var meme = await getTwitterRandomMeme();
+                resolve(meme);
             } catch (error) {
-                reject(error)
+                reject(error);
             }
             
-        })
+        });
     }
-}
+};

@@ -1,35 +1,35 @@
 const Discord = require('discord.js');
-const ytdl = require("ytdl-core")
+const ytdl = require("ytdl-core");
 const axios = require("axios").default;
-const Utils = require("./../../../utils/utils")
+const Utils = require("./../../../utils/utils");
 var parseString = require('xml2js').parseString;
 
 require('dotenv/config');
 
 async function sendRects(message, reactions) {
     for (var i = 0; i < reactions.length; i++) {
-        await message.react(reactions[i])
+        await message.react(reactions[i]);
     }
 }
 async function sendRectsLight(message) {
-    await message.react("1️⃣")
-    await message.react("2️⃣")
-    await message.react("3️⃣")
-    await message.react("4️⃣")
-    await message.react("5️⃣")
+    await message.react("1️⃣");
+    await message.react("2️⃣");
+    await message.react("3️⃣");
+    await message.react("4️⃣");
+    await message.react("5️⃣");
 }
 module.exports = {
     getPodcastsByTerm(term, cb) {
         return new Promise((resolve, reject) => {
-            var url = "https://itunes.apple.com/search?entity=podcast&limit=5&term=" + encodeURIComponent(String(term))
+            var url = "https://itunes.apple.com/search?entity=podcast&limit=5&term=" + encodeURIComponent(String(term));
             axios.get(url)
                 .then(res => {
-                    resolve(res.data["results"].slice(0, 10))
+                    resolve(res.data["results"].slice(0, 10));
                 })
                 .catch(err => {
-                    reject(err)
+                    reject(err);
                 });
-        })
+        });
 
     },
     getLastEpsByUrl(url, index = 0, limit=5) {
@@ -38,19 +38,19 @@ module.exports = {
                 .then(xml => {
                     parseString(xml.data, function (err, res) {
                         if (err) {
-                            return reject(err)
+                            return reject(err);
                         }
-                        resolve(res["rss"]["channel"][0]["item"].slice(index, index + limit))
-                    })
+                        resolve(res["rss"]["channel"][0]["item"].slice(index, index + limit));
+                    });
 
                 }).catch(err => {
-                    reject(err)
+                    reject(err);
                 });
-        })
+        });
     },
     getReactLight(message) {
         return new Promise(async (resolve, reject) => {
-            sendRectsLight(message)
+            sendRectsLight(message);
             const filter = (reaction, user) => {
                 return !["754756207507669128", "753723888671785042", "757333853529702461", "760496747625185330"].includes(user.id);
             };
@@ -62,45 +62,45 @@ module.exports = {
                 })
                 .then(collected => {
                     const reaction = collected.first();
-                    var index = 0
+                    var index = 0;
                     switch (reaction.emoji.name) {
                         case "1️⃣":
-                            index = 0
+                            index = 0;
                             break;
                         case "2️⃣":
-                            index = 1
+                            index = 1;
                             break;
                         case "3️⃣":
-                            index = 2
+                            index = 2;
                             break;
                         case "4️⃣":
-                            index = 3
+                            index = 3;
                             break;
                         case "5️⃣":
-                            index = 4
+                            index = 4;
                             break;
                         default:
                             reject({
                                 status: 3,
                                 data: "usuário não selecionou nenhum dos emojis",
                                 message: message
-                            })
+                            });
                             break;
                     }
-                    resolve(index)
+                    resolve(index);
                 })
                 .catch(collected => {
                     reject({
                         status: 0,
                         data: collected
-                    })
+                    });
                 });
 
-        })
+        });
     },
     getReact(message, reactions=["1️⃣", "2️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "⏪", "⏩"]) {
         return new Promise(async (resolve, reject) => {
-            sendRects(message, reactions)
+            sendRects(message, reactions);
             const filter = (reaction, user) => {
                 return !["754756207507669128", "753723888671785042", "757333853529702461", "760496747625185330"].includes(user.id);
             };
@@ -112,46 +112,46 @@ module.exports = {
                 })
                 .then(collected => {
                     const reaction = collected.first();
-                    var index = 0
+                    var index = 0;
                     switch (reaction.emoji.name) {
                         case "1️⃣":
-                            index = 0
+                            index = 0;
                             break;
                         case "2️⃣":
-                            index = 1
+                            index = 1;
                             break;
                         case "3️⃣":
-                            index = 2
+                            index = 2;
                             break;
                         case "4️⃣":
-                            index = 3
+                            index = 3;
                             break;
                         case "5️⃣":
-                            index = 4
+                            index = 4;
                             break;
                         case "⏪":
-                            index = 5
+                            index = 5;
                             break;
                         case "⏩":
-                            index = 6
+                            index = 6;
                             break;
                         default:
                             reject({
                                 status: 3,
                                 data: "usuário não selecionou nenhum dos emojis",
                                 message: message
-                            })
+                            });
                             break;
                     }
-                    resolve(index)
+                    resolve(index);
                 })
                 .catch(collected => {
                     reject({
                         status: 0,
                         data: collected
-                    })
+                    });
                 });
 
-        })
+        });
     }
-}
+};

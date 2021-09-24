@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const random_meme = require("./random_meme")
+const random_meme = require("./random_meme");
 
 module.exports = {
 	validate(client, message) {
@@ -11,7 +11,7 @@ module.exports = {
 	 * @param  {} args
 	 */
 	run: async (client, message, args) => {
-		var meme = await random_meme.getRandomMeme()
+		var meme = await random_meme.getRandomMeme();
 		const meme_embed = new Discord.MessageEmbed()
 		.setTitle('Hm, que tal um meme?')
 		.setDescription(meme.text)
