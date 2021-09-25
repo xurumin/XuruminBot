@@ -27,8 +27,8 @@ module.exports = {
 			);
 
 		}
-		let metioned_user = message.mentions.members.toJSON()[0].user;
-		let metioned_user_2 = message.mentions.members.toJSON()[1].user;
+		let metioned_user = message.mentions.users.toJSON()[0];
+		let metioned_user_2 = message.mentions.users.toJSON()[1];
 
 		if(message.author == metioned_user){
 			let msg = {
@@ -78,7 +78,9 @@ module.exports = {
 				loaded_msg.description
 			)
 			.setThumbnail("https://i.imgur.com/8wzMv0f.png");
-			loading_msg.edit_(loaded_msg_embed);
+			loading_msg.edit({
+				embeds: [loaded_msg_embed]
+			});
 		}, 2000);
 
 	},

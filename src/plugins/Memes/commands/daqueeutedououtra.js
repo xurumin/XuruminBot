@@ -69,7 +69,7 @@ module.exports = {
                     utils.createSimpleEmbed(msg.title, msg.description)
                 ));
             }
-            for(var user of tagged_users.slice(0,3)){
+            for(let user of tagged_users.slice(0,3)){
                 user = user.user;
                 var user_pic = user.avatarURL({
                     format: "png",
