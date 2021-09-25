@@ -105,15 +105,21 @@ module.exports = {
 
                     const red_light = "🔴🔴🔴🔴\n🔴🔴🔴🔴\n🔴🔴🔴🔴\n🔴🔴🔴🔴\n";
                     main_embed.setDescription("                             \n"+red_light);
-                    await msg.edit_(main_embed);
+                    await msg.edit({
+                        embeds: [main_embed]
+                    });
                     await Utils.wait(1500);
                     const yellow_light = "🟡🟡🟡🟡\n🟡🟡🟡🟡\n🟡🟡🟡🟡\n🟡🟡🟡🟡\n";
                     main_embed.setDescription("                             \n"+yellow_light);
-                    await msg.edit_(main_embed);
+                    await msg.edit({
+                        embeds: [main_embed]
+                    });
                     await Utils.wait(1500);
                     const green_light = "🟢🟢🟢🟢\n🟢🟢🟢🟢\n🟢🟢🟢🟢\n🟢🟢🟢🟢\n";
                     main_embed.setDescription("                             \n"+green_light);
-                    await msg.edit_(main_embed);
+                    await msg.edit({
+                        embeds: [main_embed]
+                    });
                     await Utils.wait(1500);
 
                     var txt = "";
@@ -126,7 +132,9 @@ module.exports = {
                         txt += "\n";
                     }
                     main_embed.setDescription("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"+txt);
-                    await msg.edit_(main_embed);
+                    await msg.edit({
+                        embeds: [main_embed]
+                    });
 
                     await Utils.wait(500);
 
@@ -149,7 +157,9 @@ module.exports = {
                             txt += "\n";
                         }
                         main_embed.setDescription("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"+txt);
-                        await msg.edit_(main_embed);
+                        await msg.edit({
+                            embeds: [main_embed]
+                        });
 
                         for (let index = 0; index < race_pos.length; index++) {
                             if (race_pos[index].length == 6) {
@@ -197,7 +207,7 @@ module.exports = {
                     }
                 })
                 .catch(async (err) => {
-                    //console.log(err);
+                    console.log(err);
                     racingGame.delete(message.guild.id);
                     return await message.send_("oops");
                 });

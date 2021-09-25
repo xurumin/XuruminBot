@@ -48,7 +48,9 @@ module.exports = {
                         .then(async (pmtResponse) => {
                             embed.setTitle(LOCALE["loading"].title);
                             embed.setDescription(LOCALE["loading"].description);
-                            confirmation.edit_(embed);
+                            confirmation.edit({
+                                embeds: [embed]
+                            });
                             await Utils.wait(3000);
 
                             embed.setTitle(game_info.title);
@@ -61,13 +63,17 @@ module.exports = {
                                     prize: prize
                                 }));
                                 await Payment.fastPayXurumin(message.author.id, prize);
-                                return resolve(confirmation.edit_(embed));
+                                return resolve(confirmation.edit({
+                                    embeds: [embed]
+                                }));
                             }else{
                                 embed.setDescription(Utils.choice(LOCALE["player_lost"]).interpolate({
                                     prize: prize,
                                     face: random
                                 }));
-                                return resolve(confirmation.edit_(embed));
+                                return resolve(confirmation.edit({
+                                    embeds: [embed]
+                                }));
                             }
 
                         }).catch(async (err) => {
@@ -76,7 +82,9 @@ module.exports = {
                                 user: message.author,
                                 prefix: process.env.COMMAND_PREFIX
                             }));
-                            return resolve(await confirmation.edit_(embed));
+                            return resolve(await confirmation.edit({
+                                embeds: [embed]
+                            }));
                         });
                 })
                 .catch(async (err) => {

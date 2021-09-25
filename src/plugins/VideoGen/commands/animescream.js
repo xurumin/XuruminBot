@@ -48,9 +48,9 @@ module.exports = {
                     title: LOCALE.errors.user_do_not_have_pic.title,
                     description: LOCALE.errors.user_do_not_have_pic.description
                 };
-                return resolve(loading_msg.edit_(
-                    Utils.createSimpleEmbed(msg.title, msg.description)
-                ));
+                return resolve(loading_msg.edit({
+                    embeds: [Utils.createSimpleEmbed(msg.title, msg.description)]
+                }));
             }
             const embed = new Discord.MessageEmbed()
                 .setColor('#9d65c9')

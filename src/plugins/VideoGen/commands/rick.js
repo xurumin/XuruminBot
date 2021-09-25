@@ -37,9 +37,9 @@ module.exports = {
                     description: LOCALE.errors.user_do_not_have_pic.description
                 };
                 // globalCooldown.shift()
-                return resolve(loading_msg.edit_(
-                    Utils.createSimpleEmbed(msg.title, msg.description)
-                ));
+                return resolve(loading_msg.edit({
+                    embeds: [Utils.createSimpleEmbed(msg.title, msg.description)]
+                }));
             }
             const embed = new Discord.MessageEmbed()
                 .setColor('#9d65c9')
