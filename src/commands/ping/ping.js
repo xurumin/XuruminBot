@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const database = require("./../../utils/database");
 
 module.exports = {
 	validate(client, message) {

@@ -310,7 +310,6 @@ const init = async () => {
 		// } catch (error) {
 		// 	console.log("[GameOffers]", error);
 		// }
-
 		setActv();
 		setInterval(async () => {
 			setActv();
@@ -379,8 +378,23 @@ const init = async () => {
 			}
 		});
 
+		process.on("SIGINT", async function() {
+			const serverList = Array.from(client.players);
 
+			for (let index = 0; index < serverList.length; index++) {
+				const element = serverList[index][1];
 
+				try {
+					const channel = client.channels.cache.find(channel => channel.id == element.message.channelId);
+					await channel.send({
+						content: "O Xurumin teve que reiniciar :(\nEstaremos de volta em poucos minutos :)"
+					});
+				} catch (error) {
+					console.log(error);
+				}
+			}
+			process.exit();
+		});
 		console.log(`I'm alive babe as shard ${client.shard.ids[0]}`);
 		console.log(`Total commands: ${client.commands.size}`);
 	});
