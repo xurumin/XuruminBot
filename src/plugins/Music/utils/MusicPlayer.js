@@ -258,7 +258,9 @@ class MusicPlayer {
 
                 const stream = ytdl(music_url, {
                     filter: 'audioonly',
-                    quality: this.audioquality
+                    quality: this.audioquality,
+                    liveBuffer: 5000,
+                    dlChunkSize: 0
                 });
 
                 let streamtimes = current_playlist[0].time || 0;
