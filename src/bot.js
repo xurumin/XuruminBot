@@ -1,5 +1,10 @@
 "use strict";
 require('dotenv/config');
+
+if (process.env.NODE_ENV != "development") {
+	require('newrelic');
+}
+
 const fs = require('fs-extra');
 
 const Discord = require('discord.js');
