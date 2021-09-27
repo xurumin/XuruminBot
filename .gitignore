@@ -4,3 +4,5 @@ node_modules
 src/plugins/Tests
 src/firebase_credential.json
 .vscode
+
+/newrelic_agent.log
