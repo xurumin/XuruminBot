@@ -196,6 +196,7 @@ class MusicPlayer {
                     return clearInterval(intv);
                 }
             } catch (error) {
+                console.log("[aliveConCooldown]", error);
                 return clearInterval(intv);
             }
         }, 5000);
