@@ -23,14 +23,22 @@ shard.spawn(Number(process.env.SHARDS))
     
 
     if (process.env.NODE_ENV == "production") {
-      try {
-        postDBL();
-        setInterval(async () => {
-          postDBL();
+      setInterval(async () => {
+          try {
+            axios.post("https://discord.bots.gg/api/v1/bots/753723888671785042/stats", {
+            guildCount: await getServerCount()
+            }, {
+              headers: {
+                Authorization: DISCORD_BOTS_GG_API
+              }
+            });
+            api.postStats({
+              serverCount: await getServerCount()
+            });
+          } catch (error) {
+            console.log(error);
+          }
         }, 1800000);
-      } catch (error) {
-        console.log(error);
-      }
     }
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`);
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`);
