@@ -38,7 +38,7 @@ shard.spawn(Number(process.env.SHARDS))
           } catch (error) {
             console.log(error);
           }
-        }, 1800000);
+      }, 1800000);
     }
     console.log(`> RUNING ${process.env.SHARDS} SHARD(s)`);
     console.log(`> ONLINE ON ${await getServerCount()} GUILDS`);
