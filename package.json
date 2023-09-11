@@ -3,10 +3,25 @@
   "version": "2.0.0",
   "description": "A simple discord bot.",
   "scripts": {
+    "dev": "bun --hot ./src/index.ts",
+    "lint": "eslint --ext .ts src --fix"
   },
   "author": "jônatas araujo <jonatasaraujofx@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eris": "^0.17.2",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0"
+  },
   "devDependencies": {
-  }
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "module": "index.ts",
+  "type": "module"
 }
