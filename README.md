@@ -1,5 +1,5 @@
-# Xurumin, The awesome bot 🎵
-A brazilian discord bot that plays music and podcasts. Btw, it has memes! To friends, Xurumin.
+# Xurumin, The awesome bot 🎵 - Phoenix
+A brazilian discord bot that plays podcasts. Btw, it has memes! To friends, Xurumin.
 
 ### Command list:
  - [PTBR](https://github.com/xurumin/aboutme/blob/main/help/COMMANDS.ptbr.md)
