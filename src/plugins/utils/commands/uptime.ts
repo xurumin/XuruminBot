@@ -20,7 +20,7 @@ export default class Uptime implements Command {
     if(hours > 0) text += `${hours} horas, `;
     if(minutes > 0) text += `${minutes} minutos e `;
     text += `${seconds} segundos`;
-
-    await response.send(`Estou online há ${text} :D`);
+    
+    await response.send(`Estou online há ${text}!`);
   }
 }
