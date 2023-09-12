@@ -1,7 +1,8 @@
 import { Command } from "../../libs/PluginManager/@types/Command";
 import { Plugin } from "../../libs/PluginManager/@types/Plugin";
+import { commandLoader } from "../../libs/cmd-loader.ts";
 
-class UtilsPlugin extends Plugin{
+class UtilsPlugin extends Plugin {
   private _name = "Utils";
   private _description = "A plugin with some useful commands.";
   private _commands: Command[] = []
@@ -18,9 +19,9 @@ class UtilsPlugin extends Plugin{
     return this._commands;
   }
 
-  async load() {
-    const ping = await import("./commands/ping.ts");    
-    this.commands.push(new ping.PingCommand());
+  async load() {    
+    const cmds = await commandLoader(import.meta.dir + "/commands")
+    this.commands.push(...cmds)
   }
   async reload() {
   }
