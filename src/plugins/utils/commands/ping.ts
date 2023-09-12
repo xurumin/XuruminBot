@@ -4,9 +4,8 @@ import { Response } from '../../../libs/PluginManager/@types/Response';
 
 export class PingCommand implements Command {
   name: string = "ping";
-  description: string = "Pong!";
+  description: string = "Pong! Ou pong...?";
   async execute(request: Request, response: Response) {    
-    const m = await response.send("Pinging...");
-    m.edit(`Pong in ${m.createdAt - request.createdAt}ms!`)
+   await response.send(`Pong in ${Date.now() - request.createdAt}ms`);
   }
 }
