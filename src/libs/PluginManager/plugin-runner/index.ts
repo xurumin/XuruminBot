@@ -5,7 +5,6 @@ import { Response } from "../@types/Response";
 
 export class PluginRunner {
   private _commands: Map<string, Command> = new Map();
-  private _aliases: Map<string, string> = new Map();
 
   public loadCommandsFrom(plugins: Plugin[]) {
     plugins.forEach((plugin) => {
