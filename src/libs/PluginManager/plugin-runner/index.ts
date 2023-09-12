@@ -4,30 +4,31 @@ import { Request } from "../@types/Request";
 import { Response } from "../@types/Response";
 
 export class PluginRunner {
-  private _commands: Record<string, Command> = {};
+  private _commands: Map<string, Command> = new Map();
+  private _aliases: Map<string, string> = new Map();
 
   public loadCommandsFrom(plugins: Plugin[]) {
     plugins.forEach((plugin) => {
       plugin.commands.forEach((command) => {
-        this._commands[command.name] = command;
+        this._commands.set(command.name, command);
       });
     });
   }
 
   public get commands() {
-    return new Map(Object.entries(this._commands));
+    return this._commands;
   }
 
   public set commands(commands: Map<string, Command>) {
-    this._commands = Object.fromEntries(commands);
+    this._commands = commands;
   }
 
   public doesCommandExist(command: string) {
-    return !!this._commands[command];
+    return this._commands.has(command);
   }
 
   public async run(command: string, request: Request, response: Response) {
-    const cmd = this._commands[command];
+    const cmd = this._commands.get(command);
 
     if (!cmd) {
       throw new Error(`Command ${command} does not exist!`);

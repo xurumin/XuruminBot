@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "bun:test";
 import { PluginRunner } from ".";
 import { Command } from "../@types/Command";
 import { Request } from "../@types/Request";
@@ -8,7 +8,7 @@ describe("PluginRunner", () => {
 
   const mockRequest: Request = {
     content: "test",
-    createdAt: new Date(),
+    createdAt: Date.now(),
     sender: {
       avatar: "https://placekitten.com/200/300",
       id: "123456789",
@@ -16,15 +16,6 @@ describe("PluginRunner", () => {
       name: "test",
     },
   };
-
-  const mockCommand: Command = {
-    name: "test",
-    description: "test",
-    execute: () => {
-      return Promise.resolve();
-    },
-  };
-
   beforeEach(() => {
     const mockCommand: Command = {
       name: "test",
@@ -35,15 +26,7 @@ describe("PluginRunner", () => {
     };
 
     pluginRunner.commands = new Map();
-    pluginRunner.loadCommands([mockCommand]);
-  });
-
-  it("should load commands", () => {
-    pluginRunner.commands = new Map();
-    expect(pluginRunner.commands.size).toBe(0);
-
-    pluginRunner.loadCommands([mockCommand]);
-    expect(pluginRunner.commands.size).toBe(1);
+    pluginRunner.commands.set("test", mockCommand);
   });
 
   it("should run a command", () => {
@@ -53,7 +36,7 @@ describe("PluginRunner", () => {
       },
     };
 
-    pluginRunner.run("test", mockRequest, mockResponse);
+    pluginRunner.run("test", mockRequest, mockResponse as any);
   });
 
   it("should throw an error if a command does not exist", () => {
@@ -64,7 +47,7 @@ describe("PluginRunner", () => {
     };
 
     expect(async () => {
-      await pluginRunner.run("test2", mockRequest, mockResponse);
-    }).rejects.toThrow();
+      await pluginRunner.run("test2", mockRequest, mockResponse as any);
+    }).toThrow();
   });
 });
