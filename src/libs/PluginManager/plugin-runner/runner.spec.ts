@@ -15,6 +15,7 @@ describe("PluginRunner", () => {
       isBot: false,
       name: "test",
     },
+    interaction: undefined,
   };
   beforeEach(() => {
     const mockCommand: Command = {
