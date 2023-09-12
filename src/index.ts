@@ -31,6 +31,10 @@ bot.on("interactionCreate", (interaction: Eris.CommandInteraction) => {
 
   const response: Response = {
     send: async (content, file) => {
+      if (typeof content !== "string") {
+        content.flags = content.ephemeral ? 64 : 0;
+      }
+      
       await interaction.createMessage(content, file)
     }
   }
