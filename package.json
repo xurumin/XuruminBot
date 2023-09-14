@@ -4,7 +4,8 @@
   "description": "A simple discord bot.",
   "scripts": {
     "dev": "bun --hot ./src/index.ts",
-    "lint": "eslint --ext .ts src --fix"
+    "lint": "eslint --ext .ts src --fix",
+    "start": "bun ./src/index.ts"
   },
   "author": "jônatas araujo <jonatasaraujofx@gmail.com>",
   "license": "MIT",
