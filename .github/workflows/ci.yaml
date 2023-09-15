@@ -12,14 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: oven-sh/setup-bun@v1
-        with:
-          version: latest
-      - run: bun install
-        env:
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          COMMAND_PREFIX: ${{ secrets.COMMAND_PREFIX }}
-
       - uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -29,6 +21,7 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/node_modules/"
           SCRIPT_AFTER: |
-            screen -d -m -S xurumin bash -c "cd ${{ secrets.REMOTE_TARGET }} && bun install && bun run start"
+            source .bashrc
+            
+            bash ~/xurumin-deploy.sh
