@@ -19,7 +19,7 @@ const pm = new PluginManager(import.meta.dir + "/plugins")
 bot.on("interactionCreate", (interaction: Eris.CommandInteraction) => {
   const request: Request = {
     content: interaction.data?.name || "",
-    createdAt: Date.now(),
+    createdAt: interaction.createdAt,
     sender: {
       avatar: interaction.member?.user.avatar || "",
       id: interaction.member?.user.id || "",
