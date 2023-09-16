@@ -21,7 +21,21 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          SCRIPT_AFTER: |
-            source .bashrc
-            
-            bash ~/xurumin-deploy.sh
+      - name: Executing remote command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd ${{ secrets.REMOTE_TARGET }}
+
+            echo Copying env files...
+            cat > .env << EOF
+            DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}
+            COMMAND_PREFIX=${{ secrets.COMMAND_PREFIX }}
+            EOF
+            echo Done!
+
+            docker compose up -d --build
