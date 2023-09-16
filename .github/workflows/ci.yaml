@@ -1,11 +1,8 @@
 name: xurumin-ci
 on:
-  push:
-    branches:
-      - phoenix
   pull_request:
     branches:
-      - phoenix
+      - main
 
 jobs:
   build:
