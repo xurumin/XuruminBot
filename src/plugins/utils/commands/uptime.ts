@@ -1,12 +1,11 @@
 import { Command } from '../../../libs/PluginManager/@types/Command'
-import { Request } from '../../../libs/PluginManager/@types/Request';
-import { Response } from '../../../libs/PluginManager/@types/Response';
+import { Context } from '../../../libs/PluginManager/@types/Context';
 
 export default class Uptime implements Command {
   name: string = "uptime";
   description: string = "Veja quanto tempo eu estou online!";
 
-  async execute(_: Request, response: Response) {
+  async execute(context: Context) {
     const uptime = process.uptime();
 
     let text = "";
@@ -21,6 +20,6 @@ export default class Uptime implements Command {
     if(minutes > 0) text += `${minutes} minutos e `;
     text += `${seconds} segundos`;
     
-    await response.send(`Estou online há ${text}!`);
+    await context.send(`Estou online há ${text}!`);
   }
 }

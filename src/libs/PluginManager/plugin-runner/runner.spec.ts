@@ -1,20 +1,25 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import { PluginRunner } from ".";
 import { Command } from "../@types/Command";
-import { Request } from "../@types/Request";
+import { Context } from "../@types/Context";
 
 describe("PluginRunner", () => {
   const pluginRunner = new PluginRunner();
 
-  const mockRequest: Request = {
-    content: "test",
-    createdAt: Date.now(),
+  const mockContext: Context = {
+    message: {
+      content: "test",
+      createdAt: Date.now(),
+      id: "123456789",
+    },
     sender: {
       avatar: "https://placekitten.com/200/300",
       id: "123456789",
       isBot: false,
       name: "test",
     },
+    eris: {} as any,
+    send: async () => { },
     interaction: undefined,
   };
   beforeEach(() => {
@@ -31,13 +36,11 @@ describe("PluginRunner", () => {
   });
 
   it("should run a command", () => {
-    const mockResponse = {
-      send: async (content: string) => {
-        expect(content).toBe("test");
-      },
+    mockContext.send = async (content: any, file?: any) => {
+      expect(content).toBe("test");
     };
 
-    pluginRunner.run("test", mockRequest, mockResponse as any);
+    pluginRunner.run("test", mockContext as any);
   });
 
   it("should throw an error if a command does not exist", () => {
@@ -48,7 +51,7 @@ describe("PluginRunner", () => {
     };
 
     expect(async () => {
-      await pluginRunner.run("test2", mockRequest, mockResponse as any);
+      await pluginRunner.run("test2", mockResponse as any);
     }).toThrow();
   });
 });

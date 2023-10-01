@@ -1,7 +1,6 @@
 import { Command } from "../@types/Command";
+import { Context } from "../@types/Context";
 import { Plugin } from "../@types/Plugin";
-import { Request } from "../@types/Request";
-import { Response } from "../@types/Response";
 
 export class PluginRunner {
   private _commands: Map<string, Command> = new Map();
@@ -26,13 +25,13 @@ export class PluginRunner {
     return this._commands.has(command);
   }
 
-  public async run(command: string, request: Request, response: Response) {
+  public async run(command: string, context: Context) {
     const cmd = this._commands.get(command);
 
     if (!cmd) {
       throw new Error(`Command ${command} does not exist!`);
     }
 
-    return await cmd.execute(request, response);
+    return await cmd.execute(context);
   }
 }

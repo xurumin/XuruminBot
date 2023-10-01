@@ -1,10 +1,8 @@
-import Eris, { Command } from "eris";
+import Eris from "eris";
 import { PluginManager } from "./libs/PluginManager";
-import { Request } from "./libs/PluginManager/@types/Request";
-import { Response } from "./libs/PluginManager/@types/Response";
+import { Context } from "./libs/PluginManager/@types/Context";
 
 const TOKEN = process.env.DISCORD_TOKEN as string;
-const PREFIX = process.env.COMMAND_PREFIX as string;
 
 const bot = Eris(TOKEN, {
   intents: [
@@ -17,19 +15,20 @@ const bot = Eris(TOKEN, {
 const pm = new PluginManager(import.meta.dir + "/plugins")
 
 bot.on("interactionCreate", (interaction: Eris.CommandInteraction) => {
-  const request: Request = {
-    content: interaction.data?.name || "",
-    createdAt: interaction.createdAt,
+  const context: Context = {
+    message: {
+      content: interaction.data?.name || "",
+      createdAt: interaction.createdAt,
+      id: interaction.id,
+    },
     sender: {
       avatar: interaction.member?.user.avatar || "",
       id: interaction.member?.user.id || "",
       isBot: interaction.member?.user.bot || false,
       name: interaction.member?.user.username || "",
     },
-    interaction
-  }
-
-  const response: Response = {
+    interaction,
+    eris: bot,
     send: async (content, file) => {
       if (typeof content !== "string") {
         content.flags = content.ephemeral ? 64 : 0;
@@ -39,9 +38,9 @@ bot.on("interactionCreate", (interaction: Eris.CommandInteraction) => {
     }
   }
 
-  if (!pm.runner.doesCommandExist(interaction.data?.name || "")) return response.send("Command not found!");
+  if (!pm.runner.doesCommandExist(interaction.data?.name || "")) return context.send("Command not found!");
 
-  pm.runner.run(interaction.data?.name || "", request, response)
+  pm.runner.run(interaction.data?.name || "", context)
 })
 
 bot.on("ready", () => {
