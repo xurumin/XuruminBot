@@ -1,8 +1,5 @@
-import { Command } from "./@types/Command";
-import { Request } from "./@types/Request";
-import { Response } from "./@types/Response";
 import PluginLoader from "./plugin-loader";
-import { error, info } from "./lib/Logger";
+import { info } from "./lib/Logger";
 import { PluginRunner } from "./plugin-runner";
 import { Plugin } from "./@types/Plugin";
 
