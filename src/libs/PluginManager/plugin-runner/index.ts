@@ -1,3 +1,4 @@
+import type Eris from "eris";
 import { Command } from "../@types/Command";
 import { Context } from "../@types/Context";
 import { Plugin } from "../@types/Plugin";
@@ -33,5 +34,15 @@ export class PluginRunner {
     }
 
     return await cmd.execute(context);
+  }
+
+  public async runInteraction(interaction: Eris.CommandInteraction) {
+    const cmd = this._commands.get(interaction.data?.name);
+
+    if (!cmd) {
+      throw new Error(`Command ${interaction.data?.name} does not exist!`);
+    }
+
+    return await cmd.handleInteraction?.(interaction);
   }
 }
