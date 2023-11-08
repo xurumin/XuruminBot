@@ -6,7 +6,7 @@ export interface Command {
   description: string;
   execute: (context: Context) => Promise<void>;
 
-  handleInteraction?: (interaction: Eris.CommandInteraction) => Promise<void>;
+  handleInteraction?: (interaction: Eris.ComponentInteraction | any) => Promise<void>;
   
   // Discord Slash Command Options
   options?: Eris.ApplicationCommandOptions[];

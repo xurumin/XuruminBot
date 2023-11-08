@@ -17,5 +17,5 @@ export interface Context {
   message: Message;
   send: (content: string | Content, file?: Eris.FileContent | Eris.FileContent[] | undefined) => Promise<void>;
   eris: Eris.Client;
-  interaction: Eris.CommandInteraction<Eris.TextableChannel> | undefined;
+  interaction: Eris.CommandInteraction<Eris.TextableChannel>;
 }

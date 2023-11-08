@@ -36,11 +36,11 @@ export class PluginRunner {
     return await cmd.execute(context);
   }
 
-  public async runInteraction(interaction: Eris.CommandInteraction) {
-    const cmd = this._commands.get(interaction.data?.name);
+  public async runInteraction(interaction: Eris.ComponentInteraction) {
+    const cmd = this._commands.get(interaction.message.interaction?.name || "");
 
     if (!cmd) {
-      throw new Error(`Command ${interaction.data?.name} does not exist!`);
+      throw new Error(`Command ${interaction.message.interaction?.name} does not exist!`);
     }
 
     return await cmd.handleInteraction?.(interaction);
