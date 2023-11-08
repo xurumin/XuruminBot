@@ -1,4 +1,4 @@
-import { ApplicationCommandOptions, ComponentInteraction, TextableChannel } from 'eris';
+import { ApplicationCommandOptions, ComponentInteraction, ComponentInteractionSelectMenuData, TextableChannel } from 'eris';
 import { Command } from '../../../libs/PluginManager/@types/Command'
 import { Context } from '../../../libs/PluginManager/@types/Context';
 import { search } from '../libs/podcast';
@@ -54,20 +54,11 @@ export default class Cmd implements Command {
   }
 
   async handleInteraction(interaction: ComponentInteraction) {
-    console.log(interaction);
+    const show = (interaction.data as ComponentInteractionSelectMenuData).values.at(0);
+    if(!show) return interaction.createMessage("No show provided!");
+
+
     
-    // const show = interaction.
-
-    // if(!show) return interaction.createMessage("No show provided!");
-
-    // const channel = interaction.channel as TextableChannel;
-
-    // await channel.createMessage({
-    //   embed: {
-    //     title: show,
-    //     description: "This is a podcast!",
-    //     color: 0x00FF00
-    //   }
-    // })
+    await interaction.createMessage("Tocando...")
   }
 }
