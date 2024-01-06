@@ -1,5 +1,5 @@
 import { Command } from '../../../libs/PluginManager/@types/Command'
-import { Context } from '../../../libs/PluginManager/@types/Context';
+import { Context } from '../../../libs/PluginManager/@types/context';
 
 export default class PingCommand implements Command {
   name: string = "ping";

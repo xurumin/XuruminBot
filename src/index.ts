@@ -1,6 +1,6 @@
 import Eris, { CommandInteraction, ComponentInteraction } from "eris";
 import { PluginManager } from "./libs/PluginManager";
-import { Context } from "./libs/PluginManager/@types/Context";
+import { Context } from "./libs/PluginManager/@types/context";
 
 const TOKEN = process.env.DISCORD_TOKEN as string;
 

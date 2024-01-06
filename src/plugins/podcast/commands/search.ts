@@ -1,6 +1,6 @@
 import { ApplicationCommandOptions, ComponentInteraction, ComponentInteractionSelectMenuData, TextableChannel } from 'eris';
 import { Command } from '../../../libs/PluginManager/@types/Command'
-import { Context } from '../../../libs/PluginManager/@types/Context';
+import { Context } from '../../../libs/PluginManager/@types/context';
 import { search } from '../libs/podcast';
 
 export default class Cmd implements Command {
